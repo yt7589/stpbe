@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.zjcbe.domain.mapper.analysis.VehicleImagesMapper">
+    <resultMap id="BaseResultMap" type="com.zhuanjingkj.zjcbe.domain.po.VehicleImagesPO" >
+        <result column="imageId" property="imageId" />
+        <result column="imageUrl" property="imageUrl" />
+        <result column="imageName" property="imageName" />
+    </resultMap>
+
+
+    <resultMap id="GetImageInfoRstm" type="com.zhuanjingkj.zjcbe.domain.po.VehicleImagesPO" >
+        <result column="imageUrl" property="imageUrl" />
+        <result column="imageName" property="imageName" />
+    </resultMap>
+    <select id="getImageInfo" resultMap="GetImageInfoRstm">
+        select imageUrl, imageName, uploadTime from vehicle_images where imageId=#{imageId}
+    </select>
+</mapper>

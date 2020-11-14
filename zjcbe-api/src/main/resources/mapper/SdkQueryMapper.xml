@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.zjcbe.domain.mapper.sdk.SdkQueryMapper">
+    <resultMap id="BaseResultMap" type="com.zhuanjingkj.zjcbe.commondata.po.VideoStreamPO" >
+        <result column="video_stream_id" property="videoStreamId" />
+        <result column="video_stream_name" property="videoStreamName" />
+        <result column="rtsp_url" property="rtspUrl" />
+        <result column="rtmp_url" property="rtmpUrl" />
+        <result column="state" property="state" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+    </resultMap>
+
+    <select id="getVideoStreamsDemo" resultMap="BaseResultMap">
+        select video_stream_id, video_stream_name, rtsp_url
+        from t_video_stream
+    </select>
+
+    <select id="getVideoStreamsTotal" resultType="java.lang.Integer">
+        select count(video_stream_id)
+        from t_video_stream
+        where state=#{state}
+    </select>
+
+    <select id="getVideoStreams" resultMap="BaseResultMap">
+        select video_stream_id, video_stream_name, rtsp_url, start_time, end_time
+        from t_video_stream
+        where state=#{state}
+        limit #{startIdx}, #{amount}
+    </select>
+</mapper>

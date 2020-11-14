@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.zjcbe.domain.mapper.analysis.VehicleAnalysisWztzMapper">
+    <resultMap id="BaseResultMap" type="com.zhuanjingkj.zjcbe.domain.po.VehicleAnalysisWztzPO" >
+        <result column="vehicle_num" property="vehicleNum" />
+        <result column="id" property="id" />
+        <result column="analysisId" property="analysisId" />
+    </resultMap>
+
+
+    <resultMap id="GetVehicleNumInImageRstm" type="com.zhuanjingkj.zjcbe.domain.po.VehicleAnalysisWztzPO" >
+        <result column="vehicle_num" property="vehicleNum" />
+    </resultMap>
+    <select id="getVehicleNumInImage" resultMap="GetVehicleNumInImageRstm">
+        select count(id) as vehicle_num from vehicle_analysis_wztz where analysisId=(select max(analysisId) from vehicle_analysis where imageId=#{imageId})
+    </select>
+
+    <!-- 获取位置特征信息 -->
+    <select id="getVehicleAnalysisWztz" resultMap="BaseResultMap">
+        select clwz, psfx from vehicle_analysis_wztz where analysisId=#{analysisId}
+    </select>
+</mapper>

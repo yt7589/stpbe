@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.zjcbe.domain.mapper.analysis.VehicleAnalysisCxtzMapper">
+    <resultMap id="BaseResultMap" type="com.zhuanjingkj.zjcbe.domain.po.VehicleAnalysisCxtzPO" >
+        <result column="cllxfl" property="cllxfl" />
+        <result column="cllxzfl" property="cllxzfl" />
+        <result column="csys" property="csys" />
+        <result column="clpp" property="clpp" />
+        <result column="ppcx" property="ppcx" />
+        <result column="cxnk" property="cxnk" />
+        <result column="ppxhms" property="ppxhms" />
+        <result column="ppxhkxd" property="ppxhkxd" />
+    </resultMap>
+
+    <select id="getVehicleAnalysisCxtz" resultMap="BaseResultMap">
+        select ppcx, cllxfl, cllxzfl, ppxhms, csys, clpp, ppxhkxd, cxnk
+        from vehicle_analysis_cxtz
+        where analysisId=#{analysisId}
+    </select>
+</mapper>
