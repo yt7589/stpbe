@@ -1,0 +1,30 @@
+package com.zhuanjingkj.stpbe.facade.controller;
+
+import com.zhuanjingkj.stpbe.data.dto.GetUserInfoDTO;
+import com.zhuanjingkj.stpbe.data.dto.LoginDTO;
+import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.rto.LoginRTO;
+import com.zhuanjingkj.stpbe.facade.service.FacadeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/facade")
+public class FacadeController {
+    @Autowired
+    FacadeService facadeService;
+
+    @PostMapping("/login")
+    public ResultDTO<LoginDTO> login(@RequestBody LoginRTO rto) {
+        return facadeService.login(rto);
+    }
+
+    @GetMapping("/getUserInfo")
+    public ResultDTO<GetUserInfoDTO> getUserInfo(
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestParam(name = "userId") String userIdStr
+    ) {
+        return facadeService.getUserInfo(platform, version, userIdStr);
+    }
+}
