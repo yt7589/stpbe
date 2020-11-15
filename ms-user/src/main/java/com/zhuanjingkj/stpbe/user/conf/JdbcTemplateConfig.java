@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
 public class JdbcTemplateConfig {
     @Bean
     public DataSourceRegistry dataSourceRegistry() {
-        return new DataSourceRegistry();
+        return DataSourceRegistry.getInstance();
     }
 }

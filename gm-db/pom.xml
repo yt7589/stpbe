@@ -19,6 +19,18 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.zhuanjingkj</groupId>
+            <artifactId>gm-common</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.zhuanjingkj</groupId>
+            <artifactId>gm-common</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <packaging>jar</packaging>
     <name>gm-db</name>
