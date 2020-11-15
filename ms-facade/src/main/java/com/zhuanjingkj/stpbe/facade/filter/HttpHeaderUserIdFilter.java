@@ -28,7 +28,7 @@ public class HttpHeaderUserIdFilter implements Filter {
         String uidStr = request.getHeader(AppConst.AUTH_USER_HEADER);
         String sessionId = request.getSession().getId();
         System.out.println("filter: sessionId=" + sessionId + "!");
-        redisTemplate.opsForValue().set(sessionId, uidStr);
+        redisTemplate.opsForValue().set(sessionId, uidStr + "");
         filterChain.doFilter(request, response);
     }
 
