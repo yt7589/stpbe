@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!-- 生成mysql带有分页的sql的插件  这个可以自己写，-->
+<!--        <plugin type="generator.MysqlPaginationPlugin" />-->
+<!--        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />-->
+<!--        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />-->
+        <!-- 自定义的注释规则，继承 DefaultCommentGenerator 重写 一些方法 -->
+<!--        <commentGenerator type="generator.NewbatisGenerator">-->
+<!--            &lt;!&ndash; 是否去除自动生成日期的注释 true：是 ： false:否 &ndash;&gt;-->
+<!--            <property name="suppressDate" value="true"/>-->
+<!--            &lt;!&ndash; 是否去除所有自动生成的注释 true：是 ： false:否 &ndash;&gt;-->
+<!--            <property name="suppressAllComments" value="true"/>-->
+<!--        </commentGenerator>-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.2.68:3306/traffic_data_platform"
+                        userId="root"
+                        password="Zhang.1986">
+        </jdbcConnection>
+        <!--生成entity类存放位置-->
+        <javaModelGenerator targetPackage="com.zhuanjingkj.stpbe.tradataplat.domain" targetProject="D:\code\stpbe\ms-platform-server\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--生成映射文件存放位置-->
+        <sqlMapGenerator targetPackage="resources.mapper" targetProject="D:\code\stpbe\ms-platform-server\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--生成Dao类存放位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zhuanjingkj.stpbe.tradataplat.dao"
+                             targetProject="D:\code\stpbe\ms-platform-server\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <table tableName="t_camera" domainObjectName="Camera">
+        </table>
+        <table tableName="t_camera_type" domainObjectName="CameraType">
+        </table>
+        <table tableName="t_image" domainObjectName="Image">
+        </table>
+        <table tableName="t_img_type" domainObjectName="ImgType">
+        </table>
+        <table tableName="t_img_va" domainObjectName="ImgVa">
+        </table>
+        <table tableName="t_img_va_cxtz" domainObjectName="ImgVaCxtz">
+        </table>
+        <table tableName="t_img_va_hptz" domainObjectName="ImgVaHptz">
+        </table>
+        <table tableName="t_img_va_wztz" domainObjectName="ImgVaWztz">
+        </table>
+        <table tableName="t_va_cllxfl" domainObjectName="VaCllxfl">
+        </table>
+        <table tableName="t_va_cllxzfl" domainObjectName="VaCllxzfl">
+        </table>
+        <table tableName="t_va_csys" domainObjectName="VaCsys">
+        </table>
+        <table tableName="t_va_hpgg" domainObjectName="VaHpgg">
+        </table>
+        <table tableName="t_va_hpys" domainObjectName="VaHpys">
+        </table>
+        <table tableName="t_va_hpzl" domainObjectName="VaHpzl">
+        </table>
+        <table tableName="t_va_hpzt" domainObjectName="VaHpzt">
+        </table>
+    </context>
+</generatorConfiguration>
