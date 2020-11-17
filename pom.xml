@@ -15,19 +15,8 @@
         <module>ms-user</module>
         <module>ms-system-info</module>
         <module>ms-sdk-server</module>
+        <module>ms-platform-server</module>
         <module>ag-zjc-saas</module>
-        <module>zjcbe-api</module>
-        <module>zjcbe-commondata</module>
-        <module>zjcbe-db-engine</module>
-        <module>zjcbe-domain</module>
-        <module>zjcbe-model</module>
-        <module>zjcbe-repository</module>
-        <module>zjcbe-utility</module>
-        <module>zjcbe-commonservice</module>
-        <module>zjcbe-applications</module>
-        <module>zjcbe-business</module>
-        <module>zjcbe-utility-redis</module>
-        <module>zjcbe-websocket</module>
         <module>ag-zjc-saas</module>
     </modules>
     <parent>
