@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.zhuanjingkj.zjcbe.facade.fcc")
+@EnableFeignClients(basePackages = "com.zhuanjingkj.stpbe.facade.fcc")
 public class MsFacadeApplication {
     public static void main(String[] args) {
         System.out.println("Eureka Server v0.0.1");
