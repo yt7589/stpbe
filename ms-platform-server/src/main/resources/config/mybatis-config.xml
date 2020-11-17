@@ -6,7 +6,21 @@
 <!--    <typeAliases>-->
 <!--        <package name="com.yefeng.vehicle.domain.po"/>-->
 <!--    </typeAliases>-->
-    <mappers>
-
-    </mappers>
+<!--    <mappers>-->
+<!--        <mapper resource="mapper/CameraMapper.xml"/>-->
+<!--        <mapper resource="mapper/CameraTypeMapper.xml"/>-->
+<!--        <mapper resource="mapper/ImageMapper.xml"/>-->
+<!--        <mapper resource="mapper/ImgTypeMapper.xml"/>-->
+<!--        <mapper resource="mapper/ImgVaCxtzMapper.xml"/>-->
+<!--        <mapper resource="mapper/ImgVaHptzMapper.xml"/>-->
+<!--        <mapper resource="mapper/ImgVaMapper.xml"/>-->
+<!--        <mapper resource="mapper/ImgVaWztzMapper.xml"/>-->
+<!--        <mapper resource="mapper/VaCllxflMapper.xml"/>-->
+<!--        <mapper resource="mapper/VaCllxzflMapper.xml"/>-->
+<!--        <mapper resource="mapper/VaCsysMapper.xml"/>-->
+<!--        <mapper resource="mapper/VaHpggMapper.xml"/>-->
+<!--        <mapper resource="mapper/VaHpysMapper.xml"/>-->
+<!--        <mapper resource="mapper/VaHpzlMapper.xml"/>-->
+<!--        <mapper resource="mapper/VaHpztMapper.xml"/>-->
+<!--    </mappers>-->
 </configuration>
