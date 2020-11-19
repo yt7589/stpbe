@@ -1,7 +1,11 @@
 package com.zhuanjingkj.stpbe.platform.service.Impl;
 
 
+import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.platform.bo.TrafficFlowBO;
+import com.zhuanjingkj.stpbe.platform.dto.DataKanbanDTO;
+import com.zhuanjingkj.stpbe.platform.dto.TrafficFlowDTO;
+import com.zhuanjingkj.stpbe.platform.dto.TrafficFlowItemDTO;
 import com.zhuanjingkj.stpbe.platform.mapper.ImgVaHptzMapper;
 import com.zhuanjingkj.stpbe.platform.service.ImgVaHptzService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,65 +18,49 @@ import java.util.List;
 
 @Service
 public class ImgVaHptzServiceImpl implements ImgVaHptzService {
-
-    private static final String ZERO = " 00:00:00";
-    private static final String FOUR = " 04:00:00";
-    private static final String EIGHT = " 08:00:00";
-    private static final String TWELVE = " 12:00:00";
-    private static final String SIXTEEN = " 16:00:00";
-    private static final String TWENTY = " 20:00:00";
-    private static final String TWENTY_FOUR = " 24:00:00";
+    private static final String[] DURATIONS = {
+            "00:00:00", "04:00:00", "08:00:00",
+            "12:00:00", "16:00:00", "20:00:00",
+            "24:00:00"
+    };
 
     @Autowired
     ImgVaHptzMapper imgVaHptzMapper;
 
     @Override
-    public List<TrafficFlowBO> countTrafficFlow() {
+    public ResultDTO<DataKanbanDTO> countTrafficFlow() {
         Date today = new Date();
         Date yesterday = new Date(today.getTime() - 86400000L);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String todayStr = sdf.format(today);
         String yesterdayStr = sdf.format(yesterday);
-        List<TrafficFlowBO> todyList = this.count(todayStr);
-        List<TrafficFlowBO> yesterdayList  = this.count(yesterdayStr);
-        yesterdayList.addAll(todyList);
-        return yesterdayList;
+        List<TrafficFlowItemDTO> todayTraffics = getDailyTrafficFlow(todayStr);
+        List<TrafficFlowItemDTO> yesterdayTraffics = getDailyTrafficFlow(yesterdayStr);
+        TrafficFlowDTO trafficFlow = new TrafficFlowDTO();
+        trafficFlow.setTodayTraffics(todayTraffics);
+        trafficFlow.setYesterdayTraffics(yesterdayTraffics);
+        DataKanbanDTO data = new DataKanbanDTO();
+        data.setTrafficFlow(trafficFlow);
+        ResultDTO<DataKanbanDTO> dto = new ResultDTO<>();
+        dto.setData(data);
+        return dto;
     }
-    private List<TrafficFlowBO> count(String date){
-        List<TrafficFlowBO> list = new ArrayList<>();
-        for(int i=0;i<6;i++){
-            TrafficFlowBO trafficFlowBO = new TrafficFlowBO();
-            String maxTime = null;
-            String minTime = null;
-            if(i==0){
-                maxTime = date + FOUR;
-                minTime = date + ZERO;
-            }
-            if(i==1){
-                maxTime = date + EIGHT;
-                minTime = date + FOUR;
-            }
-            if(i==2){
-                maxTime = date + TWELVE;
-                minTime = date + EIGHT;
-            }
-            if(i==3){
-                maxTime = date + SIXTEEN;
-                minTime = date + TWELVE;
-            }
-            if(i==4){
-                maxTime = date + TWENTY;
-                minTime = date + SIXTEEN;
-            }
-            if(i==5){
-                maxTime = date + TWENTY_FOUR;
-                minTime = date + TWENTY;
-            }
+
+    private List<TrafficFlowItemDTO> getDailyTrafficFlow(String date) {
+        List<TrafficFlowItemDTO> items = new ArrayList<>();
+        String maxTime = null;
+        String minTime = null;
+        TrafficFlowItemDTO tfi = null;
+        // 0至4时
+        for (int i=0; i<6; i++) {
+            minTime = date + " " + DURATIONS[i];
+            maxTime = date + " " + DURATIONS[i+1];
+            tfi = new TrafficFlowItemDTO();
             int count = imgVaHptzMapper.countByTime(maxTime,minTime);
-            trafficFlowBO.setCount(count);
-            trafficFlowBO.setReportTime(maxTime);
-            list.add(trafficFlowBO);
+            tfi.setCount(count);
+            tfi.setReportTime(DURATIONS[i+1]);
+            items.add(tfi);
         }
-        return list;
+        return items;
     }
 }

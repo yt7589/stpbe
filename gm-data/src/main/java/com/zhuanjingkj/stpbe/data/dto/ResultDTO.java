@@ -10,6 +10,11 @@ public class ResultDTO<T extends BaseDTO> {
     @JSONField(name="data")
     protected T data;
 
+    public ResultDTO() {
+        code = 0;
+        msg = "";
+    }
+
     public int getCode() {
         return code;
     }
