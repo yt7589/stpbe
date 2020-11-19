@@ -15,7 +15,6 @@ import java.util.TimeZone;
 @SpringBootApplication
 @ServletComponentScan
 @EnableTransactionManagement(proxyTargetClass = true)
-@ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.platform.*"})
 @MapperScan("com.zhuanjingkj.stpbe.platform.mapper")
 public class Application {
 	@PostConstruct
