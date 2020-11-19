@@ -19,6 +19,7 @@ public class ImgVaHptzController {
 
     @GetMapping("/traffic/flow")
     public ResponseData< List<TrafficFlowBO>> getTrafficFlow() {
-        return ResponseData.success(imgVaHptzService.countTrafficFlow());
+        //return ResponseData.success(imgVaHptzService.countTrafficFlow());
+        return null;
     }
 }
