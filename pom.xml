@@ -11,13 +11,13 @@
         <module>gm-common</module>
         <module>gm-data</module>
         <module>sr-eureka</module>
+        <module>sr-dtmp</module>
         <module>ms-facade</module>
         <module>ms-tmdp</module>
         <module>ms-user</module>
         <module>ms-system-info</module>
         <module>ms-sdk-server</module>
         <module>ms-platform-server</module>
-        <module>ag-zjc-saas</module>
         <module>ag-zjc-saas</module>
     </modules>
     <parent>

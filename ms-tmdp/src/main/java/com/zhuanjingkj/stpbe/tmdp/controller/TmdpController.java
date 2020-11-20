@@ -130,6 +130,14 @@ public class TmdpController {
         return dto;
     }
 
+    /**
+     * 首页
+     * @param platform
+     * @param version
+     * @param servletRequest
+     * @param servletResponse
+     * @return
+     */
     @GetMapping("/dk/getDkVttf")
     public ResultDTO<DkVttfDTO> getDkVttf(
             @RequestParam(name = "p") String platform,
