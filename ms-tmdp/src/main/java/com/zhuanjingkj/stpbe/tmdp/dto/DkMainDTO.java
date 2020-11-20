@@ -10,6 +10,8 @@ public class DkMainDTO extends BaseDTO {
     private DkVtpDTO dkVtp;
     @JSONField(name = "dkTitf")
     private DkTitfDTO dkTitf;
+    @JSONField(name = "dkVttf")
+    private DkVttfDTO dkVttf;
 
     public DkVtieDTO getDkVtie() {
         return dkVtie;
@@ -33,5 +35,13 @@ public class DkMainDTO extends BaseDTO {
 
     public void setDkTitf(DkTitfDTO dkTitf) {
         this.dkTitf = dkTitf;
+    }
+
+    public DkVttfDTO getDkVttf() {
+        return dkVttf;
+    }
+
+    public void setDkVttf(DkVttfDTO dkVttf) {
+        this.dkVttf = dkVttf;
     }
 }

@@ -4,13 +4,11 @@ import com.zhuanjingkj.stpbe.data.dto.GetUserInfoDTO;
 import com.zhuanjingkj.stpbe.data.dto.LoginDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.rto.LoginRTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.DkMainDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.DkTitfDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.DkVtieDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.DkVtpDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.*;
 import com.zhuanjingkj.stpbe.tmdp.service.DkTitfService;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtieService;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtpService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVttfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +26,8 @@ public class TmdpController {
     private DkVtpService dkVtpService;
     @Autowired
     private DkTitfService dkTitfService;
+    @Autowired
+    private DkVttfService dkVttfService;
 
     /**
      * 首页数据看板页面总体数据请求接口
@@ -58,6 +58,10 @@ public class TmdpController {
         // 获取交通流量分时段显示
         DkTitfDTO dkTitf = dkTitfService.countTrafficFlow();
         data.setDkTitf(dkTitf);
+        // 显示车辆类型分时段交通流量
+        DkVttfDTO dkVttf = dkVttfService.getDkVttf();
+        data.setDkVttf(dkVttf);
+        //
         dto.setData(data);
         return dto;
     }
@@ -106,6 +110,14 @@ public class TmdpController {
         return dto;
     }
 
+    /**
+     * 首页数据看板左侧第一行车辆类型占比统计
+     * @param platform
+     * @param version
+     * @param servletRequest
+     * @param servletResponse
+     * @return
+     */
     @GetMapping("/dk/getDkVtp")
     public ResultDTO<DkVtpDTO> getDkVtp(
             @RequestParam(name = "p") String platform,
@@ -115,6 +127,18 @@ public class TmdpController {
     ) {
         ResultDTO<DkVtpDTO> dto = new ResultDTO<>();
         dto.setData(dkVtpService.getDkVtp());
+        return dto;
+    }
+
+    @GetMapping("/dk/getDkVttf")
+    public ResultDTO<DkVttfDTO> getDkVttf(
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            ServletRequest servletRequest,
+            ServletResponse servletResponse
+    ) {
+        ResultDTO<DkVttfDTO> dto = new ResultDTO<>();
+        dto.setData(dkVttfService.getDkVttf());
         return dto;
     }
 }
