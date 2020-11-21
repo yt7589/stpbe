@@ -1,10 +1,12 @@
 package com.zhuanjingkj.stpbe.tmdp.dto;
 
+import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
+
 /**
  * author by guoqiang
  * date on 2020.11.21
  **/
-public class VehiclePassedNumberDTO {
+public class VehiclePassedNumberDTO extends BaseDTO {
 
     /**
      * 今日过车量

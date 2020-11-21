@@ -27,7 +27,7 @@ public class VehicleStatisticController {
     @Autowired
     private VehicleStatisticService vehicleStatisticService;
 
-    @GetMapping("")
+    @GetMapping()
     public ResultDTO<VehicleStatisticListDTO> getDkMain() {
         List<VehicleDistributionDTO> vehicleDistributionList = vehicleStatisticService.getVehicleDistribution();
 

@@ -1,10 +1,12 @@
 package com.zhuanjingkj.stpbe.tmdp.dto;
 
+import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
+
 /**
  * author by guoqiang
  * date on 2020.11.20
  **/
-public class VehicleStatisticDTO {
+public class VehicleStatisticDTO extends BaseDTO {
 
     private Integer id;
 
