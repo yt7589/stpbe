@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.tmdp.mapper.TrafficViolationMapper">
+    <select id="getTrafficViolationTimeFrameNumber" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        count(*) as trafficViolationNum
+        from
+        t_traffic_violation
+        where
+        traffic_violation_time &gt;= #{minDate,jdbcType=TIMESTAMP}
+        and
+        traffic_violation_time &lt;= #{maxDate,jdbcType=TIMESTAMP}
+    </select>
+
+    <select id="getTrafficViolationTypeNumber" resultType="com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationStatisticDTO" parameterType="java.lang.String">
+        select
+        t_traffic_violation_type.violation_type_name as trafficViolationType,
+        count(*) as trafficViolationNum
+        from
+        t_traffic_violation inner join
+        t_traffic_violation_type
+        on t_traffic_violation.violation_type_id = t_traffic_violation_type.id
+        group by t_traffic_violation_type.violation_type_name
+        order by trafficViolationNum desc
+    </select>
+
+
+    <select id="getTrafficViolationByTime" resultType="com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationDTO" parameterType="java.lang.String">
+        SELECT
+        t_traffic_violation.id as id,
+        t_traffic_violation.location as location,
+        t_traffic_violation.vehicle_type as vehicleType,
+        t_traffic_violation.vehicle_style as vehicleStyle,
+        t_traffic_violation.violation_type_id as violationTypeId,
+        t_traffic_violation.traffic_violation_time as trafficViolationTime,
+        t_traffic_violation.status as status,
+        t_traffic_violation.img_id as imgId,
+        t_traffic_violation.vehicle_plate as vehiclePlate,
+        t_image.image_url as imgUrl,
+        t_traffic_violation_type.violation_type_name as violationTypeName
+        FROM
+        t_traffic_violation,
+        t_traffic_violation_type,
+        t_image
+        WHERE
+        t_traffic_violation.violation_type_id = t_traffic_violation_type.id
+        AND
+        t_traffic_violation.img_id = t_image.image_id
+        order by trafficViolationTime desc
+        limit 2
+    </select>
+
+</mapper>

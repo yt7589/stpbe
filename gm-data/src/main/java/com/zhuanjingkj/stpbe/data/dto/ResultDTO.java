@@ -15,6 +15,12 @@ public class ResultDTO<T extends BaseDTO> {
         msg = "";
     }
 
+    public ResultDTO(T data){
+        this.code = 0;
+        this.msg = "success";
+        this.data = data;
+    }
+
     public int getCode() {
         return code;
     }
@@ -37,5 +43,9 @@ public class ResultDTO<T extends BaseDTO> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public static <T extends BaseDTO> ResultDTO<T> success(T data){
+        return new ResultDTO<>(data);
     }
 }
