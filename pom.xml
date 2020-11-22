@@ -18,15 +18,17 @@
         <module>ms-user</module>
         <module>ms-system-info</module>
         <module>ms-sdk-server</module>
-        <module>ms-platform-server</module>
         <module>ag-zjc-saas</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.2.RELEASE</version>
+        <version>2.3.5.RELEASE</version>
         <relativePath/>
     </parent>
+
+
+
     <properties>
         <java.version>1.8</java.version>
         <docker.image.prefix>zhuanjingkj</docker.image.prefix>
