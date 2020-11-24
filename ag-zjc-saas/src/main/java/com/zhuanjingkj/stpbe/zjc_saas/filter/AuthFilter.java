@@ -10,6 +10,8 @@ import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.zjc_saas.common.ZjcSaasConst;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -21,6 +23,7 @@ public class AuthFilter  extends ZuulFilter {
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
     private List<String> mssWhiteList;
+    private final static Logger logger = LoggerFactory.getLogger(AuthFilter.class);
 
     public AuthFilter() {
         super();
@@ -54,17 +57,23 @@ public class AuthFilter  extends ZuulFilter {
 
     @Override
     public Object run() throws ZuulException {
+        logger.info("AuthFilter.run 1");
         RequestContext ctx = RequestContext.getCurrentContext();
+        logger.info("AuthFilter.run 2");
         String requestUri = ctx.getRequest().getRequestURI();
+        logger.info("AuthFilter.run 3");
         boolean isInWhiteList = false;
         for (String serviceName : mssWhiteList) {
             if (requestUri.indexOf(serviceName) >= 0) {
                 isInWhiteList = true;
             }
         }
+        logger.info("AuthFilter.run 4");
         if (isInWhiteList) {
+            logger.info("AuthFilter.run 5");
             ctx.set(ZjcSaasConst.ZUUL_FILTER_IS_SUCCESS, ZjcSaasConst.ZULL_FILTER_IS_SUCCESS_TRUE);
         } else {
+            logger.info("AuthFilter.run 6");
             // 获取Authorization头
             String token = ctx.getRequest().getHeader("Authorization");
             long userId = 0;
@@ -75,16 +84,19 @@ public class AuthFilter  extends ZuulFilter {
             } catch (Exception ex) {
                 System.out.println("Verify JWT exception: " + ex.getMessage() + "!");
             }
+            logger.info("AuthFilter.run 7");
             if (userId > 0) {
                 ctx.set(ZjcSaasConst.ZUUL_FILTER_IS_SUCCESS, ZjcSaasConst.ZULL_FILTER_IS_SUCCESS_TRUE);
                 ctx.addZuulRequestHeader(AppConst.AUTH_USER_HEADER, "" + userId);
                 Object userIdStr = redisTemplate.opsForValue().get(AppConst.AUTH_REDIS_USER_PREFIX + userId);
                 return null;
             }
+            logger.info("AuthFilter.run 8");
             ctx.set(ZjcSaasConst.ZUUL_FILTER_IS_SUCCESS, ZjcSaasConst.ZULL_FILTER_IS_SUCCESS_FALSE);
             ResultDTO<BaseDTO> dto = new ResultDTO<>();
             dto.setCode(9);
             dto.setMsg("请先登录");
+            logger.info("AuthFilter.run 9");
             //HttpHeaders hdrs = new HttpHeaders();
             //hdrs.add("zjc", "forTest");
             //String resp = ResponseEntity.status(403).headers(hdrs).
@@ -92,6 +104,7 @@ public class AuthFilter  extends ZuulFilter {
             ctx.setResponseBody(JSONObject.toJSONString(dto));
             ctx.getResponse().setContentType("application/json; charset=utf-8");
             ctx.getResponse().addHeader("zjc-saas", "for Test v0.0.1");
+            logger.info("AuthFilter.run 10");
             return null;
         }
         return null;
