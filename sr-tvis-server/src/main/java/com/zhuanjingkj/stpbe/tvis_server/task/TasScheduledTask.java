@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 public class TasScheduledTask {
     private static Logger logger = LoggerFactory.getLogger(TasScheduledTask.class);
 
-    //@Async("tvisServerPool")
-    //@Scheduled(cron = "*/1 * * * * ?")
+    @Async("tvisServerPool")
+    @Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
         logger.info("TasScheduledTask.run ... " + System.currentTimeMillis() + "!");
     }
