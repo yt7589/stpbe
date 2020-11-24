@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.UUID;
 
+@Service
 public class TvisImageRecogService implements ITvisImageRecogService {
     private final static String LIST_CREATE_LIB = "create-lib-list";
     private final static String LIST_QUERY_LIB = "query-lib-list";
