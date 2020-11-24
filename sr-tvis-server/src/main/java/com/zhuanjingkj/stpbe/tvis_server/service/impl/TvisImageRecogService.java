@@ -67,6 +67,7 @@ public class TvisImageRecogService implements ITvisImageRecogService {
             return JSON.parseObject(JSON.toJSONString(responseError));
         }
         logger.info("recognition step 4");
+        // 向Kafka的Topic发送请求
         return JSON.parseObject(response);
     }
 

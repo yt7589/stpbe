@@ -17,26 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/tebs")
 public class TvisController {
-    /*private TvisProducer tvisProducer;
-
-    public TvisController(TvisProducer tvisProducer) {
-        super();
-        this.tvisProducer = tvisProducer;
-    }*/
     @Autowired
     private TvisJsonRawListener tvisListener;
     @Autowired
     private KafkaTemplate<Integer, String> kafkaTemplate;
 
     @PostMapping("/postTvisJson")
-    public ResultDTO<PostTvisJsonDTO> posTvisJson(@RequestBody TvisJsonRTO tvisJsonRTO) {
+    public ResultDTO<PostTvisJsonDTO> postTvisJson(@RequestBody TvisJsonRTO tvisJsonRTO) {
         // 发送到消息总线，即Kafaka的Topic上，设置Topic过期时间为500毫秒
-        /*String payload = "text/plain";
-        tvisProducer.getTvisSource().output().send(
-                MessageBuilder.withPayload(payload).
-                        setHeader("type", "string").
-                        build()
-        );*/
         kafkaTemplate.send("tvis", 0, "Hello kafka of tvis topic");
         kafkaTemplate.flush();
         // 返回处理成功结果
