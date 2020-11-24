@@ -35,10 +35,15 @@ public class FacadeService implements IFacadeService {
 
     @Override
     public ResultDTO<LoginDTO> login(LoginRTO rto) {
+        logger.info("ms-facade: step 1");
         ResultDTO<LoginDTO> dto = fccUserService.login(rto);
+        logger.info("ms-facade: step 2");
         LoginDTO data = (LoginDTO)dto.getData();
+        logger.info("ms-facade: step 3");
         data.setJwtToken(generateJwtToken(data));
+        logger.info("ms-facade: step 4");
         UserVO userVo = new UserVO();
+        logger.info("ms-facade: step 5");
         userVo.setUserId(data.getUserId());
         userVo.setUserName(data.getUserName());
         userVo.setRoleId(data.getRoleId());
