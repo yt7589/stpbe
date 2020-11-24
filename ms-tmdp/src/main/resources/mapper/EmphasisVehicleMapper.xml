@@ -34,14 +34,19 @@
     <select id="getEmphasisVehicleBySite" resultType="com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleInformationDTO" parameterType="java.lang.String">
         select
         sum(emphasis_vehicle_num) as emphasisVehicleNum,
-        device_site_name as deviceSiteName
+        t_emphasis_vehicle_information.site_id as siteId,
+        t_site.site_name as siteName
         from
         t_emphasis_vehicle_information
+        inner join
+        t_site
+        on
+        t_emphasis_vehicle_information.site_id = t_site.site_id
         where
-        date &gt;= #{minDate,jdbcType=TIMESTAMP}
+        t_emphasis_vehicle_information.date &gt;= #{minDate,jdbcType=TIMESTAMP}
         and
-        date &lt;= #{maxDate,jdbcType=TIMESTAMP}
-        group by device_site_name
+        t_emphasis_vehicle_information.date &lt;= #{maxDate,jdbcType=TIMESTAMP}
+        group by siteId
         order by emphasisVehicleNum desc
         limit 7
     </select>
@@ -55,14 +60,24 @@
         t_traffic_violation.violation_type_id as violationTypeId,
         t_traffic_violation.traffic_violation_time as trafficViolationTime,
         t_traffic_violation.status as status,
-        t_traffic_violation.img_id as imgId,
+        t_traffic_violation.img_va_id as imgVaId,
         t_traffic_violation.vehicle_plate as vehiclePlate,
-        t_traffic_violation_type.violation_type_name as violationTypeName
+        t_traffic_violation_type.violation_type_name as violationTypeName,
+        t_image.image_url as imgUrl,
+        t_site.site_name as siteName,
+        t_site.lng as lng,
+        t_site.lat as lat
         FROM
         t_traffic_violation,
-        t_traffic_violation_type
+        t_traffic_violation_type,
+        t_site,
+        t_image
         WHERE
         t_traffic_violation.violation_type_id = t_traffic_violation_type.id
+        AND
+        t_traffic_violation.site_id = t_site.site_id
+        AND
+        t_traffic_violation.img_id = t_image.image_id
         AND
         t_traffic_violation.is_emphasis_vehicle = '1'
         order by trafficViolationTime desc
@@ -72,7 +87,7 @@
 
     <select id="getEmphasisVehicleByTimeFrame" resultType="java.lang.Integer" parameterType="java.lang.String">
         select
-        count(*)
+        sum(emphasis_vehicle_num)
         from
         t_emphasis_vehicle_information
         where
@@ -83,7 +98,7 @@
 
     <select id="getTodayEmphasisVehicleNum" resultType="java.lang.Integer" parameterType="java.lang.String">
         select
-        count(*)
+        sum(emphasis_vehicle_num)
         from
         t_emphasis_vehicle_information
         where
@@ -107,7 +122,7 @@
 
     <select id="getTodayEmVehicleAndEmRegionNum" resultType="java.lang.Integer" parameterType="java.lang.String">
         SELECT
-        COUNT(*)
+        sum(emphasis_vehicle_num)
         FROM
         t_emphasis_vehicle_information
         INNER JOIN
@@ -129,6 +144,14 @@
         t_camera
         WHERE
         rec_state = '1'
+    </select>
+
+    <select id="getEmphasisVehicleImg" resultType="com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleImgUrl">
+        SELECT
+        id,
+        img_url as imgUrl
+        FROM
+        t_emphasis_vehicle_img
     </select>
 
 </mapper>

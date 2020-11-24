@@ -24,7 +24,7 @@ public class TrafficViolationController {
     private TrafficViolationService trafficViolationService;
 
     @GetMapping()
-    public ResultDTO<TrafficViolationListDTO> getDkMain() {
+    public ResultDTO<TrafficViolationListDTO> getTrafficViolationInfo() {
         TrafficViolationListDTO trafficViolationListDTO = new TrafficViolationListDTO();
 
         List<TrafficViolationStatisticDTO> trafficViolationTimeFrameNumberList = trafficViolationService.getTrafficViolationTimeFrameNumber();

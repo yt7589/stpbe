@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -33,12 +32,12 @@ public class EmphasisVehicleServiceImpl implements EmphasisVehicleService {
         }
         AtomicReference<Integer> num = new AtomicReference<>(0);
         list.forEach(emphasisVehicleInformationDTO -> {
-            num.updateAndGet(v -> v + emphasisVehicleInformationDTO.getEmphasisVehicleNum());
+           num.updateAndGet(v -> v + emphasisVehicleInformationDTO.getEmphasisVehicleNum());
         });
         BigDecimal total = new BigDecimal(num.get());
         list.forEach(emphasisVehicleInformationDTO ->{
             BigDecimal emphasisVehicleNum = new BigDecimal(emphasisVehicleInformationDTO.getEmphasisVehicleNum());
-            String percentage = emphasisVehicleNum.divide(total).toString();
+            String percentage = emphasisVehicleNum.divide(total,4,BigDecimal.ROUND_HALF_UP).toString();
             emphasisVehicleInformationDTO.setPercentage(percentage);
         });
         return list;
@@ -105,6 +104,11 @@ public class EmphasisVehicleServiceImpl implements EmphasisVehicleService {
         emphasisVehicleNumberDTO.setEmphasisVehicleEmphasisRegionNum(emphasisVehicleEmphasisRegionNum);
         emphasisVehicleNumberDTO.setOnlineDevice(onlineDevice);
         return emphasisVehicleNumberDTO;
+    }
+
+    @Override
+    public List<EmphasisVehicleImgUrl> getEmphasisVehicleImg() {
+        return emphasisVehicleMapper.getEmphasisVehicleImg();
     }
 
     private Map<String,String> getDateStr(){

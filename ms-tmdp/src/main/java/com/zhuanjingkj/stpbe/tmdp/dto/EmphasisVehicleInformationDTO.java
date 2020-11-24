@@ -43,6 +43,32 @@ public class EmphasisVehicleInformationDTO extends BaseDTO {
      */
     private String percentage;
 
+    /**
+     * 点位ID
+     */
+    private Integer siteId;
+
+    /**
+     * 点位名称
+     */
+    private String siteName;
+
+    public Integer getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(Integer siteId) {
+        this.siteId = siteId;
+    }
+
+    public String getSiteName() {
+        return siteName;
+    }
+
+    public void setSiteName(String siteName) {
+        this.siteName = siteName;
+    }
+
     public String getPercentage() {
         return percentage;
     }
