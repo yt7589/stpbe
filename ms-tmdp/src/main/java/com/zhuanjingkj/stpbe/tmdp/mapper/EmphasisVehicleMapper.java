@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.mapper;
 
+import com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleImgUrl;
 import com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleInformationDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationDTO;
 import org.apache.ibatis.annotations.Param;
@@ -82,4 +83,10 @@ public interface EmphasisVehicleMapper {
      * @return
      */
     Integer getOnlineDeviceNum();
+
+    /**
+     * 获取重点车辆实时图片
+     * @return
+     */
+    List<EmphasisVehicleImgUrl> getEmphasisVehicleImg();
 }

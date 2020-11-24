@@ -1,10 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.dto.res;
 
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleInformationDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleNumberDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleTimeFrameDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.*;
 
 import java.util.List;
 
@@ -24,6 +21,16 @@ public class EmphasisVehicleListDTO extends BaseDTO {
     private List<EmphasisVehicleTimeFrameDTO> EmphasisVehicleTimeFrameList;
 
     private EmphasisVehicleNumberDTO emphasisVehicleNumber;
+
+    private List<EmphasisVehicleImgUrl> emphasisVehicleImgUrList;
+
+    public List<EmphasisVehicleImgUrl> getEmphasisVehicleImgUrList() {
+        return emphasisVehicleImgUrList;
+    }
+
+    public void setEmphasisVehicleImgUrList(List<EmphasisVehicleImgUrl> emphasisVehicleImgUrList) {
+        this.emphasisVehicleImgUrList = emphasisVehicleImgUrList;
+    }
 
     public List<EmphasisVehicleInformationDTO> getEmphasisVehiclePercentageList() {
         return emphasisVehiclePercentageList;

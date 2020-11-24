@@ -1,9 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.service;
 
-import com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleInformationDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleNumberDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleTimeFrameDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -52,4 +49,10 @@ public interface EmphasisVehicleService {
      * @return
      */
     EmphasisVehicleNumberDTO getEmphasisVehicleNumber();
+
+    /**
+     * 获取重点车辆实时图片
+     * @return
+     */
+    List<EmphasisVehicleImgUrl> getEmphasisVehicleImg();
 }

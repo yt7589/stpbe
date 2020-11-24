@@ -26,25 +26,23 @@ public class EmphasisVehicleController {
     private EmphasisVehicleService emphasisVehicleService;
 
     @GetMapping()
-    public ResultDTO<EmphasisVehicleListDTO> getDkMain() {
+    public ResultDTO<EmphasisVehicleListDTO> getEmphasisVehicleInfo() {
         EmphasisVehicleListDTO emphasisVehicleListDTO = new EmphasisVehicleListDTO();
 
         List<EmphasisVehicleInformationDTO> emphasisVehiclePercentageList = emphasisVehicleService.getEmphasisVehiclePercentage();
         List<EmphasisVehicleInformationDTO> regionEmphasisVehicleList = emphasisVehicleService.getEmphasisVehicleByRegion();
-
         List<EmphasisVehicleInformationDTO> siteEmphasisVehicleList = emphasisVehicleService.getEmphasisVehicleBySite();
-
         List<TrafficViolationDTO> emphasisVehicleViolationList = emphasisVehicleService.getEmphasisVehicleViolation();
-
         List<EmphasisVehicleTimeFrameDTO> emphasisVehicleTimeFrameList = emphasisVehicleService.getEmphasisVehicleByTimeFrame();
-
         EmphasisVehicleNumberDTO emphasisVehicleNumber = emphasisVehicleService.getEmphasisVehicleNumber();
+        List<EmphasisVehicleImgUrl> emphasisVehicleImgUrList = emphasisVehicleService.getEmphasisVehicleImg();
         emphasisVehicleListDTO.setEmphasisVehiclePercentageList(emphasisVehiclePercentageList);
         emphasisVehicleListDTO.setRegionEmphasisVehicleList(regionEmphasisVehicleList);
         emphasisVehicleListDTO.setSiteEmphasisVehicleList(siteEmphasisVehicleList);
         emphasisVehicleListDTO.setEmphasisVehicleViolationList(emphasisVehicleViolationList);
         emphasisVehicleListDTO.setEmphasisVehicleTimeFrameList(emphasisVehicleTimeFrameList);
         emphasisVehicleListDTO.setEmphasisVehicleNumber(emphasisVehicleNumber);
+        emphasisVehicleListDTO.setEmphasisVehicleImgUrList(emphasisVehicleImgUrList);
         return ResultDTO.success(emphasisVehicleListDTO);
     }
 }
