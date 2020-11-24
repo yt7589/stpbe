@@ -1,6 +1,8 @@
-package com.zhuanjingkj.stpbe.tmdp.dto;
+package com.zhuanjingkj.stpbe.tmdp.dto.res;
 
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationStatisticDTO;
 
 import java.util.List;
 

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.tmdp.mapper.EmphasisVehicleMapper">
+
+
+    <select id="getEmphasisVehiclePercentage" resultType="com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleInformationDTO" parameterType="java.lang.String">
+        select
+        emphasis_vehicle_type_name as emphasisVehicleTypeName,
+        sum(emphasis_vehicle_num) as emphasisVehicleNum
+        from
+        t_emphasis_vehicle_information
+        where
+        date &gt;= #{minDate,jdbcType=TIMESTAMP}
+        and
+        date &lt;= #{maxDate,jdbcType=TIMESTAMP}
+        group by emphasisVehicleTypeName
+    </select>
+
+
+    <select id="getEmphasisVehicleByRegion" resultType="com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleInformationDTO" parameterType="java.lang.String">
+        select
+        sum(emphasis_vehicle_num) as emphasisVehicleNum,
+        region_name as regionName
+        from
+        t_emphasis_vehicle_information
+        where
+        date &gt;= #{minDate,jdbcType=TIMESTAMP}
+        and
+        date &lt;= #{maxDate,jdbcType=TIMESTAMP}
+        group by region_name
+        order by emphasisVehicleNum desc
+    </select>
+
+    <select id="getEmphasisVehicleBySite" resultType="com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleInformationDTO" parameterType="java.lang.String">
+        select
+        sum(emphasis_vehicle_num) as emphasisVehicleNum,
+        device_site_name as deviceSiteName
+        from
+        t_emphasis_vehicle_information
+        where
+        date &gt;= #{minDate,jdbcType=TIMESTAMP}
+        and
+        date &lt;= #{maxDate,jdbcType=TIMESTAMP}
+        group by device_site_name
+        order by emphasisVehicleNum desc
+        limit 7
+    </select>
+
+    <select id="getEmphasisVehicleViolation" resultType="com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationDTO" >
+        SELECT
+        t_traffic_violation.id as id,
+        t_traffic_violation.location as location,
+        t_traffic_violation.vehicle_type as vehicleType,
+        t_traffic_violation.vehicle_style as vehicleStyle,
+        t_traffic_violation.violation_type_id as violationTypeId,
+        t_traffic_violation.traffic_violation_time as trafficViolationTime,
+        t_traffic_violation.status as status,
+        t_traffic_violation.img_id as imgId,
+        t_traffic_violation.vehicle_plate as vehiclePlate,
+        t_traffic_violation_type.violation_type_name as violationTypeName
+        FROM
+        t_traffic_violation,
+        t_traffic_violation_type
+        WHERE
+        t_traffic_violation.violation_type_id = t_traffic_violation_type.id
+        AND
+        t_traffic_violation.is_emphasis_vehicle = '1'
+        order by trafficViolationTime desc
+        limit 5
+    </select>
+
+
+    <select id="getEmphasisVehicleByTimeFrame" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        count(*)
+        from
+        t_emphasis_vehicle_information
+        where
+        date &gt;= #{minDate,jdbcType=TIMESTAMP}
+        and
+        date &lt;= #{maxDate,jdbcType=TIMESTAMP}
+    </select>
+
+    <select id="getTodayEmphasisVehicleNum" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        count(*)
+        from
+        t_emphasis_vehicle_information
+        where
+        date &gt;= #{minDate,jdbcType=TIMESTAMP}
+        and
+        date &lt;= #{maxDate,jdbcType=TIMESTAMP}
+    </select>
+
+
+    <select id="getTodayViolationNum" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        count(*)
+        from
+        t_traffic_violation
+        where
+        traffic_violation_time &gt;= #{minDate,jdbcType=TIMESTAMP}
+        and
+        traffic_violation_time &lt;= #{maxDate,jdbcType=TIMESTAMP}
+        and is_emphasis_vehicle = '1'
+    </select>
+
+    <select id="getTodayEmVehicleAndEmRegionNum" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT
+        COUNT(*)
+        FROM
+        t_emphasis_vehicle_information
+        INNER JOIN
+        t_region
+        ON
+        t_emphasis_vehicle_information.region_name = t_region.region_name
+        WHERE
+        t_region.is_emphasis_region = '1'
+        and
+        t_emphasis_vehicle_information.date &gt;= #{minDate,jdbcType=TIMESTAMP}
+        and
+        t_emphasis_vehicle_information.date &lt;= #{maxDate,jdbcType=TIMESTAMP}
+    </select>
+
+    <select id="getOnlineDeviceNum" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        t_camera
+        WHERE
+        rec_state = '1'
+    </select>
+
+</mapper>
