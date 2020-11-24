@@ -17,7 +17,6 @@
         <module>sr-tvis-server</module>
         <module>sr-tvis-client</module>
         <module>ms-facade</module>
-        <module>ms-tmdp</module>
         <module>ms-user</module>
         <module>ms-system-info</module>
         <module>ms-sdk-server</module>
