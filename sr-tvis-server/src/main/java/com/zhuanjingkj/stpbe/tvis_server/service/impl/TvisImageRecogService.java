@@ -74,7 +74,9 @@ public class TvisImageRecogService implements ITvisImageRecogService {
         logger.info("recognition step 4");
         // 向Kafka的Topic发送请求
         kafkaTemplate.send("tvis", 0, response);
+        logger.info("kafka 1 " + response + "!");
         kafkaTemplate.flush();
+        logger.info("kafka 2");
         return JSON.parseObject(response);
     }
 
