@@ -1,12 +1,11 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
-import com.zhuanjingkj.stpbe.tmdp.dto.*;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
 import com.zhuanjingkj.stpbe.tmdp.mapper.VehicleStatisticMapper;
 import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

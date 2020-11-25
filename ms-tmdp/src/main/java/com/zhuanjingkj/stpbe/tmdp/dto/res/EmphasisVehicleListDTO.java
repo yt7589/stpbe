@@ -1,7 +1,11 @@
 package com.zhuanjingkj.stpbe.tmdp.dto.res;
 
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.*;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleImgUrl;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleInformationDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleNumberDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleTimeFrameDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 
 import java.util.List;
 

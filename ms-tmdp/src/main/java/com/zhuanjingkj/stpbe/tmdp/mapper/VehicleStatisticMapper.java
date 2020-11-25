@@ -1,6 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.mapper;
 
-import com.zhuanjingkj.stpbe.tmdp.dto.*;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

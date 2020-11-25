@@ -1,7 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.dto.res;
 
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.*;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
 
 import java.util.List;
 

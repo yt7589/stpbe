@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.dto;
+package com.zhuanjingkj.stpbe.tmdp.dto.emphavehi;
 
 /**
  * author by guoqiang

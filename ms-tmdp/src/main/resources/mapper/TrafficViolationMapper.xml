@@ -12,7 +12,7 @@
         traffic_violation_time &lt;= #{maxDate,jdbcType=TIMESTAMP}
     </select>
 
-    <select id="getTrafficViolationTypeNumber" resultType="com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationStatisticDTO" parameterType="java.lang.String">
+    <select id="getTrafficViolationTypeNumber" resultType="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO" parameterType="java.lang.String">
         select
         t_traffic_violation_type.violation_type_name as trafficViolationType,
         count(*) as trafficViolationNum
@@ -25,7 +25,7 @@
     </select>
 
 
-    <select id="getTrafficViolationByTime" resultType="com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationDTO" parameterType="java.lang.String">
+    <select id="getTrafficViolationByTime" resultType="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO" parameterType="java.lang.String">
         SELECT
         t_traffic_violation.id as id,
         t_traffic_violation.location as location,
