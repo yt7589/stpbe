@@ -1,7 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.service;
 
-import com.zhuanjingkj.stpbe.tmdp.dto.*;
-import org.apache.ibatis.annotations.Param;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
 
 import java.util.List;
 

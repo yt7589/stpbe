@@ -3,7 +3,7 @@
 <mapper namespace="com.zhuanjingkj.stpbe.tmdp.mapper.EmphasisVehicleMapper">
 
 
-    <select id="getEmphasisVehiclePercentage" resultType="com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleInformationDTO" parameterType="java.lang.String">
+    <select id="getEmphasisVehiclePercentage" resultType="com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleInformationDTO" parameterType="java.lang.String">
         select
         emphasis_vehicle_type_name as emphasisVehicleTypeName,
         sum(emphasis_vehicle_num) as emphasisVehicleNum
@@ -17,7 +17,7 @@
     </select>
 
 
-    <select id="getEmphasisVehicleByRegion" resultType="com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleInformationDTO" parameterType="java.lang.String">
+    <select id="getEmphasisVehicleByRegion" resultType="com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleInformationDTO" parameterType="java.lang.String">
         select
         sum(emphasis_vehicle_num) as emphasisVehicleNum,
         region_name as regionName
@@ -31,7 +31,7 @@
         order by emphasisVehicleNum desc
     </select>
 
-    <select id="getEmphasisVehicleBySite" resultType="com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleInformationDTO" parameterType="java.lang.String">
+    <select id="getEmphasisVehicleBySite" resultType="com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleInformationDTO" parameterType="java.lang.String">
         select
         sum(emphasis_vehicle_num) as emphasisVehicleNum,
         t_emphasis_vehicle_information.site_id as siteId,
@@ -51,7 +51,7 @@
         limit 7
     </select>
 
-    <select id="getEmphasisVehicleViolation" resultType="com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationDTO" >
+    <select id="getEmphasisVehicleViolation" resultType="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO" >
         SELECT
         t_traffic_violation.id as id,
         t_traffic_violation.location as location,
@@ -146,7 +146,7 @@
         rec_state = '1'
     </select>
 
-    <select id="getEmphasisVehicleImg" resultType="com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleImgUrl">
+    <select id="getEmphasisVehicleImg" resultType="com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleImgUrl">
         SELECT
         id,
         img_url as imgUrl

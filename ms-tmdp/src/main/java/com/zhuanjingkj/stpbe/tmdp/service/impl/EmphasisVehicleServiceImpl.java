@@ -1,6 +1,10 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
-import com.zhuanjingkj.stpbe.tmdp.dto.*;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleImgUrl;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleInformationDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleNumberDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleTimeFrameDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import com.zhuanjingkj.stpbe.tmdp.mapper.EmphasisVehicleMapper;
 import com.zhuanjingkj.stpbe.tmdp.service.EmphasisVehicleService;
 import com.zhuanjingkj.stpbe.tmdp.util.CommentUtils;

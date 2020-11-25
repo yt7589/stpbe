@@ -1,11 +1,13 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.*;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleImgUrl;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleInformationDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleNumberDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleTimeFrameDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.res.EmphasisVehicleListDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.res.TrafficViolationListDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.EmphasisVehicleService;
-import com.zhuanjingkj.stpbe.tmdp.service.TrafficViolationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

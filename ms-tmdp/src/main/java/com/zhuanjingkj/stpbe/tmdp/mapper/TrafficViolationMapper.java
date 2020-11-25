@@ -1,7 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.mapper;
 
-import com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationStatisticDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
 package com.zhuanjingkj.stpbe.tmdp.mapper;
 
-import com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleImgUrl;
-import com.zhuanjingkj.stpbe.tmdp.dto.EmphasisVehicleInformationDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleImgUrl;
+import com.zhuanjingkj.stpbe.tmdp.dto.emphavehi.EmphasisVehicleInformationDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

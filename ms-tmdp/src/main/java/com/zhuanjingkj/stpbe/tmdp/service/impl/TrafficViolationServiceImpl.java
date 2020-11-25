@@ -1,14 +1,13 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
-import com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.TrafficViolationStatisticDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO;
 import com.zhuanjingkj.stpbe.tmdp.mapper.TrafficViolationMapper;
 import com.zhuanjingkj.stpbe.tmdp.service.TrafficViolationService;
 import com.zhuanjingkj.stpbe.tmdp.util.CommentUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**

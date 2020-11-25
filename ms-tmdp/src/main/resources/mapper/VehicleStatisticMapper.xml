@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhuanjingkj.stpbe.tmdp.mapper.VehicleStatisticMapper">
 
-    <resultMap type="com.zhuanjingkj.stpbe.tmdp.dto.VehicleDistributionDTO" id="vehicleDistributionMap">
+    <resultMap type="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.VehicleDistributionDTO" id="vehicleDistributionMap">
         <id column="id" property="id"/>
         <result column="vehicle_distribution_name" property="vehicleDistributionName"/>
         <result column="vehicle_distribution_percentage" property="vehicleDistributionPercentage"/>
@@ -17,7 +17,7 @@
         t_vehicle_distribution
     </select>
 
-    <select id="getVehicleType" resultType="com.zhuanjingkj.stpbe.tmdp.dto.VehicleTypeDTO">
+    <select id="getVehicleType" resultType="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.VehicleTypeDTO">
         select
         id,
         vehicle_type_name as vehicleTypeName,
@@ -26,7 +26,7 @@
         t_vehicle_type
     </select>
 
-    <select id="getTimeFrameNumber" resultType="com.zhuanjingkj.stpbe.tmdp.dto.TimeFrameNumberDTO" parameterType="java.lang.String">
+    <select id="getTimeFrameNumber" resultType="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TimeFrameNumberDTO" parameterType="java.lang.String">
         select
         id,
         time_frame as timeFrame,
@@ -40,7 +40,7 @@
         date &lt;= #{maxDate,jdbcType=TIMESTAMP}
     </select>
 
-    <select id="getVehicleTypeNumber" resultType="com.zhuanjingkj.stpbe.tmdp.dto.VehicleTypeNumberDTO">
+    <select id="getVehicleTypeNumber" resultType="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.VehicleTypeNumberDTO">
         select
         id,
         vehicle_type_name as vehicleTypeName,
@@ -51,7 +51,7 @@
     </select>
 
 
-    <select id="getVehicleStatisticByStreet" resultType="com.zhuanjingkj.stpbe.tmdp.dto.VehicleStatisticDTO" parameterType="java.lang.String">
+    <select id="getVehicleStatisticByStreet" resultType="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.VehicleStatisticDTO" parameterType="java.lang.String">
         select
         street_name as streetName,
         sum(passed_number) as passedNumber
@@ -65,7 +65,7 @@
         order by passedNumber desc
     </select>
 
-    <select id="getVehicleStatisticByRegion" resultType="com.zhuanjingkj.stpbe.tmdp.dto.VehicleStatisticDTO" parameterType="java.lang.String">
+    <select id="getVehicleStatisticByRegion" resultType="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.VehicleStatisticDTO" parameterType="java.lang.String">
         select
         region_name as regionName,
         sum(passed_number) as passedNumber

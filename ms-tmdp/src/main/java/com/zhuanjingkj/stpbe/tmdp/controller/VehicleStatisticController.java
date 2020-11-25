@@ -1,8 +1,8 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.*;
 import com.zhuanjingkj.stpbe.tmdp.dto.res.VehicleStatisticListDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
 import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
