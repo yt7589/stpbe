@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tvis_server.conf;
 
+import com.zhuanjingkj.stpbe.common.AppConst;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -24,7 +25,7 @@ public class KafkaConfig {
     @Bean
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.2.68:9092");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConst.KAFKA_SERVER);
         props.put(ProducerConfig.RETRIES_CONFIG, 0);
         props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
         props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
