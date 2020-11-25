@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.tmdp.mapper.CameraMapper">
+
+    <select id="getSite" resultType="com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteInfoDTO">
+        select
+        site_id as siteId,
+        site_name as siteName,
+        lng,
+        lat,
+        region_id as regionId,
+        region_name as regionName
+        from
+        t_site,
+        t_region
+        where
+        t_site.region_id = t_region.id
+    </select>
+
+
+    <select id="getAllCamera" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        count(*)
+        from
+        t_camera,
+        t_camera_type
+        where
+        t_camera.camera_type_id = t_camera_type.camera_type_id
+        and
+        t_camera_type.camera_type_name = '摄像头'
+        and
+        t_camera.rec_state = '1'
+        <if test=" siteId != null and siteId != ''">
+            and t_camera.site_id = #{siteId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="getAllSnapMachine" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        count(*)
+        from
+        t_camera,
+        t_camera_type
+        where
+        t_camera.camera_type_id = t_camera_type.camera_type_id
+        and
+        t_camera_type.camera_type_name = '抓拍机'
+        and
+        t_camera.rec_state = '1'
+        <if test=" siteId != null and siteId != ''">
+           and t_camera.site_id = #{siteId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="getBrokenSnapMachine" resultType="java.lang.Integer">
+        select
+        count(*)
+        from
+        t_camera,
+        t_camera_type
+        where
+        t_camera.camera_type_id = t_camera_type.camera_type_id
+        and
+        t_camera_type.camera_type_name = '抓拍机'
+        and
+        t_camera.rec_state = '1'
+        and
+        t_camera.status = '0'
+    </select>
+
+    <select id="getBrokenCamera" resultType="java.lang.Integer">
+        select
+        count(*)
+        from
+        t_camera,
+        t_camera_type
+        where
+        t_camera.camera_type_id = t_camera_type.camera_type_id
+        and
+        t_camera_type.camera_type_name = '摄像头'
+        and
+        t_camera.rec_state = '1'
+        and
+        t_camera.status = '0'
+    </select>
+
+
+    <select id="getCameraInfoBySite" resultType="com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO" parameterType="java.lang.String">
+        select
+        t_camera.camera_id as cameraId,
+        t_camera.camera_code as cameraCode,
+        t_camera.site_id as siteId,
+        t_camera.start_time as startTime,
+        t_camera.end_time as endTime,
+        t_camera.camera_type_id as cameraTypeId,
+        t_camera.rtsp_url as rtspUrl,
+        t_camera.rtp_push_addr as rtpPushAddr,
+        t_camera.web_url as webUrl,
+        t_camera.ftp_url as ftpUrl,
+        t_camera.upload_url as uploadUrl,
+        t_camera.status as status,
+        t_camera.region_id as regionId,
+        t_region.region_name as regionName,
+        t_camera_type.camera_type_name as cameraTypeName
+        from
+        t_camera,
+        t_camera_type,
+        t_region
+        where
+        t_camera.camera_type_id = t_camera_type.camera_type_id
+        and
+        t_camera.region_id = t_region.id
+        and
+        t_camera.rec_state = '1'
+        and
+        t_camera.site_id = #{siteId,jdbcType=BIGINT}
+    </select>
+
+</mapper>
