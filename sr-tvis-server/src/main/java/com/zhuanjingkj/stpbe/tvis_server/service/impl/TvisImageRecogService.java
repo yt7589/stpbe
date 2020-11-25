@@ -73,7 +73,7 @@ public class TvisImageRecogService implements ITvisImageRecogService {
         }
         logger.info("recognition step 4");
         // 向Kafka的Topic发送请求
-        StringBuilder msg = new StringBuilder("{\"cameraId\": \"" + cameraId + "\", \"json\": \"" + response + "\"}");
+        StringBuilder msg = new StringBuilder("{\"cameraId\": \"" + cameraId + "\", \"json\": " + response + "}");
         kafkaTemplate.send("tvis", 0, msg.toString());
         logger.info("kafka 1 " + response + "!");
         kafkaTemplate.flush();
