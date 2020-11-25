@@ -62,7 +62,7 @@ public class TvisImageRecogService implements ITvisImageRecogService {
     }
 
     @Override
-    public Map<String, Object> recognition(String gcxh, String mrhpt, String hphm, byte[] imageData) {
+    public Map<String, Object> recognition(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData) {
         logger.info("recognition step 1");
         String response = sendByteRequest(LIST_VEHICLE_RECOGNITION, imageData);
         logger.info("recognition step 2");
@@ -73,7 +73,8 @@ public class TvisImageRecogService implements ITvisImageRecogService {
         }
         logger.info("recognition step 4");
         // 向Kafka的Topic发送请求
-        kafkaTemplate.send("tvis", 0, response);
+        StringBuilder msg = new StringBuilder("{\"cameraId\": \"" + cameraId + "\", \"json\": \"" + response + "\"}");
+        kafkaTemplate.send("tvis", 0, msg.toString());
         logger.info("kafka 1 " + response + "!");
         kafkaTemplate.flush();
         logger.info("kafka 2");

@@ -9,7 +9,7 @@ public interface ITvisImageRecogService {
 
     Map<String, Object> updateLib(Map<String, Object> params);
 
-    Map<String, Object> recognition(String gcxh, String mrhpt, String hphm, byte[] imageData);
+    Map<String, Object> recognition(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData);
 
     Map<String, Object> compareVehicle(String cltzxx1, String cltzxx2);
 

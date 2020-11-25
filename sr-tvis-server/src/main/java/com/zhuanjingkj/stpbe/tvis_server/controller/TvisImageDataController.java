@@ -119,6 +119,7 @@ public class TvisImageDataController {
                                            @RequestParam("TPLX") String tplx,
                                            @RequestParam(name = "MRHPT", required = false) String mrhpt,
                                            @RequestParam(name = "HPHM", required = false) String hphm,
+                                           @RequestParam(name = "cameraId", required = true) String cameraId,
                                            @RequestParam(name = "TPXX", required = false) MultipartFile file,
                                            @RequestParam(name = "TPWJ", required = false) String tpwj) {
         byte[] data = null;
@@ -156,7 +157,7 @@ public class TvisImageDataController {
                 return result;
             }
             logger.info("before recognition");
-            return tvisImageRecogService.recognition(gcxh, mrhpt, hphm, data);
+            return tvisImageRecogService.recognition(cameraId, gcxh, mrhpt, hphm, data);
 
         } catch (Exception e) {
             logger.error("车辆识别异常, gcxh={}, tplx={}", gcxh, tplx, e);

@@ -187,6 +187,7 @@ public class SrTvisClientApplication {
                         map.put("MRHPT", "test");
                         map.put("HPHM", "test");
                         map.put("MRHPT", "test");
+                        map.put("cameraId", "101");
                         if (sendName == true) {
                             map.put("TPMC", f.getName());
                         }
