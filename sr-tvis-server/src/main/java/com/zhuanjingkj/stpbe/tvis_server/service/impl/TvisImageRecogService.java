@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,6 +35,8 @@ public class TvisImageRecogService implements ITvisImageRecogService {
     private StringRedisTemplate redisTemplate;
     @Resource(name = "redisTemplate2")
     private RedisTemplate<String, byte[]> redisTemplate2;
+    @Autowired
+    private KafkaTemplate<Integer, String> kafkaTemplate;
 
     @Value("${result.timeout:10000}")
     private long timeout;
@@ -70,6 +73,8 @@ public class TvisImageRecogService implements ITvisImageRecogService {
         }
         logger.info("recognition step 4");
         // 向Kafka的Topic发送请求
+        kafkaTemplate.send("tvis", 0, response);
+        kafkaTemplate.flush();
         return JSON.parseObject(response);
     }
 
