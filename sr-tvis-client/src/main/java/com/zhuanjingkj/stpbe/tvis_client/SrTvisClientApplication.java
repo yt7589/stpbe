@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 
 public class SrTvisClientApplication {
     @Value("${app.output_mode}")
-    private int outputMode;
+    private String outputMode;
 
     private final static Logger logger = LoggerFactory.getLogger(SrTvisClientApplication.class);
     private AtomicInteger errorImages = new AtomicInteger(0);
@@ -252,7 +252,7 @@ public class SrTvisClientApplication {
                             System.out.println("error image:" + f.getName());
                         }
                         logger.info("outputMode=" + outputMode + "!");
-                        if (1 == outputMode) {
+                        if (outputMode.equals("1")) {
                             if (outputFilePath != null) {
                                 try (OutputStream fout = new FileOutputStream(outputFilePath.getAbsolutePath() + File.separator + f.getName() + "_" + loopIndex + ".json")) {
                                     if (response == null) {
