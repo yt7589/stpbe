@@ -39,7 +39,7 @@ public class CameraController {
         return ResultDTO.success(siteListDTO);
     }
 
-    @GetMapping("/site/camera")
+    @GetMapping("/site/device")
     public ResultDTO<CameraListDTO> getSiteCamera(@NotNull(message = "点位ID不能为空") @RequestParam Long siteId){
         CameraListDTO cameraListDTO = new CameraListDTO();
 
