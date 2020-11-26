@@ -113,6 +113,12 @@ public class SrTvisClientApplication {
         }
 
         List<File> files = listFilesRecursively(new File(picDir));
+        logger.info("size=" + files.size() + "!");
+
+        int iDebug = 1;
+        if (1 == iDebug) {
+            return ;
+        }
 
         if (files == null || files.size() == 0) {
             return;
@@ -217,6 +223,9 @@ public class SrTvisClientApplication {
                             try (OutputStream fout = new FileOutputStream(outputFilePath.getAbsolutePath() + File.separator + f.getName() + "_" + loopIndex + ".json")) {
                                 if (response == null) {
                                     response = "no response message";
+                                } else {
+                                    // 解析JSON内容，调用Milvus保存到特征库中
+                                    logger.info("保存到Milvus特征库中");
                                 }
                                 fout.write(response.getBytes("UTF-8"));
                             } catch (Exception ex) {
