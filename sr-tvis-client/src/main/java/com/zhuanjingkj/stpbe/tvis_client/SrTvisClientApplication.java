@@ -68,8 +68,7 @@ public class SrTvisClientApplication {
         httpclient = HttpClients.custom().setConnectionManager(connectionManager).build();
     }
 
-
-    public void start(String[] args) throws InterruptedException {
+    private List<File> getFgvcDs() {
         List<File> fs = new ArrayList<>();
         String dsFn = "/media/ps/0A9AD66165F33762/yantao/dcl/datasets/CUB_200_2011/anno/sfds_train_ds_20201020.txt";
         try {
@@ -95,12 +94,11 @@ public class SrTvisClientApplication {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        logger.info("记录总数：" + fs.size() + "!");
-        int iDebug = 1;
-        if (1 == iDebug) {
-            return ;
-        }
+        return fs;
+    }
 
+
+    public void start(String[] args) throws InterruptedException {
         Map<String, String> params = parseParams(args);
         url = params.get("url");
         nThread = params.get("thread") == null ? null : Integer.valueOf(params.get("thread"));
@@ -140,7 +138,13 @@ public class SrTvisClientApplication {
             return;
         }
 
-        List<File> files = listFilesRecursively(new File(picDir));
+        //List<File> files = listFilesRecursively(new File(picDir));
+        List<File> files = getFgvcDs();
+        logger.info("数据集文件数：" + files.size() + "!");
+        int iDebug = 1;
+        if (1 == iDebug) {
+            return ;
+        }
 
 
         if (files == null || files.size() == 0) {
