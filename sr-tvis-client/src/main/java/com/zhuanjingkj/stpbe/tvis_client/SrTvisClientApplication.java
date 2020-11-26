@@ -21,10 +21,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -73,6 +70,27 @@ public class SrTvisClientApplication {
 
 
     public void start(String[] args) throws InterruptedException {
+        String dsFn = "/media/ps/0A9AD66165F33762/yantao/dcl/datasets/CUB_200_2011/anno/sfds_train_ds_20201020.txt";
+        try {
+            FileInputStream fis = new FileInputStream(new File(dsFn));
+            InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+            BufferedReader br = new BufferedReader(isr);
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                logger.info("file:" + line + "!");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int iDebug = 1;
+        if (1 == iDebug) {
+            return ;
+        }
+
         Map<String, String> params = parseParams(args);
         url = params.get("url");
         nThread = params.get("thread") == null ? null : Integer.valueOf(params.get("thread"));
@@ -113,12 +131,7 @@ public class SrTvisClientApplication {
         }
 
         List<File> files = listFilesRecursively(new File(picDir));
-        logger.info("size=" + files.size() + "!");
 
-        int iDebug = 1;
-        if (1 == iDebug) {
-            return ;
-        }
 
         if (files == null || files.size() == 0) {
             return;
