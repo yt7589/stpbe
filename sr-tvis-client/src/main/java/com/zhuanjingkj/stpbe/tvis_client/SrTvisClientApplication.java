@@ -33,7 +33,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SrTvisClientApplication {
-    @Value("${app.output_mode}")
+    @Value("${app.output.mode}")
     private String appOutputMode;
 
     private final static Logger logger = LoggerFactory.getLogger(SrTvisClientApplication.class);
