@@ -24,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/camera")
+@Validated
 public class CameraController {
 
     @Autowired
@@ -40,7 +41,7 @@ public class CameraController {
     }
 
     @GetMapping("/site/device")
-    public ResultDTO<CameraListDTO> getSiteCamera(@NotNull(message = "点位ID不能为空") @RequestParam Long siteId){
+    public ResultDTO<CameraListDTO> getSiteCamera(@NotNull(message = "点位ID不能为空") Long siteId){
         CameraListDTO cameraListDTO = new CameraListDTO();
 
         List<CameraDTO> cameraList = cameraService.getCameraInfoBySite(siteId.toString());
