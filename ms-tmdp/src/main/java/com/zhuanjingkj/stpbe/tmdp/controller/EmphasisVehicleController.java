@@ -44,7 +44,7 @@ public class EmphasisVehicleController {
         emphasisVehicleListDTO.setEmphasisVehicleViolationList(emphasisVehicleViolationList);
         emphasisVehicleListDTO.setEmphasisVehicleTimeFrameList(emphasisVehicleTimeFrameList);
         emphasisVehicleListDTO.setEmphasisVehicleNumber(emphasisVehicleNumber);
-        emphasisVehicleListDTO.setEmphasisVehicleImgUrList(emphasisVehicleImgUrList);
+        emphasisVehicleListDTO.setEmphasisVehicleImgUrlList(emphasisVehicleImgUrList);
         return ResultDTO.success(emphasisVehicleListDTO);
     }
 }
