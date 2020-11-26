@@ -251,6 +251,7 @@ public class SrTvisClientApplication {
                             errorImages.incrementAndGet();
                             System.out.println("error image:" + f.getName());
                         }
+                        logger.info("outputMode=" + outputMode + "!");
                         if (1 == outputMode) {
                             if (outputFilePath != null) {
                                 try (OutputStream fout = new FileOutputStream(outputFilePath.getAbsolutePath() + File.separator + f.getName() + "_" + loopIndex + ".json")) {
