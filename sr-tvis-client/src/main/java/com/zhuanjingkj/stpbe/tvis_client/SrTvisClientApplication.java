@@ -70,14 +70,23 @@ public class SrTvisClientApplication {
 
 
     public void start(String[] args) throws InterruptedException {
+        List<File> fs = new ArrayList<>();
         String dsFn = "/media/ps/0A9AD66165F33762/yantao/dcl/datasets/CUB_200_2011/anno/sfds_train_ds_20201020.txt";
         try {
             FileInputStream fis = new FileInputStream(new File(dsFn));
             InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
             BufferedReader br = new BufferedReader(isr);
             String line = null;
+            String[] arrs = null;
+            int loop = 0;
             while ((line = br.readLine()) != null) {
-                logger.info("file:" + line + "!");
+                //logger.info("file:" + line + "!");
+                arrs = line.split("\\*");
+                fs.add(new File(arrs[0]));
+                loop++;
+                if (loop % 1000 == 0) {
+                    logger.info("已处理：" + loop + "条记录！");
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -86,6 +95,7 @@ public class SrTvisClientApplication {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        logger.info("记录总数：" + fs.size() + "!");
         int iDebug = 1;
         if (1 == iDebug) {
             return ;
