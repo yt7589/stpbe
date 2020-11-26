@@ -26,14 +26,14 @@ public class EmphasisVehicleListDTO extends BaseDTO {
 
     private EmphasisVehicleNumberDTO emphasisVehicleNumber;
 
-    private List<EmphasisVehicleImgUrl> emphasisVehicleImgUrList;
+    private List<EmphasisVehicleImgUrl> emphasisVehicleImgUrlList;
 
-    public List<EmphasisVehicleImgUrl> getEmphasisVehicleImgUrList() {
-        return emphasisVehicleImgUrList;
+    public List<EmphasisVehicleImgUrl> getEmphasisVehicleImgUrlList() {
+        return emphasisVehicleImgUrlList;
     }
 
-    public void setEmphasisVehicleImgUrList(List<EmphasisVehicleImgUrl> emphasisVehicleImgUrList) {
-        this.emphasisVehicleImgUrList = emphasisVehicleImgUrList;
+    public void setEmphasisVehicleImgUrlList(List<EmphasisVehicleImgUrl> emphasisVehicleImgUrlList) {
+        this.emphasisVehicleImgUrlList = emphasisVehicleImgUrlList;
     }
 
     public List<EmphasisVehicleInformationDTO> getEmphasisVehiclePercentageList() {
