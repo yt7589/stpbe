@@ -157,7 +157,7 @@ public class TvisImageRecogService implements ITvisImageRecogService {
                         if(rlSize<=0)
                             break;
                         logger.info("sendRequest 3.10");
-                        topVal = redisTemplate2.opsForList().range(requestList, rlsize-1, rlsize).get(0);
+                        topVal = redisTemplate2.opsForList().range(requestList, rlSize-1, rlSize).get(0);
                         logger.info("sendRequest 3.11");
                         oldRequestId = new StringBuilder(REQUEST_ID_PREFIX);
                         oldRequestId.append(new String(topVal, 0, 36, Charset.forName("UTF-8")));
