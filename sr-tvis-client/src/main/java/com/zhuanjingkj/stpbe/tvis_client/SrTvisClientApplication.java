@@ -20,6 +20,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.*;
 import java.util.*;
@@ -32,6 +33,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SrTvisClientApplication {
+    @Value("${app.output_mode}")
+    private int outputMode;
+
     private final static Logger logger = LoggerFactory.getLogger(SrTvisClientApplication.class);
     private AtomicInteger errorImages = new AtomicInteger(0);
     private CloseableHttpClient httpclient = null;
@@ -140,7 +144,13 @@ public class SrTvisClientApplication {
         // 从目录中读入
         //List<File> files = listFilesRecursively(new File(picDir));
         // 从数据集文件中读入
-        List<File> files = getFgvcDs();
+        //List<File> files = getFgvcDs();
+        List<File> files = new ArrayList<>();
+        files.add(new File("/media/ps/work/yantao/zjkj/i900m_cutted/tail/car/d00/d00/d08/d34/d24/CAF7180AC4_冀GE3691_02_130700100346_130700304263657649.jpg"));
+        files.add(new File("/media/ps/work/yantao/zjkj/i900m_cutted/tail/car/d00/d00/d08/d34/d96/CJL7200J2A5_贵GPM006_02_520000102407_520000104400581127.jpg"));
+        files.add(new File("/media/ps/work/yantao/zjkj/i900m_cutted/tail/car/d00/d00/d08/d07/d77/CC6461RM21_冀F790SS_02_130600101367_130600303890295798.jpg"));
+        files.add(new File("/media/ps/work/yantao/zjkj/i900m_cutted/tail/car/d00/d00/d08/d24/d15/SVW71215EN_冀A02MR2_02_130100101649_130100308234190362.jpg"));
+        files.add(new File("/media/ps/work/yantao/zjkj/i900m_cutted/tail/car/d00/d00/d08/d24/d38/SY7182HS_鲁F7356X_02_373000100395_373000002585262660.jpg"));
         logger.info("数据集文件数：" + files.size() + "!");
         if (files == null || files.size() == 0) {
             return;
@@ -241,17 +251,23 @@ public class SrTvisClientApplication {
                             errorImages.incrementAndGet();
                             System.out.println("error image:" + f.getName());
                         }
-                        if (outputFilePath != null) {
-                            try (OutputStream fout = new FileOutputStream(outputFilePath.getAbsolutePath() + File.separator + f.getName() + "_" + loopIndex + ".json")) {
-                                if (response == null) {
-                                    response = "no response message";
-                                } else {
-                                    // 解析JSON内容，调用Milvus保存到特征库中
-                                    logger.info("保存到Milvus特征库中");
+                        if (1 == outputMode) {
+                            if (outputFilePath != null) {
+                                try (OutputStream fout = new FileOutputStream(outputFilePath.getAbsolutePath() + File.separator + f.getName() + "_" + loopIndex + ".json")) {
+                                    if (response == null) {
+                                        response = "no response message";
+                                    }
+                                    fout.write(response.getBytes("UTF-8"));
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
                                 }
-                                fout.write(response.getBytes("UTF-8"));
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
+                            }
+                        } else {
+                            if (response == null) {
+                                response = "no response message";
+                            } else {
+                                // 解析JSON内容，调用Milvus保存到特征库中
+                                logger.info("保存到Milvus特征库中");
                             }
                         }
                     } catch (Exception e) {
