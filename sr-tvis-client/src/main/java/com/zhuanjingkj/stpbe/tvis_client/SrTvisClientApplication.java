@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 
 public class SrTvisClientApplication {
     @Value("${app.output_mode}")
-    private String appOutputMode = "1";
+    private String appOutputMode;
 
     private final static Logger logger = LoggerFactory.getLogger(SrTvisClientApplication.class);
     private AtomicInteger errorImages = new AtomicInteger(0);
