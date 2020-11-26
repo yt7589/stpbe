@@ -33,8 +33,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SrTvisClientApplication {
-    @Value("${app.output.mode}")
-    private String appOutputMode;
+    //@Value("${app.output.mode}")
+    private String appOutputMode = "2";
 
     private final static Logger logger = LoggerFactory.getLogger(SrTvisClientApplication.class);
     private AtomicInteger errorImages = new AtomicInteger(0);
