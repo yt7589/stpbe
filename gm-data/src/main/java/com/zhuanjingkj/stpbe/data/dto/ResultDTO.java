@@ -11,12 +11,12 @@ public class ResultDTO<T extends BaseDTO> {
     protected T data;
 
     public ResultDTO() {
-        code = 0;
+        code = Code.SUCCESS;
         msg = "";
     }
 
     public ResultDTO(T data){
-        this.code = 0;
+        this.code = Code.SUCCESS;
         this.msg = "success";
         this.data = data;
     }
@@ -47,5 +47,12 @@ public class ResultDTO<T extends BaseDTO> {
 
     public static <T extends BaseDTO> ResultDTO<T> success(T data){
         return new ResultDTO<>(data);
+    }
+
+    public static ResultDTO error(int code,String msg){
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(code);
+        resultDTO.setMsg(msg);
+        return resultDTO;
     }
 }
