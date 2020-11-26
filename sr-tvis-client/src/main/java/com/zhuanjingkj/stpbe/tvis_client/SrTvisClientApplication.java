@@ -79,11 +79,10 @@ public class SrTvisClientApplication {
             String[] arrs = null;
             int loop = 0;
             while ((line = br.readLine()) != null) {
-                //logger.info("file:" + line + "!");
                 arrs = line.split("\\*");
                 fs.add(new File(arrs[0]));
                 loop++;
-                if (loop % 1000 == 0) {
+                if (loop % 1000000 == 0) {
                     logger.info("已处理：" + loop + "条记录！");
                 }
             }
@@ -138,15 +137,11 @@ public class SrTvisClientApplication {
             return;
         }
 
+        // 从目录中读入
         //List<File> files = listFilesRecursively(new File(picDir));
+        // 从数据集文件中读入
         List<File> files = getFgvcDs();
         logger.info("数据集文件数：" + files.size() + "!");
-        int iDebug = 1;
-        if (1 == iDebug) {
-            return ;
-        }
-
-
         if (files == null || files.size() == 0) {
             return;
         }
