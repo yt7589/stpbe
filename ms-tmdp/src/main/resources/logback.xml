@@ -26,9 +26,12 @@
             </customFields>
         </encoder>
         <File>${LOG_}/vehicle.log</File>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter"/>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志存档名称模板 -->
             <fileNamePattern>${LOG_}/%d{yyyy-MM-dd}.log.bak</fileNamePattern>
+            <!-- 日志最大容量 -->
+            <maxFileSize>100MB</maxFileSize>
             <!-- 日志最大的历史 30天 -->
             <maxHistory>3</maxHistory>
         </rollingPolicy>
