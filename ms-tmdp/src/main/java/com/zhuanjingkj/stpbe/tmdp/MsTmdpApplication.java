@@ -9,8 +9,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -22,19 +20,5 @@ public class MsTmdpApplication {
     public static void main(String[] args) {
         MsTmdpApplication.appCtx = SpringApplication.run(MsTmdpApplication.class, args);
         AppRegistry.putParam(AppConst.APP_CTX, MsTmdpApplication.appCtx);
-    }
-    
-    /**
-     * 允许跨域访问
-     */
-    @Bean
-    public WebMvcConfigurer webMvcConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/*")
-                    .allowedOrigins("*");
-                }
-        };
     }
 }

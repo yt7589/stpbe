@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/tmdp")
+@CrossOrigin(origins = "*")
 public class TmdpController {
     @Autowired
     private DkVtieService dkVtieService;
