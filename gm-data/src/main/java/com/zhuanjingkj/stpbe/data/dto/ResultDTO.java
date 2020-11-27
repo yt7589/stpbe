@@ -11,8 +11,7 @@ public class ResultDTO<T extends BaseDTO> {
     protected T data;
 
     public ResultDTO() {
-        code = Code.SUCCESS;
-        msg = "";
+
     }
 
     public ResultDTO(T data){
@@ -47,6 +46,13 @@ public class ResultDTO<T extends BaseDTO> {
 
     public static <T extends BaseDTO> ResultDTO<T> success(T data){
         return new ResultDTO<>(data);
+    }
+
+    public static ResultDTO success(){
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(Code.SUCCESS);
+        resultDTO.setMsg("success");
+        return resultDTO;
     }
 
     public static ResultDTO error(int code,String msg){

@@ -18,8 +18,23 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ValidationException .class)
     @ResponseBody
-    public ResultDTO handle(ValidationException  exception){
+    public ResultDTO handleValidationException(ValidationException  exception){
         exception.printStackTrace();
         return ResultDTO.error(Code.PARAMETER_ERROR,exception.getMessage().split(": ")[1]);
+    }
+
+
+    @ExceptionHandler(Exception .class)
+    @ResponseBody
+    public ResultDTO handleException(Exception  exception){
+        exception.printStackTrace();
+        return ResultDTO.error(Code.PARAMETER_ERROR,"未知错误");
+    }
+
+    @ExceptionHandler(ServiceException .class)
+    @ResponseBody
+    public ResultDTO handleServiceException(ServiceException  exception){
+        exception.printStackTrace();
+        return ResultDTO.error(exception.getCode(),exception.getMessage());
     }
 }
