@@ -8,4 +8,5 @@ public class Code {
     public static final int SUCCESS = 0;
     public static final int PARAMETER_ERROR = 8888;
     public static final int UNKNOWN_ERROR = 9999;
+    public static final int NO_REGION = 0001;
 }

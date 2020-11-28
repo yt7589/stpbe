@@ -63,6 +63,7 @@
         date &lt;= #{maxDate,jdbcType=TIMESTAMP}
         group by street_name
         order by passedNumber desc
+        limit 10
     </select>
 
     <select id="getVehicleStatisticByRegion" resultType="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.VehicleStatisticDTO" parameterType="java.lang.String">
@@ -77,6 +78,16 @@
         date &lt;= #{maxDate,jdbcType=TIMESTAMP}
         group by region_name
         order by passedNumber desc
+    </select>
+
+
+    <select id="getRegion" resultType="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.VehicleStatisticDTO" parameterType="java.lang.String">
+        select
+        region_name as regionName
+        from
+        t_region
+        where
+        t_region.level = #{level}
     </select>
 
     <select id="getPassedNumber" resultType="java.lang.Integer" parameterType="java.lang.String">

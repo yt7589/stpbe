@@ -1,6 +1,9 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
+import com.zhuanjingkj.stpbe.data.dto.Code;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
+import com.zhuanjingkj.stpbe.tmdp.exception.ServiceException;
 import com.zhuanjingkj.stpbe.tmdp.mapper.VehicleStatisticMapper;
 import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,14 +64,30 @@ public class VehicleStatisticServiceImpl implements VehicleStatisticService {
     }
 
     @Override
-    public List<VehicleStatisticDTO> getVehicleStatisticByRegion() {
+    public List<VehicleStatisticDTO> getVehicleStatisticByRegion() throws ServiceException{
 
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateStr = sdf.format(date) ;
         Date dateBefore = new Date(date.getTime() - 3600000L);
         String dateBeforeStr = sdf.format(dateBefore) ;
-        return vehicleStatisticMapper.getVehicleStatisticByRegion(dateBeforeStr,dateStr);    }
+        List<VehicleStatisticDTO> regionList = vehicleStatisticMapper.getRegion("2");
+        if(regionList==null|| regionList.size()==0){
+            throw new ServiceException(Code.NO_REGION,"没有可显示的区域");
+        }
+        List<VehicleStatisticDTO> passNumList = vehicleStatisticMapper.getVehicleStatisticByRegion(dateBeforeStr,dateStr);
+        if(passNumList==null || passNumList.size()==0){
+           return regionList;
+        }
+        regionList.forEach(v->{
+            passNumList.forEach(v1->{
+                if(StringUtils.equals(v.getRegionName(),v1.getRegionName())){
+                    v.setPassedNumber(v1.getPassedNumber());
+                }
+            });
+        });
+        return regionList;
+    }
 
     @Override
     public VehiclePassedNumberDTO getVehiclePassedNumber() {

@@ -28,7 +28,7 @@ public class VehicleStatisticDTO extends BaseDTO {
     /**
      * 车流量
      */
-    private Integer passedNumber;
+    private Integer passedNumber = 0;
 
     public Integer getId() {
         return id;
