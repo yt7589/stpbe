@@ -116,4 +116,26 @@
         t_camera.site_id = #{siteId,jdbcType=BIGINT}
     </select>
 
+
+    <select id="getImgByCameraId" resultType="com.zhuanjingkj.stpbe.tmdp.dto.camera.ImageDTO" parameterType="java.lang.String">
+        select
+        image_id as imageId,
+        image_url as imageUrl,
+        image_path as imagePath,
+        upload_time as uploadTime,
+        camera_id as cameraId,
+        user_id as userId,
+        lng,
+        lat,
+        vehicle_num as vehicleNum,
+        video_stream_id as videoStreamId,
+        detail
+        from
+        ${tName}
+        where
+        camera_id = #{cameraId}
+        order by upload_time
+        limit 1
+    </select>
+
 </mapper>

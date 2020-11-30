@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.mapper;
 
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.camera.ImageDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteInfoDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -51,5 +52,13 @@ public interface CameraMapper {
      * @return
      */
     List<CameraDTO> getCameraInfoBySite(@Param("siteId") String siteId);
+
+    /**
+     * 查询设备下的图片
+     * @param tName
+     * @param cameraId
+     * @return
+     */
+    ImageDTO getImgByCameraId(@Param("tName") String tName, @Param("cameraId") String cameraId);
 
 }

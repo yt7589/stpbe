@@ -3,6 +3,7 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraInfoDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.camera.ImageDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteInfoDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.res.CameraListDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.res.SiteListDTO;
@@ -50,5 +51,11 @@ public class CameraController {
         cameraListDTO.setCameraNum(cameraNum);
         cameraListDTO.setSnapMachineNum(snapMachineNum);
         return ResultDTO.success(cameraListDTO);
+    }
+
+    @GetMapping("/image")
+    public ResultDTO<ImageDTO> getImgByCameraId(@NotNull(message = "设备ID不能为空") Long cameraId){
+        ImageDTO imageDTO = cameraService.getImgByCameraId(cameraId.toString());
+        return ResultDTO.success(imageDTO);
     }
 }
