@@ -7,10 +7,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-/*@SpringBootApplication
+@SpringBootApplication
 @EnableScheduling
 @EnableTransactionManagement(proxyTargetClass = true)
-@ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.*"})*/
+@ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.*"})
 public class SrMgqsApplication {
     public static void main(String[] args) {
         System.out.println("Mulvus Graph Query System v0.0.1");
