@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp.service;
 
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraInfoDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.camera.ImageDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteInfoDTO;
 import org.apache.ibatis.annotations.Param;
 
@@ -43,4 +44,13 @@ public interface CameraService {
      * @return
      */
     Integer getAllSnapMachine(String siteId);
+
+
+
+    /**
+     * 查询设备下的图片
+     * @param cameraId
+     * @return
+     */
+    ImageDTO getImgByCameraId(String cameraId);
 }

@@ -9,6 +9,7 @@ import com.zhuanjingkj.stpbe.tmdp.dto.res.EmphasisVehicleListDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.EmphasisVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/emphasis/vehicle")
+@CrossOrigin(origins = "*")
 public class EmphasisVehicleController {
 
     @Autowired

@@ -5,6 +5,7 @@ import com.zhuanjingkj.stpbe.tmdp.dto.res.VehicleStatisticListDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
 import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/vehicle/statistic")
+@CrossOrigin(origins = "*")
 public class VehicleStatisticController {
 
     @Autowired

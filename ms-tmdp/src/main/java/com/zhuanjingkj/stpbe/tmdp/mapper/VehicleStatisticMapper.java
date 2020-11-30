@@ -57,4 +57,10 @@ public interface VehicleStatisticMapper {
      * @return
      */
     Integer getPassedNumber(@Param("minDate") String minDate, @Param("maxDate") String maxDate);
+
+    /**
+     * 获取区域名称
+     * @return
+     */
+    List<VehicleStatisticDTO> getRegion(@Param("level") String level);
 }

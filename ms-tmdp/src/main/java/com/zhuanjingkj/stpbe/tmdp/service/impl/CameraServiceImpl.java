@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraInfoDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.camera.ImageDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteInfoDTO;
 import com.zhuanjingkj.stpbe.tmdp.mapper.CameraMapper;
 import com.zhuanjingkj.stpbe.tmdp.service.CameraService;
@@ -53,5 +54,13 @@ public class CameraServiceImpl implements CameraService {
     @Override
     public Integer getAllSnapMachine(String siteId) {
         return Optional.ofNullable(cameraMapper.getAllSnapMachine(siteId)).orElse(0);
+    }
+
+    @Override
+    public ImageDTO getImgByCameraId(String cameraId) {
+
+        String  tName = "t_image";
+        ImageDTO imageDTO = cameraMapper.getImgByCameraId(tName,cameraId);
+        return imageDTO;
     }
 }

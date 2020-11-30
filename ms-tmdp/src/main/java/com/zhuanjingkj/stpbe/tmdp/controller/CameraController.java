@@ -3,16 +3,14 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraInfoDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.camera.ImageDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteInfoDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.res.CameraListDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.res.SiteListDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.CameraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -25,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/camera")
 @Validated
+@CrossOrigin(origins = "*")
 public class CameraController {
 
     @Autowired
@@ -52,5 +51,11 @@ public class CameraController {
         cameraListDTO.setCameraNum(cameraNum);
         cameraListDTO.setSnapMachineNum(snapMachineNum);
         return ResultDTO.success(cameraListDTO);
+    }
+
+    @GetMapping("/image")
+    public ResultDTO<ImageDTO> getImgByCameraId(@NotNull(message = "设备ID不能为空") Long cameraId){
+        ImageDTO imageDTO = cameraService.getImgByCameraId(cameraId.toString());
+        return ResultDTO.success(imageDTO);
     }
 }
