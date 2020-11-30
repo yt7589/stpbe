@@ -16,6 +16,7 @@
         <module>sr-tebs</module>
         <module>sr-tvis-server</module>
         <module>sr-tvis-client</module>
+        <module>sr-mgqs</module>
         <module>ms-facade</module>
         <module>ms-user</module>
         <module>ms-system-info</module>
