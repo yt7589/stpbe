@@ -4,6 +4,7 @@ package com.zhuanjingkj.stpbe.data.vo;
  * 车型特征值对象
  */
 public class VehicleCxtzVo {
+    private long tzxlId;
     private int cllxfl;
     private String cllxflName;
     private int cllxzfl;
@@ -18,6 +19,14 @@ public class VehicleCxtzVo {
     private String cxnkName;
     private int ppxhms;
     private String ppxhmsName;
+
+    public long getTzxlId() {
+        return tzxlId;
+    }
+
+    public void setTzxlId(long tzxlId) {
+        this.tzxlId = tzxlId;
+    }
 
     public int getCllxfl() {
         return cllxfl;

@@ -4,6 +4,8 @@ import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import io.milvus.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -11,6 +13,7 @@ import java.util.stream.DoubleStream;
 
 public class MgqEngine {
     public final static String COLLECTION_NAME = "tvis";
+    public final static String MILVUS_ID = "milvusId";
     // Partition名称定义
     public final static String PN_HEAD_CAR = "head_car";
     public final static String PN_HEAD_BUS = "head_bus";
@@ -31,6 +34,9 @@ public class MgqEngine {
     private final static Logger logger = LoggerFactory.getLogger(MgqEngine.class);
     private static MilvusClient client = null;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     /**
      * 在application类中调用进行初始化，供所有程序使用
      */
@@ -45,11 +51,11 @@ public class MgqEngine {
      * 从Redis中取出向量编号
      * @return
      */
-    public static long getTzxlId() {
-        return 1L;
+    public long getTzxlId() {
+        return redisTemplate.opsForValue().increment(MILVUS_ID);
     }
 
-    public static long insertRecord(String partitionTag, List<VehicleCxtzVo> vos, List<List<Float>> embeddings) {
+    public long insertRecord(String partitionTag, List<VehicleCxtzVo> vos, List<List<Float>> embeddings) {
         long tzxlId = getTzxlId();
         // 插入记录
         List<Long> ids = new ArrayList<>(Arrays.asList(tzxlId));
@@ -83,7 +89,7 @@ public class MgqEngine {
         return entityId;
     }
 
-    public static VehicleCxtzVo findTopK(String partitionTag, List<List<Float>> queryEmbedding, long topK) {
+    public VehicleCxtzVo findTopK(String partitionTag, List<List<Float>> queryEmbedding, long topK) {
         String dsl =
                 String.format(
                         "{\"bool\": {"
@@ -107,9 +113,11 @@ public class MgqEngine {
                                 "\"" + FLD_PPXHMS + "\", \"embedding\"]}");
         SearchResult searchResult = client.search(searchParam);
         int idx = 0;
+        long tzxlId = searchResult.getResultIdsList().get(0).get(idx);
         float top1Dist = searchResult.getResultDistancesList().get(0).get(idx);
         Map<String, Object> rec = searchResult.getFieldsMap().get(0).get(idx);
         VehicleCxtzVo vo = new VehicleCxtzVo();
+        vo.setTzxlId(tzxlId);
         vo.setCllxfl((Integer)rec.get(FLD_CLLXFL));
         vo.setCllxzfl((Integer)rec.get(FLD_CLLXZFL));
         vo.setCsys((Integer)rec.get(FLD_CSYS));

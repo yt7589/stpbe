@@ -17,9 +17,9 @@ import java.util.*;
 @ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.*"})
 public class SrMgqsApplication {
     public static void main(String[] args) {
-        System.out.println("Mulvus Graph Query System v0.0.1");
+        System.out.println("Mulvus Graph Query System v0.0.2");
         SpringApplication.run(SrMgqsApplication.class, args);
-        // MgqEngine.initMilvus(); // 危险调用，请保持注释掉状态！！！！！！！！！！！！！！！！！！！！！！！！！
+        MgqEngine.initMilvus(); // 危险调用，请保持注释掉状态！！！！！！！！！！！！！！！！！！！！！！！！！
         System.out.println("创建Collection和Partition");
         MgqEngine.initialize();
         System.out.println("获取Milvus客户端");
@@ -41,10 +41,12 @@ public class SrMgqsApplication {
         System.out.println("插入第5条记录......");
 
         // 查询结果
+        MgqEngine mgqEngine = new MgqEngine();
         List<List<Float>> queryEmbedding = new ArrayList<>();
         queryEmbedding.add(tzxl_2);
-        VehicleCxtzVo rstVo = MgqEngine.findTopK(partitionTag, queryEmbedding, 1);
-        System.out.println("查询结果：" + rstVo.getPpcx() + "; " + rstVo.getPpxhms());
+        VehicleCxtzVo rstVo = mgqEngine.findTopK(partitionTag, queryEmbedding, 1);
+        System.out.println("查询结果：" + rstVo.getPpcx() + "; " +
+                rstVo.getPpxhms() + "; id=" + rstVo.getTzxlId() + "!");
     }
 
     private static Map<String, Object> getReIDInfo(int seq) {
@@ -88,7 +90,8 @@ public class SrMgqsApplication {
         vos.add(vo);
         tzxl = (List<Float>)infos.get("tzxl");
         embeddings.add(tzxl);
-        MgqEngine.insertRecord(partitionTag, vos, embeddings);
+        MgqEngine mgqEngine = new MgqEngine();
+        mgqEngine.insertRecord(partitionTag, vos, embeddings);
         return tzxl;
     }
 
