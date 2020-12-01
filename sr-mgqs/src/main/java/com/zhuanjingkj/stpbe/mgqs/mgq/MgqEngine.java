@@ -28,13 +28,13 @@ public class MgqEngine {
         final int dimension = REID_DIM; // ReID特征向量维数
         CollectionMapping collectionMapping =
                 CollectionMapping.create(collectionName)
-                        .addField("CLLXFL", DataType.STRING) // 车辆类型分类
-                        .addField("CLLXZFL", DataType.STRING) // 车辆类型子分类
-                        .addField("CSYS", DataType.STRING) // 车身颜色
-                        .addField("CLPP", DataType.STRING) // 车辆品牌
-                        .addField("PPCX", DataType.STRING) // 品牌车型
-                        .addField("CXNK", DataType.STRING) // 车型年款
-                        .addField("PPXHMS", DataType.STRING) // 品牌型号描述
+                        .addField("CLLXFL", DataType.INT32) // 车辆类型分类
+                        .addField("CLLXZFL", DataType.INT32) // 车辆类型子分类
+                        .addField("CSYS", DataType.INT32) // 车身颜色
+                        .addField("CLPP", DataType.INT32) // 车辆品牌
+                        .addField("PPCX", DataType.INT32) // 品牌车型
+                        .addField("CXNK", DataType.INT32) // 车型年款
+                        .addField("PPXHMS", DataType.INT32) // 品牌型号描述
                         .addVectorField("embedding", DataType.VECTOR_FLOAT, dimension)
                         .setParamsInJson("{\"segment_row_limit\": 4096, \"auto_id\": false}");
         logger.info("创创CollectionMapping");
@@ -58,23 +58,23 @@ public class MgqEngine {
         logger.info("创建分区成功！！！！！！！！！！！！！");
         // 插入记录
         List<Long> ids = new ArrayList<>(Arrays.asList(1L, 2L, 3L));
-        List<String> cllxfl = Arrays.asList("01", "02", "03");
-        List<String> cllxzfl = Arrays.asList("01_01", "02_01", "03_01");
-        List<String> csys = Arrays.asList("c01", "c02", "c03");
-        List<String> clpp = Arrays.asList("b01", "b02", "b03");
-        List<String> ppcx = Arrays.asList("x01", "x02", "x03");
-        List<String> cxnk = Arrays.asList("n01", "n02", "n03");
-        List<String> ppxhms = Arrays.asList("奥迪-A6L-2008", "奔驰-E级-2019", "宝马-3系-2018");
+        List<Integer> cllxfl = Arrays.asList(1, 2, 3);
+        List<Integer> cllxzfl = Arrays.asList(1001, 1002, 1003);
+        List<Integer> csys = Arrays.asList(2001, 2002, 2003);
+        List<Integer> clpp = Arrays.asList(100001, 100002, 100003);
+        List<Integer> ppcx = Arrays.asList(210001, 210002, 210003);
+        List<Integer> cxnk = Arrays.asList(220001, 220002, 220003);
+        List<Integer> ppxhms = Arrays.asList(300001, 300002, 300003);
         List<List<Float>> embeddings = randomFloatVectors(3, dimension);
         InsertParam insertParam =
                 InsertParam.create(collectionName)
-                        .addField("CLLXFL", DataType.STRING, cllxfl)
-                        .addField("CLLXZFL", DataType.STRING, cllxzfl)
-                        .addField("CSYS", DataType.STRING, csys)
-                        .addField("CLPP", DataType.STRING, clpp)
-                        .addField("PPCX", DataType.STRING, ppcx)
-                        .addField("CXNK", DataType.STRING, cxnk)
-                        .addField("PPXHMS", DataType.STRING, ppxhms)
+                        .addField("CLLXFL", DataType.INT32, cllxfl)
+                        .addField("CLLXZFL", DataType.INT32, cllxzfl)
+                        .addField("CSYS", DataType.INT32, csys)
+                        .addField("CLPP", DataType.INT32, clpp)
+                        .addField("PPCX", DataType.INT32, ppcx)
+                        .addField("CXNK", DataType.INT32, cxnk)
+                        .addField("PPXHMS", DataType.INT32, ppxhms)
                         .addVectorField("embedding", DataType.VECTOR_FLOAT, embeddings)
                         .setEntityIds(ids)
                         .setPartitionTag(partitionTag);
