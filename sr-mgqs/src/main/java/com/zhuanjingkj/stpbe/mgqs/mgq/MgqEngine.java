@@ -4,7 +4,14 @@ import io.milvus.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SplittableRandom;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
+
 public class MgqEngine {
+    public final static int REID_DIM = 512;
     private final static Logger logger = LoggerFactory.getLogger(MgqEngine.class);
 
     public static void demo() {
@@ -17,7 +24,7 @@ public class MgqEngine {
             client.dropCollection(collectionName);
         }
         logger.info("删除已有Collection");
-        final int dimension = 512; // ReID特征向量维数
+        final int dimension = REID_DIM; // ReID特征向量维数
         CollectionMapping collectionMapping =
                 CollectionMapping.create(collectionName)
                         .addField("CLLXFL", DataType.STRING) // 车辆类型分类
@@ -37,6 +44,29 @@ public class MgqEngine {
             logger.info("创建失败：？？？？？？？？");
             throw new AssertionError("Collection not found!");
         }
-        logger.info("创建成功！！！！！！！！！！！！！！！1");
+        logger.info("创建Collection成功！！！！！！！！！！！！！！！1");
+        // 生成partition：目前共分为6个，分别为：
+        // head_truck, head_bus, head_car, tail_truck, tail_bus, tail_car
+        final String partitionTag = "head_car";
+        client.createPartition(collectionName, partitionTag);
+        // Check the existence of partition
+        if (!client.hasPartition(collectionName, partitionTag)) {
+            logger.info("创建分区失败？？？？？？？？？？？？");
+            throw new AssertionError("Partition not found!");
+        }
+        logger.info("创建分区成功！！！！！！！！！！！！！");
+    }
+
+    private static List<List<Float>> randomFloatVectors(int vectorCount, int dimension) {
+        SplittableRandom splitCollectionRandom = new SplittableRandom();
+        List<List<Float>> vectors = new ArrayList<>(vectorCount);
+        for (int i = 0; i < vectorCount; ++i) {
+            splitCollectionRandom = splitCollectionRandom.split();
+            DoubleStream doubleStream = splitCollectionRandom.doubles(dimension);
+            List<Float> vector =
+                    doubleStream.boxed().map(Double::floatValue).collect(Collectors.toList());
+            vectors.add(vector);
+        }
+        return vectors;
     }
 }
