@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
+@Component
 public class MgqEngine {
     public final static String COLLECTION_NAME = "tvis";
     public final static String MILVUS_ID = "milvusId";
@@ -36,7 +38,7 @@ public class MgqEngine {
     private final static Logger logger = LoggerFactory.getLogger(MgqEngine.class);
     private static MilvusClient client = null;
 
-    @Resource
+    @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
 
     /**
