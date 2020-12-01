@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.SplittableRandom;
 import java.util.stream.Collectors;
@@ -55,6 +56,32 @@ public class MgqEngine {
             throw new AssertionError("Partition not found!");
         }
         logger.info("创建分区成功！！！！！！！！！！！！！");
+        // 插入记录
+        List<Long> ids = new ArrayList<>(Arrays.asList(1L, 2L, 3L));
+        List<String> cllxfl = Arrays.asList("01", "02", "03");
+        List<String> cllxzfl = Arrays.asList("01_01", "02_01", "03_01");
+        List<String> csys = Arrays.asList("c01", "c02", "c03");
+        List<String> clpp = Arrays.asList("b01", "b02", "b03");
+        List<String> ppcx = Arrays.asList("x01", "x02", "x03");
+        List<String> cxnk = Arrays.asList("n01", "n02", "n03");
+        List<String> ppxhms = Arrays.asList("奥迪-A6L-2008", "奔驰-E级-2019", "宝马-3系-2018");
+        List<List<Float>> embeddings = randomFloatVectors(3, dimension);
+        InsertParam insertParam =
+                InsertParam.create(collectionName)
+                        .addField("CLLXFL", DataType.STRING, cllxfl)
+                        .addField("CLLXZFL", DataType.STRING, cllxzfl)
+                        .addField("CSYS", DataType.STRING, csys)
+                        .addField("CLPP", DataType.STRING, clpp)
+                        .addField("PPCX", DataType.STRING, ppcx)
+                        .addField("CXNK", DataType.STRING, cxnk)
+                        .addField("PPXHMS", DataType.STRING, ppxhms)
+                        .addVectorField("embedding", DataType.VECTOR_FLOAT, embeddings)
+                        .setEntityIds(ids)
+                        .setPartitionTag(partitionTag);
+        System.out.println("\n--------Insert Entities--------");
+        List<Long> entityIds = client.insert(insertParam);
+        System.out.println(entityIds);
+        logger.info("插入记录成功！！！！！！！！！！！！！！！！！！！！！！！！");
     }
 
     private static List<List<Float>> randomFloatVectors(int vectorCount, int dimension) {
