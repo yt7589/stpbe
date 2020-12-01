@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class MgqEngine {
     private final static Logger logger = LoggerFactory.getLogger(MgqEngine.class);
     private static MilvusClient client = null;
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, Serializable> redisTemplate;
 
     /**
