@@ -79,6 +79,12 @@ public class MgqEngine {
         List<Long> entityIds = client.insert(insertParam);
         System.out.println(entityIds);
         logger.info("插入记录成功！！！！！！！！！！！！！！！！！！！！！！！！");
+        long beforeEntityCount = client.countEntities(collectionName);
+        client.flush(collectionName);
+        long afterEntityCount = client.countEntities(collectionName);
+        System.out.println("\n--------Flush Collection--------");
+        System.out.printf("There are %d films in the collection before flush.\n", beforeEntityCount);
+        System.out.printf("There are %d films in the collection after flush.\n", afterEntityCount);
         // 图搜示例
         List<List<Float>> queryEmbedding = new ArrayList<>(); //randomFloatVectors(1, dimension);
         queryEmbedding.add(embeddings.get(0));
