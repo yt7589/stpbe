@@ -4,10 +4,7 @@ import io.milvus.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.SplittableRandom;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
@@ -82,6 +79,45 @@ public class MgqEngine {
         List<Long> entityIds = client.insert(insertParam);
         System.out.println(entityIds);
         logger.info("插入记录成功！！！！！！！！！！！！！！！！！！！！！！！！");
+        // 图搜示例
+        List<List<Float>> queryEmbedding = randomFloatVectors(1, dimension);
+        final long topK = 3;
+        String dsl =
+                String.format(
+                        "{\"bool\": {"
+                                + "\"must\": [{"
+                                + "    \"vector\": {"
+                                + "        \"embedding\": {"
+                                + "            \"topk\": %d, \"metric_type\": \"L2\", " +
+                                "\"type\": \"float\", \"query\": %s"
+                                + "    }}}]}}",
+                        topK, queryEmbedding.toString());
+
+        // Only specified fields in `setParamsInJson` will be returned from search request.
+        // If not set, all fields will be returned.
+        SearchParam searchParam =
+                SearchParam.create(collectionName)
+                        .setDsl(dsl)
+                        .setParamsInJson("{\"fields\": [\"CLLXFL\", \"CLLXZFL\", " +
+                                "\"CSYS\", \"CLPP\", \"PPCX\", \"CXNK\", " +
+                                "\"PPXHMS\", \"embedding\"]}");
+        System.out.println("\n--------Search Result--------");
+        SearchResult searchResult = client.search(searchParam);
+        System.out.println("- ids: " + searchResult.getResultIdsList().toString());
+        System.out.println("- distances: " + searchResult.getResultDistancesList().toString());
+        for (List<Map<String, Object>> singleQueryResult : searchResult.getFieldsMap()) {
+            // We only have 1 film returned
+            for (Map<String, Object> res : singleQueryResult) {
+                System.out.println("车辆类型分类: " + res.get("CLLXFL"));
+                System.out.println("车辆类型子分类: " + res.get("CLLXZFL"));
+                System.out.println("车身颜色：" + res.get("CSYS"));
+                System.out.println("车辆品牌：" + res.get("CLPP"));
+                System.out.println("品牌车型：" + res.get("PPCX"));
+                System.out.println("车型年款：" + res.get("CXNK"));
+                System.out.println("品牌型号描述：" + res.get("PPXHMS"));
+                System.out.println("- embedding: " + res.get("embedding"));
+            }
+        }
     }
 
     private static List<List<Float>> randomFloatVectors(int vectorCount, int dimension) {
