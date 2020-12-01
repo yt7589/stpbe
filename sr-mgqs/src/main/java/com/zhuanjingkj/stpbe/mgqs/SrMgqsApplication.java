@@ -17,16 +17,26 @@ import java.util.*;
 @ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.*"})
 public class SrMgqsApplication {
     public static void main(String[] args) {
-        System.out.println("Mulvus Graph Query System v0.0.2");
+        System.out.println("Mulvus Graph Query System v0.0.3");
         SpringApplication.run(SrMgqsApplication.class, args);
         MgqEngine.initMilvus(); // 危险调用，请保持注释掉状态！！！！！！！！！！！！！！！！！！！！！！！！！
         System.out.println("创建Collection和Partition");
         MgqEngine.initialize();
         System.out.println("获取Milvus客户端");
-        runExcemple();
+        Thread thd = new Thread(()->{
+            System.out.println("wait 10 seconds......");
+            try {
+                Thread.sleep(10 * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            SrMgqsApplication.runExcemple();
+        });
+        //runExcemple();
     }
 
     public static void runExcemple() {
+        System.out.println("Begin running in new thread ......");
         String partitionTag = MgqEngine.PN_HEAD_TRUCK;
         int seq = 1;
         List<Float> tzxl_1 = insertOneReIdVec(partitionTag, seq++);
