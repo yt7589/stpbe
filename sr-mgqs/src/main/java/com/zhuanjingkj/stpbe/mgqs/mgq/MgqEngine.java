@@ -80,7 +80,8 @@ public class MgqEngine {
         System.out.println(entityIds);
         logger.info("插入记录成功！！！！！！！！！！！！！！！！！！！！！！！！");
         // 图搜示例
-        List<List<Float>> queryEmbedding = randomFloatVectors(1, dimension);
+        List<List<Float>> queryEmbedding = new ArrayList<>(); //randomFloatVectors(1, dimension);
+        queryEmbedding.add(embeddings.get(0));
         final long topK = 3;
         String dsl =
                 String.format(
