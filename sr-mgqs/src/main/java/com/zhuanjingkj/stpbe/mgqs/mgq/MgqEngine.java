@@ -258,7 +258,7 @@ public class MgqEngine {
      */
     public static void initMilvus() {
         ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
-        MilvusClient client = new MilvusGrpcClient(connectParam);
+        client = new MilvusGrpcClient(connectParam);
         // 创建Collection
         final String collectionName = COLLECTION_NAME;
         if (client.listCollections().contains(collectionName)) {
