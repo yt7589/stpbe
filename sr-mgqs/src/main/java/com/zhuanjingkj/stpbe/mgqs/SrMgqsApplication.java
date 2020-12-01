@@ -78,7 +78,7 @@ public class SrMgqsApplication {
     private static List<Float> insertOneReIdVec(String partitionTag, int seq) {
         Map<String, Object> infos = null;
         //
-        List<List<Float>> embeddings = null;
+        List<List<Float>> embeddings = new ArrayList<>();
         List<VehicleCxtzVo> vos = new ArrayList<>();
         List<Float> tzxl;
         VehicleCxtzVo vo = null;
