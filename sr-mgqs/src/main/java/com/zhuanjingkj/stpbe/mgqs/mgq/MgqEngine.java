@@ -112,17 +112,21 @@ public class MgqEngine {
         SearchResult searchResult = client.search(searchParam);
         System.out.println("- ids: " + searchResult.getResultIdsList().toString());
         System.out.println("- distances: " + searchResult.getResultDistancesList().toString());
+        int idx = 0;
+        float top1Dist = searchResult.getResultDistancesList().get(0).get(idx);
+        Map<String, Object> rec = searchResult.getFieldsMap().get(0).get(idx);
+        System.out.println("第一条：" + rec.get("CLPP") + "; dist=" + top1Dist + "!");
         for (List<Map<String, Object>> singleQueryResult : searchResult.getFieldsMap()) {
             // We only have 1 film returned
             for (Map<String, Object> res : singleQueryResult) {
-                System.out.println("车辆类型分类: " + res.get("CLLXFL"));
-                System.out.println("车辆类型子分类: " + res.get("CLLXZFL"));
-                System.out.println("车身颜色：" + res.get("CSYS"));
-                System.out.println("车辆品牌：" + res.get("CLPP"));
-                System.out.println("品牌车型：" + res.get("PPCX"));
-                System.out.println("车型年款：" + res.get("CXNK"));
-                System.out.println("品牌型号描述：" + res.get("PPXHMS"));
-                System.out.println("- embedding: " + res.get("embedding"));
+                System.out.println("### 车辆类型分类: " + res.get("CLLXFL"));
+                System.out.println("### 车辆类型子分类: " + res.get("CLLXZFL"));
+                System.out.println("### 车身颜色：" + res.get("CSYS"));
+                System.out.println("### 车辆品牌：" + res.get("CLPP"));
+                System.out.println("### 品牌车型：" + res.get("PPCX"));
+                System.out.println("### 车型年款：" + res.get("CXNK"));
+                System.out.println("### 品牌型号描述：" + res.get("PPXHMS"));
+                // System.out.println("- embedding: " + res.get("embedding"));
             }
         }
     }
