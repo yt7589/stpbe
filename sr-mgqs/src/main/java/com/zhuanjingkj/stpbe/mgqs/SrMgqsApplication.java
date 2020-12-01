@@ -32,6 +32,7 @@ public class SrMgqsApplication {
             }
             SrMgqsApplication.runExcemple();
         });
+        thd.start();
         //runExcemple();
     }
 
