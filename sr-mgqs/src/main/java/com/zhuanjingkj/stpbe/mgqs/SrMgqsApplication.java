@@ -3,6 +3,7 @@ package com.zhuanjingkj.stpbe.mgqs;
 //import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,6 +17,9 @@ import java.util.*;
 @EnableTransactionManagement(proxyTargetClass = true)
 @ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.*"})
 public class SrMgqsApplication {
+    @Autowired
+    private MgqEngine mgqEngine;
+
     public static void main(String[] args) {
         System.out.println("Mulvus Graph Query System v0.0.3");
         SpringApplication.run(SrMgqsApplication.class, args);
@@ -23,6 +27,8 @@ public class SrMgqsApplication {
         System.out.println("创建Collection和Partition");
         MgqEngine.initialize();
         System.out.println("获取Milvus客户端");
+
+        SrMgqsApplication app = new SrMgqsApplication();
         Thread thd = new Thread(()->{
             System.out.println("wait 10 seconds......");
             try {
@@ -30,13 +36,13 @@ public class SrMgqsApplication {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            SrMgqsApplication.runExcemple();
+            app.runExcemple();
         });
         thd.start();
         //runExcemple();
     }
 
-    public static void runExcemple() {
+    public void runExcemple() {
         System.out.println("Begin running in new thread ......");
         String partitionTag = MgqEngine.PN_HEAD_TRUCK;
         int seq = 1;
@@ -52,7 +58,7 @@ public class SrMgqsApplication {
         System.out.println("插入第5条记录......");
 
         // 查询结果
-        MgqEngine mgqEngine = new MgqEngine();
+        //MgqEngine mgqEngine = new MgqEngine();
         List<List<Float>> queryEmbedding = new ArrayList<>();
         queryEmbedding.add(tzxl_2);
         VehicleCxtzVo rstVo = mgqEngine.findTopK(partitionTag, queryEmbedding, 1);
@@ -60,7 +66,7 @@ public class SrMgqsApplication {
                 rstVo.getPpxhms() + "; id=" + rstVo.getTzxlId() + "!");
     }
 
-    private static Map<String, Object> getReIDInfo(int seq) {
+    private Map<String, Object> getReIDInfo(int seq) {
         Map<String, Object> infos = new HashMap<>();
         List<List<Float>> embeddings = new ArrayList<>();
         List<VehicleCxtzVo> vos = new ArrayList<>();
@@ -88,7 +94,7 @@ public class SrMgqsApplication {
         return infos;
     }
 
-    private static List<Float> insertOneReIdVec(String partitionTag, int seq) {
+    private List<Float> insertOneReIdVec(String partitionTag, int seq) {
         Map<String, Object> infos = null;
         //
         List<List<Float>> embeddings = new ArrayList<>();
@@ -101,12 +107,12 @@ public class SrMgqsApplication {
         vos.add(vo);
         tzxl = (List<Float>)infos.get("tzxl");
         embeddings.add(tzxl);
-        MgqEngine mgqEngine = new MgqEngine();
+        //MgqEngine mgqEngine = new MgqEngine();
         mgqEngine.insertRecord(partitionTag, vos, embeddings);
         return tzxl;
     }
 
-    private static List<Float> createRandomTzxl() {
+    private List<Float> createRandomTzxl() {
         List<Float> tzxl = new ArrayList<>();
         Random random = new Random();
         for (int i=0; i<MgqEngine.REID_DIM; i++) {

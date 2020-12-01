@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
-@Component
+@Service
 public class MgqEngine {
     public final static String COLLECTION_NAME = "tvis";
     public final static String MILVUS_ID = "milvusId";
