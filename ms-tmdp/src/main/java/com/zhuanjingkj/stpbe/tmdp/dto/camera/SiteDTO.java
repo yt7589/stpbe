@@ -7,7 +7,7 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
  * date on 2020.11.25
  **/
 public class SiteDTO extends BaseDTO {
-    private Integer id;
+    private Integer siteId;
     private String siteName;
 
     /**
@@ -22,11 +22,11 @@ public class SiteDTO extends BaseDTO {
     private Integer regionId;
 
     public Integer getId() {
-        return id;
+        return siteId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer siteId) {
+        this.siteId = siteId;
     }
 
     public String getSiteName() {
