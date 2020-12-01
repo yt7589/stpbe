@@ -112,9 +112,15 @@ public class MgqEngine {
         int idx = 0;
         float top1Dist = searchResult.getResultDistancesList().get(0).get(idx);
         Map<String, Object> rec = searchResult.getFieldsMap().get(0).get(idx);
-        System.out.println("第一条：" + rec.get("CLPP") + "; dist=" + top1Dist + "!");
+        System.out.println("第一条：" + rec.get(FLD_CLLXFL) + "; dist=" + top1Dist + "!");
         VehicleCxtzVo vo = new VehicleCxtzVo();
-        vo.setCllxfl((Integer)rec.get("cllxfl"));
+        vo.setCllxfl((Integer)rec.get(FLD_CLLXFL));
+        vo.setCllxzfl((Integer)rec.get(FLD_CLLXZFL));
+        vo.setCsys((Integer)rec.get(FLD_CSYS));
+        vo.setClpp((Integer)rec.get(FLD_CLPP));
+        vo.setPpcx((Integer)rec.get(FLD_PPCX));
+        vo.setCxnk((Integer)rec.get(FLD_CXNK));
+        vo.setPpxhms((Integer)rec.get(FLD_PPXHMS));
         return vo;
     }
 
