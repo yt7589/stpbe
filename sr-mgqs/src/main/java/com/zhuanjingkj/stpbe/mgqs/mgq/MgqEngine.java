@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
@@ -35,7 +36,7 @@ public class MgqEngine {
     private static MilvusClient client = null;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Serializable> redisTemplate;
 
     /**
      * 在application类中调用进行初始化，供所有程序使用
@@ -52,6 +53,11 @@ public class MgqEngine {
      * @return
      */
     public long getTzxlId() {
+        System.out.println("??? redisTemplat=" + redisTemplate + "!");
+        System.out.println("??? redisTemplate.opsForValue(): " + redisTemplate.opsForValue() + "!");
+        /*if (redisTemplate.opsForValue().get(MILVUS_ID) == null) {
+            redisTemplate.opsForValue().set(MILVUS_ID, 1);
+        }*/
         return redisTemplate.opsForValue().increment(MILVUS_ID);
     }
 
