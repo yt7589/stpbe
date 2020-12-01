@@ -105,14 +105,10 @@ public class MgqEngine {
                                 "\"" + FLD_CSYS + "\", \"" + FLD_CLPP + "\", " +
                                 "\"" + FLD_PPCX + "\", \"" + FLD_CXNK + "\", " +
                                 "\"" + FLD_PPXHMS + "\", \"embedding\"]}");
-        System.out.println("\n--------Search Result--------");
         SearchResult searchResult = client.search(searchParam);
-        System.out.println("- ids: " + searchResult.getResultIdsList().toString());
-        System.out.println("- distances: " + searchResult.getResultDistancesList().toString());
         int idx = 0;
         float top1Dist = searchResult.getResultDistancesList().get(0).get(idx);
         Map<String, Object> rec = searchResult.getFieldsMap().get(0).get(idx);
-        System.out.println("第一条：" + rec.get(FLD_CLLXFL) + "; dist=" + top1Dist + "!");
         VehicleCxtzVo vo = new VehicleCxtzVo();
         vo.setCllxfl((Integer)rec.get(FLD_CLLXFL));
         vo.setCllxzfl((Integer)rec.get(FLD_CLLXZFL));

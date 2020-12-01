@@ -19,7 +19,7 @@ public class SrMgqsApplication {
     public static void main(String[] args) {
         System.out.println("Mulvus Graph Query System v0.0.1");
         SpringApplication.run(SrMgqsApplication.class, args);
-        MgqEngine.initMilvus(); // 危险调用，请保持注释掉状态！！！！！！！！！！！！！！！！！！！！！！！！！
+        // MgqEngine.initMilvus(); // 危险调用，请保持注释掉状态！！！！！！！！！！！！！！！！！！！！！！！！！
         System.out.println("创建Collection和Partition");
         MgqEngine.initialize();
         System.out.println("获取Milvus客户端");
@@ -44,7 +44,7 @@ public class SrMgqsApplication {
         List<List<Float>> queryEmbedding = new ArrayList<>();
         queryEmbedding.add(tzxl_2);
         VehicleCxtzVo rstVo = MgqEngine.findTopK(partitionTag, queryEmbedding, 1);
-        System.out.println("查询结果：" + rstVo.getPpcx() + "; " + rstVo.getPpxhmsName());
+        System.out.println("查询结果：" + rstVo.getPpcx() + "; " + rstVo.getPpxhms());
     }
 
     private static Map<String, Object> getReIDInfo(int seq) {
