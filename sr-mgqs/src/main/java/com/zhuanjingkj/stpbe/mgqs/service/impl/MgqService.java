@@ -1,5 +1,7 @@
 package com.zhuanjingkj.stpbe.mgqs.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
@@ -20,6 +22,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -33,17 +36,19 @@ public class MgqService implements IMgqService {
     private MgqEngine mgqEngine;
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
+    @Autowired
+    private MongoTemplate mongoTemplate;
     private final static Logger logger = LoggerFactory.getLogger(MgqService.class);
     private AtomicInteger successImages = new AtomicInteger(0);
     private AtomicInteger errorImages = new AtomicInteger(0);
 
     @Override
     public ResultDTO<BaseDTO> importDclFds() {
-        //runExcemple();
-        Thread thd = new Thread(()->{
+        /*Thread thd = new Thread(()->{
             runImportDclFdsThread();
         });
-        thd.start();
+        thd.start();*/
+        System.out.println("MongoDB: mongoTemplate=" + mongoTemplate + "!");
         ResultDTO<BaseDTO> dto = new ResultDTO<>();
         dto.setCode(0);
         dto.setMsg("开始建库");
@@ -58,11 +63,25 @@ public class MgqService implements IMgqService {
         connectionManager.setMaxTotal(200);
         connectionManager.setDefaultMaxPerRoute(20);
         httpclient = HttpClients.custom().setConnectionManager(connectionManager).build();
-        String result = processImageFile(dsFiles.get(0));
-        if (result.equals(ERROR_RESPONSE)) {
-            System.out.println("识别图片失败");
-        } else {
-            System.out.println("识别结果：" + result + "!");
+        int sum = 0;
+        String result = null;
+        for (File f : dsFiles) {
+            result = processImageFile(f);
+            if (result.equals(ERROR_RESPONSE)) {
+                System.out.println("识别图片失败");
+            } else {
+                JSONObject rstJson = JSONObject.parseObject(result);
+                // 获取特征向量
+                JSONArray vehs = rstJson.getJSONArray("VEH");
+                JSONObject vehJson = null;
+                JSONObject cxtzJson = null;
+                String vecStr = null;
+                for (Object veh : vehs) {
+                    vehJson = (JSONObject)veh;
+                    cxtzJson = vehJson.getJSONObject("CXTZ");
+                    vecStr = vehJson.getString("CLTZXL");
+                }
+            }
         }
     }
 
