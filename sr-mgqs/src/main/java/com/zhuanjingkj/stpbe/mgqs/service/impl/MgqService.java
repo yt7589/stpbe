@@ -52,7 +52,7 @@ public class MgqService implements IMgqService {
         thd.start();
         ResultDTO<BaseDTO> dto = new ResultDTO<>();
         dto.setCode(0);
-        dto.setMsg("开始建库 v0.0.1");
+        dto.setMsg("开始建库 v0.0.2");
         return dto;
     }
 
@@ -137,9 +137,11 @@ public class MgqService implements IMgqService {
     private List<Float> generateTzxl(String vecStr) {
         List<Float> tzxl = new ArrayList<>();
         String[] arrs = vecStr.split(",");
+        System.out.println("arrs.length=" + arrs.length + "!!!!!!!!!!!!!!!!!");
         for (String item : arrs) {
             tzxl.add(Float.parseFloat(item));
         }
+        System.out.println("tzxl.size=" + tzxl.size() + "!!!!!!!!!!!!!!!!!!");
         return tzxl;
     }
 
@@ -258,6 +260,7 @@ public class MgqService implements IMgqService {
                 loop++;
                 if (loop % 1000000 == 0) {
                     logger.info("已处理：" + loop + "条记录！");
+                    break;
                 }
             }
         } catch (FileNotFoundException e) {
