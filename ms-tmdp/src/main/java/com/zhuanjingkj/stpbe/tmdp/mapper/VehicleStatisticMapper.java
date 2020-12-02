@@ -63,4 +63,21 @@ public interface VehicleStatisticMapper {
      * @return
      */
     List<VehicleStatisticDTO> getRegion(@Param("level") String level);
+
+    /**
+     * 更新今天日期
+     * @param date
+     */
+    void updateTodayTimeFrame(@Param("date") String date);
+
+    /**
+     * 更新昨天日期
+     * @param date
+     */
+    void updateYesterdayTimeFrame(@Param("date") String date);
+
+
+    void updateRegion(@Param("date") String date);
+
+    void updatePassedNumber(@Param("date") String date);
 }
