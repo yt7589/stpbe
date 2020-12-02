@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
+import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
@@ -56,6 +57,8 @@ public class MgqService implements IMgqService {
         Query query = Query.query(Criteria.where("brand_code").is("1002"));
         BrandDTO brandDTO = mongoTemplate.findOne(query, BrandDTO.class);
         System.out.println("品牌模询结果：" + brandDTO.getBrandId() + "---" + brandDTO.getBrandName() + "!");
+        Query modelQuery = Query.query(Criteria.where("model_code").is("1003100001"));
+        ModelDTO modelDTO = mongoTemplate.findOne(modelQuery, ModelDTO.class);
 
 
         ResultDTO<BaseDTO> dto = new ResultDTO<>();
