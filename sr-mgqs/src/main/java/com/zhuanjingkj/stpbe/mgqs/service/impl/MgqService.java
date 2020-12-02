@@ -123,6 +123,7 @@ public class MgqService implements IMgqService {
                     vo.setPpxhms(ppxhms);
                     vos.add(vo);
                     embedding = generateTzxl(vehJson.getString("CLTZXL"));
+                    embeddings.add(embedding);
                     mgqEngine.insertRecord(partitionTag, vos, embeddings);
                 }
             }
