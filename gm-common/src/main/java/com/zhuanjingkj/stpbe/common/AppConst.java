@@ -11,4 +11,6 @@ public class AppConst {
     public final static String KAFKA_GROUP_JSON_RAW = "raw";
     public final static String KAFKA_GROUP_KB_TITF = "kbTitf";
     public final static String KAFKA_SERVER = "192.168.2.68:9092";
+    // TVIS相关
+    public final static String TVIS_SERVER_URL = "http://192.168.2.68:6666/vehicle/function/recognition";
 }

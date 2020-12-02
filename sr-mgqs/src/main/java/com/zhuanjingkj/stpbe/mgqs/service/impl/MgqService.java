@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.BmyDao;
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
+import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.dto.*;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
@@ -64,8 +65,15 @@ public class MgqService implements IMgqService {
         int sum = 0;
         String result = null;
         for (File f : dsFiles) {
-            result = processImageFile(f);
-            if (result.equals(ERROR_RESPONSE)) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("GCXH", "111111");
+            map.put("MRHPT", "test");
+            map.put("HPHM", "test");
+            map.put("MRHPT", "test");
+            map.put("cameraId", "101");
+            map.put("TPMC", f.getName());
+            result = TvisUtil.recognizeImageFile(map, f);
+            if (result.equals(TvisUtil.ERROR_RESPONSE)) {
                 System.out.println("识别图片失败");
             } else {
                 JSONObject rstJson = JSONObject.parseObject(result);
@@ -142,64 +150,7 @@ public class MgqService implements IMgqService {
         return tzxl;
     }
 
-    private final static String ERROR_RESPONSE = "ERROR";
-    public String processImageFile(File f) {
-        System.out.println("处理文件：" + f);
-        boolean sendName = true;
-        String type = "file";
-        String url = "http://192.168.2.68:6666/vehicle/function/recognition";
-        Map<String, Object> map = new HashMap<>();
-        map.put("GCXH", "111111");
-        map.put("MRHPT", "test");
-        map.put("HPHM", "test");
-        map.put("MRHPT", "test");
-        map.put("cameraId", "101");
-        if (sendName == true) {
-            map.put("TPMC", f.getName());
-        }
 
-        String response = null;
-        try {
-            if ("file".equals(type)) {
-                map.put("TPXX", f);
-                map.put("TPLX", "1");
-                response = HttpUtil.postFile(url, map);//postFile(url, map);
-            } else {
-                map.put("TPLX", "2");
-                map.put("TPXX", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(f)));
-                response = HttpUtil.postString(url, map);
-            }
-            map.clear();
-            map = null;
-        } catch (IOException ex) {
-            return ERROR_RESPONSE;
-        }
-
-        System.out.println("response:" + response + "!");
-        if (isSuccessRequest(response)) {
-            successImages.incrementAndGet();
-            return response;
-        } else {
-            errorImages.incrementAndGet();
-            System.out.println("error image:" + f.getName());
-            return ERROR_RESPONSE;
-        }
-    }
-
-
-    private boolean isSuccessRequest(String response) {
-        try {
-            JSONObject json = JSONObject.parseObject(response); //JSONUtil.parseObj(response);
-            Integer code = json.getIntValue("CODE"); //json.getInt("CODE");
-            if (Integer.valueOf(1).equals(code)) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
 
 
