@@ -52,7 +52,7 @@ public class MgqService implements IMgqService {
         thd.start();
         ResultDTO<BaseDTO> dto = new ResultDTO<>();
         dto.setCode(0);
-        dto.setMsg("开始建库");
+        dto.setMsg("开始建库 v0.0.1");
         return dto;
     }
 
