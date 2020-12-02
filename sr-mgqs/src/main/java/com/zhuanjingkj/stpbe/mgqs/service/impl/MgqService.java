@@ -59,7 +59,7 @@ public class MgqService implements IMgqService {
         System.out.println("车型查询结果：" + modelDTO.getModelId() + "---" + modelDTO.getModelName() + "!");
         Query bmyQuery = Query.query(Criteria.where("bmy_code").is("1002100005101" + " "));
         BmyDTO bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
-        String[] arrs = bmyDTO.getBmyName().split("_");
+        String[] arrs = bmyDTO.getBmyName().split("-");
         String yearName = arrs[arrs.length - 1];
         System.out.println("年款查询结果：" + bmyDTO.getBmyId() + "---" + bmyDTO.getBmyName() + "---" + yearName + "!");
 
