@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.BmyDao;
+import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.data.dto.*;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
@@ -60,10 +61,6 @@ public class MgqService implements IMgqService {
         System.out.println("开始导入DCL全量数据集到Milvus中......");
         List<File> dsFiles = getFgvcDs();
         System.out.println("总文件数：" + dsFiles.size() + "!");
-        PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
-        connectionManager.setMaxTotal(200);
-        connectionManager.setDefaultMaxPerRoute(20);
-        httpclient = HttpClients.custom().setConnectionManager(connectionManager).build();
         int sum = 0;
         String result = null;
         for (File f : dsFiles) {
@@ -166,11 +163,11 @@ public class MgqService implements IMgqService {
             if ("file".equals(type)) {
                 map.put("TPXX", f);
                 map.put("TPLX", "1");
-                response = postFile(url, map);//postFile(url, map);
+                response = HttpUtil.postFile(url, map);//postFile(url, map);
             } else {
                 map.put("TPLX", "2");
                 map.put("TPXX", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(f)));
-                response = postString(url, map);
+                response = HttpUtil.postString(url, map);
             }
             map.clear();
             map = null;
@@ -204,43 +201,6 @@ public class MgqService implements IMgqService {
         }
     }
 
-    private CloseableHttpClient httpclient = null;
-    private String postFile(String url, Map<String, Object> data) throws IOException {
-        HttpPost post = new HttpPost(url);
-        try {
-//            post.addHeader("Connection", "close");
-            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            for (Map.Entry<String, Object> entry : data.entrySet()) {
-                if (entry.getValue() instanceof File) {
-                    builder.addBinaryBody(entry.getKey(), (File) entry.getValue());
-                } else {
-                    builder.addTextBody(entry.getKey(), String.valueOf(entry.getValue()));
-                }
-            }
-            post.setEntity(builder.build());
-            CloseableHttpResponse response = httpclient.execute(post);
-            return EntityUtils.toString(response.getEntity());
-        } finally {
-//            post.releaseConnection();
-        }
-    }
-
-    private String postString(String url, Map<String, Object> data) throws IOException {
-        HttpPost post = new HttpPost(url);
-        try {
-//            post.addHeader("Connection", "close");
-            List<BasicNameValuePair> pair = new ArrayList<>();
-            for (Map.Entry<String, Object> entry : data.entrySet()) {
-                pair.add(new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue())));
-            }
-            post.setEntity(new UrlEncodedFormEntity(pair));
-            CloseableHttpResponse response = httpclient.execute(post);
-            return EntityUtils.toString(response.getEntity());
-        } finally {
-//            post.releaseConnection();
-        }
-    }
 
 
 

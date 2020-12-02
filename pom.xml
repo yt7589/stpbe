@@ -22,6 +22,7 @@
         <module>ms-system-info</module>
         <module>ms-sdk-server</module>
         <module>ag-zjc-saas</module>
+        <module>ca-tvis</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
