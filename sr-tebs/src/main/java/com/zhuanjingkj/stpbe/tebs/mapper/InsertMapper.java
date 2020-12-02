@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tebs.mapper;
 
+import com.zhuanjingkj.stpbe.tebs.rto.ImageRTO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,5 +14,5 @@ public interface InsertMapper {
     /**
      * 插入图片
      */
-    void insertImage();
+    void insertImage(ImageRTO image);
 }
