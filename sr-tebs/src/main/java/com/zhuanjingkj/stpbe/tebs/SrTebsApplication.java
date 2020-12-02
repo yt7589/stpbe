@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tebs;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement(proxyTargetClass = true)
 @ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.*"})
 @EnableDiscoveryClient
+@MapperScan("com.zhuanjingkj.stpbe.tebs.mapper")
 public class SrTebsApplication {
     public static void main(String[] args) {
         System.out.println("Traffic Event Bus System v0.0.1");
