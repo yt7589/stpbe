@@ -18,11 +18,18 @@ public class MgqService implements IMgqService {
 
     @Override
     public ResultDTO<BaseDTO> importDclFds() {
-        runExcemple();
+        //runExcemple();
+        Thread thd = new Thread(()->{
+            runImportDclFdsThread();
+        });
         ResultDTO<BaseDTO> dto = new ResultDTO<>();
         dto.setCode(0);
         dto.setMsg("开始建库");
         return dto;
+    }
+
+    public void runImportDclFdsThread() {
+        System.out.println("开始导入DCL全量数据集到Milvus中......");
     }
 
 
