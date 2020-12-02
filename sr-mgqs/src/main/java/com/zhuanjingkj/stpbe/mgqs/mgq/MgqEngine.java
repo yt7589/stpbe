@@ -35,7 +35,7 @@ public class MgqEngine {
     public final static String FLD_CXNK = "CXNK";
     public final static String FLD_PPXHMS = "PPXHMS";
     // ReID特征向量维度定义
-    public final static int REID_DIM = 512;
+    public final static int REID_DIM = 256;
     private final static Logger logger = LoggerFactory.getLogger(MgqEngine.class);
     private static MilvusClient client = null;
     //
