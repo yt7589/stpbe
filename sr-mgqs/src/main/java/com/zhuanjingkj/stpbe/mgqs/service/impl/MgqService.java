@@ -1,11 +1,22 @@
 package com.zhuanjingkj.stpbe.mgqs.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
-import com.zhuanjingkj.stpbe.data.dto.GetUserInfoDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
 import com.zhuanjingkj.stpbe.mgqs.service.IMgqService;
+import org.apache.commons.io.FileUtils;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class MgqService implements IMgqService {
@@ -22,6 +34,8 @@ public class MgqService implements IMgqService {
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
     private final static Logger logger = LoggerFactory.getLogger(MgqService.class);
+    private AtomicInteger successImages = new AtomicInteger(0);
+    private AtomicInteger errorImages = new AtomicInteger(0);
 
     @Override
     public ResultDTO<BaseDTO> importDclFds() {
@@ -40,6 +54,112 @@ public class MgqService implements IMgqService {
         System.out.println("开始导入DCL全量数据集到Milvus中......");
         List<File> dsFiles = getFgvcDs();
         System.out.println("总文件数：" + dsFiles.size() + "!");
+        PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+        connectionManager.setMaxTotal(200);
+        connectionManager.setDefaultMaxPerRoute(20);
+        httpclient = HttpClients.custom().setConnectionManager(connectionManager).build();
+        String result = processImageFile(dsFiles.get(0));
+        if (result.equals(ERROR_RESPONSE)) {
+            System.out.println("识别图片失败");
+        } else {
+            System.out.println("识别结果：" + result + "!");
+        }
+    }
+
+    private final static String ERROR_RESPONSE = "ERROR";
+    public String processImageFile(File f) {
+        System.out.println("处理文件：" + f);
+        boolean sendName = true;
+        String type = "file";
+        String url = "http://192.168.2.68:9510/image/function/recognition";
+        Map<String, Object> map = new HashMap<>();
+        map.put("GCXH", "111111");
+        map.put("MRHPT", "test");
+        map.put("HPHM", "test");
+        map.put("MRHPT", "test");
+        map.put("cameraId", "101");
+        if (sendName == true) {
+            map.put("TPMC", f.getName());
+        }
+
+        String response = null;
+        try {
+            if ("file".equals(type)) {
+                map.put("TPXX", f);
+                map.put("TPLX", "1");
+                response = postFile(url, map);//postFile(url, map);
+            } else {
+                map.put("TPLX", "2");
+                map.put("TPXX", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(f)));
+                response = postString(url, map);
+            }
+            map.clear();
+            map = null;
+        } catch (IOException ex) {
+            return ERROR_RESPONSE;
+        }
+
+        if (isSuccessRequest(response)) {
+            successImages.incrementAndGet();
+            return response;
+        } else {
+            errorImages.incrementAndGet();
+            System.out.println("error image:" + f.getName());
+            return ERROR_RESPONSE;
+        }
+    }
+
+
+    private boolean isSuccessRequest(String response) {
+        try {
+            JSONObject json = JSONObject.parseObject(response); //JSONUtil.parseObj(response);
+            Integer code = json.getIntValue("CODE"); //json.getInt("CODE");
+            if (Integer.valueOf(1).equals(code)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private CloseableHttpClient httpclient = null;
+    private String postFile(String url, Map<String, Object> data) throws IOException {
+        HttpPost post = new HttpPost(url);
+        try {
+//            post.addHeader("Connection", "close");
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                if (entry.getValue() instanceof File) {
+                    builder.addBinaryBody(entry.getKey(), (File) entry.getValue());
+                } else {
+                    builder.addTextBody(entry.getKey(), String.valueOf(entry.getValue()));
+                }
+            }
+            post.setEntity(builder.build());
+            CloseableHttpResponse response = httpclient.execute(post);
+            return EntityUtils.toString(response.getEntity());
+        } finally {
+//            post.releaseConnection();
+        }
+    }
+
+    private String postString(String url, Map<String, Object> data) throws IOException {
+        HttpPost post = new HttpPost(url);
+        try {
+//            post.addHeader("Connection", "close");
+            List<BasicNameValuePair> pair = new ArrayList<>();
+            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                pair.add(new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue())));
+            }
+            post.setEntity(new UrlEncodedFormEntity(pair));
+            CloseableHttpResponse response = httpclient.execute(post);
+            return EntityUtils.toString(response.getEntity());
+        } finally {
+//            post.releaseConnection();
+        }
     }
 
 
