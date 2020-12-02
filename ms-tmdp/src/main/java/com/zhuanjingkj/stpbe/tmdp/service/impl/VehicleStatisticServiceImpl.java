@@ -45,6 +45,13 @@ public class VehicleStatisticServiceImpl implements VehicleStatisticService {
         String dateStr = sdf.format(date) + MAX_TIME;
         Date yesterday = new Date(date.getTime() - 86400000L);
         String yesterdayStr = sdf.format(yesterday) + MIN_TIME;
+
+
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateStr1 = sdf1.format(date);
+        String yesterdayStr1 = sdf1.format(yesterday);
+        vehicleStatisticMapper.updateTodayTimeFrame(dateStr1);
+        vehicleStatisticMapper.updateYesterdayTimeFrame(yesterdayStr1);
         return vehicleStatisticMapper.getTimeFrameNumber(yesterdayStr,dateStr);
     }
 
@@ -60,6 +67,10 @@ public class VehicleStatisticServiceImpl implements VehicleStatisticService {
         String dateStr = sdf.format(date) ;
         Date dateBefore = new Date(date.getTime() - 3600000L);
         String dateBeforeStr = sdf.format(dateBefore) ;
+
+        Date date1 = new Date(date.getTime() - 1800000L);
+        String dateStr1 = sdf.format(date1) ;
+        vehicleStatisticMapper.updateRegion(dateStr1);
         return vehicleStatisticMapper.getVehicleStatisticByStreet(dateBeforeStr,dateStr);
     }
 
@@ -94,8 +105,12 @@ public class VehicleStatisticServiceImpl implements VehicleStatisticService {
         VehiclePassedNumberDTO vehiclePassedNumberDTO = new VehiclePassedNumberDTO();
         Date today = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+
         String todayMin = sdf.format(today) + MIN_TIME;
         String todayMax = sdf.format(today) + MAX_TIME;
+
+        vehicleStatisticMapper.updatePassedNumber(todayMin);
         int todayPassedNumber = Optional.ofNullable(vehicleStatisticMapper.getPassedNumber(todayMin,todayMax)).orElse(0);
 
         Date sevenDayBefore = new Date(today.getTime()-51840000L);

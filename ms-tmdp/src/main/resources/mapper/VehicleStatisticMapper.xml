@@ -100,4 +100,36 @@
         and
         date &lt;= #{maxDate,jdbcType=TIMESTAMP}
     </select>
+
+    <update id="updateTodayTimeFrame" parameterType="java.lang.String">
+        update t_time_frame_number
+        <set>
+            date=#{date}
+        </set>
+        where
+        id in (1,2,3,4,5,6)
+    </update>
+
+    <update id="updateYesterdayTimeFrame" parameterType="java.lang.String">
+        update t_time_frame_number
+        <set>
+            date=#{date}
+        </set>
+        where
+        id in (7,8,9,10,11,12)
+    </update>
+
+    <update id="updateRegion" parameterType="java.lang.String">
+        update t_vehicle_statistic
+        <set>
+            date=#{date}
+        </set>
+    </update>
+
+    <update id="updatePassedNumber" parameterType="java.lang.String">
+        update t_vehicle_passed_number
+        <set>
+            date=#{date}
+        </set>
+    </update>
 </mapper>
