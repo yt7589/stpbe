@@ -3,10 +3,7 @@ package com.zhuanjingkj.stpbe.mgqs.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
-import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
-import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
-import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.dto.*;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
 import com.zhuanjingkj.stpbe.mgqs.service.IMgqService;
@@ -59,6 +56,12 @@ public class MgqService implements IMgqService {
         System.out.println("品牌模询结果：" + brandDTO.getBrandId() + "---" + brandDTO.getBrandName() + "!");
         Query modelQuery = Query.query(Criteria.where("model_code").is("1003100001"));
         ModelDTO modelDTO = mongoTemplate.findOne(modelQuery, ModelDTO.class);
+        System.out.println("车型查询结果：" + modelDTO.getModelId() + "---" + modelDTO.getModelName() + "!");
+        Query bmyQuery = Query.query(Criteria.where("bmy_code").is("1002100005101" + " "));
+        BmyDTO bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
+        String[] arrs = bmyDTO.getBmyName().split("_");
+        String yearName = arrs[arrs.length - 1];
+        System.out.println("年款查询结果：" + bmyDTO.getBmyId() + "---" + bmyDTO.getBmyName() + "---" + yearName + "!");
 
 
         ResultDTO<BaseDTO> dto = new ResultDTO<>();
