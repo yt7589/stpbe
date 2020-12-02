@@ -51,7 +51,9 @@ public class MgqEngine {
      * 在application类中调用进行初始化，供所有程序使用
      */
     public static void initialize() {
+        System.out.println("MgqEngine.initialize 1");
         if (null == client) {
+            System.out.println("MgqEngine.initialize 2");
             ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
             client = new MilvusGrpcClient(connectParam);
             // 客车初始化
@@ -69,7 +71,9 @@ public class MgqEngine {
             truckCllxfl = new ArrayList<>();
             truckCllxfl.add("21");
             truckCllxfl.add("22");
+            System.out.println("MgqEngine.initialize 3");
         }
+        System.out.println("MgqEngine.initialize 4: carCllxzfl=" + carCllxzfl + "!");
     }
 
     public String getPartitionTag(String psfx, String cllxflCode, String cllxzflCode) {
