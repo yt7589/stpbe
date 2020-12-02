@@ -76,7 +76,7 @@ public class MgqEngine {
             truckCllxfl.add("22");
             System.out.println("MgqEngine.initialize 3");
         }
-        System.out.println("MgqEngine.initialize 4: carCllxzfl=" + carCllxzfl + "!");
+        System.out.println("MgqEngine.initialize 4: truckCllxfl=" + truckCllxfl + "!");
     }
 
     public String getPartitionTag(String psfx, String cllxflCode, String cllxzflCode) {
@@ -92,7 +92,7 @@ public class MgqEngine {
         }
         if (busCllxfl.contains(cllxflCode)) {
             partitionTag.append("bus");
-        } else if (carCllxfl.contains(cllxflCode)) {
+        } else if (truckCllxfl.contains(cllxflCode)) {
             partitionTag.append("truck");
         }
         return partitionTag.toString();
