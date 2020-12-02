@@ -56,6 +56,9 @@ public class MgqEngine {
             System.out.println("MgqEngine.initialize 2");
             ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
             client = new MilvusGrpcClient(connectParam);
+        }
+        if (null == carCllxzfl || null == carCllxfl || null == busCllxfl || null == truckCllxfl) {
+            System.out.println("MgqEngine.initialize 2.1");
             // 客车初始化
             busCllxfl = new ArrayList<>();
             busCllxfl.add("11");
