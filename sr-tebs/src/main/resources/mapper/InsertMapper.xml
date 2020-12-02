@@ -27,7 +27,7 @@
             #{vehicleNum},
             #{videoStreamId},
             #{imageType},
-            #{presentationTimeStamp},
+            #{presentationTimeStamp}
         )
     </insert>
 </mapper>
