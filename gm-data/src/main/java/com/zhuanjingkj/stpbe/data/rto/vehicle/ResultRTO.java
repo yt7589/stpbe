@@ -44,6 +44,20 @@ public class ResultRTO extends BaseRTO {
     @JSONField(name = "VEH")
     private List<VehicleInfoRTO> vehicleInfoList;
 
+    /**
+     * 图片url
+     */
+    @JSONField(name = "ImageUrl")
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public String getRecordNumber() {
         return recordNumber;
     }

@@ -3,10 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <typeAliases>
-        <package name="com.yefeng.vehicle.domain.po"/>
-    </typeAliases>
-    <mappers>
-        <mapper resource="mapper/VehicleAnalysisWztzMapper.xml"/>
-    </mappers>
+<!--    <typeAliases>-->
+<!--        <package name="com.yefeng.vehicle.domain.po"/>-->
+<!--    </typeAliases>-->
+<!--    <mappers>-->
+<!--        <mapper resource="mapper/VehicleAnalysisWztzMapper.xml"/>-->
+<!--    </mappers>-->
 </configuration>

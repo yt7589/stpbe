@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.tebs.mapper.InsertMapper">
+
+    <insert id="insertImage" parameterType="com.zhuanjingkj.stpbe.tebs.rto.ImageRTO">
+        insert into ${tableName}
+        (
+        image_url,
+        image_path,
+        upload_time,
+        camera_id,
+        lng,
+        lat,
+        vehicle_num,
+        video_stream_id,
+        image_type,
+        presentation_time_stamp
+        )
+        values
+        (
+            #{imageUrl},
+            #{imagePath},
+            #{uploadTime},
+            #{cameraId},
+            #{lng},
+            #{lat},
+            #{vehicleNum},
+            #{videoStreamId},
+            #{imageType},
+            #{presentationTimeStamp}
+        )
+    </insert>
+</mapper>
