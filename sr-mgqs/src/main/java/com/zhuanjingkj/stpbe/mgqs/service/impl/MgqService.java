@@ -6,15 +6,22 @@ import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
 import com.zhuanjingkj.stpbe.mgqs.service.IMgqService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.*;
 
 @Service
 public class MgqService implements IMgqService {
     @Autowired
     private MgqEngine mgqEngine;
+    @Autowired
+    private RedisTemplate<String, Serializable> redisTemplate;
+    private final static Logger logger = LoggerFactory.getLogger(MgqService.class);
 
     @Override
     public ResultDTO<BaseDTO> importDclFds() {
@@ -22,6 +29,7 @@ public class MgqService implements IMgqService {
         Thread thd = new Thread(()->{
             runImportDclFdsThread();
         });
+        thd.start();
         ResultDTO<BaseDTO> dto = new ResultDTO<>();
         dto.setCode(0);
         dto.setMsg("开始建库");
@@ -30,6 +38,38 @@ public class MgqService implements IMgqService {
 
     public void runImportDclFdsThread() {
         System.out.println("开始导入DCL全量数据集到Milvus中......");
+        List<File> dsFiles = getFgvcDs();
+        System.out.println("总文件数：" + dsFiles.size() + "!");
+    }
+
+
+
+    private List<File> getFgvcDs() {
+        List<File> fs = new ArrayList<>();
+        String dsFn = "/media/ps/0A9AD66165F33762/yantao/dcl/datasets/CUB_200_2011/anno/sfds_train_ds_20201020.txt";
+        try {
+            FileInputStream fis = new FileInputStream(new File(dsFn));
+            InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+            BufferedReader br = new BufferedReader(isr);
+            String line = null;
+            String[] arrs = null;
+            int loop = 0;
+            while ((line = br.readLine()) != null) {
+                arrs = line.split("\\*");
+                fs.add(new File(arrs[0]));
+                loop++;
+                if (loop % 1000000 == 0) {
+                    logger.info("已处理：" + loop + "条记录！");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fs;
     }
 
 
