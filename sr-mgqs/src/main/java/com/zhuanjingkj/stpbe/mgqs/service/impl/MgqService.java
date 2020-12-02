@@ -46,22 +46,10 @@ public class MgqService implements IMgqService {
 
     @Override
     public ResultDTO<BaseDTO> importDclFds() {
-        /*Thread thd = new Thread(()->{
+        Thread thd = new Thread(()->{
             runImportDclFdsThread();
         });
-        thd.start();*/
-        System.out.println("v0.0.1 MongoDB: mongoTemplate=" + mongoTemplate + "!");
-        BrandDTO brandDTO = BmyDao.getBrandDTO(mongoTemplate, "1002");
-        System.out.println("品牌模询结果：" + brandDTO.getBrandId() + "---" + brandDTO.getBrandName() + "!");
-
-        ModelDTO modelDTO = BmyDao.getModelDTO(mongoTemplate, "1003100001");
-        System.out.println("车型查询结果：" + modelDTO.getModelId() + "---" + modelDTO.getModelName() + "!");
-
-        BmyDTO bmyDTO = BmyDao.getBmyDTO(mongoTemplate, "1002100005101" + " ");
-        System.out.println("年款查询结果：" + bmyDTO.getBmyId() + "---" + bmyDTO.getBmyName() +
-                "---" + bmyDTO.getYearName() + "!");
-
-
+        thd.start();
         ResultDTO<BaseDTO> dto = new ResultDTO<>();
         dto.setCode(0);
         dto.setMsg("开始建库");
@@ -89,13 +77,69 @@ public class MgqService implements IMgqService {
                 JSONObject vehJson = null;
                 JSONObject cxtzJson = null;
                 String vecStr = null;
+                JSONObject wztzJson = null;
+                String psfx = null;
+                int cllxfl = 0;
+                String cllxflCode = null;
+                int cllxzfl = 0;
+                String cllxzflCode = null;
+                int csys = 0;
+                int clpp = -1;
+                String clppCode = null;
+                BrandDTO brandDTO = null;
+                int ppcx = -1;
+                String ppcxCode = null;
+                ModelDTO modelDTO = null;
+                int cxnk = -1;
+                String cxnkCode = null;
+                BmyDTO bmyDTO = null;
+                int ppxhms = -1;
+                List<List<Float>> embeddings = new ArrayList<>();
+                List<Float> embedding = null;
+                List<VehicleCxtzVo> vos = new ArrayList<>();
+                VehicleCxtzVo vo = null;
+                String partitionTag = null;
                 for (Object veh : vehs) {
                     vehJson = (JSONObject)veh;
+                    wztzJson = vehJson.getJSONObject("WZTZ");
+                    psfx = wztzJson.getString("PSFX"); // 拍摄方向
                     cxtzJson = vehJson.getJSONObject("CXTZ");
-                    vecStr = vehJson.getString("CLTZXL");
+                    cllxflCode = cxtzJson.getString(MgqEngine.FLD_CLLXFL);
+                    cllxzflCode = cxtzJson.getString(MgqEngine.FLD_CLLXZFL);
+                    partitionTag = mgqEngine.getPartitionTag(psfx, cllxflCode, cllxzflCode);
+                    brandDTO = BmyDao.getBrandDTO(mongoTemplate, cxtzJson.getString("CLPP"));
+                    clpp = brandDTO.getBrandId();
+                    modelDTO = BmyDao.getModelDTO(mongoTemplate, "PPCX");
+                    ppcx = modelDTO.getModelId();
+                    bmyDTO = BmyDao.getBmyDTO(mongoTemplate, "CXNK");
+                    cxnk = bmyDTO.getBmyId();
+                    ppxhms = bmyDTO.getBmyId();
+                    vo = new VehicleCxtzVo();
+                    vo.setCllxfl(cllxfl);
+                    vo.setCllxzfl(cllxzfl);
+                    vo.setClpp(clpp);
+                    vo.setPpcx(ppcx);
+                    vo.setCxnk(cxnk);
+                    vo.setPpxhms(ppxhms);
+                    vos.add(vo);
+                    embedding = generateTzxl(vehJson.getString("CLTZXL"));
+                    mgqEngine.insertRecord(partitionTag, vos, embeddings);
                 }
             }
+            sum++;
+            if (sum > 5) {
+                break;
+            }
         }
+    }
+
+    private List<Float> generateTzxl(String vecStr) {
+        List<Float> tzxl = new ArrayList<>();
+        String[] arrs = vecStr.split(",");
+        for (String item : arrs) {
+            tzxl.add(Float.parseFloat(item));
+        }
+        return tzxl;
     }
 
     private final static String ERROR_RESPONSE = "ERROR";

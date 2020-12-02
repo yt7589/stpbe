@@ -38,6 +38,11 @@ public class MgqEngine {
     public final static int REID_DIM = 512;
     private final static Logger logger = LoggerFactory.getLogger(MgqEngine.class);
     private static MilvusClient client = null;
+    //
+    private static List<String> busCllxfl = null;
+    private static List<String> carCllxfl = null;
+    private static List<String> truckCllxfl = null;
+    private static List<String> carCllxzfl = null;
 
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
@@ -49,7 +54,41 @@ public class MgqEngine {
         if (null == client) {
             ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
             client = new MilvusGrpcClient(connectParam);
+            // 客车初始化
+            busCllxfl = new ArrayList<>();
+            busCllxfl.add("11");
+            busCllxfl.add("12");
+            busCllxfl.add("13"); // 仅包括134
+            busCllxfl.add("14");
+            // 轿车初始化
+            carCllxzfl = new ArrayList<>();
+            carCllxzfl.add("131");
+            carCllxzfl.add("132");
+            carCllxzfl.add("133");
+            // 货车初始化
+            truckCllxfl = new ArrayList<>();
+            truckCllxfl.add("21");
+            truckCllxfl.add("22");
         }
+    }
+
+    public String getPartitionTag(String psfx, String cllxflCode, String cllxzflCode) {
+        StringBuilder partitionTag = new StringBuilder();
+        if (psfx.equals("1")) {
+            partitionTag.append("head_");
+        } else {
+            partitionTag.append("tail_");
+        }
+        if (carCllxzfl.contains(cllxzflCode)) {
+            partitionTag.append("car");
+            return partitionTag.toString();
+        }
+        if (busCllxfl.contains(cllxflCode)) {
+            partitionTag.append("bus");
+        } else if (carCllxfl.contains(cllxflCode)) {
+            partitionTag.append("truck");
+        }
+        return partitionTag.toString();
     }
 
     /**
