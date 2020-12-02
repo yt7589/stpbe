@@ -99,6 +99,7 @@ public class MgqService implements IMgqService {
             return ERROR_RESPONSE;
         }
 
+        System.out.println("response:" + response + "!");
         if (isSuccessRequest(response)) {
             successImages.incrementAndGet();
             return response;
