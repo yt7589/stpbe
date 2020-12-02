@@ -11,6 +11,7 @@ public class BmyDTO extends BaseDTO {
     private String bmyCode;
     @Field("bmy_name")
     private String bmyName;
+    private String yearName;
 
     public int getBmyId() {
         return bmyId;
@@ -34,5 +35,13 @@ public class BmyDTO extends BaseDTO {
 
     public void setBmyName(String bmyName) {
         this.bmyName = bmyName;
+    }
+
+    public String getYearName() {
+        return yearName;
+    }
+
+    public void setYearName(String yearName) {
+        this.yearName = yearName;
     }
 }
