@@ -71,7 +71,7 @@ public class MgqService implements IMgqService {
         System.out.println("处理文件：" + f);
         boolean sendName = true;
         String type = "file";
-        String url = "http://192.168.2.68:9510/image/function/recognition";
+        String url = "http://192.168.2.68:6666/image/function/recognition";
         Map<String, Object> map = new HashMap<>();
         map.put("GCXH", "111111");
         map.put("MRHPT", "test");
