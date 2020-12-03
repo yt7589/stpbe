@@ -1,14 +1,18 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
+import com.zhuanjingkj.stpbe.data.dto.CreateRtspBindDTO;
 import com.zhuanjingkj.stpbe.data.dto.GetUserInfoDTO;
 import com.zhuanjingkj.stpbe.data.dto.LoginDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.rto.CreateRtspBindRTO;
 import com.zhuanjingkj.stpbe.data.rto.LoginRTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.*;
 import com.zhuanjingkj.stpbe.tmdp.service.DkTitfService;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtieService;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtpService;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVttfService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +33,18 @@ public class TmdpController {
     private DkTitfService dkTitfService;
     @Autowired
     private DkVttfService dkVttfService;
+    private final static Logger logger = LoggerFactory.getLogger(TmdpController.class);
+
+    @PostMapping("/sdk/createRtspBind")
+    public ResultDTO<CreateRtspBindDTO> createRtspBind(
+            @RequestBody CreateRtspBindRTO rto) {
+        logger.info("RTSP Bind: " + rto.getRtspUrl() + "!");
+        ResultDTO<CreateRtspBindDTO> dto = new ResultDTO<>();
+        CreateRtspBindDTO data = new CreateRtspBindDTO();
+        data.setStreamId("1001");
+        dto.setData(data);
+        return dto;
+    }
 
     /**
      * 首页数据看板页面总体数据请求接口
