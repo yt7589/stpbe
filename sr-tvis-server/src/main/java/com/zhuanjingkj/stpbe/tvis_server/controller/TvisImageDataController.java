@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/image")
+@RequestMapping("/vehicle")
 public class TvisImageDataController {
     private final static Logger logger = LoggerFactory.getLogger(TvisImageDataController.class);
     private final static String VEHICLE_ANALYSER_HEART = "VEHICLE_ANALYSER_ALIVE";

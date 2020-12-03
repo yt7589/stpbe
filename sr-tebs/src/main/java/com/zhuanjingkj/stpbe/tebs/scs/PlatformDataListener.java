@@ -34,6 +34,7 @@ import java.util.Optional;
  * date on 2020.12.01
  **/
 
+@Component
 public class PlatformDataListener {
 
     @Autowired
@@ -110,6 +111,8 @@ public class PlatformDataListener {
                 "\t\t\"ImageUrl\":\"www.baidu.com\"\n" +
                 "\t}\n" +
                 "}";
+    @KafkaListener(id = "zjkj003", topics = "tvis")
+    public void listen(String value){
         if (StringUtils.isEmpty(value)){
             return;
         }
