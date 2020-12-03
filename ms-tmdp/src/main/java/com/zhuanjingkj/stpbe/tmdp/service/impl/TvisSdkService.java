@@ -25,12 +25,13 @@ public class TvisSdkService implements ITvisSdkService {
         byte[] respBytes = TcpClient.sendRequest(
                 AppConst.VIDEO_TVIS_ADDR, AppConst.VIDEO_TVIS_PORT,
                 reqBytes);
-        
+        logger.info("response: " + respBytes.length + "!");
         if (null == respBytes) {
             data.setStreamId("-1");
             data.setState(1);
         } else {
             String resp = new String(reqBytes);
+            logger.info("resp: " + resp + "!");
             String[] arrs = resp.split("/");
             String streamId = arrs[arrs.length - 1];
             data.setState(0);
