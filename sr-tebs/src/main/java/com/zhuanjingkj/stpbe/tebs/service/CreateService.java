@@ -12,4 +12,10 @@ public interface CreateService {
      * 创建图片表
      */
     String createNewImageTable();
+
+    /**
+     * 创建车辆基本信息表
+     * @return
+     */
+    String createNewVehicleIfon();
 }

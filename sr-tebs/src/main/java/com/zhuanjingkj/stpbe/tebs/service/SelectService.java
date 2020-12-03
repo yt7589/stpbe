@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tebs.service;
 
 import com.zhuanjingkj.stpbe.tebs.dto.CameraDTO;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * author by guoqiang
@@ -14,4 +15,13 @@ public interface SelectService {
      * @return
      */
     CameraDTO getCamera( String cameraId);
+
+
+    /**
+     * 根据uuid查询ID
+     * @param tableName
+     * @param uid
+     * @return
+     */
+    Long getImage(String tableName, String uid);
 }

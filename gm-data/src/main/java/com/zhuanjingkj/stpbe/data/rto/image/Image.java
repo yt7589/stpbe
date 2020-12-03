@@ -17,8 +17,16 @@ public class Image extends BaseRTO {
     private Integer vehicleNum;
     private Long videoStreamId;
     private Integer imageType;
-    private String detail;
     private String presentationTimeStamp;
+    private String uid;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public Long getImageId() {
         return imageId;
@@ -100,13 +108,6 @@ public class Image extends BaseRTO {
         this.imageType = imageType;
     }
 
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
 
     public String getPresentationTimeStamp() {
         return presentationTimeStamp;

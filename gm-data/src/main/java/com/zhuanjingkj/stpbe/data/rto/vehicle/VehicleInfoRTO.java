@@ -19,7 +19,7 @@ public class VehicleInfoRTO extends BaseRTO {
      * 顺序号
      */
     @JSONField(name = "SXH")
-    private String OrderNumber;
+    private Integer OrderNumber;
 
     /**
      * 车型特征
@@ -59,11 +59,11 @@ public class VehicleInfoRTO extends BaseRTO {
         this.position = position;
     }
 
-    public String getOrderNumber() {
+    public Integer getOrderNumber() {
         return OrderNumber;
     }
 
-    public void setOrderNumber(String orderNumber) {
+    public void setOrderNumber(Integer orderNumber) {
         OrderNumber = orderNumber;
     }
 

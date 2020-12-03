@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * date on 2020.12.02
  **/
 @Repository
-public interface CameraMapper {
+public interface SelectMapper {
 
     /**
      * 获取摄像头信息
@@ -17,4 +17,12 @@ public interface CameraMapper {
      * @return
      */
     CameraDTO getCamera(@Param("cameraId") String cameraId);
+
+    /**
+     * 根据uuid查询ID
+     * @param tableName
+     * @param uid
+     * @return
+     */
+    Long getImage(@Param("tableName")String tableName,@Param("uid")String uid);
 }
