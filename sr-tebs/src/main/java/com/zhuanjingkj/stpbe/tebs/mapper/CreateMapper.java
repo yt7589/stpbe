@@ -16,4 +16,10 @@ public interface CreateMapper {
      */
     void createNewImageTable(@Param("tableName") String tableName);
 
+    /**
+     * 创建车辆基本信息表
+     * @param tableName
+     */
+    void createNewVehicleIfon(@Param("tableName") String tableName);
+
 }

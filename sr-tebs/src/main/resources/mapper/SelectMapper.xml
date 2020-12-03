@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhuanjingkj.stpbe.tebs.mapper.CameraMapper">
+<mapper namespace="com.zhuanjingkj.stpbe.tebs.mapper.SelectMapper">
 
     <select id="getCamera" resultType="com.zhuanjingkj.stpbe.tebs.dto.CameraDTO" parameterType="java.lang.String">
         select
@@ -22,5 +22,15 @@
         t_camera.region_id = t_region.id
         and
         t_camera.camera_id = #{cameraId}
+    </select>
+
+
+    <select id="getImage" resultType="java.lang.Long" parameterType="java.lang.String">
+        select
+        image_id as imageId
+        from
+        ${tableName}
+        where
+        uid = #{uid}
     </select>
 </mapper>

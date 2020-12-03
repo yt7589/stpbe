@@ -5,6 +5,7 @@
     <insert id="insertImage" parameterType="com.zhuanjingkj.stpbe.tebs.rto.ImageRTO">
         insert into ${tableName}
         (
+        uid,
         image_url,
         image_path,
         upload_time,
@@ -18,6 +19,7 @@
         )
         values
         (
+            #{uid}
             #{imageUrl},
             #{imagePath},
             #{uploadTime},
@@ -29,5 +31,37 @@
             #{imageType},
             #{presentationTimeStamp}
         )
+    </insert>
+
+    <insert id="insertVehicleInfo" parameterType="com.zhuanjingkj.stpbe.tebs.rto.VehicleInformationRTO">
+        insert into ${vehicleInformationTableName}
+        (
+        uid,
+        position_info,
+        order_number,
+        vehicle_model_info,
+        vehicle_vector,
+        individuation_info,
+        licence_plate,
+        driving_behavior,
+        image_id,
+        image_table_name,
+        create_time
+        )
+        values
+        <foreach collection="vehicleInformationList" item="item" index="index" separator=",">
+            (#{item.uid},
+            #{item.positionInfo},
+            #{item.orderNumber},
+            #{item.vehicleModelInfo},
+            #{item.vehicleVector},
+            #{item.individuationInfo},
+            #{item.licencePlate},
+            #{item.drivingBehavior},
+            #{item.imageId}
+            #{item.imageTableName}
+            #{item.creatTime}
+            )
+        </foreach>
     </insert>
 </mapper>
