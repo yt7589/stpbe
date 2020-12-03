@@ -6,7 +6,7 @@
             CREATE TABLE IF NOT EXISTS ${tableName} (
                 `image_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '图片ID',
                 `image_url` varchar(200) NOT NULL COMMENT '图片url',
-                `image_path` varchar(200) NOT NULL COMMENT '图片所存储的位置',
+                `image_path` varchar(200) DEFAULT NULL COMMENT '图片所存储的位置',
                 `upload_time` datetime DEFAULT NULL COMMENT '上传时间',
                 `camera_id` bigint(20) NOT NULL COMMENT '摄像头ID',
                 `user_id` bigint(20) DEFAULT NULL COMMENT '上传用户ID',

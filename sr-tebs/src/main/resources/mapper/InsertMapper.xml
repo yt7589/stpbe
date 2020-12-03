@@ -19,7 +19,7 @@
         )
         values
         (
-            #{uid}
+            #{uid},
             #{imageUrl},
             #{imagePath},
             #{uploadTime},
@@ -58,8 +58,8 @@
             #{item.individuationInfo},
             #{item.licencePlate},
             #{item.drivingBehavior},
-            #{item.imageId}
-            #{item.imageTableName}
+            #{item.imageId},
+            #{item.imageTableName},
             #{item.creatTime}
             )
         </foreach>
