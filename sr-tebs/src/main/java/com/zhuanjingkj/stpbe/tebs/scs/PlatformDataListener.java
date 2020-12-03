@@ -37,7 +37,7 @@ public class PlatformDataListener {
     @Autowired
     InsertService insertService;
 
-    @KafkaListener(id = "zjkj", topics = "tvis")
+    @KafkaListener(id = "zjkj003", topics = "tvis")
     public void listen(String value){
         if (StringUtils.isEmpty(value)){
             return;
