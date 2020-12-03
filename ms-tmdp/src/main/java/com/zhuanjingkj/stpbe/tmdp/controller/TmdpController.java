@@ -11,6 +11,7 @@ import com.zhuanjingkj.stpbe.tmdp.service.DkTitfService;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtieService;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtpService;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVttfService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.TvisSdkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +34,14 @@ public class TmdpController {
     private DkTitfService dkTitfService;
     @Autowired
     private DkVttfService dkVttfService;
+    @Autowired
+    private TvisSdkService tvisSdkService;
     private final static Logger logger = LoggerFactory.getLogger(TmdpController.class);
 
-    @PostMapping("/sdk/createRtspBind")
+    @PostMapping("/tvis-sdk/createRtspBind")
     public ResultDTO<CreateRtspBindDTO> createRtspBind(
             @RequestBody CreateRtspBindRTO rto) {
-        logger.info("RTSP Bind: " + rto.getRtspUrl() + "!");
-        ResultDTO<CreateRtspBindDTO> dto = new ResultDTO<>();
-        CreateRtspBindDTO data = new CreateRtspBindDTO();
-        data.setStreamId("1001");
-        dto.setData(data);
-        return dto;
+        return tvisSdkService.createRtspBind(rto.getRtspUrl());
     }
 
     /**
