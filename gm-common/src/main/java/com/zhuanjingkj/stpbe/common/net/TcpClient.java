@@ -11,7 +11,7 @@ public class TcpClient {
         Socket socket = null;
         int readLen = 0;
         byte[] data = new byte[1024];
-        String rtmpUrl = null;
+        String resp = null;
         OutputStream outStrm = null;
         InputStream inStrm = null;
         try {
@@ -21,7 +21,7 @@ public class TcpClient {
             inStrm = socket.getInputStream();
             readLen = inStrm.read(data, 0, 1024);
             if (readLen > 0) {
-                rtmpUrl = new String(data, 0, readLen);
+                resp = new String(data, 0, readLen);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -40,8 +40,8 @@ public class TcpClient {
                 e.printStackTrace();
             }
         }
-        if (rtmpUrl != null) {
-            return rtmpUrl.getBytes();
+        if (resp != null) {
+            return resp.getBytes();
         } else {
             return null;
         }
