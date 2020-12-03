@@ -22,9 +22,14 @@ public class TvisSdkService implements ITvisSdkService {
         req.append("/start");
         logger.info("socket req:" + req.toString() + "!");
         byte[] reqBytes = req.toString().getBytes();
-        byte[] respBytes = TcpClient.sendRequest(
-                AppConst.VIDEO_TVIS_ADDR, AppConst.VIDEO_TVIS_PORT,
-                reqBytes);
+        byte[] respBytes = null;
+        try {
+            respBytes = TcpClient.sendRequest(
+                    AppConst.VIDEO_TVIS_ADDR, AppConst.VIDEO_TVIS_PORT,
+                    reqBytes);
+        } catch (Exception ex) {
+            System.out.println("########### exception: " + ex.getMessage() + "!");
+        }
         logger.info("response: " + respBytes.length + "!");
         if (null == respBytes) {
             data.setStreamId("-1");
