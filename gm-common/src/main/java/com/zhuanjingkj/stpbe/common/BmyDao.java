@@ -19,6 +19,7 @@ public class BmyDao {
     }
 
     public static BmyDTO getBmyDTO(MongoTemplate mongoTemplate, String bmyCode) {
+        System.out.println("bmyCode: " + bmyCode + "!");
         Query bmyQuery = Query.query(Criteria.where("bmy_code").is(bmyCode + " "));
         BmyDTO bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
         String[] arrs = bmyDTO.getBmyName().split("-");
