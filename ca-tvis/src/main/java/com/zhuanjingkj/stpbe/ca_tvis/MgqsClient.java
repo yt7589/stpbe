@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.ca_tvis;
 
 import com.zhuanjingkj.stpbe.common.BmyDao;
+import com.zhuanjingkj.stpbe.common.mgq.MgqEngine;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
 import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
@@ -48,6 +49,7 @@ public class MgqsClient implements ITvisClient {
             } else {
                 // SDK识别结果
                 List<VehicleVo> vvos = TvisUtil.parseTvisJson(result);
+                VehicleWztzVo vehicleWztzVo;
                 VehicleCxtzVo vehicleCxtzVo;
                 VehicleCltzxlVo vehicleCltzxlVo;
                 BrandDTO brandDTO = null;
@@ -57,22 +59,23 @@ public class MgqsClient implements ITvisClient {
                 int ppcxSdk = 0;
                 int ppcxMilvus = 0;
                 for (VehicleVo vvo : vvos) {
+                    vehicleWztzVo = vvo.getVehicleWztzVo();
                     vehicleCxtzVo = vvo.getVehicleCxtzVo();
                     brandDTO = BmyDao.getBrandDTO(mongoTemplate, vehicleCxtzVo.getClppCode());
                     clppSdk = brandDTO.getBrandId();
                     modelDTO = BmyDao.getModelDTO(mongoTemplate, vehicleCxtzVo.getPpcxCode());
                     ppcxSdk = modelDTO.getModelId();
-                    System.out.println("clpp:" + vehicleCxtzVo.getClppCode() +
-                            "---" + clppSdk + "; " +
-                            vehicleCxtzVo.getPpcxCode() + "---" + ppcxSdk + "!");
-
-
                     List<List<Float>> queryEmbedding = new ArrayList<>();
                     queryEmbedding.add(vvo.getVehicleCltzxlVo().getCltzxl());
-                    String partitionTag = null;
-                    //VehicleCxtzVo rstVo = mgqEngine.findTopK(partitionTag, queryEmbedding, 1);
-                    //System.out.println("查询结果：" + rstVo.getPpcx() + "; " +
-                     //       rstVo.getPpxhms() + "; id=" + rstVo.getTzxlId() + "!");
+                    String partitionTag = MgqEngine.getPartitionTag(vehicleWztzVo.getPsfx(),
+                            vehicleCxtzVo.getCllxflCode(),
+                            vehicleCxtzVo.getCllxzflCode());
+                    VehicleCxtzVo rstVo = MgqEngine.findTopK(partitionTag, queryEmbedding, 1);
+                    System.out.println("识别结果：clpp:" + vehicleCxtzVo.getClppCode() +
+                            "---" + clppSdk + "; " +
+                            vehicleCxtzVo.getPpcxCode() + "---" + ppcxSdk + "!");
+                    System.out.println("查询结果：clpp=" + rstVo.getClpp() + "; ppcx=" +
+                            rstVo.getPpcx() + "; id=" + rstVo.getTzxlId() + "!");
                 }
             }
             // 2.2. 从图搜系统查出结果：上传图片、查出结果、删除上传图片

@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.ca_tvis;
 
+import com.zhuanjingkj.stpbe.common.mgq.MgqEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +14,7 @@ public class CaTvisApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
 		System.out.println("Client Application Tvis v0.0.1");
+		MgqEngine.initialize();
 		ConfigurableApplicationContext ctx = SpringApplication.run(CaTvisApplication.class, args);
     }
 
