@@ -1,9 +1,9 @@
 package com.zhuanjingkj.stpbe.ca_tvis;
 
+import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+
 import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class MgqsClient implements ITvisClient {
     public final static int ARGS_ROOT_PATH_IDX = 1;
@@ -22,6 +22,19 @@ public class MgqsClient implements ITvisClient {
         for (File f : dsFiles) {
             System.out.println("### " + f + "!");
             // 2.1. 调用图片识别服务
+            Map<String, Object> map = new HashMap<>();
+            map.put("GCXH", "111111");
+            map.put("MRHPT", "test");
+            map.put("HPHM", "test");
+            map.put("MRHPT", "test");
+            map.put("cameraId", "101");
+            map.put("TPMC", f.getName());
+            String result = TvisUtil.recognizeImageFile(map, f);
+            if (result.equals(TvisUtil.ERROR_RESPONSE)) {
+                System.out.println("识别图片失败");
+            } else {
+
+            }
             // 2.2. 从图搜系统查出结果：上传图片、查出结果、删除上传图片
             // 2.3. 二者相等则写入正确文件列表文件，并有一个网页可以浏览
             // 2.4. 二者不相等，则写入错误列表文件，并有另一个网页可以浏览

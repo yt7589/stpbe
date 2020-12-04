@@ -7,7 +7,10 @@ import com.zhuanjingkj.stpbe.common.BmyDao;
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.dto.*;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
 import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
 import com.zhuanjingkj.stpbe.mgqs.service.IMgqService;
 import org.apache.commons.io.FileUtils;
@@ -64,6 +67,18 @@ public class MgqService implements IMgqService {
         System.out.println("总文件数：" + dsFiles.size() + "!");
         int sum = 0;
         String result = null;
+        List<VehicleVo> vos = null;
+        VehicleWztzVo vehicleWztzVo = null;
+        VehicleCxtzVo vehicleCxtzVo = null;
+        VehicleCltzxlVo vehicleCltzxlVo = null;
+        String partitionTag = null;
+        BrandDTO brandDTO = null;
+        ModelDTO modelDTO = null;
+        BmyDTO bmyDTO = null;
+        int clpp = 0;
+        int ppcx = 0;
+        int cxnk = 0;
+        int ppxhms = 0;
         for (File f : dsFiles) {
             Map<String, Object> map = new HashMap<>();
             map.put("GCXH", "111111");
@@ -76,60 +91,24 @@ public class MgqService implements IMgqService {
             if (result.equals(TvisUtil.ERROR_RESPONSE)) {
                 System.out.println("识别图片失败");
             } else {
-                JSONObject rstJson = JSONObject.parseObject(result);
-                // 获取特征向量
-                JSONArray vehs = rstJson.getJSONArray("VEH");
-                JSONObject vehJson = null;
-                JSONObject cxtzJson = null;
-                String vecStr = null;
-                JSONObject wztzJson = null;
-                String psfx = null;
-                int cllxfl = 0;
-                String cllxflCode = null;
-                int cllxzfl = 0;
-                String cllxzflCode = null;
-                int csys = 0;
-                int clpp = -1;
-                String clppCode = null;
-                BrandDTO brandDTO = null;
-                int ppcx = -1;
-                String ppcxCode = null;
-                ModelDTO modelDTO = null;
-                int cxnk = -1;
-                String cxnkCode = null;
-                BmyDTO bmyDTO = null;
-                int ppxhms = -1;
-                List<List<Float>> embeddings = new ArrayList<>();
-                List<Float> embedding = null;
-                List<VehicleCxtzVo> vos = new ArrayList<>();
-                VehicleCxtzVo vo = null;
-                String partitionTag = null;
-                for (Object veh : vehs) {
-                    vehJson = (JSONObject)veh;
-                    wztzJson = vehJson.getJSONObject("WZTZ");
-                    psfx = wztzJson.getString("PSFX"); // 拍摄方向
-                    cxtzJson = vehJson.getJSONObject("CXTZ");
-                    cllxflCode = cxtzJson.getString(MgqEngine.FLD_CLLXFL);
-                    cllxzflCode = cxtzJson.getString(MgqEngine.FLD_CLLXZFL);
-                    partitionTag = mgqEngine.getPartitionTag(psfx, cllxflCode, cllxzflCode);
-                    brandDTO = BmyDao.getBrandDTO(mongoTemplate, cxtzJson.getString("CLPP"));
-                    clpp = brandDTO.getBrandId();
-                    modelDTO = BmyDao.getModelDTO(mongoTemplate, "PPCX");
-                    ppcx = modelDTO.getModelId();
-                    bmyDTO = BmyDao.getBmyDTO(mongoTemplate, "CXNK");
-                    cxnk = bmyDTO.getBmyId();
-                    ppxhms = bmyDTO.getBmyId();
-                    vo = new VehicleCxtzVo();
-                    vo.setCllxfl(cllxfl);
-                    vo.setCllxzfl(cllxzfl);
-                    vo.setClpp(clpp);
-                    vo.setPpcx(ppcx);
-                    vo.setCxnk(cxnk);
-                    vo.setPpxhms(ppxhms);
-                    vos.add(vo);
-                    embedding = generateTzxl(vehJson.getString("CLTZXL"));
-                    embeddings.add(embedding);
-                    mgqEngine.insertRecord(partitionTag, vos, embeddings);
+                vos = TvisUtil.parseTvisJson(result);
+                for (VehicleVo vo : vos) {
+                    vehicleWztzVo = vo.getVehicleWztzVo();
+                    vehicleCxtzVo = vo.getVehicleCxtzVo();
+                    vehicleCltzxlVo = vo.getVehicleCltzxlVo();
+                    partitionTag = mgqEngine.getPartitionTag(
+                            vehicleWztzVo.getPsfx(),
+                            vehicleCxtzVo.getCllxflCode(),
+                            vehicleCxtzVo.getCllxzflCode()
+                    );
+                    brandDTO = BmyDao.getBrandDTO(mongoTemplate, vehicleCxtzVo.getClppCode());
+                    vehicleCxtzVo.setClpp(brandDTO.getBrandId());
+                    modelDTO = BmyDao.getModelDTO(mongoTemplate, vehicleCxtzVo.getPpcxCode());
+                    vehicleCxtzVo.setPpcx(modelDTO.getModelId());
+                    bmyDTO = BmyDao.getBmyDTO(mongoTemplate, vehicleCxtzVo.getCxnkCode());
+                    vehicleCxtzVo.setCxnk(bmyDTO.getBmyId());
+                    vehicleCxtzVo.setPpxhms(bmyDTO.getBmyId());
+                    mgqEngine.insertRecord(partitionTag, vo);
                 }
             }
             sum++;
@@ -253,7 +232,7 @@ public class MgqService implements IMgqService {
         tzxl = (List<Float>)infos.get("tzxl");
         embeddings.add(tzxl);
         //MgqEngine mgqEngine = new MgqEngine();
-        mgqEngine.insertRecord(partitionTag, vos, embeddings);
+        //mgqEngine.insertRecord(partitionTag, vo);
         return tzxl;
     }
 

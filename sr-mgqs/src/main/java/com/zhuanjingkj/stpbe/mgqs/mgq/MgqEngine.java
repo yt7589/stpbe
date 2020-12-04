@@ -1,6 +1,9 @@
 package com.zhuanjingkj.stpbe.mgqs.mgq;
 
+import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
 import io.milvus.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,19 +114,22 @@ public class MgqEngine {
         return redisTemplate.opsForValue().increment(MILVUS_ID);
     }
 
-    public long insertRecord(String partitionTag, List<VehicleCxtzVo> vos, List<List<Float>> embeddings) {
+    public long insertRecord(String partitionTag, VehicleVo vo) {
         long tzxlId = getTzxlId();
         // 插入记录
         List<Long> ids = new ArrayList<>(Arrays.asList(tzxlId));
-        VehicleCxtzVo vo = vos.get(0);
-        List<Integer> cllxfl = Arrays.asList(vo.getCllxfl());
-        List<Integer> cllxzfl = Arrays.asList(vo.getCllxzfl());
-        List<Integer> csys = Arrays.asList(vo.getCsys());
-        List<Integer> clpp = Arrays.asList(vo.getClpp());
-        List<Integer> ppcx = Arrays.asList(vo.getPpcx());
-        List<Integer> cxnk = Arrays.asList(vo.getCxnk());
-        List<Integer> ppxhms = Arrays.asList(vo.getPpxhms());
-        //List<List<Float>> embeddings = randomFloatVectors(3, REID_DIM);
+        //VehicleVo vo = vos.get(0);
+        VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
+        VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
+        VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
+        List<Integer> cllxfl = Arrays.asList(vehicleCxtzVo.getCllxfl());
+        List<Integer> cllxzfl = Arrays.asList(vehicleCxtzVo.getCllxzfl());
+        List<Integer> csys = Arrays.asList(vehicleCxtzVo.getCsys());
+        List<Integer> clpp = Arrays.asList(vehicleCxtzVo.getClpp());
+        List<Integer> ppcx = Arrays.asList(vehicleCxtzVo.getPpcx());
+        List<Integer> cxnk = Arrays.asList(vehicleCxtzVo.getCxnk());
+        List<Integer> ppxhms = Arrays.asList(vehicleCxtzVo.getPpxhms());
+        List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
         InsertParam insertParam =
                 InsertParam.create(COLLECTION_NAME)
                         .addField(FLD_CLLXFL, DataType.INT32, cllxfl)

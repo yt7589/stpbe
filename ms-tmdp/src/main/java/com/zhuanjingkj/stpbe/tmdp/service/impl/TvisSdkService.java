@@ -35,7 +35,7 @@ public class TvisSdkService implements ITvisSdkService {
             data.setStreamId("-1");
             data.setState(1);
         } else {
-            String resp = new String(reqBytes);
+            String resp = new String(respBytes);
             logger.info("resp: " + resp + "!");
             String[] arrs = resp.split("/");
             String streamId = arrs[arrs.length - 1];

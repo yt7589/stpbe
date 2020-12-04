@@ -6,18 +6,25 @@ package com.zhuanjingkj.stpbe.data.vo;
 public class VehicleCxtzVo {
     private long tzxlId;
     private int cllxfl;
+    private String cllxflCode;
     private String cllxflName;
     private int cllxzfl;
+    private String cllxzflCode;
     private String cllxzflName;
     private int csys;
+    private String csysCode;
     private String csysName;
     private int clpp;
+    private String clppCode;
     private String clppName;
     private int ppcx;
+    private String ppcxCode;
     private String ppcxName;
     private int cxnk;
+    private String cxnkCode;
     private String cxnkName;
     private int ppxhms;
+    private String ppxhmsCode;
     private String ppxhmsName;
 
     public long getTzxlId() {
@@ -138,5 +145,61 @@ public class VehicleCxtzVo {
 
     public void setPpxhmsName(String ppxhmsName) {
         this.ppxhmsName = ppxhmsName;
+    }
+
+    public String getCllxflCode() {
+        return cllxflCode;
+    }
+
+    public void setCllxflCode(String cllxflCode) {
+        this.cllxflCode = cllxflCode;
+    }
+
+    public String getCllxzflCode() {
+        return cllxzflCode;
+    }
+
+    public void setCllxzflCode(String cllxzflCode) {
+        this.cllxzflCode = cllxzflCode;
+    }
+
+    public String getCsysCode() {
+        return csysCode;
+    }
+
+    public void setCsysCode(String csysCode) {
+        this.csysCode = csysCode;
+    }
+
+    public String getClppCode() {
+        return clppCode;
+    }
+
+    public void setClppCode(String clppCode) {
+        this.clppCode = clppCode;
+    }
+
+    public String getPpcxCode() {
+        return ppcxCode;
+    }
+
+    public void setPpcxCode(String ppcxCode) {
+        this.ppcxCode = ppcxCode;
+    }
+
+    public String getCxnkCode() {
+        return cxnkCode;
+    }
+
+    public void setCxnkCode(String cxnkCode) {
+        this.cxnkCode = cxnkCode;
+    }
+
+    public String getPpxhmsCode() {
+        return ppxhmsCode;
+    }
+
+    public void setPpxhmsCode(String ppxhmsCode) {
+        this.ppxhmsCode = ppxhmsCode;
     }
 }
