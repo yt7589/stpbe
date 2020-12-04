@@ -1,8 +1,11 @@
 package com.zhuanjingkj.stpbe.tebs.mapper;
 
+import com.zhuanjingkj.stpbe.data.entity.VehicleDistribution;
 import com.zhuanjingkj.stpbe.tebs.dto.CameraDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * author by guoqiang
@@ -25,4 +28,11 @@ public interface SelectMapper {
      * @return
      */
     Long getImage(@Param("tableName")String tableName,@Param("uid")String uid);
+
+    /**
+     * 查询车辆分布情况
+     * @param date
+     * @return
+     */
+    List<VehicleDistribution> getVehicleDistribution(@Param("date")String date);
 }

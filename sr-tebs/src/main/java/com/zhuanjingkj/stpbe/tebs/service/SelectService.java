@@ -1,7 +1,10 @@
 package com.zhuanjingkj.stpbe.tebs.service;
 
+import com.zhuanjingkj.stpbe.data.entity.VehicleDistribution;
 import com.zhuanjingkj.stpbe.tebs.dto.CameraDTO;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * author by guoqiang
@@ -24,4 +27,10 @@ public interface SelectService {
      * @return
      */
     Long getImage(String tableName, String uid);
+
+    /**
+     * 查询车辆分布情况
+     * @return
+     */
+    List<VehicleDistribution> getVehicleDistribution();
 }

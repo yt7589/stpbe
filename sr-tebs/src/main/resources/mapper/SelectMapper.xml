@@ -33,4 +33,17 @@
         where
         uid = #{uid}
     </select>
+
+
+    <select id="getVehicleDistribution" resultType="com.zhuanjingkj.stpbe.data.entity.VehicleDistribution" parameterType="java.lang.String">
+        select
+        id,
+        vehicle_distribution_name as vehicleDistributionName,
+        vehicle_distribution_num as vehicleDistributionNum,
+        date
+        from
+        t_vehicle_distribution
+        where
+        date = #{date}
+    </select>
 </mapper>

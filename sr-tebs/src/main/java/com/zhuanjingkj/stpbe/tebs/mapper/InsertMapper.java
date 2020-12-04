@@ -1,8 +1,11 @@
 package com.zhuanjingkj.stpbe.tebs.mapper;
 
+import com.zhuanjingkj.stpbe.data.entity.VehicleDistribution;
 import com.zhuanjingkj.stpbe.tebs.rto.ImageRTO;
 import com.zhuanjingkj.stpbe.tebs.rto.VehicleInformationRTO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * author by guoqiang
@@ -23,4 +26,16 @@ public interface InsertMapper {
      * @param vehicleInformationRTO
      */
     void insertVehicleInfo(VehicleInformationRTO vehicleInformationRTO);
+
+    /**
+     * 插入当日新增车辆分布
+     * @param list
+     */
+    void insertVehicleDistribution(List<VehicleDistribution> list);
+
+    /**
+     * 更新当日车辆分布
+     * @param list
+     */
+    void updateVehicleDistribution(VehicleDistribution vehicleDistribution);
 }

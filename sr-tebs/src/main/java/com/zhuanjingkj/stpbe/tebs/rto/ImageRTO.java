@@ -1,6 +1,6 @@
 package com.zhuanjingkj.stpbe.tebs.rto;
 
-import com.zhuanjingkj.stpbe.data.rto.image.Image;
+import com.zhuanjingkj.stpbe.data.entity.image.Image;
 
 /**
  * author by guoqiang

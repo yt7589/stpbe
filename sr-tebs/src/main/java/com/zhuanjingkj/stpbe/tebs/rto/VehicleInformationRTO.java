@@ -1,7 +1,7 @@
 package com.zhuanjingkj.stpbe.tebs.rto;
 
 import com.zhuanjingkj.stpbe.data.rto.BaseRTO;
-import com.zhuanjingkj.stpbe.data.rto.image.VehicleInformation;
+import com.zhuanjingkj.stpbe.data.entity.image.VehicleInformation;
 
 import java.util.List;
 

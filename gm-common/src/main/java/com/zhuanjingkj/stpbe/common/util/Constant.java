@@ -7,4 +7,7 @@ package com.zhuanjingkj.stpbe.common.util;
 public class Constant {
     public static final int VIDEO_IMAGE_TYPE = 1;
     public static final int IMAGE_IMAGE_TYPE = 0;
+
+    public static final String NATIVE_VEHICLE = "本市";
+    public static final String OTHER_VEHICLE = "外埠";
 }

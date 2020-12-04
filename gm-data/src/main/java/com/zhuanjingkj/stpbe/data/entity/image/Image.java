@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.data.rto.image;
+package com.zhuanjingkj.stpbe.data.entity.image;
 
 import com.zhuanjingkj.stpbe.data.rto.BaseRTO;
 
@@ -6,7 +6,7 @@ import com.zhuanjingkj.stpbe.data.rto.BaseRTO;
  * author by guoqiang
  * date on 2020.12.02
  **/
-public class Image extends BaseRTO {
+public class Image  {
     private Long imageId;
     private String imageUrl;
     private String imagePath;

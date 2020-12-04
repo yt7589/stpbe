@@ -64,4 +64,29 @@
             )
         </foreach>
     </insert>
+
+
+    <insert id="insertVehicleDistribution" parameterType="java.util.List">
+        insert into t_vehicle_distribution
+        (
+        vehicle_distribution_name,
+        vehicle_distribution_num,
+        date
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.vehicleDistributionName},
+            #{item.vehicleDistributionNum},
+            #{item.date}
+            )
+        </foreach>
+    </insert>
+
+
+    <update id="updateVehicleDistribution" parameterType="com.zhuanjingkj.stpbe.data.entity.VehicleDistribution">
+            update t_vehicle_distribution
+            set
+            vehicle_distribution_num=#{vehicleDistributionNum,jdbcType=BIGINT}
+            where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>
