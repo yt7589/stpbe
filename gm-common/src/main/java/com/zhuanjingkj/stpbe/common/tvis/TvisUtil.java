@@ -81,6 +81,7 @@ public class TvisUtil {
         VehicleCltzxlVo vehicleCltzxlVo = null;
         for (Object veh : vehs) {
             vehJson = (JSONObject) veh;
+            vo = new VehicleVo();
             // 位置特征解析
             vehicleWztzVo = new VehicleWztzVo();
             wztzJson = vehJson.getJSONObject("WZTZ");
