@@ -26,6 +26,11 @@ public class MgqsClient implements ITvisClient {
 
     public void startup(String[] args) {
         System.out.println("启动图搜客户端......");
+
+        BrandDTO bt1 = BmyDao.getBrandDTOById(mongoTemplate,118);
+        System.out.println("##### " + bt1.getBrandId() + "---" +
+                bt1.getBrandCode() + "---" + bt1.getBrandName() + "!");
+
         // 1. 读出指定目录图片列表
         String imagePath = args[ARGS_ROOT_PATH_IDX];
         String tvisUrl = args[ARGS_TVIS_URL];
@@ -61,7 +66,7 @@ public class MgqsClient implements ITvisClient {
                 for (VehicleVo vvo : vvos) {
                     vehicleWztzVo = vvo.getVehicleWztzVo();
                     vehicleCxtzVo = vvo.getVehicleCxtzVo();
-                    brandDTO = BmyDao.getBrandDTO(mongoTemplate, vehicleCxtzVo.getClppCode());
+                    brandDTO = BmyDao.getBrandDTOByCode(mongoTemplate, vehicleCxtzVo.getClppCode());
                     clppSdk = brandDTO.getBrandId();
                     modelDTO = BmyDao.getModelDTO(mongoTemplate, vehicleCxtzVo.getPpcxCode());
                     ppcxSdk = modelDTO.getModelId();
@@ -71,16 +76,15 @@ public class MgqsClient implements ITvisClient {
                             vehicleCxtzVo.getCllxflCode(),
                             vehicleCxtzVo.getCllxzflCode());
                     VehicleCxtzVo rstVo = MgqEngine.findTopK(partitionTag, queryEmbedding, 1);
-                    System.out.println("识别结果：clpp:" + vehicleCxtzVo.getClppCode() +
-                            "---" + clppSdk + "; " +
-                            vehicleCxtzVo.getPpcxCode() + "---" + ppcxSdk + "!");
-                    System.out.println("查询结果：clpp=" + rstVo.getClpp() + "; ppcx=" +
-                            rstVo.getPpcx() + "; id=" + rstVo.getTzxlId() + "!");
+                    clppMilvus = rstVo.getClpp();
+                    ppcxMilvus = rstVo.getPpcx();
+                    if (clppSdk==clppMilvus && ppcxSdk==ppcxMilvus) {
+                        System.out.println("识别结果一致: " + f + "!");
+                    } else {
+                        System.out.println("识别结果不一致：" + f + "!");
+                    }
                 }
             }
-            // 2.2. 从图搜系统查出结果：上传图片、查出结果、删除上传图片
-            // 2.3. 二者相等则写入正确文件列表文件，并有一个网页可以浏览
-            // 2.4. 二者不相等，则写入错误列表文件，并有另一个网页可以浏览
         }
     }
 

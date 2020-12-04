@@ -8,8 +8,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 public class BmyDao {
-    public static BrandDTO getBrandDTO(MongoTemplate mongoTemplate, String brandCode) {
+    public static BrandDTO getBrandDTOByCode(MongoTemplate mongoTemplate, String brandCode) {
         Query query = Query.query(Criteria.where("brand_code").is(brandCode));
+        return mongoTemplate.findOne(query, BrandDTO.class);
+    }
+
+    public static BrandDTO getBrandDTOById(MongoTemplate mongoTemplate, int brandId) {
+        Query query = Query.query(Criteria.where("brand_id").is(brandId));
         return mongoTemplate.findOne(query, BrandDTO.class);
     }
 
