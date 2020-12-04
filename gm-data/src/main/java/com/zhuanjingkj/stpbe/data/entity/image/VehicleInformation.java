@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.data.rto.image;
+package com.zhuanjingkj.stpbe.data.entity.image;
 
 import com.zhuanjingkj.stpbe.data.rto.BaseRTO;
 
@@ -6,7 +6,7 @@ import com.zhuanjingkj.stpbe.data.rto.BaseRTO;
  * author by guoqiang
  * date on 2020.12.03
  **/
-public class VehicleInformation extends BaseRTO {
+public class VehicleInformation {
     private Long id;
     private String uid;
 

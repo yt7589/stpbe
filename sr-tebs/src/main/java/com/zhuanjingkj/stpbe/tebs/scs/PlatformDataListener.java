@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.util.Constant;
 import com.zhuanjingkj.stpbe.common.util.Utils;
-import com.zhuanjingkj.stpbe.data.rto.image.VehicleInformation;
+import com.zhuanjingkj.stpbe.data.entity.image.VehicleInformation;
 import com.zhuanjingkj.stpbe.data.rto.vehicle.MsgRTO;
 import com.zhuanjingkj.stpbe.data.rto.vehicle.ResultRTO;
 import com.zhuanjingkj.stpbe.data.rto.vehicle.VehicleInfoRTO;
@@ -15,19 +15,13 @@ import com.zhuanjingkj.stpbe.tebs.service.CreateService;
 import com.zhuanjingkj.stpbe.tebs.service.InsertService;
 import com.zhuanjingkj.stpbe.tebs.service.SelectService;
 import org.apache.commons.lang.StringUtils;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * author by guoqiang
