@@ -22,6 +22,7 @@ public class BmyDao {
         System.out.println("bmyCode: " + bmyCode + "!");
         Query bmyQuery = Query.query(Criteria.where("bmy_code").is(bmyCode + " "));
         BmyDTO bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
+        System.out.println("#### bmyDTO:" + bmyDTO + "!");
         String[] arrs = bmyDTO.getBmyName().split("-");
         bmyDTO.setYearName(arrs[arrs.length - 1]);
         return bmyDTO;
