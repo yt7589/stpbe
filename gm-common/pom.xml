@@ -38,5 +38,11 @@
             <version>2.6</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>io.milvus</groupId>
+            <artifactId>milvus-sdk-java</artifactId>
+            <version>0.9.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

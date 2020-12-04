@@ -1,8 +1,9 @@
 package com.zhuanjingkj.stpbe.mgqs;
 
 //import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
+import com.zhuanjingkj.stpbe.common.mgq.MgqEngine;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
-import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
+import com.zhuanjingkj.stpbe.mgqs.service.impl.MgqService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,8 +18,6 @@ import java.util.*;
 @EnableTransactionManagement(proxyTargetClass = true)
 @ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.*"})
 public class SrMgqsApplication {
-    @Autowired
-    private MgqEngine mgqEngine;
 
     public static void main(String[] args) {
         System.out.println("Mulvus Graph Query System v0.0.3");

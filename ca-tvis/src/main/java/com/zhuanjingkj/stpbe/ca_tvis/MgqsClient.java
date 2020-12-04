@@ -1,14 +1,27 @@
 package com.zhuanjingkj.stpbe.ca_tvis;
 
+import com.zhuanjingkj.stpbe.common.BmyDao;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
+import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.*;
 
+@Service
 public class MgqsClient implements ITvisClient {
     public final static int ARGS_ROOT_PATH_IDX = 1;
     public final static int ARGS_TVIS_URL = 2;
     public final static int ARGS_MGQS_URL = 3;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     public void startup(String[] args) {
         System.out.println("启动图搜客户端......");
@@ -33,7 +46,34 @@ public class MgqsClient implements ITvisClient {
             if (result.equals(TvisUtil.ERROR_RESPONSE)) {
                 System.out.println("识别图片失败");
             } else {
+                // SDK识别结果
+                List<VehicleVo> vvos = TvisUtil.parseTvisJson(result);
+                VehicleCxtzVo vehicleCxtzVo;
+                VehicleCltzxlVo vehicleCltzxlVo;
+                BrandDTO brandDTO = null;
+                int clppSdk = 0;
+                int clppMilvus = 0;
+                ModelDTO modelDTO = null;
+                int ppcxSdk = 0;
+                int ppcxMilvus = 0;
+                for (VehicleVo vvo : vvos) {
+                    vehicleCxtzVo = vvo.getVehicleCxtzVo();
+                    brandDTO = BmyDao.getBrandDTO(mongoTemplate, vehicleCxtzVo.getClppCode());
+                    clppSdk = brandDTO.getBrandId();
+                    modelDTO = BmyDao.getModelDTO(mongoTemplate, vehicleCxtzVo.getPpcxCode());
+                    ppcxSdk = modelDTO.getModelId();
+                    System.out.println("clpp:" + vehicleCxtzVo.getClppCode() +
+                            "---" + clppSdk + "; " +
+                            vehicleCxtzVo.getPpcxCode() + "---" + ppcxSdk + "!");
 
+
+                    List<List<Float>> queryEmbedding = new ArrayList<>();
+                    queryEmbedding.add(vvo.getVehicleCltzxlVo().getCltzxl());
+                    String partitionTag = null;
+                    //VehicleCxtzVo rstVo = mgqEngine.findTopK(partitionTag, queryEmbedding, 1);
+                    //System.out.println("查询结果：" + rstVo.getPpcx() + "; " +
+                     //       rstVo.getPpxhms() + "; id=" + rstVo.getTzxlId() + "!");
+                }
             }
             // 2.2. 从图搜系统查出结果：上传图片、查出结果、删除上传图片
             // 2.3. 二者相等则写入正确文件列表文件，并有一个网页可以浏览

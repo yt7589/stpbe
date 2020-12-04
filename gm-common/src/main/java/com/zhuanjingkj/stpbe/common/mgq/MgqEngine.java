@@ -1,5 +1,6 @@
-package com.zhuanjingkj.stpbe.mgqs.mgq;
+package com.zhuanjingkj.stpbe.common.mgq;
 
+import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
@@ -7,18 +8,13 @@ import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
 import io.milvus.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
-@Service
 public class MgqEngine {
     public final static String COLLECTION_NAME = "tvis";
     public final static String MILVUS_ID = "milvusId";
@@ -40,49 +36,15 @@ public class MgqEngine {
     // ReID特征向量维度定义
     public final static int REID_DIM = 256;
     private final static Logger logger = LoggerFactory.getLogger(MgqEngine.class);
-    private static MilvusClient client = null;
     //
     private static List<String> busCllxfl = null;
     private static List<String> carCllxfl = null;
     private static List<String> truckCllxfl = null;
     private static List<String> carCllxzfl = null;
 
-    @Autowired
-    private RedisTemplate<String, Serializable> redisTemplate;
+    private static MilvusClient client = null;
 
-    /**
-     * 在application类中调用进行初始化，供所有程序使用
-     */
-    public static void initialize() {
-        System.out.println("MgqEngine.initialize 1");
-        if (null == client) {
-            System.out.println("MgqEngine.initialize 2");
-            ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
-            client = new MilvusGrpcClient(connectParam);
-        }
-        if (null == carCllxzfl || null == carCllxfl || null == busCllxfl || null == truckCllxfl) {
-            System.out.println("MgqEngine.initialize 2.1");
-            // 客车初始化
-            busCllxfl = new ArrayList<>();
-            busCllxfl.add("11");
-            busCllxfl.add("12");
-            busCllxfl.add("13"); // 仅包括134
-            busCllxfl.add("14");
-            // 轿车初始化
-            carCllxzfl = new ArrayList<>();
-            carCllxzfl.add("131");
-            carCllxzfl.add("132");
-            carCllxzfl.add("133");
-            // 货车初始化
-            truckCllxfl = new ArrayList<>();
-            truckCllxfl.add("21");
-            truckCllxfl.add("22");
-            System.out.println("MgqEngine.initialize 3");
-        }
-        System.out.println("MgqEngine.initialize 4: truckCllxfl=" + truckCllxfl + "!");
-    }
-
-    public String getPartitionTag(String psfx, String cllxflCode, String cllxzflCode) {
+    public static String getPartitionTag(String psfx, String cllxflCode, String cllxzflCode) {
         StringBuilder partitionTag = new StringBuilder();
         if (psfx.equals("1")) {
             partitionTag.append("head_");
@@ -105,17 +67,14 @@ public class MgqEngine {
      * 从Redis中取出向量编号
      * @return
      */
-    public long getTzxlId() {
-        System.out.println("??? redisTemplat=" + redisTemplate + "!");
-        System.out.println("??? redisTemplate.opsForValue(): " + redisTemplate.opsForValue() + "!");
-        /*if (redisTemplate.opsForValue().get(MILVUS_ID) == null) {
-            redisTemplate.opsForValue().set(MILVUS_ID, 1);
-        }*/
+    public static long getTzxlId(RedisTemplate<String, Serializable> redisTemplate) {
         return redisTemplate.opsForValue().increment(MILVUS_ID);
     }
 
-    public long insertRecord(String partitionTag, VehicleVo vo) {
-        long tzxlId = getTzxlId();
+    public static long insertRecord(RedisTemplate<String,
+                            Serializable> redisTemplate,
+                             String partitionTag, VehicleVo vo) {
+        long tzxlId = getTzxlId(redisTemplate);
         // 插入记录
         List<Long> ids = new ArrayList<>(Arrays.asList(tzxlId));
         //VehicleVo vo = vos.get(0);
@@ -151,7 +110,7 @@ public class MgqEngine {
         return entityId;
     }
 
-    public VehicleCxtzVo findTopK(String partitionTag, List<List<Float>> queryEmbedding, long topK) {
+    public static VehicleCxtzVo findTopK(String partitionTag, List<List<Float>> queryEmbedding, long topK) {
         String dsl =
                 String.format(
                         "{\"bool\": {"
@@ -190,6 +149,96 @@ public class MgqEngine {
         return vo;
     }
 
+
+    /**
+     * 在application类中调用进行初始化，供所有程序使用
+     */
+    public static void initialize() {
+        System.out.println("MgqEngine.initialize 1");
+        if (null == client) {
+            System.out.println("MgqEngine.initialize 2");
+            ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
+            client = new MilvusGrpcClient(connectParam);
+        }
+        if (null == carCllxzfl || null == carCllxfl || null == busCllxfl || null == truckCllxfl) {
+            System.out.println("MgqEngine.initialize 2.1");
+            // 客车初始化
+            busCllxfl = new ArrayList<>();
+            busCllxfl.add("11");
+            busCllxfl.add("12");
+            busCllxfl.add("13"); // 仅包括134
+            busCllxfl.add("14");
+            // 轿车初始化
+            carCllxzfl = new ArrayList<>();
+            carCllxzfl.add("131");
+            carCllxzfl.add("132");
+            carCllxzfl.add("133");
+            // 货车初始化
+            truckCllxfl = new ArrayList<>();
+            truckCllxfl.add("21");
+            truckCllxfl.add("22");
+            System.out.println("MgqEngine.initialize 3");
+        }
+        System.out.println("MgqEngine.initialize 4: truckCllxfl=" + truckCllxfl + "!");
+    }
+
+    /**
+     * 初始化Milvus系统，创建Collection和Partition，只需要调用一次，
+     * 再次调用会删除所有数据！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+     */
+    public static void initMilvus() {
+        ConnectParam connectParam = new ConnectParam.Builder().
+                withHost(AppConst.MILVUS_SERVER_ADDR).
+                withPort(AppConst.MILVUS_SERVER_PORT).build();
+        client = new MilvusGrpcClient(connectParam);
+        // 创建Collection
+        final String collectionName = COLLECTION_NAME;
+        if (client.listCollections().contains(collectionName)) {
+            client.dropCollection(collectionName);
+        }
+        logger.info("删除已有Collection");
+        final int dimension = REID_DIM; // ReID特征向量维数
+        CollectionMapping collectionMapping =
+                CollectionMapping.create(collectionName)
+                        .addField(FLD_CLLXFL, DataType.INT32) // 车辆类型分类
+                        .addField(FLD_CLLXZFL, DataType.INT32) // 车辆类型子分类
+                        .addField(FLD_CSYS, DataType.INT32) // 车身颜色
+                        .addField(FLD_CLPP, DataType.INT32) // 车辆品牌
+                        .addField(FLD_PPCX, DataType.INT32) // 品牌车型
+                        .addField(FLD_CXNK, DataType.INT32) // 车型年款
+                        .addField(FLD_PPXHMS, DataType.INT32) // 品牌型号描述
+                        .addVectorField("embedding", DataType.VECTOR_FLOAT, dimension)
+                        .setParamsInJson("{\"segment_row_limit\": 4096, \"auto_id\": false}");
+        client.createCollection(collectionMapping);
+        // Check the existence of collection
+        if (!client.hasCollection(collectionName)) {
+            throw new AssertionError("创建Collection失败：Collection not found!");
+        }
+        // 生成partition：目前共分为6个，分别为：
+        // head_truck, head_bus, head_car, tail_truck, tail_bus, tail_car
+        createPartitionMilvus(COLLECTION_NAME, PN_HEAD_CAR);
+        createPartitionMilvus(COLLECTION_NAME, PN_HEAD_BUS);
+        createPartitionMilvus(COLLECTION_NAME, PN_HEAD_TRUCK);
+        createPartitionMilvus(COLLECTION_NAME, PN_TAIL_CAR);
+        createPartitionMilvus(COLLECTION_NAME, PN_TAIL_BUS);
+        createPartitionMilvus(COLLECTION_NAME, PN_TAIL_TRUCK);
+        logger.info("创建分区成功！");
+    }
+
+    public static void createPartitionMilvus(String collectionName, String partitionTag) {
+        client.createPartition(collectionName, partitionTag);
+        if (!client.hasPartition(collectionName, partitionTag)) {
+            throw new AssertionError("创建" + partitionTag + "分区失败：Partition not found!");
+        }
+    }
+
+
+
+
+
+
+
+
     public static void demo() {
         logger.info("Milvus Graph Query Engine Demo");
         ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
@@ -200,7 +249,7 @@ public class MgqEngine {
             client.dropCollection(collectionName);
         }
         logger.info("删除已有Collection");
-        final int dimension = REID_DIM; // ReID特征向量维数
+        final int dimension = 256; // ReID特征向量维数
         CollectionMapping collectionMapping =
                 CollectionMapping.create(collectionName)
                         .addField("CLLXFL", DataType.INT32) // 车辆类型分类
@@ -322,53 +371,4 @@ public class MgqEngine {
         return vectors;
     }
 
-
-
-    /**
-     * 初始化Milvus系统，创建Collection和Partition，只需要调用一次，
-     * 再次调用会删除所有数据！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-     */
-    public static void initMilvus() {
-        ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
-        client = new MilvusGrpcClient(connectParam);
-        // 创建Collection
-        final String collectionName = COLLECTION_NAME;
-        if (client.listCollections().contains(collectionName)) {
-            client.dropCollection(collectionName);
-        }
-        logger.info("删除已有Collection");
-        final int dimension = REID_DIM; // ReID特征向量维数
-        CollectionMapping collectionMapping =
-                CollectionMapping.create(collectionName)
-                        .addField(FLD_CLLXFL, DataType.INT32) // 车辆类型分类
-                        .addField(FLD_CLLXZFL, DataType.INT32) // 车辆类型子分类
-                        .addField(FLD_CSYS, DataType.INT32) // 车身颜色
-                        .addField(FLD_CLPP, DataType.INT32) // 车辆品牌
-                        .addField(FLD_PPCX, DataType.INT32) // 品牌车型
-                        .addField(FLD_CXNK, DataType.INT32) // 车型年款
-                        .addField(FLD_PPXHMS, DataType.INT32) // 品牌型号描述
-                        .addVectorField("embedding", DataType.VECTOR_FLOAT, dimension)
-                        .setParamsInJson("{\"segment_row_limit\": 4096, \"auto_id\": false}");
-        client.createCollection(collectionMapping);
-        // Check the existence of collection
-        if (!client.hasCollection(collectionName)) {
-            throw new AssertionError("创建Collection失败：Collection not found!");
-        }
-        // 生成partition：目前共分为6个，分别为：
-        // head_truck, head_bus, head_car, tail_truck, tail_bus, tail_car
-        createPartitionMilvus(COLLECTION_NAME, PN_HEAD_CAR);
-        createPartitionMilvus(COLLECTION_NAME, PN_HEAD_BUS);
-        createPartitionMilvus(COLLECTION_NAME, PN_HEAD_TRUCK);
-        createPartitionMilvus(COLLECTION_NAME, PN_TAIL_CAR);
-        createPartitionMilvus(COLLECTION_NAME, PN_TAIL_BUS);
-        createPartitionMilvus(COLLECTION_NAME, PN_TAIL_TRUCK);
-        logger.info("创建分区成功！");
-    }
-
-    private static void createPartitionMilvus(String collectionName, String partitionTag) {
-        client.createPartition(collectionName, partitionTag);
-        if (!client.hasPartition(collectionName, partitionTag)) {
-            throw new AssertionError("创建" + partitionTag + "分区失败：Partition not found!");
-        }
-    }
 }

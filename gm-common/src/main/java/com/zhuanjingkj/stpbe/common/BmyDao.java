@@ -14,12 +14,12 @@ public class BmyDao {
     }
 
     public static ModelDTO getModelDTO(MongoTemplate mongoTemplate, String modelCode) {
-        Query modelQuery = Query.query(Criteria.where("model_code").is("1003100001"));
+        Query modelQuery = Query.query(Criteria.where("model_code").is(modelCode));
         return mongoTemplate.findOne(modelQuery, ModelDTO.class);
     }
 
     public static BmyDTO getBmyDTO(MongoTemplate mongoTemplate, String bmyCode) {
-        Query bmyQuery = Query.query(Criteria.where("bmy_code").is("1002100005101" + " "));
+        Query bmyQuery = Query.query(Criteria.where("bmy_code").is(bmyCode + " "));
         BmyDTO bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
         String[] arrs = bmyDTO.getBmyName().split("-");
         bmyDTO.setYearName(arrs[arrs.length - 1]);

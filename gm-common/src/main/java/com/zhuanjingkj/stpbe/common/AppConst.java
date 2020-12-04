@@ -15,4 +15,7 @@ public class AppConst {
     public final static String TVIS_SERVER_URL = "http://192.168.2.68:6666/vehicle/function/recognition";
     public final static String VIDEO_TVIS_ADDR = "192.168.2.68";
     public final static short VIDEO_TVIS_PORT = 3030;
+    // Milvus图搜相关
+    public final static String MILVUS_SERVER_ADDR = "192.168.2.15";
+    public final static short MILVUS_SERVER_PORT = 19530;
 }

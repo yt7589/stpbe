@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.BmyDao;
+import com.zhuanjingkj.stpbe.common.mgq.MgqEngine;
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.dto.*;
@@ -11,8 +12,9 @@ import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
-import com.zhuanjingkj.stpbe.mgqs.mgq.MgqEngine;
 import com.zhuanjingkj.stpbe.mgqs.service.IMgqService;
+import io.milvus.client.ConnectParam;
+import io.milvus.client.MilvusGrpcClient;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -39,8 +41,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class MgqService implements IMgqService {
-    @Autowired
-    private MgqEngine mgqEngine;
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
     @Autowired
@@ -96,7 +96,7 @@ public class MgqService implements IMgqService {
                     vehicleWztzVo = vo.getVehicleWztzVo();
                     vehicleCxtzVo = vo.getVehicleCxtzVo();
                     vehicleCltzxlVo = vo.getVehicleCltzxlVo();
-                    partitionTag = mgqEngine.getPartitionTag(
+                    partitionTag = MgqEngine.getPartitionTag(
                             vehicleWztzVo.getPsfx(),
                             vehicleCxtzVo.getCllxflCode(),
                             vehicleCxtzVo.getCllxzflCode()
@@ -108,7 +108,7 @@ public class MgqService implements IMgqService {
                     bmyDTO = BmyDao.getBmyDTO(mongoTemplate, vehicleCxtzVo.getCxnkCode());
                     vehicleCxtzVo.setCxnk(bmyDTO.getBmyId());
                     vehicleCxtzVo.setPpxhms(bmyDTO.getBmyId());
-                    mgqEngine.insertRecord(partitionTag, vo);
+                    MgqEngine.insertRecord(redisTemplate, partitionTag, vo);
                 }
             }
             sum++;
@@ -117,6 +117,13 @@ public class MgqService implements IMgqService {
             }
         }
     }
+
+
+
+
+
+
+
 
     private List<Float> generateTzxl(String vecStr) {
         List<Float> tzxl = new ArrayList<>();
@@ -167,7 +174,7 @@ public class MgqService implements IMgqService {
 
 
     public void runExcemple() {
-        System.out.println("Begin running in new thread ......");
+        /*System.out.println("Begin running in new thread ......");
         String partitionTag = MgqEngine.PN_HEAD_TRUCK;
         int seq = 1;
         List<Float> tzxl_1 = insertOneReIdVec(partitionTag, seq++);
@@ -187,7 +194,7 @@ public class MgqService implements IMgqService {
         queryEmbedding.add(tzxl_2);
         VehicleCxtzVo rstVo = mgqEngine.findTopK(partitionTag, queryEmbedding, 1);
         System.out.println("查询结果：" + rstVo.getPpcx() + "; " +
-                rstVo.getPpxhms() + "; id=" + rstVo.getTzxlId() + "!");
+                rstVo.getPpxhms() + "; id=" + rstVo.getTzxlId() + "!");*/
     }
 
     private Map<String, Object> getReIDInfo(int seq) {
@@ -237,11 +244,12 @@ public class MgqService implements IMgqService {
     }
 
     private List<Float> createRandomTzxl() {
-        List<Float> tzxl = new ArrayList<>();
+        /*List<Float> tzxl = new ArrayList<>();
         Random random = new Random();
         for (int i=0; i<MgqEngine.REID_DIM; i++) {
             tzxl.add(random.nextFloat());
         }
-        return tzxl;
+        return tzxl;*/
+        return null;
     }
 }
