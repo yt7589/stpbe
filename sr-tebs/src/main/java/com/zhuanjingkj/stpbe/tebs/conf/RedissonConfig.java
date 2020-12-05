@@ -27,8 +27,6 @@ public class RedissonConfig {
     public RedissonClient getRedisson(){
 
         Config config = new Config();
-        System.out.println("aaaa:"+"redis://" + host + ":" + port);
-        System.out.println("bbbbb:");
         config.useSingleServer().setAddress("redis://" + host + ":" + port);
         //添加主从配置
 //        config.useMasterSlaveServers().setMasterAddress("").setPassword("").addSlaveAddress(new String[]{"",""});

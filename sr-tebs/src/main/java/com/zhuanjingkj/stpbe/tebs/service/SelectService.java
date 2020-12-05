@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tebs.service;
 
 import com.zhuanjingkj.stpbe.data.entity.VehicleDistribution;
+import com.zhuanjingkj.stpbe.data.entity.VehicleFeatureList;
 import com.zhuanjingkj.stpbe.tebs.dto.CameraDTO;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,4 +34,10 @@ public interface SelectService {
      * @return
      */
     List<VehicleDistribution> getVehicleDistribution();
+
+    /**
+     * 获取车辆特征参数表
+     * @return
+     */
+    VehicleFeatureList getVehicleFeatureList();
 }

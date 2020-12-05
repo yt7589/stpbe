@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tebs.service.Impl;
 
 import com.zhuanjingkj.stpbe.data.entity.VehicleDistribution;
+import com.zhuanjingkj.stpbe.data.entity.VehicleFeatureList;
 import com.zhuanjingkj.stpbe.tebs.dto.CameraDTO;
 import com.zhuanjingkj.stpbe.tebs.mapper.SelectMapper;
 import com.zhuanjingkj.stpbe.tebs.service.SelectService;
@@ -37,5 +38,18 @@ public class SelectServiceImpl implements SelectService {
         String dateStr = simpleDateFormat.format(date);
         List<VehicleDistribution> list = selectMapper.getVehicleDistribution(dateStr);
         return list;
+    }
+
+    @Override
+    public VehicleFeatureList getVehicleFeatureList() {
+        VehicleFeatureList vehicleFeatureList = new VehicleFeatureList();
+        vehicleFeatureList.setLicensePlateColorList(selectMapper.getLicensePlateColor());
+        vehicleFeatureList.setLicensePlateTypeList(selectMapper.getLicensePlateType());
+        vehicleFeatureList.setVehicleColorList(selectMapper.getVehicleColor());
+        vehicleFeatureList.setVehicleDisplayGoodsList(selectMapper.getVehicleDisplayGoods());
+        vehicleFeatureList.setVehicleSubTypeList(selectMapper.getVehicleSubType());
+        vehicleFeatureList.setVehicleTypeList(selectMapper.getVehicleType());
+        vehicleFeatureList.setVehicleWindowPasteColorList(selectMapper.getVehicleWindowPasteColor());
+        return vehicleFeatureList;
     }
 }
