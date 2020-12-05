@@ -84,9 +84,9 @@ public class MgqService implements IMgqService {
                     );
                     brandDTO = BmyDao.getBrandDTOByCode(mongoTemplate, vehicleCxtzVo.getClppCode());
                     vehicleCxtzVo.setClpp(brandDTO.getBrandId());
-                    modelDTO = BmyDao.getModelDTO(mongoTemplate, vehicleCxtzVo.getPpcxCode());
+                    modelDTO = BmyDao.getModelDTOByCode(mongoTemplate, vehicleCxtzVo.getPpcxCode());
                     vehicleCxtzVo.setPpcx(modelDTO.getModelId());
-                    bmyDTO = BmyDao.getBmyDTO(mongoTemplate, vehicleCxtzVo.getCxnkCode());
+                    bmyDTO = BmyDao.getBmyDTOByCode(mongoTemplate, vehicleCxtzVo.getCxnkCode());
                     vehicleCxtzVo.setCxnk(bmyDTO.getBmyId());
                     vehicleCxtzVo.setPpxhms(bmyDTO.getBmyId());
                     MgqEngine.insertRecord(redisTemplate, partitionTag, vo);

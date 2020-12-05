@@ -18,12 +18,17 @@ public class BmyDao {
         return mongoTemplate.findOne(query, BrandDTO.class);
     }
 
-    public static ModelDTO getModelDTO(MongoTemplate mongoTemplate, String modelCode) {
+    public static ModelDTO getModelDTOByCode(MongoTemplate mongoTemplate, String modelCode) {
         Query modelQuery = Query.query(Criteria.where("model_code").is(modelCode));
         return mongoTemplate.findOne(modelQuery, ModelDTO.class);
     }
 
-    public static BmyDTO getBmyDTO(MongoTemplate mongoTemplate, String bmyCode) {
+    public static ModelDTO getModelDTOById(MongoTemplate mongoTemplate, int modelId) {
+        Query query = Query.query(Criteria.where("model_id").is(modelId));
+        return mongoTemplate.findOne(query, ModelDTO.class);
+    }
+
+    public static BmyDTO getBmyDTOByCode(MongoTemplate mongoTemplate, String bmyCode) {
         System.out.println("bmyCode: " + bmyCode + "!");
         Query bmyQuery = Query.query(Criteria.where("bmy_code").is(bmyCode + " "));
         BmyDTO bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
@@ -32,6 +37,14 @@ public class BmyDao {
             bmyQuery = Query.query(Criteria.where("bmy_code").is(bmyCode));
             bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
         }
+        String[] arrs = bmyDTO.getBmyName().split("-");
+        bmyDTO.setYearName(arrs[arrs.length - 1]);
+        return bmyDTO;
+    }
+
+    public static BmyDTO getBmyDTOById(MongoTemplate mongoTemplate, int bmyId) {
+        Query bmyQuery = Query.query(Criteria.where("bmy_id").is(bmyId));
+        BmyDTO bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
         String[] arrs = bmyDTO.getBmyName().split("-");
         bmyDTO.setYearName(arrs[arrs.length - 1]);
         return bmyDTO;
