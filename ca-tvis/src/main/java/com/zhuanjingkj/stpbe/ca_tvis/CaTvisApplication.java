@@ -25,6 +25,10 @@ public class CaTvisApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+    	int iDebug = 1;
+    	if (1 == iDebug) {
+    		return;
+		}
     	String cmd = args[0];
     	if (cmd.equals("mgqs")) {
 			getMgqsClient().startup(args);
