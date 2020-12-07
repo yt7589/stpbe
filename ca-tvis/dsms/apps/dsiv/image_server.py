@@ -18,7 +18,7 @@ class ImageServer(object):
         bmy_id_to_img_file_idx = self.read_bmy_id_to_img_file_idx()
         bmy_id = 188
         print('idx={0};'.format(bmy_id_to_img_file_idx[bmy_id]))
-        print('image_file: {0};'.format(bmy_id_to_img_files[bmy_id_to_img_file_idx[bmy_id]]))
+        print('image_file: {0};'.format(bmy_id_to_img_files[bmy_id][bmy_id_to_img_file_idx[bmy_id]]))
         app.run(
             host = '0.0.0.0',
             port = 5000
