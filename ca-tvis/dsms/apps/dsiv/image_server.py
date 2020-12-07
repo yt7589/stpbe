@@ -14,7 +14,10 @@ class ImageServer(object):
         self.refl = ''
         MMongoDb.initialize()
         #self.read_bmy_id_to_img_files()
-        self.initialize_bmy_id_to_img_file_idx()
+        #self.initialize_bmy_id_to_img_file_idx()
+        bmy_id_to_img_file_idx = self.read_bmy_id_to_img_file_idx()
+        for k, v in bmy_id_to_img_file_idx:
+            print('### {0}={1};'.format(k, v))
         app.run(
             host = '0.0.0.0',
             port = 5000
@@ -39,6 +42,16 @@ class ImageServer(object):
 
     def read_bmy_id_to_img_file_idx(self):
         pass
+
+    def read_bmy_id_to_img_file_idx(self):
+        bmy_id_to_img_file_idx = {}
+        with open('./bmy_id_to_img_file_idx.txt', 'r', encoding='utf-8') as fd:
+            for line in fd:
+                line = line.strip()
+                arrs = line.split(':')
+                bmy_id_to_img_file_idx[arrs[0]] = arrs[1]
+        return bmy_id_to_img_file_idx
+
 
     def initialize_bmy_id_to_img_file_idx(self):
         '''
