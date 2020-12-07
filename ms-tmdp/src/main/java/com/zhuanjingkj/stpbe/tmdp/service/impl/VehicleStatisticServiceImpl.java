@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.zhuanjingkj.stpbe.data.dto.Code;
+import com.zhuanjingkj.stpbe.data.entity.VehicleJoinType;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
 import com.zhuanjingkj.stpbe.tmdp.exception.ServiceException;
 import com.zhuanjingkj.stpbe.tmdp.mapper.VehicleStatisticMapper;
@@ -134,5 +135,10 @@ public class VehicleStatisticServiceImpl implements VehicleStatisticService {
         vehiclePassedNumberDTO.setCurrentMonthPassedNumber(currentMonthPassedNumber);
         vehiclePassedNumberDTO.setDailyMean(dailyMean);
         return vehiclePassedNumberDTO;
+    }
+
+    @Override
+    public List<VehicleJoinType> getVehicleJoinType() {
+        return vehicleStatisticMapper.getVehicleJoinType();
     }
 }

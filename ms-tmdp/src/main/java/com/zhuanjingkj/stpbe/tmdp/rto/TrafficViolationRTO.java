@@ -10,7 +10,7 @@ public class TrafficViolationRTO extends TrafficViolation {
     private int pageNum = 1;
     private int pageSize = 10;
 
-    private String violationType;
+    private String violationJoinTypeName;
 
     private String dateMin;
     private String dateMax;
@@ -25,15 +25,13 @@ public class TrafficViolationRTO extends TrafficViolation {
         this.violationTypeName = violationTypeName;
     }
 
-    public String getViolationType() {
-        return violationType;
+    public String getViolationJoinTypeName() {
+        return violationJoinTypeName;
     }
 
-    public void setViolationType(String violationType) {
-        this.violationType = violationType;
+    public void setViolationJoinTypeName(String violationJoinTypeName) {
+        this.violationJoinTypeName = violationJoinTypeName;
     }
-
-
 
     public String getDateMin() {
         return dateMin;

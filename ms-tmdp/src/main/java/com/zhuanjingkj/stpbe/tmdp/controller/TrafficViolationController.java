@@ -3,11 +3,14 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.entity.TrafficViolationType;
+import com.zhuanjingkj.stpbe.data.entity.VehicleJoinType;
 import com.zhuanjingkj.stpbe.tmdp.dto.res.TrafficViolationListDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.TrafficViolationRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.TrafficViolationService;
+import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +29,9 @@ public class TrafficViolationController {
 
     @Autowired
     private TrafficViolationService trafficViolationService;
+
+    @Autowired
+    private VehicleStatisticService vehicleStatisticService;
 
     @GetMapping()
     public ResultDTO<Object> getTrafficViolationInfo() {
@@ -133,5 +139,18 @@ public class TrafficViolationController {
     public ResultDTO<PageInfo> getTrafficViolationList(@RequestBody TrafficViolationRTO trafficViolationRTO) {
         PageInfo<TrafficViolationDTO> pageInfo = trafficViolationService.getTrafficViolation(trafficViolationRTO);
         return ResultDTO.success(pageInfo);
+    }
+
+
+    @GetMapping("/vehicle/join/type")
+    public ResultDTO<List> getVehicleJoinType() {
+        List<VehicleJoinType> list = vehicleStatisticService.getVehicleJoinType();
+        return ResultDTO.success(list);
+    }
+
+    @GetMapping("/type")
+    public ResultDTO<List> getTrafficViolationType() {
+        List<TrafficViolationType> list = trafficViolationService.getTrafficViolationType();
+        return ResultDTO.success(list);
     }
 }

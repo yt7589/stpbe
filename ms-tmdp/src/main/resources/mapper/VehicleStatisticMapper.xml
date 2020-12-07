@@ -132,4 +132,13 @@
             date=#{date}
         </set>
     </update>
+
+    <select id="getVehicleJoinType" resultType="com.zhuanjingkj.stpbe.data.entity.VehicleJoinType" >
+        select
+        id,
+        vehicle_join_type_name as violationJoinTypeName
+        from
+        t_vehicle_join_type
+
+    </select>
 </mapper>

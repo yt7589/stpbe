@@ -101,4 +101,13 @@
 
     </select>
 
+
+    <select id="getTrafficViolationType" resultType="com.zhuanjingkj.stpbe.data.entity.TrafficViolationType">
+        select
+        id,
+        violation_type_name as violationTypeName
+        from
+        t_traffic_violation_type
+    </select>
+
 </mapper>
