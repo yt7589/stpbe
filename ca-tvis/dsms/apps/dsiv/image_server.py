@@ -15,6 +15,8 @@ class ImageServer(object):
         MMongoDb.initialize()
         #self.read_bmy_id_to_img_files()
         bmy_ids = CBmy.get_bmy_ids()
+        for bmy_id in bmy_ids:
+            print('bmy_id: {0};'.format(bmy_id))
         app.run(
             host = '0.0.0.0',
             port = 5000
