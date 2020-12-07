@@ -32,7 +32,7 @@ class ImageServer(object):
                 line = line.strip()
                 arrs = line.split('*')
                 img_file = arrs[0]
-                bmy_id = arrs[1]
+                bmy_id = int(arrs[1])
                 if bmy_id not in bmy_id_to_img_files:
                     bmy_id_to_img_files[bmy_id] = []
                 bmy_id_to_img_files[bmy_id].append(img_file)
@@ -50,7 +50,7 @@ class ImageServer(object):
             for line in fd:
                 line = line.strip()
                 arrs = line.split(':')
-                bmy_id_to_img_file_idx[arrs[0]] = arrs[1]
+                bmy_id_to_img_file_idx[int(arrs[0])] = int(arrs[1])
         return bmy_id_to_img_file_idx
 
 
