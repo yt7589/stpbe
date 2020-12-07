@@ -50,4 +50,50 @@
         limit 2
     </select>
 
+    <select id="getTrafficViolation" resultType="com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO" parameterType="com.zhuanjingkj.stpbe.data.entity.TrafficViolation">
+        SELECT
+        t_traffic_violation.id as id,
+        t_traffic_violation.location as location,
+        t_traffic_violation.vehicle_type as vehicleType,
+        t_traffic_violation.violation_type_id as violationTypeId,
+        t_traffic_violation.traffic_violation_time as trafficViolationTime,
+        t_traffic_violation.vehicle_plate as vehiclePlate,
+        t_traffic_violation.is_native as isNative,
+        t_traffic_violation_type.violation_type_name as violationTypeName
+        FROM
+        t_traffic_violation,
+        t_traffic_violation_type
+        WHERE
+        t_traffic_violation.violation_type_id = t_traffic_violation_type.id
+        <if test="dateMin != null and dateMin != ''">
+            and t_traffic_violation.traffic_violation_time &gt;=#{dateMin}
+        </if>
+
+        <if test="dateMax != null and dateMax != ''">
+            and t_traffic_violation.traffic_violation_time &lt;=#{dateMax}
+        </if>
+
+        <if test="isNative != null ">
+            and t_traffic_violation.is_native=#{isNative}
+        </if>
+
+        <if test="vehicleType != null and vehicleType != ''">
+            and t_traffic_violation.vehicle_type=#{vehicleType}
+        </if>
+
+        <if test="violationTypeName != null and violationTypeName != ''">
+            and t_traffic_violation_type.violation_type_name=#{violationTypeName}
+        </if>
+
+        <if test="vehiclePlate != null and vehiclePlate != ''">
+            and t_traffic_violation.vehicle_plate=#{vehiclePlate}
+        </if>
+
+        <if test="location != null and location != ''">
+            and t_traffic_violation.location like concat("%",#{location},"%")
+        </if>
+        order by trafficViolationTime desc
+
+    </select>
+
 </mapper>
