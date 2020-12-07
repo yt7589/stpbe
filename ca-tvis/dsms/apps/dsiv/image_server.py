@@ -47,7 +47,7 @@ class ImageServer(object):
         with open('./bmy_id_to_img_file_idx.txt', 'w+', encoding='utf-8') as fd:
             for bmy_id in bmy_ids:
                 print('bmy_id: {0};'.format(bmy_id))
-                fd.write('{0}:{1}\r\n'.format(bmy_id, 0))
+                fd.write('{0}:{1}\r\n'.format(bmy_id['bmy_id'], 0))
 
     @staticmethod
     def display_image():
