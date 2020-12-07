@@ -16,7 +16,7 @@ class ImageServer(object):
         #self.read_bmy_id_to_img_files()
         #self.initialize_bmy_id_to_img_file_idx()
         bmy_id_to_img_file_idx = self.read_bmy_id_to_img_file_idx()
-        for k, v in bmy_id_to_img_file_idx:
+        for k, v in bmy_id_to_img_file_idx.items():
             print('### {0}={1};'.format(k, v))
         app.run(
             host = '0.0.0.0',
