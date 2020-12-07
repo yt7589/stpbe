@@ -36,11 +36,10 @@ class ImageServer(object):
                 bmy_id = int(arrs[1])
                 if bmy_id not in bmy_id_to_img_files:
                     bmy_id_to_img_files[bmy_id] = []
-                bmy_id_to_img_files[bmy_id].append(img_file)
+                bmy_id_to_img_files[bmy_id].append([img_file])
                 num += 1
                 if num % 10000 == 0:
                     print('已经处理{0}条记录...'.format(num))
-                    return bmy_id_to_img_files
         return bmy_id_to_img_files
 
     def read_bmy_id_to_img_file_idx(self):
