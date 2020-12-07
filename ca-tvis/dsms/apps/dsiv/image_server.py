@@ -6,11 +6,13 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from flask import request
 import urllib
+from apps.dsiv.model.m_mongodb import MMongoDb
 from apps.dsiv.controller.c_bmy import CBmy
 
 class ImageServer(object):
     def __init__(self):
         self.refl = ''
+        MMongoDb.initialize()
         #self.read_bmy_id_to_img_files()
         bmy_ids = CBmy.get_bmy_ids()
         app.run(

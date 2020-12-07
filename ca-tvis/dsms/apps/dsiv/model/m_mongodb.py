@@ -36,6 +36,6 @@ class MMongoDb(object):
         return row
 
     @staticmethod
-    def _initialize():
+    def initialize():
         mongo_client = pymongo.MongoClient('mongodb://localhost:27017/')
         MMongoDb.db = mongo_client['stpdb']
