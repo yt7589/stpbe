@@ -14,9 +14,7 @@ class ImageServer(object):
         self.refl = ''
         MMongoDb.initialize()
         #self.read_bmy_id_to_img_files()
-        bmy_ids = CBmy.get_bmy_ids()
-        for bmy_id in bmy_ids:
-            print('bmy_id: {0};'.format(bmy_id))
+        self.initialize_bmy_id_to_img_file_idx()
         app.run(
             host = '0.0.0.0',
             port = 5000
@@ -42,9 +40,14 @@ class ImageServer(object):
     def read_bmy_id_to_img_file_idx(self):
         pass
 
-    def initialize_bmy_id_img_file_idx(self):
+    def initialize_bmy_id_to_img_file_idx(self):
         '''
         '''
+        bmy_ids = CBmy.get_bmy_ids()
+        with open('./bmy_id_to_img_file_idx.txt', 'w+', encoding='utf-8') as fd:
+            for bmy_id in bmy_ids:
+                print('bmy_id: {0};'.format(bmy_id))
+                fd.write('{0}:{1}\r\n'.format(bmy_id, 0))
 
     @staticmethod
     def display_image():
