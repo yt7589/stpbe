@@ -17,6 +17,7 @@ class ImageServer(object):
         #self.initialize_bmy_id_to_img_file_idx()
         bmy_id_to_img_file_idx = self.read_bmy_id_to_img_file_idx()
         bmy_id = 188
+        print('idx={0};'.format(bmy_id_to_img_file_idx[bmy_id]))
         print('image_file: {0};'.format(bmy_id_to_img_files[bmy_id_to_img_file_idx[bmy_id]]))
         app.run(
             host = '0.0.0.0',
@@ -39,6 +40,7 @@ class ImageServer(object):
                 num += 1
                 if num % 10000 == 0:
                     print('已经处理{0}条记录...'.format(num))
+                    return bmy_id_to_img_files
         return bmy_id_to_img_files
 
     def read_bmy_id_to_img_file_idx(self):
