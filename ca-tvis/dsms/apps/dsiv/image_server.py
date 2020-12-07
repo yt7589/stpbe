@@ -11,6 +11,10 @@ class ImageServer(object):
     def __init__(self):
         self.refl = ''
         self.read_bmy_id_to_img_files()
+        app.run(
+            host = '0.0.0.0',
+            port = 5000
+        )
 
     def read_bmy_id_to_img_files(self):
         num = 0
@@ -48,9 +52,3 @@ CORS(app)
 @app.route('/displayImage', methods=['GET'])
 def display_image():
     return ImageServer.display_image()
-
-
-app.run(
-    host = '0.0.0.0',
-    port = 5000
-)
