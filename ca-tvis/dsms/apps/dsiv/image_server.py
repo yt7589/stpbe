@@ -13,12 +13,14 @@ class ImageServer(object):
     def __init__(self):
         self.refl = ''
         MMongoDb.initialize()
-        bmy_id_to_img_files = self.read_bmy_id_to_img_files()
+        #bmy_id_to_img_files = self.read_bmy_id_to_img_files()
         #self.initialize_bmy_id_to_img_file_idx()
         bmy_id_to_img_file_idx = self.read_bmy_id_to_img_file_idx()
         bmy_id = 188
-        print('idx={0};'.format(bmy_id_to_img_file_idx[bmy_id]))
-        print('image_file: {0};'.format(bmy_id_to_img_files[bmy_id][bmy_id_to_img_file_idx[bmy_id]]))
+        bmy_id_to_img_file_idx[bmy_id] = 518
+        self.save_bmy_id_to_img_file_idx(bmy_id_to_img_file_idx)
+        #print('idx={0};'.format(bmy_id_to_img_file_idx[bmy_id]))
+        #print('image_file: {0};'.format(bmy_id_to_img_files[bmy_id][bmy_id_to_img_file_idx[bmy_id]]))
         app.run(
             host = '0.0.0.0',
             port = 5000
@@ -38,12 +40,14 @@ class ImageServer(object):
                     bmy_id_to_img_files[bmy_id] = []
                 bmy_id_to_img_files[bmy_id].append([img_file])
                 num += 1
-                if num % 10000 == 0:
+                if num % 1000000 == 0:
                     print('已经处理{0}条记录...'.format(num))
         return bmy_id_to_img_files
 
-    def read_bmy_id_to_img_file_idx(self):
-        pass
+    def save_bmy_id_to_img_file_idx(self, bmy_id_to_img_file_idx):
+        with open('./bmy_id_to_img_file_idx.txt', 'w', encoding='utf-8') as fd:
+            for k, v in bmy_id_to_img_file_idx.items():
+                fd.write('{0}:{1}\r\n'.format(k, v))
 
     def read_bmy_id_to_img_file_idx(self):
         bmy_id_to_img_file_idx = {}
