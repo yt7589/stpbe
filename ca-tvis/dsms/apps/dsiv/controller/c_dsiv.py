@@ -3,6 +3,7 @@ import urllib
 import flask
 from flask import request
 from apps.dsiv.controller.c_bmy import CBmy
+from apps.dsiv.controller.flask_web import FlaskWeb
 
 class CDsiv(object):
     bmy_id_to_img_files = None
@@ -11,7 +12,9 @@ class CDsiv(object):
     @staticmethod
     def get_bmy_id_example_img_file():
         bmy_id = int(urllib.parse.unquote(request.args.get('bmyId')))
-        return CDsiv.bmy_id_to_img_files[bmy_id][CDsiv.bmy_id_to_img_file_idx[bmy_id]]
+        img_file = CDsiv.bmy_id_to_img_files[bmy_id][CDsiv.bmy_id_to_img_file_idx[bmy_id]]
+        resp = {'img_file': img_file}
+        return FlaskWeb.generate_response()
 
     @staticmethod
     def display_image():
