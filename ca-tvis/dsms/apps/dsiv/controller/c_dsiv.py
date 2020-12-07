@@ -13,7 +13,8 @@ class CDsiv(object):
     def get_bmy_id_example_img_file():
         bmy_id = int(urllib.parse.unquote(request.args.get('bmyId')))
         img_file = CDsiv.bmy_id_to_img_files[bmy_id][CDsiv.bmy_id_to_img_file_idx[bmy_id]]
-        resp = {'img_file': img_file}
+        resp = FlaskWeb.get_resp_param()
+        resp['data'] ={'img_file': img_file}
         return FlaskWeb.generate_response(resp)
 
     @staticmethod
