@@ -1,7 +1,10 @@
 package com.zhuanjingkj.stpbe.tmdp.service;
 
+import com.github.pagehelper.PageInfo;
+import com.zhuanjingkj.stpbe.data.entity.TrafficViolation;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO;
+import com.zhuanjingkj.stpbe.tmdp.rto.TrafficViolationRTO;
 
 import java.util.List;
 
@@ -29,4 +32,11 @@ public interface TrafficViolationService {
      * @return
      */
     List<TrafficViolationDTO> getTrafficViolationByTime();
+
+    /**
+     * 分页查询违章列表
+     * @param trafficViolationRTO
+     * @return
+     */
+    PageInfo getTrafficViolation(TrafficViolationRTO trafficViolationRTO);
 }

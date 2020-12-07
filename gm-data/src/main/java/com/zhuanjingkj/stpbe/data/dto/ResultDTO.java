@@ -2,7 +2,7 @@ package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class ResultDTO<T extends BaseDTO> {
+public class ResultDTO<T> {
     @JSONField(name="code")
     protected int code;
     @JSONField(name="msg")
@@ -36,7 +36,7 @@ public class ResultDTO<T extends BaseDTO> {
         this.msg = msg;
     }
 
-    public BaseDTO getData() {
+    public T getData() {
         return data;
     }
 
@@ -44,7 +44,7 @@ public class ResultDTO<T extends BaseDTO> {
         this.data = data;
     }
 
-    public static <T extends BaseDTO> ResultDTO<T> success(T data){
+    public static <T> ResultDTO<T> success(T data){
         return new ResultDTO<>(data);
     }
 

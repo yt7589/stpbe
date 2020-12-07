@@ -1,8 +1,13 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.zhuanjingkj.stpbe.data.dto.Code;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO;
+import com.zhuanjingkj.stpbe.tmdp.exception.ServiceException;
 import com.zhuanjingkj.stpbe.tmdp.mapper.TrafficViolationMapper;
+import com.zhuanjingkj.stpbe.tmdp.rto.TrafficViolationRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.TrafficViolationService;
 import com.zhuanjingkj.stpbe.tmdp.util.CommentUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +50,18 @@ public class TrafficViolationServiceImpl implements TrafficViolationService {
     @Override
     public List<TrafficViolationDTO> getTrafficViolationByTime() {
         return trafficViolationMapper.getTrafficViolationByTime();
+    }
+
+    @Override
+    public PageInfo getTrafficViolation(TrafficViolationRTO trafficViolationRTO) {
+
+        if(trafficViolationRTO == null){
+            throw new ServiceException(Code.PARAMETER_ERROR,"查询参数不能为空");
+        }
+        PageHelper.startPage(trafficViolationRTO.getPageNum(), trafficViolationRTO.getPageSize()); // 设定当前页码，以及当前页显示的条数
+        //PageHelper.offsetPage(pageNum, pageSize);也可以使用此方式进行设置
+        List<TrafficViolationDTO> list = trafficViolationMapper.getTrafficViolation(trafficViolationRTO);
+        PageInfo<TrafficViolationDTO> pageInfo = new PageInfo<TrafficViolationDTO>(list);
+        return pageInfo;
     }
 }
