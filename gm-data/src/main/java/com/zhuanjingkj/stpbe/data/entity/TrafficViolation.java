@@ -7,7 +7,7 @@ package com.zhuanjingkj.stpbe.data.entity;
 public class TrafficViolation {
     private Integer id;
     private String location;
-    private String vehicleType;
+    private String vehicleTypeName;
     private String vehicleStyle;
     private Integer violationTypeId;
     private String trafficViolationTime;
@@ -18,6 +18,7 @@ public class TrafficViolation {
     private String siteId;
     private Integer isNative;
     private String vehicleLogo;
+    private String vehicleSubTypeName;
 
     public Integer getIsEmphasisVehicle() {
         return isEmphasisVehicle;
@@ -51,12 +52,20 @@ public class TrafficViolation {
         this.location = location;
     }
 
-    public String getVehicleType() {
-        return vehicleType;
+    public String getVehicleTypeName() {
+        return vehicleTypeName;
     }
 
-    public void setVehicleType(String vehicleType) {
-        this.vehicleType = vehicleType;
+    public void setVehicleTypeName(String vehicleTypeName) {
+        this.vehicleTypeName = vehicleTypeName;
+    }
+
+    public String getVehicleSubTypeName() {
+        return vehicleSubTypeName;
+    }
+
+    public void setVehicleSubTypeName(String vehicleSubTypeName) {
+        this.vehicleSubTypeName = vehicleSubTypeName;
     }
 
     public String getVehicleStyle() {

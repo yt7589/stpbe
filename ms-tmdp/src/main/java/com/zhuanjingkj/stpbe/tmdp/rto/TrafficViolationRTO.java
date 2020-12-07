@@ -10,10 +10,30 @@ public class TrafficViolationRTO extends TrafficViolation {
     private int pageNum = 1;
     private int pageSize = 10;
 
-    private String violationTypeName;
+    private String violationType;
 
     private String dateMin;
     private String dateMax;
+
+    private String violationTypeName;
+
+    public String getViolationTypeName() {
+        return violationTypeName;
+    }
+
+    public void setViolationTypeName(String violationTypeName) {
+        this.violationTypeName = violationTypeName;
+    }
+
+    public String getViolationType() {
+        return violationType;
+    }
+
+    public void setViolationType(String violationType) {
+        this.violationType = violationType;
+    }
+
+
 
     public String getDateMin() {
         return dateMin;
@@ -29,14 +49,6 @@ public class TrafficViolationRTO extends TrafficViolation {
 
     public void setDateMax(String dateMax) {
         this.dateMax = dateMax;
-    }
-
-    public String getViolationTypeName() {
-        return violationTypeName;
-    }
-
-    public void setViolationTypeName(String violationTypeName) {
-        this.violationTypeName = violationTypeName;
     }
 
     public int getPageNum() {
