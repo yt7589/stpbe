@@ -10,6 +10,7 @@ import com.zhuanjingkj.stpbe.tmdp.mapper.TrafficViolationMapper;
 import com.zhuanjingkj.stpbe.tmdp.rto.TrafficViolationRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.TrafficViolationService;
 import com.zhuanjingkj.stpbe.tmdp.util.CommentUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +58,13 @@ public class TrafficViolationServiceImpl implements TrafficViolationService {
 
         if(trafficViolationRTO == null){
             throw new ServiceException(Code.PARAMETER_ERROR,"查询参数不能为空");
+        }
+        if(StringUtils.isNotEmpty(trafficViolationRTO.getViolationType())){
+            String[] violationType = trafficViolationRTO.getViolationType().split("-");
+            trafficViolationRTO.setVehicleTypeName(violationType[0]);
+            if(violationType.length == 2){
+                trafficViolationRTO.setVehicleSubTypeName(violationType[1]);
+            }
         }
         PageHelper.startPage(trafficViolationRTO.getPageNum(), trafficViolationRTO.getPageSize()); // 设定当前页码，以及当前页显示的条数
         //PageHelper.offsetPage(pageNum, pageSize);也可以使用此方式进行设置

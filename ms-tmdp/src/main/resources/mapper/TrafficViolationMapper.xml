@@ -54,7 +54,8 @@
         SELECT
         t_traffic_violation.id as id,
         t_traffic_violation.location as location,
-        t_traffic_violation.vehicle_type as vehicleType,
+        t_traffic_violation.vehicle_type_name as vehicleTypeName,
+        t_traffic_violation.vehicle_sub_type_name as vehicleSubTypeName,
         t_traffic_violation.violation_type_id as violationTypeId,
         t_traffic_violation.traffic_violation_time as trafficViolationTime,
         t_traffic_violation.vehicle_plate as vehiclePlate,
@@ -77,8 +78,12 @@
             and t_traffic_violation.is_native=#{isNative}
         </if>
 
-        <if test="vehicleType != null and vehicleType != ''">
-            and t_traffic_violation.vehicle_type=#{vehicleType}
+        <if test="vehicleSubTypeName != null and vehicleSubTypeName != ''">
+            and t_traffic_violation.vehicle_sub_type_name=#{vehicleSubTypeName}
+        </if>
+
+        <if test="vehicleTypeName != null and vehicleTypeName != ''">
+            and t_vehicle_sub_type.vehicle_type_name=#{vehicleTypeName}
         </if>
 
         <if test="violationTypeName != null and violationTypeName != ''">
