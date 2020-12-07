@@ -1,5 +1,6 @@
-# v0.0.1
+#
 import json
+import base64
 import flask
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -14,7 +15,7 @@ class ImageServer(object):
     def display_image():
         print('ImageServer.display_image 1')
         img_file = urllib.parse.unquote(request.args.get('img_file'))
-        print('url: {0};'.format(request.url))
+        print('url: {0};'.format(base64.b64decode(request.url)))
         pr = urllib.parse.urlparse(request.url)
         qs = pr.query
         rst_qs = urllib.parse.parse_qs(qs)
