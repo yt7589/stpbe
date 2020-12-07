@@ -6,11 +6,13 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from flask import request
 import urllib
+from apps.dsiv.controller.c_bmy import CBmy
 
 class ImageServer(object):
     def __init__(self):
         self.refl = ''
-        self.read_bmy_id_to_img_files()
+        #self.read_bmy_id_to_img_files()
+        bmy_ids = CBmy.get_bmy_ids()
         app.run(
             host = '0.0.0.0',
             port = 5000
@@ -35,6 +37,10 @@ class ImageServer(object):
 
     def read_bmy_id_to_img_file_idx(self):
         pass
+
+    def initialize_bmy_id_img_file_idx(self):
+        '''
+        '''
 
     @staticmethod
     def display_image():
