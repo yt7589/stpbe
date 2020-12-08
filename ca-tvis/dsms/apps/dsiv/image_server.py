@@ -30,3 +30,7 @@ def display_image():
 @app.route('/getBmyIdExampleImgFile', methods=['GET'])
 def get_bmy_id_example_img_file():
     return CDsiv.get_bmy_id_example_img_file()
+
+@app.route('/test001', methods=['GET'])
+def test001():
+    return CBmy.get_bmy_ids()

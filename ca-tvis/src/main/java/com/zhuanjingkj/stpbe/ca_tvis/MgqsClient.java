@@ -182,6 +182,7 @@ public class MgqsClient implements ITvisClient {
         html.append(generateEndHtml());
         generateHtmlFile("e:/temp/es_images_bk/question_images.html", html.toString());
     }
+    // 主要是看重这家公司里能做人工智能技术，我目前做的是根据图片识别车辆品牌车型年款。不过公司现在让我做智慧交通应用平台，做人工智能这边只能是兼职了。
 
     public void generateHtmlFile(String fn, String html) {
         System.out.println(html);
