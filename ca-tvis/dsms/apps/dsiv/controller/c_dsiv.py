@@ -12,6 +12,9 @@ class CDsiv(object):
     @staticmethod
     def get_bmy_id_example_img_file():
         bmy_id = int(urllib.parse.unquote(request.args.get('bmyId')))
+        print('bmyId={0}'.format(bmy_id))
+        print('CDsiv.bmy_id_to_img_files={0};'.format(CDsiv.bmy_id_to_img_files))
+        print('bmy_id_to_img_file_idx={0};'.format(CDsiv.bmy_id_to_img_file_idx))
         img_file = CDsiv.bmy_id_to_img_files[bmy_id][CDsiv.bmy_id_to_img_file_idx[bmy_id]]
         resp = FlaskWeb.get_resp_param()
         resp['data'] ={'img_file': img_file[0]}
@@ -29,9 +32,9 @@ class CDsiv(object):
 
     @staticmethod
     def initialize():
-        ###CDsiv.bmy_id_to_img_files = CDsiv.read_bmy_id_to_img_files()
+        CDsiv.bmy_id_to_img_files = CDsiv.read_bmy_id_to_img_files()
         #CDsiv.initialize_bmy_id_to_img_file_idx()
-        ###CDsiv.bmy_id_to_img_file_idx = CDsiv.read_bmy_id_to_img_file_idx()
+        CDsiv.bmy_id_to_img_file_idx = CDsiv.read_bmy_id_to_img_file_idx()
         #bmy_id = 188
         #bmy_id_to_img_file_idx[bmy_id] = 518
         #CDsiv.save_bmy_id_to_img_file_idx(bmy_id_to_img_file_idx)

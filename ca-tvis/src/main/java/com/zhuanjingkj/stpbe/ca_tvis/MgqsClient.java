@@ -127,7 +127,8 @@ public class MgqsClient implements ITvisClient {
                                 gMilvusPpcxs.append(",\r\n{'id': " + modelDTOMilvus.getModelId() +
                                         ", 'name': '" + modelDTOMilvus.getModelName() + "'}");
                                 gMilvusCxnks.append(",\r\n{'id': " + bmyDTOMilvus.getBmyId() +
-                                        ", 'name': '" + bmyDTOMilvus.getBmyName() + "'}");
+                                        ", 'name': '" + bmyDTOMilvus.getBmyName() + "-" +
+                                        bmyDTOMilvus.getBmyCode() + "'}");
                             } else {
                                 gImages.append("'" +
                                         f.getAbsolutePath().replace("\\", "\\\\") +
@@ -143,7 +144,8 @@ public class MgqsClient implements ITvisClient {
                                 gMilvusPpcxs.append("{'id': " + modelDTOMilvus.getModelId() +
                                         ", 'name': '" + modelDTOMilvus.getModelName() + "'}");
                                 gMilvusCxnks.append("{'id': " + bmyDTOMilvus.getBmyId() +
-                                        ", 'name': '" + bmyDTOMilvus.getBmyName() + "'}");
+                                        ", 'name': '" + bmyDTOMilvus.getBmyName() + "-" +
+                                        bmyDTOMilvus.getBmyCode() + "'}");
                             }
                             System.out.println("    识别结果："
                                     + brandDTO.getBrandName() + "(" + brandDTO.getBrandId() + ")"
@@ -283,12 +285,12 @@ public class MgqsClient implements ITvisClient {
                 "\tdocument.getElementById('clppIdSdk').innerText = g_sdk_clpps[g_idx].id\n" +
                 "\tdocument.getElementById('ppcxNameSdk').innerText = g_sdk_ppcxs[g_idx].name\n" +
                 "\tdocument.getElementById('ppcxIdSdk').innerText = g_sdk_ppcxs[g_idx].id\n" +
-                "\tdocument.getElementById('cxnkIdSdk').innerText = g_sdk_cxnks[g_idx].id\n" +
+                "\tdocument.getElementById('cxnkIdSdk').innerText = '' + g_sdk_cxnks[g_idx].id + '-' + g_sdk_cxnks[g_idx].name\n" +
                 "\tdocument.getElementById('clppNameMilvus').innerText = g_milvus_clpps[g_idx].name\n" +
                 "\tdocument.getElementById('clppIdMilvus').innerText = g_milvus_clpps[g_idx].id\n" +
                 "\tdocument.getElementById('ppcxNameMilvus').innerText = g_milvus_ppcxs[g_idx].name\n" +
                 "\tdocument.getElementById('ppcxIdMilvus').innerText = g_milvus_ppcxs[g_idx].id\n" +
-                "\tdocument.getElementById('cxnkIdMilvus').innerText = g_milvus_cxnks[g_idx].id\n" +
+                "\tdocument.getElementById('cxnkIdMilvus').innerText = '' + g_milvus_cxnks[g_idx].id + '-' + g_milvus_cxnks[g_idx].name\n" +
                 "}\n" +
                 "\n" +
                 "function goPrev() {\n" +

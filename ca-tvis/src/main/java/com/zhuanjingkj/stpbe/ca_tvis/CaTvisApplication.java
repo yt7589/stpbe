@@ -25,7 +25,7 @@ public class CaTvisApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-    	int iDebug = 1;
+    	int iDebug = 10;
     	if (1 == iDebug) {
     		return;
 		}
