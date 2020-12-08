@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.entity.TrafficViolationType;
 import com.zhuanjingkj.stpbe.data.entity.VehicleJoinType;
+import com.zhuanjingkj.stpbe.tmdp.dto.*;
 import com.zhuanjingkj.stpbe.tmdp.dto.res.TrafficViolationListDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO;
@@ -12,9 +13,12 @@ import com.zhuanjingkj.stpbe.tmdp.rto.TrafficViolationRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.TrafficViolationService;
 import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.POST;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/traffic/violation")
 @CrossOrigin(origins = "*")
+@Validated
 public class TrafficViolationController {
 
     @Autowired
@@ -152,5 +157,114 @@ public class TrafficViolationController {
     public ResultDTO<List> getTrafficViolationType() {
         List<TrafficViolationType> list = trafficViolationService.getTrafficViolationType();
         return ResultDTO.success(list);
+    }
+
+    @GetMapping("/detail")
+    public ResultDTO<TrafficViolationDetailDTO> getTrafficViolationDetail(@NotNull(message = "违章ID不能为空") Integer id) {
+        TrafficViolationDetailDTO trafficViolationDetail = new TrafficViolationDetailDTO();
+        trafficViolationDetail.setDate("2020-12-08 12:00:00");
+        trafficViolationDetail.setIsNative("0");
+        trafficViolationDetail.setLocation("上地六街十字");
+        trafficViolationDetail.setVehicleColor("白色");
+        trafficViolationDetail.setTrafficViolationType("不系安全带");
+        trafficViolationDetail.setVehiclePlate("京A12345");
+        trafficViolationDetail.setVehicleSubType("轿车");
+        trafficViolationDetail.setVehicleType("小型客车");
+
+        DrivingBehaviorDTO drivingBehavior = new DrivingBehaviorDTO();
+        drivingBehavior.setCopilotDownSunShield(0);
+        drivingBehavior.setCopilotWithoutSeatBelt(0);
+        drivingBehavior.setDriverCalling(0);
+        drivingBehavior.setDriverSmoking(0);
+        drivingBehavior.setWithoutHelmet(0);
+        drivingBehavior.setDriverReadPhone(0);
+        drivingBehavior.setDriverWithoutSeatBelt(1);
+        drivingBehavior.setDriverDownSunShield(0);
+        VehicleBrandDTO vehicleBrand = new VehicleBrandDTO();
+        vehicleBrand.setCredibility("98");
+        vehicleBrand.setVehicleBrand("大众");
+        vehicleBrand.setVehicleType("帕萨特");
+        vehicleBrand.setVehicleYear("2020");
+
+        LicencePlateDTO licencePlate = new LicencePlateDTO();
+        licencePlate.setEachLicencePlateReliability("京-99,A-99,1-99,2-99,3-99,4-99,5-99");
+        licencePlate.setLicencePlatColorStyle("蓝色");
+        licencePlate.setLicencePlateCharSetStyle("单排单列");
+        licencePlate.setLicencePlateNumber("京A12345");
+        licencePlate.setLicencePlateStatus("正常");
+        licencePlate.setLicencePlateType("小型汽车");
+        licencePlate.setTempLicencePlate(0);
+        licencePlate.setLicencePlateReliability("98");
+        trafficViolationDetail.setDrivingBehavior(drivingBehavior);
+        trafficViolationDetail.setVehicleBrand(vehicleBrand);
+        trafficViolationDetail.setLicencePlate(licencePlate);
+        return ResultDTO.success(trafficViolationDetail);
+    }
+
+    @GetMapping("/history")
+    public ResultDTO<TrafficViolationHistory> getTrafficViolationHistory(@NotNull(message = "车辆号牌不能为空") String licensePlate) {
+        TrafficViolationHistory trafficViolationHistory = new TrafficViolationHistory();
+        trafficViolationHistory.setCurrentYearTrafficViolationNum(20);
+        trafficViolationHistory.setLicensePlate("京A12345");
+        trafficViolationHistory.setTotalTrafficViolationNum(100);
+        List<TrafficViolationTypeDTO> trafficViolationTypeList = new ArrayList<>();
+        List<TrafficViolationHistoryNumDTO> trafficViolationNumList = new ArrayList<>();
+
+        trafficViolationHistory.setTrafficViolationHistoryNumList(trafficViolationNumList);
+        trafficViolationHistory.setTrafficViolationTypeList(trafficViolationTypeList);
+
+        TrafficViolationTypeDTO  trafficViolationType1 = new TrafficViolationTypeDTO();
+        trafficViolationType1.setTrafficViolationType("主驾驶不系安全带");
+        trafficViolationType1.setTrafficViolationNum(40);
+
+        TrafficViolationTypeDTO  trafficViolationType2 = new TrafficViolationTypeDTO();
+        trafficViolationType2.setTrafficViolationType("闯红灯");
+        trafficViolationType2.setTrafficViolationNum(34);
+
+        TrafficViolationTypeDTO  trafficViolationType3 = new TrafficViolationTypeDTO();
+        trafficViolationType3.setTrafficViolationType("主驾驶抽烟");
+        trafficViolationType3.setTrafficViolationNum(30);
+
+        TrafficViolationTypeDTO  trafficViolationType4 = new TrafficViolationTypeDTO();
+        trafficViolationType4.setTrafficViolationType("逆行");
+        trafficViolationType4.setTrafficViolationNum(20);
+
+        TrafficViolationTypeDTO  trafficViolationType5 = new TrafficViolationTypeDTO();
+        trafficViolationType5.setTrafficViolationType("压线");
+        trafficViolationType5.setTrafficViolationNum(15);
+
+        trafficViolationTypeList.add(trafficViolationType1);
+        trafficViolationTypeList.add(trafficViolationType2);
+        trafficViolationTypeList.add(trafficViolationType3);
+        trafficViolationTypeList.add(trafficViolationType4);
+        trafficViolationTypeList.add(trafficViolationType5);
+
+        TrafficViolationHistoryNumDTO trafficViolationHistoryNum1 = new TrafficViolationHistoryNumDTO();
+        trafficViolationHistoryNum1.setNum(11);
+        trafficViolationHistoryNum1.setYear("2016");
+
+        TrafficViolationHistoryNumDTO trafficViolationHistoryNum2 = new TrafficViolationHistoryNumDTO();
+        trafficViolationHistoryNum2.setNum(15);
+        trafficViolationHistoryNum2.setYear("2017");
+
+        TrafficViolationHistoryNumDTO trafficViolationHistoryNum3 = new TrafficViolationHistoryNumDTO();
+        trafficViolationHistoryNum3.setNum(13);
+        trafficViolationHistoryNum3.setYear("2018");
+
+        TrafficViolationHistoryNumDTO trafficViolationHistoryNum4 = new TrafficViolationHistoryNumDTO();
+        trafficViolationHistoryNum4.setNum(8);
+        trafficViolationHistoryNum4.setYear("2019");
+
+        trafficViolationNumList.add(trafficViolationHistoryNum1);
+        trafficViolationNumList.add(trafficViolationHistoryNum2);
+        trafficViolationNumList.add(trafficViolationHistoryNum3);
+        trafficViolationNumList.add(trafficViolationHistoryNum4);
+        return ResultDTO.success(trafficViolationHistory);
+    }
+
+    @PostMapping("history/list")
+    public ResultDTO<PageInfo> getTrafficViolationHistoryList(@RequestBody TrafficViolationRTO trafficViolationRTO) {
+        PageInfo<TrafficViolationDTO> pageInfo = trafficViolationService.getTrafficViolation(trafficViolationRTO);
+        return ResultDTO.success(pageInfo);
     }
 }
