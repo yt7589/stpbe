@@ -21,6 +21,24 @@ public class SiteDTO extends BaseDTO {
     private String lat;
     private Integer regionId;
 
+    private Integer trafficViolationNum;
+
+    public Integer getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(Integer siteId) {
+        this.siteId = siteId;
+    }
+
+    public Integer getTrafficViolationNum() {
+        return trafficViolationNum;
+    }
+
+    public void setTrafficViolationNum(Integer trafficViolationNum) {
+        this.trafficViolationNum = trafficViolationNum;
+    }
+
     public Integer getId() {
         return siteId;
     }

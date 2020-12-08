@@ -1,12 +1,15 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.entity.TrafficViolationType;
 import com.zhuanjingkj.stpbe.data.entity.VehicleJoinType;
 import com.zhuanjingkj.stpbe.tmdp.dto.*;
+import com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.res.TrafficViolationListDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.res.TrafficViolationStatisticListDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.TrafficViolationRTO;
@@ -267,4 +270,205 @@ public class TrafficViolationController {
         PageInfo<TrafficViolationDTO> pageInfo = trafficViolationService.getTrafficViolation(trafficViolationRTO);
         return ResultDTO.success(pageInfo);
     }
+
+    @GetMapping("/region/site")
+    public ResultDTO<TrafficViolationStatisticListDTO> getSiteTrafficViolation(@RequestBody TrafficViolationRTO trafficViolationRTO) {
+
+        List<SiteDTO> list = new ArrayList<>();
+        for(int i=0;i<10;i++){
+            SiteDTO site = new SiteDTO();
+            site.setId(i+1);
+            if(i==0){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地六街十字");
+                site.setTrafficViolationNum(56);
+            }
+            if(i==1){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地三街十字");
+                site.setTrafficViolationNum(44);
+            }
+            if(i==2){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地二街十字");
+                site.setTrafficViolationNum(14);
+            }
+            if(i==3){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地一街十字");
+                site.setTrafficViolationNum(210);
+            }
+            if(i==4){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地四街十字");
+                site.setTrafficViolationNum(69);
+            }
+            if(i==5){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地五街十字");
+                site.setTrafficViolationNum(78);
+            }
+            if(i==6){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地七街十字");
+                site.setTrafficViolationNum(101);
+            }
+            if(i==7){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地八街十字");
+                site.setTrafficViolationNum(98);
+            }
+            if(i==8){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地九街十字");
+                site.setTrafficViolationNum(441);
+            }
+            if(i==9){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地十街十字");
+                site.setTrafficViolationNum(123);
+            }
+            list.add(site);
+        }
+
+        List<RegionDTO> regionList = new ArrayList<>();
+        for(int i=0;i<10;i++){
+            RegionDTO region = new RegionDTO();
+            region.setRegionId(i+1);
+            if(i==0){
+                region.setRegionName("海淀区");
+                region.setRegionTrafficViolationNum(1200);
+            }
+            if(i==1){
+                region.setRegionName("东城区");
+                region.setRegionTrafficViolationNum(1200);
+            }
+            if(i==2){
+                region.setRegionName("西城区");
+                region.setRegionTrafficViolationNum(1200);
+            }
+            if(i==3){
+                region.setRegionName("朝阳区");
+                region.setRegionTrafficViolationNum(1200);
+            }
+            if(i==4){
+                region.setRegionName("丰台区");
+                region.setRegionTrafficViolationNum(1200);
+            }
+            if(i==5){
+                region.setRegionName("石景山区");
+                region.setRegionTrafficViolationNum(1200);
+            }
+            if(i==6){
+                region.setRegionName("门头沟区");
+                region.setRegionTrafficViolationNum(1200);
+            }
+            if(i==7){
+                region.setRegionName("房山区");
+                region.setRegionTrafficViolationNum(1200);
+            }
+            if(i==8){
+                region.setRegionName("通州区");
+                region.setRegionTrafficViolationNum(1200);
+            }
+            if(i==9){
+                region.setRegionName("顺义区");
+                region.setRegionTrafficViolationNum(1200);
+            }
+            regionList.add(region);
+        }
+        TrafficViolationStatisticListDTO trafficViolationStatisticList  = new TrafficViolationStatisticListDTO();
+        trafficViolationStatisticList.setRegionList(regionList);
+        trafficViolationStatisticList.setSiteList(list);
+        return ResultDTO.success(trafficViolationStatisticList);
+    }
+
+    @GetMapping("/site/list")
+    public ResultDTO<PageInfo> getSiteTrafficViolation(int pageNum,int pageSize){
+
+        List<SiteDTO> list = new ArrayList<>();
+        for(int i=0;i<10;i++){
+            SiteDTO site = new SiteDTO();
+            site.setId(i+1);
+            if(i==0){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地六街十字");
+                site.setTrafficViolationNum(56);
+            }
+            if(i==1){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地三街十字");
+                site.setTrafficViolationNum(44);
+            }
+            if(i==2){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地二街十字");
+                site.setTrafficViolationNum(14);
+            }
+            if(i==3){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地一街十字");
+                site.setTrafficViolationNum(210);
+            }
+            if(i==4){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地四街十字");
+                site.setTrafficViolationNum(69);
+            }
+            if(i==5){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地五街十字");
+                site.setTrafficViolationNum(78);
+            }
+            if(i==6){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地七街十字");
+                site.setTrafficViolationNum(101);
+            }
+            if(i==7){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地八街十字");
+                site.setTrafficViolationNum(98);
+            }
+            if(i==8){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地九街十字");
+                site.setTrafficViolationNum(441);
+            }
+            if(i==9){
+                site.setLat("40.04008");
+                site.setLng("116.318741");
+                site.setSiteName("上地十街十字");
+                site.setTrafficViolationNum(123);
+            }
+            list.add(site);
+        }
+
+        PageHelper.startPage(pageNum, pageSize); // 设定当前页码，以及当前页显示的条数
+        //PageHelper.offsetPage(pageNum, pageSize);也可以使用此方式进行设置
+
+        PageInfo<SiteDTO> pageInfo = new PageInfo<SiteDTO>(list);
+        return ResultDTO.success(pageInfo);
+    }
+
+
 }
