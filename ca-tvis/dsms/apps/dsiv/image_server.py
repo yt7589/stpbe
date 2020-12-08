@@ -33,4 +33,7 @@ def get_bmy_id_example_img_file():
 
 @app.route('/test001', methods=['GET'])
 def test001():
-    return CBmy.get_bmy_ids()
+    ids = CBmy.get_bmy_ids()
+    for item in ids:
+        print('### {0};'.formt(item))
+    return 'ok'
