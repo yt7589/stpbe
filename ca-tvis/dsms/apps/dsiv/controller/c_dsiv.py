@@ -37,6 +37,7 @@ class CDsiv(object):
         #CDsiv.save_bmy_id_to_img_file_idx(bmy_id_to_img_file_idx)
         #print('idx={0};'.format(bmy_id_to_img_file_idx[bmy_id]))
         #print('image_file: {0};'.format(bmy_id_to_img_files[bmy_id][bmy_id_to_img_file_idx[bmy_id]]))
+        pass
 
     @staticmethod
     def read_bmy_id_to_img_files():
