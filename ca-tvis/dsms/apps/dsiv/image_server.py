@@ -35,5 +35,5 @@ def get_bmy_id_example_img_file():
 def test001():
     ids = CBmy.get_bmy_ids()
     for item in ids:
-        print('### {0};'.formt(item))
+        print('### {0};'.format(item))
     return 'ok'
