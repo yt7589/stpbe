@@ -34,4 +34,7 @@ def get_bmy_id_example_img_file():
 @app.route('/test001', methods=['GET'])
 def test001():
     ids = CBmy.get_bmy_ids()
-    return ''.join(ids)
+    rst = ''
+    for item in ids:
+        rst = '{0}, {1}'.format(rst, item['bmy_id'])
+    return rst
