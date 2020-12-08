@@ -3,6 +3,7 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhuanjingkj.stpbe.data.dto.Code;
+import com.zhuanjingkj.stpbe.data.entity.TrafficViolationType;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO;
 import com.zhuanjingkj.stpbe.tmdp.exception.ServiceException;
@@ -59,8 +60,8 @@ public class TrafficViolationServiceImpl implements TrafficViolationService {
         if(trafficViolationRTO == null){
             throw new ServiceException(Code.PARAMETER_ERROR,"查询参数不能为空");
         }
-        if(StringUtils.isNotEmpty(trafficViolationRTO.getViolationType())){
-            String[] violationType = trafficViolationRTO.getViolationType().split("-");
+        if(StringUtils.isNotEmpty(trafficViolationRTO.getViolationJoinTypeName())){
+            String[] violationType = trafficViolationRTO.getViolationJoinTypeName().split("-");
             trafficViolationRTO.setVehicleTypeName(violationType[0]);
             if(violationType.length == 2){
                 trafficViolationRTO.setVehicleSubTypeName(violationType[1]);
@@ -71,5 +72,10 @@ public class TrafficViolationServiceImpl implements TrafficViolationService {
         List<TrafficViolationDTO> list = trafficViolationMapper.getTrafficViolation(trafficViolationRTO);
         PageInfo<TrafficViolationDTO> pageInfo = new PageInfo<TrafficViolationDTO>(list);
         return pageInfo;
+    }
+
+    @Override
+    public List<TrafficViolationType> getTrafficViolationType() {
+        return trafficViolationMapper.getTrafficViolationType();
     }
 }

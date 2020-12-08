@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zhuanjingkj.stpbe.data.entity.TrafficViolation;
+import com.zhuanjingkj.stpbe.data.entity.TrafficViolationType;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.TrafficViolationRTO;
@@ -39,4 +40,10 @@ public interface TrafficViolationService {
      * @return
      */
     PageInfo getTrafficViolation(TrafficViolationRTO trafficViolationRTO);
+
+    /**
+     * 查询违章类型
+     * @return
+     */
+    List<TrafficViolationType>  getTrafficViolationType();
 }

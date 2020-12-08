@@ -1,6 +1,8 @@
 package com.zhuanjingkj.stpbe.tmdp.mapper;
 
 import com.zhuanjingkj.stpbe.data.entity.TrafficViolation;
+import com.zhuanjingkj.stpbe.data.entity.TrafficViolationType;
+import com.zhuanjingkj.stpbe.data.entity.VehicleJoinType;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO;
 import org.apache.ibatis.annotations.Param;
@@ -40,4 +42,10 @@ public interface TrafficViolationMapper {
      * @return
      */
     List<TrafficViolationDTO> getTrafficViolation(TrafficViolation trafficViolation);
+
+    /**
+     * 查询违章类型
+     * @return
+     */
+    List<TrafficViolationType>  getTrafficViolationType();
 }

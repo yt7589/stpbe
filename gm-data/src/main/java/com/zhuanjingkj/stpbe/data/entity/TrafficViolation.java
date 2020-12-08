@@ -17,7 +17,7 @@ public class TrafficViolation {
     private Integer isEmphasisVehicle;
     private String siteId;
     private Integer isNative;
-    private String vehicleLogo;
+    private String vehicleBrand;
     private String vehicleSubTypeName;
 
     public Integer getIsEmphasisVehicle() {
@@ -125,13 +125,11 @@ public class TrafficViolation {
         this.siteId = siteId;
     }
 
-
-
-    public String getVehicleLogo() {
-        return vehicleLogo;
+    public String getVehicleBrand() {
+        return vehicleBrand;
     }
 
-    public void setVehicleLogo(String vehicleLogo) {
-        this.vehicleLogo = vehicleLogo;
+    public void setVehicleBrand(String vehicleBrand) {
+        this.vehicleBrand = vehicleBrand;
     }
 }
