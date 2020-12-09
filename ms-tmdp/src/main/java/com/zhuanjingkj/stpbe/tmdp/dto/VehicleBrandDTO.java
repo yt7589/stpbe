@@ -9,7 +9,7 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 public class VehicleBrandDTO extends BaseDTO {
 
     private String vehicleBrand;
-    private String vehicleType;
+    private String vehicleBrandType;
     private String vehicleYear;
     private String credibility;
 
@@ -21,12 +21,12 @@ public class VehicleBrandDTO extends BaseDTO {
         this.vehicleBrand = vehicleBrand;
     }
 
-    public String getVehicleType() {
-        return vehicleType;
+    public String getVehicleBrandType() {
+        return vehicleBrandType;
     }
 
-    public void setVehicleType(String vehicleType) {
-        this.vehicleType = vehicleType;
+    public void setVehicleBrandType(String vehicleBrandType) {
+        this.vehicleBrandType = vehicleBrandType;
     }
 
     public String getVehicleYear() {

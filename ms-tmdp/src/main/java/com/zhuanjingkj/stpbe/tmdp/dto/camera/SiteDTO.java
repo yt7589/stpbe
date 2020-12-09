@@ -39,14 +39,6 @@ public class SiteDTO extends BaseDTO {
         this.trafficViolationNum = trafficViolationNum;
     }
 
-    public Integer getId() {
-        return siteId;
-    }
-
-    public void setId(Integer siteId) {
-        this.siteId = siteId;
-    }
-
     public String getSiteName() {
         return siteName;
     }
