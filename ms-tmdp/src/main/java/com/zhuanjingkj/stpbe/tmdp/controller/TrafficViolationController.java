@@ -186,7 +186,7 @@ public class TrafficViolationController {
         VehicleBrandDTO vehicleBrand = new VehicleBrandDTO();
         vehicleBrand.setCredibility("98");
         vehicleBrand.setVehicleBrand("大众");
-        vehicleBrand.setVehicleType("帕萨特");
+        vehicleBrand.setVehicleBrandType("帕萨特");
         vehicleBrand.setVehicleYear("2020");
 
         LicencePlateDTO licencePlate = new LicencePlateDTO();
@@ -277,7 +277,7 @@ public class TrafficViolationController {
         List<SiteDTO> list = new ArrayList<>();
         for(int i=0;i<10;i++){
             SiteDTO site = new SiteDTO();
-            site.setId(i+1);
+            site.setSiteId(i+1);
             if(i==0){
                 site.setLat("40.04008");
                 site.setLng("116.318741");
@@ -399,7 +399,7 @@ public class TrafficViolationController {
         List<SiteDTO> list = new ArrayList<>();
         for(int i=0;i<10;i++){
             SiteDTO site = new SiteDTO();
-            site.setId(i+1);
+            site.setSiteId(i+1);
             if(i==0){
                 site.setLat("40.04008");
                 site.setLng("116.318741");
