@@ -272,7 +272,7 @@ public class TrafficViolationController {
     }
 
     @GetMapping("/region/site")
-    public ResultDTO<TrafficViolationStatisticListDTO> getSiteTrafficViolation(@RequestBody TrafficViolationRTO trafficViolationRTO) {
+    public ResultDTO<TrafficViolationStatisticListDTO> getSiteTrafficViolation() {
 
         List<SiteDTO> list = new ArrayList<>();
         for(int i=0;i<10;i++){
