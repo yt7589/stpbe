@@ -31,7 +31,7 @@ public class QuestionImageService implements IQuestionImageService {
         FileOutputStream fosDs = null;
         OutputStreamWriter oswDs = null;
         try {
-            fosDs = new FileOutputStream("e:/temp/es_images_bk/qi.txt", true);
+            fosDs = new FileOutputStream("d:/awork/work/es_images/qi.txt", true);
             oswDs = new OutputStreamWriter(fosDs, "UTF-8");
             oswDs.write(imageName + "*" + bmyId + "*" + brandId + "\r\n");
             oswDs.flush();
