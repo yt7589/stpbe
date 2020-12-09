@@ -52,9 +52,6 @@ public class VehicleStatisticController {
 //        vehicleDistributionListDTO.setVehiclePassedNumber(vehiclePassedNumber);
 
         String s = "{\n" +
-                "    \"code\": 0,\n" +
-                "    \"msg\": \"success\",\n" +
-                "    \"data\": {\n" +
                 "        \"vehiclePassedNumber\": {\n" +
                 "            \"todayPassedNumber\": 5556,\n" +
                 "            \"dailyMean\": 7878,\n" +
@@ -377,50 +374,49 @@ public class VehicleStatisticController {
                 "        ],\n" +
                 "        \"vehicleDistributionList\": [\n" +
                 "            {\n" +
-                "                \"vehicleDistributionPercntage\": \"70%\",\n" +
+                "                \"vehicleDistributionPercntage\": \"0.7\",\n" +
                 "                \"id\": 1,\n" +
                 "                \"vehicleDistributionName\": \"本市车辆\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleDistributionPercntage\": \"30%\",\n" +
+                "                \"vehicleDistributionPercntage\": \"0.3\",\n" +
                 "                \"id\": 2,\n" +
                 "                \"vehicleDistributionName\": \"外埠\"\n" +
                 "            }\n" +
                 "        ],\n" +
                 "        \"vehicleTypeDTOList\": [\n" +
                 "            {\n" +
-                "                \"vehicleTypePercentage\": \"41%\",\n" +
+                "                \"vehicleTypePercentage\": \"0.41\",\n" +
                 "                \"id\": 1,\n" +
                 "                \"vehicleTypeName\": \"小汽车\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleTypePercentage\": \"23%\",\n" +
+                "                \"vehicleTypePercentage\": \"0.23\",\n" +
                 "                \"id\": 2,\n" +
                 "                \"vehicleTypeName\": \"SUV\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleTypePercentage\": \"11%\",\n" +
+                "                \"vehicleTypePercentage\": \"0.11\",\n" +
                 "                \"id\": 3,\n" +
                 "                \"vehicleTypeName\": \"MPV\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleTypePercentage\": \"6%\",\n" +
+                "                \"vehicleTypePercentage\": \"0.06\",\n" +
                 "                \"id\": 4,\n" +
                 "                \"vehicleTypeName\": \"面包车\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleTypePercentage\": \"9%\",\n" +
+                "                \"vehicleTypePercentage\": \"0.09\",\n" +
                 "                \"id\": 5,\n" +
                 "                \"vehicleTypeName\": \"罐式货车\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleTypePercentage\": \"10%\",\n" +
+                "                \"vehicleTypePercentage\": \"0.1\",\n" +
                 "                \"id\": 6,\n" +
                 "                \"vehicleTypeName\": \"普通货车\"\n" +
                 "            }\n" +
                 "        ]\n" +
-                "    }\n" +
-                "}";
+                "    }" ;
         Object j = JSON.parse(s);
         return ResultDTO.success(j);
     }
