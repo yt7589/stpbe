@@ -17,7 +17,7 @@ class CDsiv(object):
         print('bmy_id_to_img_file_idx={0};'.format(len(CDsiv.bmy_id_to_img_file_idx)))
         img_file = CDsiv.bmy_id_to_img_files[bmy_id][CDsiv.bmy_id_to_img_file_idx[bmy_id]]
         resp = FlaskWeb.get_resp_param()
-        resp['data'] ={'img_file': img_file[0]}
+        resp['data'] ={'imgFile': img_file[0]}
         return FlaskWeb.generate_response(resp)
 
     @staticmethod
