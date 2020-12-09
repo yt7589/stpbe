@@ -42,15 +42,16 @@ class CDsiv(object):
         #print('image_file: {0};'.format(bmy_id_to_img_files[bmy_id][bmy_id_to_img_file_idx[bmy_id]]))
         pass
 
+    bmy_sim_org_dict = {}
     @staticmethod
     def get_org_bmy_id_of_sim(sim_bmy_id):
-        bmy_sim_org_dict = {}
-        with open('/media/ps/0A9AD66165F33762/yantao/dcl/support/bmy_sim_org_dict.txt', 'r', 'utf-8') as fd:
-            for line in fd:
-                line = line.strip()
-                arrs = line.split(':')
-                bmy_sim_org_dict[int(arrs[0])] = int(arrs[1])
-        return bmy_sim_org_dict[sim_bmy_id]
+        if len(CDsiv.bmy_sim_org_dict)<2:
+            with open('/media/ps/0A9AD66165F33762/yantao/dcl/support/bmy_sim_org_dict.txt', 'r', encoding='utf-8') as fd:
+                for line in fd:
+                    line = line.strip()
+                    arrs = line.split(':')
+                    CDsiv.bmy_sim_org_dict[int(arrs[0])] = int(arrs[1])
+        return CDsiv.bmy_sim_org_dict[sim_bmy_id]
 
     @staticmethod
     def read_bmy_id_to_img_files():
