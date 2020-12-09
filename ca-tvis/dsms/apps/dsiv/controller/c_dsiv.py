@@ -22,7 +22,7 @@ class CDsiv(object):
 
     @staticmethod
     def display_image():
-        img_file = urllib.parse.unquote(request.args.get('img_file'))
+        img_file = urllib.parse.unquote(request.args.get('imgFile'))
         with open(img_file, 'rb') as img_fd:
             image_data = img_fd.read()
         response = flask.make_response(image_data)
@@ -43,6 +43,16 @@ class CDsiv(object):
         pass
 
     @staticmethod
+    def get_org_bmy_id_of_sim(sim_bmy_id):
+        bmy_sim_org_dict = {}
+        with open('/media/ps/0A9AD66165F33762/yantao/dcl/support/bmy_sim_org_dict.txt', 'r', 'utf-8') as fd:
+            for line in fd:
+                line = line.strip()
+                arrs = line.split(':')
+                bmy_sim_org_dict[int(arrs[0])] = int(arrs[1])
+        return bmy_sim_org_dict[sim_bmy_id]
+
+    @staticmethod
     def read_bmy_id_to_img_files():
         num = 0
         bmy_id_to_img_files = {}
@@ -52,7 +62,8 @@ class CDsiv(object):
                 line = line.strip()
                 arrs = line.split('*')
                 img_file = arrs[0]
-                bmy_id = int(arrs[1])
+                sim_bmy_id = int(arrs[1])
+                bmy_id = CDsiv.get_org_bmy_id_of_sim(sim_bmy_id)
                 if bmy_id not in bmy_id_to_img_files:
                     bmy_id_to_img_files[bmy_id] = []
                 bmy_id_to_img_files[bmy_id].append([img_file])

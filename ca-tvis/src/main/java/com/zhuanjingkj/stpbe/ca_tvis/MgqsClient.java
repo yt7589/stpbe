@@ -10,6 +10,8 @@ import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class MgqsClient implements ITvisClient {
     public final static int ARGS_MGQS_URL = 3;
     @Autowired
     private MongoTemplate mongoTemplate;
+    private final static Logger logger = LoggerFactory.getLogger(MgqsClient.class);
 
     public void startup(String[] args) {
         System.out.println("启动图搜客户端......");
@@ -44,7 +47,7 @@ public class MgqsClient implements ITvisClient {
         FileOutputStream fosDs = null;
         OutputStreamWriter oswDs = null;
         try {
-            fosDs = new FileOutputStream("e:/temp/es_images_bk/ds.txt");
+            fosDs = new FileOutputStream("d:/awork/work/es_images/ds.txt");
             oswDs = new OutputStreamWriter(fosDs, "UTF-8");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -91,7 +94,10 @@ public class MgqsClient implements ITvisClient {
                         clppSdk = brandDTO.getBrandId();
                         modelDTO = BmyDao.getModelDTOByCode(mongoTemplate, vehicleCxtzVo.getPpcxCode());
                         ppcxSdk = modelDTO.getModelId();
+                        logger.info("##### bmy_code=" + vehicleCxtzVo.getCxnkCode() + "!");
                         bmyDTO = BmyDao.getBmyDTOByCode(mongoTemplate, vehicleCxtzVo.getCxnkCode());
+                        logger.info("##### bmyId=" + bmyDTO.getBmyId() + "; bmyCode="
+                                + bmyDTO.getBmyCode() + "; bmyName=" + bmyDTO.getBmyName() + "!");
                         cxnkSdk = bmyDTO.getBmyId();
                         List<List<Float>> queryEmbedding = new ArrayList<>();
                         queryEmbedding.add(vvo.getVehicleCltzxlVo().getCltzxl());
@@ -116,35 +122,47 @@ public class MgqsClient implements ITvisClient {
                             if (gImages.length() > 25) {
                                 gImages.append(",\r\n'" + f.getAbsolutePath().replace(
                                         "\\", "\\\\") + "'");
-                                gSdkClpps.append(",\r\n{'id': " + brandDTO.getBrandId() +
-                                        ", 'name': '" + brandDTO.getBrandName() + "'}");
-                                gSdkPpcxs.append(",\r\n{'id': " + modelDTO.getModelId() +
-                                        ", 'name': '" + modelDTO.getModelName() + "'}");
-                                gSdkCxnks.append(",\r\n{'id': " + bmyDTO.getBmyId() +
-                                        ", 'name': '" + bmyDTO.getBmyName() + "'}");
-                                gMilvusClpps.append(",\r\n{'id': " + brandDTOMilvus.getBrandId() +
-                                        ", 'name': '" + brandDTOMilvus.getBrandName() + "'}");
-                                gMilvusPpcxs.append(",\r\n{'id': " + modelDTOMilvus.getModelId() +
-                                        ", 'name': '" + modelDTOMilvus.getModelName() + "'}");
-                                gMilvusCxnks.append(",\r\n{'id': " + bmyDTOMilvus.getBmyId() +
-                                        ", 'name': '" + bmyDTOMilvus.getBmyName() + "-" +
+                                gSdkClpps.append(",\r\n{'id': " + brandDTO.getBrandId()
+                                        + ", 'code': '" + brandDTO.getBrandCode()
+                                        + "', 'name': '" + brandDTO.getBrandName() + "'}");
+                                gSdkPpcxs.append(",\r\n{'id': " + modelDTO.getModelId()
+                                        + ", 'code': '" + modelDTO.getModelCode()
+                                        + "', 'name': '" + modelDTO.getModelName() + "'}");
+                                gSdkCxnks.append(",\r\n{'id': " + bmyDTO.getBmyId()
+                                        + ", 'code': '" + bmyDTO.getBmyCode()
+                                        + "', 'name': '" + bmyDTO.getBmyName() + "'}");
+                                gMilvusClpps.append(",\r\n{'id': " + brandDTOMilvus.getBrandId()
+                                        + ", 'code': '" + brandDTOMilvus.getBrandCode()
+                                        + "', 'name': '" + brandDTOMilvus.getBrandName() + "'}");
+                                gMilvusPpcxs.append(",\r\n{'id': " + modelDTOMilvus.getModelId()
+                                        + ", 'code': '" + modelDTOMilvus.getModelCode()
+                                        + "', 'name': '" + modelDTOMilvus.getModelName() + "'}");
+                                gMilvusCxnks.append(",\r\n{'id': " + bmyDTOMilvus.getBmyId()
+                                        + ", 'code': '" + bmyDTOMilvus.getBmyCode()
+                                        + "', 'name': '" + bmyDTOMilvus.getBmyName() + "-" +
                                         bmyDTOMilvus.getBmyCode() + "'}");
                             } else {
                                 gImages.append("'" +
                                         f.getAbsolutePath().replace("\\", "\\\\") +
                                         "'");
-                                gSdkClpps.append("{'id': " + brandDTO.getBrandId() +
-                                        ", 'name': '" + brandDTO.getBrandName() + "'}");
-                                gSdkPpcxs.append("{'id': " + modelDTO.getModelId() +
-                                        ", 'name': '" + modelDTO.getModelName() + "'}");
-                                gSdkCxnks.append("{'id': " + bmyDTO.getBmyId() +
-                                        ", 'name': '" + bmyDTO.getBmyName() + "'}");
-                                gMilvusClpps.append("{'id': " + brandDTOMilvus.getBrandId() +
-                                        ", 'name': '" + brandDTOMilvus.getBrandName() + "'}");
-                                gMilvusPpcxs.append("{'id': " + modelDTOMilvus.getModelId() +
-                                        ", 'name': '" + modelDTOMilvus.getModelName() + "'}");
-                                gMilvusCxnks.append("{'id': " + bmyDTOMilvus.getBmyId() +
-                                        ", 'name': '" + bmyDTOMilvus.getBmyName() + "-" +
+                                gSdkClpps.append("{'id': " + brandDTO.getBrandId()
+                                        + ", 'code': '" + brandDTO.getBrandCode()
+                                        + "', 'name': '" + brandDTO.getBrandName() + "'}");
+                                gSdkPpcxs.append("{'id': " + modelDTO.getModelId()
+                                        + ", 'code': '" + modelDTO.getModelCode()
+                                        + "', 'name': '" + modelDTO.getModelName() + "'}");
+                                gSdkCxnks.append("{'id': " + bmyDTO.getBmyId()
+                                        + ", 'code': '" + bmyDTO.getBmyCode()
+                                        + "', 'name': '" + bmyDTO.getBmyName() + "'}");
+                                gMilvusClpps.append("{'id': " + brandDTOMilvus.getBrandId()
+                                        + ", 'code': '" + brandDTOMilvus.getBrandCode()
+                                        + "', 'name': '" + brandDTOMilvus.getBrandName() + "'}");
+                                gMilvusPpcxs.append("{'id': " + modelDTOMilvus.getModelId()
+                                        + ", 'code': '" + modelDTOMilvus.getModelCode()
+                                        + "', 'name': '" + modelDTOMilvus.getModelName() + "'}");
+                                gMilvusCxnks.append("{'id': " + bmyDTOMilvus.getBmyId()
+                                        + ", 'code': '" + bmyDTOMilvus.getBmyCode()
+                                        + "', 'name': '" + bmyDTOMilvus.getBmyName() + "-" +
                                         bmyDTOMilvus.getBmyCode() + "'}");
                             }
                             System.out.println("    识别结果："
@@ -182,7 +200,7 @@ public class MgqsClient implements ITvisClient {
         html.append(gMilvusPpcxs.toString());
         html.append(gMilvusCxnks.toString());
         html.append(generateEndHtml());
-        generateHtmlFile("e:/temp/es_images_bk/question_images.html", html.toString());
+        generateHtmlFile("d:/awork/work/es_images/question_images.html", html.toString());
     }
     // 主要是看重这家公司里能做人工智能技术，我目前做的是根据图片识别车辆品牌车型年款。不过公司现在让我做智慧交通应用平台，做人工智能这边只能是兼职了。
 
