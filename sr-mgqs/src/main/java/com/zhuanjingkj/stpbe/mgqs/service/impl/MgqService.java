@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import sun.awt.windows.ThemeReader;
 
 import java.io.*;
 import java.util.*;
@@ -46,7 +47,28 @@ public class MgqService implements IMgqService {
         System.out.println("开始导入DCL全量数据集到Milvus中......");
         List<File> dsFiles = getFgvcDs();
         System.out.println("总文件数：" + dsFiles.size() + "!");
-        int sum = 0;
+        List<Thread> thds = new ArrayList<>();
+        Thread thd = null;
+        for (int i = 0; i < 5; i++) {
+            final List<File> dsf = dsFiles.subList(i * 1000000, (i + 1) * 1000000);
+            thd = new Thread(() -> {
+                processBatchDclFdsFiles(dsf);
+            });
+            thd.start();
+            thds.add(thd);
+        }
+        for (Thread t : thds) {
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("^_^ OK ^_^");
+    }
+
+    private static int numFiles = 0;
+    public void processBatchDclFdsFiles(List<File> dsFiles) {
         String result = null;
         List<VehicleVo> vos = null;
         VehicleWztzVo vehicleWztzVo = null;
@@ -92,9 +114,9 @@ public class MgqService implements IMgqService {
                     MgqEngine.insertRecord(redisTemplate, partitionTag, vo);
                 }
             }
-            sum++;
-            if (sum > 5) {
-                break;
+            numFiles++;
+            if (numFiles % 10000 == 0) {
+                System.out.println("已经处理完成" + numFiles + "个文件......");
             }
         }
     }
@@ -125,6 +147,7 @@ public class MgqService implements IMgqService {
     private List<File> getFgvcDs() {
         List<File> fs = new ArrayList<>();
         String dsFn = "/media/ps/0A9AD66165F33762/yantao/dcl/datasets/CUB_200_2011/anno/sfds_train_ds_20201020.txt";
+        //String dsFn = "d:/awork/work/sfds_train_ds_20201020.txt";
         try {
             FileInputStream fis = new FileInputStream(new File(dsFn));
             InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
@@ -138,7 +161,6 @@ public class MgqService implements IMgqService {
                 loop++;
                 if (loop % 1000000 == 0) {
                     logger.info("已处理：" + loop + "条记录！");
-                    break;
                 }
             }
         } catch (FileNotFoundException e) {
