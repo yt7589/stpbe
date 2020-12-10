@@ -26,14 +26,13 @@ public class TvisUtil {
         boolean sendName = true;
         String type = "file";
         String url = AppConst.TVIS_SERVER_URL;
-        /**/
 
         String response = null;
         try {
             if ("file".equals(type)) {
                 map.put("TPXX", f);
                 map.put("TPLX", "1");
-                response = HttpUtil.postFile(url, map);//postFile(url, map);
+                response = HttpUtil.postFile(url, map);
             } else {
                 map.put("TPLX", "2");
                 map.put("TPXX", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(f)));
@@ -44,8 +43,6 @@ public class TvisUtil {
         } catch (IOException ex) {
             return ERROR_RESPONSE;
         }
-
-        System.out.println("response:" + response + "!");
         if (isSuccessRequest(response)) {
             return response;
         } else {
