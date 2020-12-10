@@ -130,6 +130,7 @@ public class TvisImageRecogService implements ITvisImageRecogService {
         if (requestData instanceof String) {
             redisTemplate.opsForList().leftPush(requestList, (String) requestData);
         } else {
+            /*
             synchronized (this){
                 logger.info("sendRequest 3.1");
                 // 设置请求编号超时时间
@@ -165,7 +166,7 @@ public class TvisImageRecogService implements ITvisImageRecogService {
                     }
                 }
                 redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
-            }
+            }*/
             redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
         }
 
