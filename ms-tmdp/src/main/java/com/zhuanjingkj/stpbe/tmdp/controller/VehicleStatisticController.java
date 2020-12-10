@@ -408,10 +408,17 @@ public class VehicleStatisticController {
                 "                \"timeFrame\": 16\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"date\": \"2020-11-25 11:55:48\",\n" +
-                "                \"vehicleNumber\": 564654,\n" +
+                "                \"date\": \"2020-11-25 11:55:37\",\n" +
+                "                \"vehicleNumber\": 7841562,\n" +
                 "                \"id\": 11,\n" +
                 "                \"timeFrame\": 20\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"date\": \"2020-11-25 11:55:48\",\n" +
+                "                \"vehicleNumber\": 5645641,\n" +
+                "                \"id\": 12,\n" +
+                "                \"timeFrame\": 24\n" +
                 "            }\n" +
                 "        ],\n" +
                 "        \"streetList\": [\n" +
