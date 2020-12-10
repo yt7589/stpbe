@@ -29,10 +29,8 @@ public class BmyDao {
     }
 
     public static BmyDTO getBmyDTOByCode(MongoTemplate mongoTemplate, String bmyCode) {
-        System.out.println("bmyCode: " + bmyCode + "!");
         Query bmyQuery = Query.query(Criteria.where("bmy_code").is(bmyCode + " "));
         BmyDTO bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
-        System.out.println("#### bmyDTO:" + bmyDTO + "!");
         if (null == bmyDTO) {
             bmyQuery = Query.query(Criteria.where("bmy_code").is(bmyCode));
             bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);

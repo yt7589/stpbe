@@ -68,6 +68,8 @@ public class MgqService implements IMgqService {
     }
 
     private static int numFiles = 0;
+    private static int errorNum = 0;
+    private static int savedNum = 0;
     public void processBatchDclFdsFiles(List<File> dsFiles) {
         String result = null;
         List<VehicleVo> vos = null;
@@ -92,7 +94,8 @@ public class MgqService implements IMgqService {
             map.put("TPMC", f.getName());
             result = TvisUtil.recognizeImageFile(map, f);
             if (result.equals(TvisUtil.ERROR_RESPONSE)) {
-                System.out.println("识别图片失败");
+                //System.out.println("识别图片失败");
+                errorNum++;
             } else {
                 vos = TvisUtil.parseTvisJson(result);
                 for (VehicleVo vo : vos) {
@@ -104,19 +107,22 @@ public class MgqService implements IMgqService {
                             vehicleCxtzVo.getCllxflCode(),
                             vehicleCxtzVo.getCllxzflCode()
                     );
-                    brandDTO = BmyDao.getBrandDTOByCode(mongoTemplate, vehicleCxtzVo.getClppCode());
-                    vehicleCxtzVo.setClpp(brandDTO.getBrandId());
-                    modelDTO = BmyDao.getModelDTOByCode(mongoTemplate, vehicleCxtzVo.getPpcxCode());
-                    vehicleCxtzVo.setPpcx(modelDTO.getModelId());
-                    bmyDTO = BmyDao.getBmyDTOByCode(mongoTemplate, vehicleCxtzVo.getCxnkCode());
-                    vehicleCxtzVo.setCxnk(bmyDTO.getBmyId());
-                    vehicleCxtzVo.setPpxhms(bmyDTO.getBmyId());
-                    MgqEngine.insertRecord(redisTemplate, partitionTag, vo);
+                    if (vehicleCxtzVo != null) {
+                        brandDTO = BmyDao.getBrandDTOByCode(mongoTemplate, vehicleCxtzVo.getClppCode());
+                        vehicleCxtzVo.setClpp(brandDTO.getBrandId());
+                        modelDTO = BmyDao.getModelDTOByCode(mongoTemplate, vehicleCxtzVo.getPpcxCode());
+                        vehicleCxtzVo.setPpcx(modelDTO.getModelId());
+                        bmyDTO = BmyDao.getBmyDTOByCode(mongoTemplate, vehicleCxtzVo.getCxnkCode());
+                        vehicleCxtzVo.setCxnk(bmyDTO.getBmyId());
+                        vehicleCxtzVo.setPpxhms(bmyDTO.getBmyId());
+                        MgqEngine.insertRecord(redisTemplate, partitionTag, vo);
+                        savedNum++;
+                    }
                 }
             }
             numFiles++;
-            if (numFiles % 10000 == 0) {
-                System.out.println("已经处理完成" + numFiles + "个文件......");
+            if (numFiles % 100 == 0) {
+                System.out.println("已经处理完成" + numFiles + "个文件：识别错误：" + errorNum + "; 入库：" + savedNum + "！");
             }
         }
     }
