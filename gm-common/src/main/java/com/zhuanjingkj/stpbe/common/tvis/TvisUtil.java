@@ -22,7 +22,6 @@ public class TvisUtil {
     public final static String ERROR_RESPONSE = "ERROR";
 
     public static String recognizeImageFile(Map<String, Object> map, File f) {
-        System.out.println("处理文件：" + f);
         boolean sendName = true;
         String type = "file";
         String url = AppConst.TVIS_SERVER_URL;
@@ -108,11 +107,9 @@ public class TvisUtil {
     private static List<Float> generateTzxl(String vecStr) {
         List<Float> tzxl = new ArrayList<>();
         String[] arrs = vecStr.split(",");
-        System.out.println("arrs.length=" + arrs.length + "!!!!!!!!!!!!!!!!!");
         for (String item : arrs) {
             tzxl.add(Float.parseFloat(item));
         }
-        System.out.println("tzxl.size=" + tzxl.size() + "!!!!!!!!!!!!!!!!!!");
         return tzxl;
     }
 }
