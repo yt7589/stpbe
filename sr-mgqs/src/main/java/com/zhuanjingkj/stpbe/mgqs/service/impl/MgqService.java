@@ -107,8 +107,13 @@ public class MgqService implements IMgqService {
                             vehicleCxtzVo.getCllxflCode(),
                             vehicleCxtzVo.getCllxzflCode()
                     );
-                    if (partitionTag.indexOf("tail_")==0) {
+                    if (partitionTag.equals("tail_")) {
                         continue;
+                    }
+                    if (vehicleWztzVo.getPsfx().equals("1")) {
+                        System.out.println("....................head.....................");
+                    } else {
+                        System.out.println("################ tail #####################");
                     }
                     if (vehicleCxtzVo != null) {
                         brandDTO = BmyDao.getBrandDTOByCode(mongoTemplate, vehicleCxtzVo.getClppCode());
