@@ -109,12 +109,21 @@ public class MgqService implements IMgqService {
                     );
                     if (vehicleCxtzVo != null) {
                         brandDTO = BmyDao.getBrandDTOByCode(mongoTemplate, vehicleCxtzVo.getClppCode());
-                        vehicleCxtzVo.setClpp(brandDTO.getBrandId());
+                        if (brandDTO != null) {
+                            vehicleCxtzVo.setClpp(brandDTO.getBrandId());
+                            continue;
+                        }
                         modelDTO = BmyDao.getModelDTOByCode(mongoTemplate, vehicleCxtzVo.getPpcxCode());
-                        vehicleCxtzVo.setPpcx(modelDTO.getModelId());
+                        if (modelDTO != null) {
+                            vehicleCxtzVo.setPpcx(modelDTO.getModelId());
+                            continue;
+                        }
                         bmyDTO = BmyDao.getBmyDTOByCode(mongoTemplate, vehicleCxtzVo.getCxnkCode());
-                        vehicleCxtzVo.setCxnk(bmyDTO.getBmyId());
-                        vehicleCxtzVo.setPpxhms(bmyDTO.getBmyId());
+                        if (bmyDTO != null) {
+                            vehicleCxtzVo.setCxnk(bmyDTO.getBmyId());
+                            vehicleCxtzVo.setPpxhms(bmyDTO.getBmyId());
+                            continue;
+                        }
                         MgqEngine.insertRecord(redisTemplate, partitionTag, vo);
                         savedNum++;
                     }

@@ -108,7 +108,11 @@ public class TvisUtil {
         List<Float> tzxl = new ArrayList<>();
         String[] arrs = vecStr.split(",");
         for (String item : arrs) {
-            tzxl.add(Float.parseFloat(item));
+            try {
+                tzxl.add(Float.parseFloat(item));
+            } catch (Exception ex) {
+                tzxl.add(0.0f);
+            }
         }
         return tzxl;
     }
