@@ -30,13 +30,18 @@ public class BmyDao {
 
     public static BmyDTO getBmyDTOByCode(MongoTemplate mongoTemplate, String bmyCode) {
         Query bmyQuery = Query.query(Criteria.where("bmy_code").is(bmyCode + " "));
-        BmyDTO bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
-        if (null == bmyDTO) {
-            bmyQuery = Query.query(Criteria.where("bmy_code").is(bmyCode));
+        BmyDTO bmyDTO = null;
+        try {
             bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
+            if (null == bmyDTO) {
+                bmyQuery = Query.query(Criteria.where("bmy_code").is(bmyCode));
+                bmyDTO = mongoTemplate.findOne(bmyQuery, BmyDTO.class);
+            }
+            String[] arrs = bmyDTO.getBmyName().split("-");
+            bmyDTO.setYearName(arrs[arrs.length - 1]);
+        } catch (Exception ex) {
+            System.out.println(bmyCode + " => Exception: " + ex.getMessage() + "!");
         }
-        String[] arrs = bmyDTO.getBmyName().split("-");
-        bmyDTO.setYearName(arrs[arrs.length - 1]);
         return bmyDTO;
     }
 
