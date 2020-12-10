@@ -282,6 +282,54 @@ public class VehicleStatisticController {
                 "                \"regionName\": \"海淀区\"\n" +
                 "            },\n" +
                 "            {\n" +
+                "                \"passedNumber\": 781204,\n" +
+                "                \"regionName\": \"丰台区\"\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"passedNumber\": 12345678,\n" +
+                "                \"regionName\": \"石景山区\"\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"passedNumber\": 564654,\n" +
+                "                \"regionName\": \"门头沟区\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"passedNumber\": 8998545,\n" +
+                "                \"regionName\": \"房山区\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"passedNumber\": 456546,\n" +
+                "                \"regionName\": \"顺义区\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"passedNumber\": 45671,\n" +
+                "                \"regionName\": \"昌平区\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"passedNumber\": 126470,\n" +
+                "                \"regionName\": \"大兴区\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"passedNumber\": 237412,\n" +
+                "                \"regionName\": \"怀柔区\"\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"passedNumber\": 14526,\n" +
+                "                \"regionName\": \"平谷区\"\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"passedNumber\": 894510,\n" +
+                "                \"regionName\": \"密云区\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"passedNumber\": 127461,\n" +
+                "                \"regionName\": \"延庆区\"\n" +
+                "            },\n" +
+                "            {\n" +
                 "                \"passedNumber\": 456546,\n" +
                 "                \"regionName\": \"东城区\"\n" +
                 "            },\n" +
@@ -370,7 +418,52 @@ public class VehicleStatisticController {
                 "            {\n" +
                 "                \"streetName\": \"上地街十字\",\n" +
                 "                \"passedNumber\": 456456\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"streetName\": \"清华大学正门\",\n" +
+                "                \"passedNumber\": 5646512\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"streetName\": \"国家大剧院十字\",\n" +
+                "                \"passedNumber\": 451369\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"streetName\": \"西华门十字\",\n" +
+                "                \"passedNumber\": 5465465\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"streetName\": \"天安门广场\",\n" +
+                "                \"passedNumber\": 4561264\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"streetName\": \"朝阳大街十字\",\n" +
+                "                \"passedNumber\": 6541245\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"streetName\": \"中关村十字\",\n" +
+                "                \"passedNumber\": 945213\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"streetName\": \"上地西里十字\",\n" +
+                "                \"passedNumber\": 123456\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"streetName\": \"上地东里十字\",\n" +
+                "                \"passedNumber\": 257962\n" +
+                "            },\n" +
+
+                "            {\n" +
+                "                \"streetName\": \"西二旗街十字\",\n" +
+                "                \"passedNumber\": 41981\n" +
                 "            }\n" +
+
                 "        ],\n" +
                 "        \"vehicleDistributionList\": [\n" +
                 "            {\n" +
