@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * author by guoqiang
@@ -29,5 +30,10 @@ public class DeviceController {
 
         PageInfo pageInfo = deviceService.getDevice(deviceRTO);
         return ResultDTO.success(pageInfo);
+    }
+
+    @GetMapping("/type")
+    public ResultDTO<List> getDeviceType() {
+        return ResultDTO.success(deviceService.getDeviceType());
     }
 }

@@ -31,4 +31,12 @@
         </if>
     </select>
 
+    <select id="getDeviceType" resultType="com.zhuanjingkj.stpbe.data.entity.CameraType">
+        select
+        camera_type_id as cameraTypeId,
+        camera_type_name as cameraTypeName
+        from
+        t_camera_type
+    </select>
+
 </mapper>
