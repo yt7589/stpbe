@@ -23,6 +23,42 @@ public class CameraDTO extends BaseDTO {
     private Integer status;
     private Integer regionId;
     private String regionName;
+    private String city;
+    private String direction;
+    private Integer vehicleDirection;
+    private String siteName;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public Integer getVehicleDirection() {
+        return vehicleDirection;
+    }
+
+    public void setVehicleDirection(Integer vehicleDirection) {
+        this.vehicleDirection = vehicleDirection;
+    }
+
+    public String getSiteName() {
+        return siteName;
+    }
+
+    public void setSiteName(String siteName) {
+        this.siteName = siteName;
+    }
 
     public Long getCameraId() {
         return cameraId;

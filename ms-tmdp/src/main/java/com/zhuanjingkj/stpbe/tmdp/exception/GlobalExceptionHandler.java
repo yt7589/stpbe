@@ -5,6 +5,7 @@ import com.zhuanjingkj.stpbe.data.dto.Code;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,6 +27,13 @@ public class GlobalExceptionHandler {
     public ResultDTO handleValidationException(ValidationException  exception){
         logger.error("validation excption is {}",exception);
         return ResultDTO.error(Code.PARAMETER_ERROR,exception.getMessage().split(": ")[1]);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public ResultDTO handleMethodArgumentNotValidException(MethodArgumentNotValidException  exception){
+        logger.error("validation excption is {}",exception);
+        return ResultDTO.error(Code.PARAMETER_ERROR,exception.getBindingResult().getFieldError().getDefaultMessage());
     }
 
 
