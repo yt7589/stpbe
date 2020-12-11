@@ -22,13 +22,13 @@ public class TasScheduledTask {
     @Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
         logger.info("TasScheduledTask.run ... v0.0.1 " + System.currentTimeMillis() + "!");
-        /*String response = (String)redisTemplate.opsForValue().get(AppConst.VIDEO_RECOG_RST_REDIS_KEY);
+        String response = (String)redisTemplate.opsForValue().get(AppConst.VIDEO_RECOG_RST_REDIS_KEY);
         // 从Redis中读出视频识别结果，将其发送到Kafka
         // 向Kafka的Topic发送请求
         StringBuilder msg = new StringBuilder("{\"cameraId\": \"-1\", \"json\": " + response + "}");
         kafkaTemplate.send("tvis", 0, msg.toString());
         logger.info("kafka 1 " + response + "!");
         kafkaTemplate.flush();
-        logger.info("kafka 2");*/
+        logger.info("kafka 2");
     }
 }

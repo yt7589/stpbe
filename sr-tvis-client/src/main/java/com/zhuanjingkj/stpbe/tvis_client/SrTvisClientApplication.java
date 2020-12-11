@@ -100,7 +100,8 @@ public class SrTvisClientApplication {
         return fs;
     }
 
-
+    private static FileOutputStream fos = null;
+    private static OutputStreamWriter osw = null;
     public void start(String[] args) throws InterruptedException {
         Map<String, String> params = parseParams(args);
         url = params.get("url");
@@ -167,6 +168,15 @@ public class SrTvisClientApplication {
             produceImage(files, loop);
         });
 
+        try {
+            fos = new FileOutputStream(new File(outputDir + "/error_images.txt"));
+            osw = new OutputStreamWriter(fos, "UTF-8");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         for (int i = 0; i < nThread; i++) {
             es.execute(() -> {
                 consumeImage();
@@ -177,6 +187,20 @@ public class SrTvisClientApplication {
         while (!es.awaitTermination(1, TimeUnit.SECONDS)) {
         }
         System.out.println("执行完成");
+        if (osw != null) {
+            try {
+                osw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (fos != null) {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         Date endTime = new Date();
 
@@ -215,6 +239,7 @@ public class SrTvisClientApplication {
     private void consumeImage() {
         while (true) {
             try {
+                //new FileOutputStream(new File("./error_images.txt"));
                 FileWrap fw = filesQueue.poll(1, TimeUnit.SECONDS);
                 if (fw != null) {
                     File f = fw.file;
@@ -250,6 +275,8 @@ public class SrTvisClientApplication {
                         } else {
                             errorImages.incrementAndGet();
                             System.out.println("error image:" + f.getName());
+                            osw.write(f.getName() + "*" + "1\r\n");
+                            osw.flush();
                         }
                         logger.info("outputMode=" + appOutputMode + "!");
                         if (appOutputMode.equals("1")) {
@@ -274,6 +301,12 @@ public class SrTvisClientApplication {
                     } catch (Exception e) {
                         errorImages.incrementAndGet();
                         System.out.println("error image:" + f.getName());
+                        try {
+                            osw.write(f.getName() + "*" + "0\r\n");
+                            osw.flush();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
                         e.printStackTrace();
                     }
                 } else {

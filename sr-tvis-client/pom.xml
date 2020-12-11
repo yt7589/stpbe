@@ -11,7 +11,7 @@
 
 
     <artifactId>sr-tvis-client</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
     <name>sr-tvis-client</name>
     <description>sr-tvis-client-001</description>
