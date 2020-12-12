@@ -123,7 +123,7 @@ public class TrafficViolationController {
                 "\"trafficViolationTime\":\"2020-11-24 18:55:15\",\n" +
                 "\"imgId\":123,\n" +
                 "\"vehiclePlate\":\"京A6666666\",\n" +
-                "\"imgUrl\":\"http://222.128.117.234:8090/cloud/vehicle_images/v001.jpg\",\n" +
+                "\"imgUrl\":\"http://222.128.117.234:8090/cloud/images/a002.jpg\",\n" +
                 "\"violationTypeName\":\"不系安全带\"\n" +
                 "},\n" +
                 "{\n" +
@@ -135,7 +135,7 @@ public class TrafficViolationController {
                 "\"trafficViolationTime\":\"2020-11-24 18:54:05\",\n" +
                 "\"imgId\":123,\n" +
                 "\"vehiclePlate\":\"京A8888888\",\n" +
-                "\"imgUrl\":\"http://222.128.117.234:8090/cloud/vehicle_images/v001.jpg\",\n" +
+                "\"imgUrl\":\"http://222.128.117.234:8090/cloud/images/a001.jpg\",\n" +
                 "\"violationTypeName\":\"不带头盔\"\n" +
                 "}\n" +
                 "]\n" +
