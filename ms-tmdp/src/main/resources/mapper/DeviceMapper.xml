@@ -39,4 +39,8 @@
         t_camera_type
     </select>
 
+    <delete id="deleteDevice" parameterType="java.lang.Integer">
+        DELETE FROM t_camera WHERE camera_id=#{cameraId}
+    </delete>
+
 </mapper>

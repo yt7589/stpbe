@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.zhuanjingkj.stpbe.data.entity.CameraType;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.DeviceRTO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,4 +26,10 @@ public interface DeviceService {
      * @return
      */
     List<CameraType> getDeviceType();
+
+    /**
+     * 删除设备
+     * @param cameraId
+     */
+    void deleteDevice(Integer cameraId);
 }

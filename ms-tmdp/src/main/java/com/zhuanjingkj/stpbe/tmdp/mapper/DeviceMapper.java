@@ -26,4 +26,10 @@ public interface DeviceMapper {
      * @return
      */
     List<CameraType> getDeviceType();
+
+    /**
+     * 删除设备
+     * @param cameraId
+     */
+    void deleteDevice(@Param("cameraId")Integer cameraId);
 }
