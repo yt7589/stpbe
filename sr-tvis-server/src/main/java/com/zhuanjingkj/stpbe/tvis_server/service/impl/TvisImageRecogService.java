@@ -167,6 +167,7 @@ public class TvisImageRecogService implements ITvisImageRecogService {
                 }
                 redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
             }*/
+            System.out.println("##### save [" + requestId + "] to redis......");
             redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
         }
 
@@ -177,7 +178,9 @@ public class TvisImageRecogService implements ITvisImageRecogService {
                 Thread.sleep(3);
             } catch (InterruptedException ignore) {
             }
+            System.out.println("##### read [" + requestId + "] ....");
             response = redisTemplate.opsForValue().get(requestId);
+            System.out.println("#### response is [" + response + "]");
             if (response != null) {
                 break;
             }

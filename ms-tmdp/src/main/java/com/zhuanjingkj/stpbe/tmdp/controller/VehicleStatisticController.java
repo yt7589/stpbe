@@ -474,12 +474,12 @@ public class VehicleStatisticController {
                 "        ],\n" +
                 "        \"vehicleDistributionList\": [\n" +
                 "            {\n" +
-                "                \"vehicleDistributionPercntage\": \"0.7\",\n" +
+                "                \"vehicleDistributionPercntage\": \"0.62\",\n" +
                 "                \"id\": 1,\n" +
                 "                \"vehicleDistributionName\": \"本市车辆\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleDistributionPercntage\": \"0.3\",\n" +
+                "                \"vehicleDistributionPercntage\": \"0.38\",\n" +
                 "                \"id\": 2,\n" +
                 "                \"vehicleDistributionName\": \"外埠\"\n" +
                 "            }\n" +

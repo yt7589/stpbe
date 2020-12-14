@@ -270,6 +270,8 @@ public class SrTvisClientApplication {
                         map.clear();
                         map = null;
 
+                        System.out.println("######### " + response + "!");
+
                         if (isSuccessRequest(response)) {
                             successImages.incrementAndGet();
                         } else {
