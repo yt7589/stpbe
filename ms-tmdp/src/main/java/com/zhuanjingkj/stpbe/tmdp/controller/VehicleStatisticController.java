@@ -132,145 +132,145 @@ public class VehicleStatisticController {
                 "                \"timeFrame\": 24\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 564654,\n" +
+                "                \"vehicleNumber\": 100,\n" +
                 "                \"id\": 13,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 2\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 5465465,\n" +
+                "                \"vehicleNumber\": 120,\n" +
                 "                \"id\": 14,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 4\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 545458,\n" +
+                "                \"vehicleNumber\": 140,\n" +
                 "                \"id\": 15,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 6\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 654654,\n" +
+                "                \"vehicleNumber\": 180,\n" +
                 "                \"id\": 16,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 8\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 132345,\n" +
+                "                \"vehicleNumber\": 150,\n" +
                 "                \"id\": 17,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 10\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 10042,\n" +
+                "                \"vehicleNumber\": 130,\n" +
                 "                \"id\": 18,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 12\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 44545,\n" +
+                "                \"vehicleNumber\": 100,\n" +
                 "                \"id\": 19,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 14\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 789786,\n" +
+                "                \"vehicleNumber\": 125,\n" +
                 "                \"id\": 20,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 16\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 54656,\n" +
+                "                \"vehicleNumber\": 130,\n" +
                 "                \"id\": 21,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 18\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 78978,\n" +
+                "                \"vehicleNumber\": 115,\n" +
                 "                \"id\": 22,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 20\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 567456,\n" +
+                "                \"vehicleNumber\": 120,\n" +
                 "                \"id\": 23,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 22\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 879789,\n" +
+                "                \"vehicleNumber\": 125,\n" +
                 "                \"id\": 24,\n" +
                 "                \"vehicleTypeName\": \"中型车\",\n" +
                 "                \"timeFrame\": 24\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 734534,\n" +
+                "                \"vehicleNumber\": 300,\n" +
                 "                \"id\": 25,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 2\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 456456,\n" +
+                "                \"vehicleNumber\": 500,\n" +
                 "                \"id\": 26,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 4\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 456456,\n" +
+                "                \"vehicleNumber\": 600,\n" +
                 "                \"id\": 27,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 6\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 456456,\n" +
+                "                \"vehicleNumber\": 200,\n" +
                 "                \"id\": 28,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 8\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 65789,\n" +
+                "                \"vehicleNumber\": 100,\n" +
                 "                \"id\": 29,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 10\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 100245,\n" +
+                "                \"vehicleNumber\": 120,\n" +
                 "                \"id\": 30,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 12\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 102030,\n" +
+                "                \"vehicleNumber\": 100,\n" +
                 "                \"id\": 31,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 14\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 1000,\n" +
+                "                \"vehicleNumber\": 90,\n" +
                 "                \"id\": 32,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 16\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 45454,\n" +
+                "                \"vehicleNumber\": 100,\n" +
                 "                \"id\": 33,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 18\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 456456,\n" +
+                "                \"vehicleNumber\": 105,\n" +
                 "                \"id\": 34,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 20\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 7865456,\n" +
+                "                \"vehicleNumber\": 180,\n" +
                 "                \"id\": 35,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 22\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 76456,\n" +
+                "                \"vehicleNumber\": 230,\n" +
                 "                \"id\": 36,\n" +
                 "                \"vehicleTypeName\": \"大型车\",\n" +
                 "                \"timeFrame\": 24\n" +
