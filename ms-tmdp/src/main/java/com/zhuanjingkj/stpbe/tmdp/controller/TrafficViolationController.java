@@ -59,47 +59,47 @@ public class TrafficViolationController {
                 "\"timeFrame\":2\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":100,\n" +
+                "\"trafficViolationNum\":80,\n" +
                 "\"timeFrame\":4\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":1023,\n" +
+                "\"trafficViolationNum\":63,\n" +
                 "\"timeFrame\":6\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":456,\n" +
+                "\"trafficViolationNum\":150,\n" +
                 "\"timeFrame\":8\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":123,\n" +
+                "\"trafficViolationNum\":180,\n" +
                 "\"timeFrame\":10\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":665,\n" +
+                "\"trafficViolationNum\":190,\n" +
                 "\"timeFrame\":12\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":442,\n" +
+                "\"trafficViolationNum\":170,\n" +
                 "\"timeFrame\":14\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":789,\n" +
+                "\"trafficViolationNum\":185,\n" +
                 "\"timeFrame\":16\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":112,\n" +
+                "\"trafficViolationNum\":225,\n" +
                 "\"timeFrame\":18\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":785,\n" +
+                "\"trafficViolationNum\":280,\n" +
                 "\"timeFrame\":20\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":23,\n" +
+                "\"trafficViolationNum\":165,\n" +
                 "\"timeFrame\":22\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":852,\n" +
+                "\"trafficViolationNum\":98,\n" +
                 "\"timeFrame\":24\n" +
                 "}\n" +
                 "],\n" +
