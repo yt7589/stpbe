@@ -53,10 +53,10 @@ public class VehicleStatisticController {
 
         String s = "{\n" +
                 "        \"vehiclePassedNumber\": {\n" +
-                "            \"todayPassedNumber\": 5556,\n" +
-                "            \"dailyMean\": 7878,\n" +
-                "            \"currentMonthPassedNumber\": 6786786,\n" +
-                "            \"sevenDayPassedNumber\": 4545645\n" +
+                "            \"todayPassedNumber\": 555612345,\n" +
+                "            \"dailyMean\": 5556123459,\n" +
+                "            \"currentMonthPassedNumber\": 555612345988,\n" +
+                "            \"sevenDayPassedNumber\": 55561234598\n" +
                 "        },\n" +
                 "        \"vehicleTypeNumberList\": [\n" +
                 "            {\n" +
