@@ -278,71 +278,71 @@ public class VehicleStatisticController {
                 "        ],\n" +
                 "        \"regionList\": [\n" +
                 "            {\n" +
-                "                \"passedNumber\": 456546,\n" +
+                "                \"passedNumber\": 2890,\n" +
                 "                \"regionName\": \"海淀区\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"passedNumber\": 781204,\n" +
+                "                \"passedNumber\": 1620,\n" +
                 "                \"regionName\": \"丰台区\"\n" +
                 "            },\n" +
 
                 "            {\n" +
-                "                \"passedNumber\": 12345678,\n" +
+                "                \"passedNumber\": 1680,\n" +
                 "                \"regionName\": \"石景山区\"\n" +
                 "            },\n" +
 
                 "            {\n" +
-                "                \"passedNumber\": 564654,\n" +
+                "                \"passedNumber\": 989,\n" +
                 "                \"regionName\": \"门头沟区\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"passedNumber\": 8998545,\n" +
+                "                \"passedNumber\": 1022,\n" +
                 "                \"regionName\": \"房山区\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"passedNumber\": 456546,\n" +
+                "                \"passedNumber\": 1989,\n" +
                 "                \"regionName\": \"顺义区\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"passedNumber\": 45671,\n" +
+                "                \"passedNumber\": 1820,\n" +
                 "                \"regionName\": \"昌平区\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"passedNumber\": 126470,\n" +
+                "                \"passedNumber\": 1780,\n" +
                 "                \"regionName\": \"大兴区\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"passedNumber\": 237412,\n" +
+                "                \"passedNumber\": 1120,\n" +
                 "                \"regionName\": \"怀柔区\"\n" +
                 "            },\n" +
 
                 "            {\n" +
-                "                \"passedNumber\": 14526,\n" +
+                "                \"passedNumber\": 990,\n" +
                 "                \"regionName\": \"平谷区\"\n" +
                 "            },\n" +
 
                 "            {\n" +
-                "                \"passedNumber\": 894510,\n" +
+                "                \"passedNumber\": 900,\n" +
                 "                \"regionName\": \"密云区\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"passedNumber\": 127461,\n" +
+                "                \"passedNumber\": 890,\n" +
                 "                \"regionName\": \"延庆区\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"passedNumber\": 456546,\n" +
+                "                \"passedNumber\": 3210,\n" +
                 "                \"regionName\": \"东城区\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"passedNumber\": 456546,\n" +
+                "                \"passedNumber\": 3620,\n" +
                 "                \"regionName\": \"西城区\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"passedNumber\": 456546,\n" +
+                "                \"passedNumber\": 3200,\n" +
                 "                \"regionName\": \"朝阳区\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"passedNumber\": 456546,\n" +
+                "                \"passedNumber\": 2998,\n" +
                 "                \"regionName\": \"通州区\"\n" +
                 "            }\n" +
                 "        ],\n" +
