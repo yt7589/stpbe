@@ -75,7 +75,7 @@ public class TrafficViolationController {
                 "\"timeFrame\":10\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":7865,\n" +
+                "\"trafficViolationNum\":665,\n" +
                 "\"timeFrame\":12\n" +
                 "},\n" +
                 "{\n" +
@@ -99,18 +99,18 @@ public class TrafficViolationController {
                 "\"timeFrame\":22\n" +
                 "},\n" +
                 "{\n" +
-                "\"trafficViolationNum\":7852,\n" +
+                "\"trafficViolationNum\":852,\n" +
                 "\"timeFrame\":24\n" +
                 "}\n" +
                 "],\n" +
                 "\"trafficViolationTypeNumberList\":[\n" +
                 "{\n" +
                 "\"trafficViolationType\":\"不带头盔\",\n" +
-                "\"trafficViolationNum\":7987\n" +
+                "\"trafficViolationNum\":187\n" +
                 "},\n" +
                 "{\n" +
                 "\"trafficViolationType\":\"不系安全带\",\n" +
-                "\"trafficViolationNum\":4654\n" +
+                "\"trafficViolationNum\":450\n" +
                 "}\n" +
                 "],\n" +
                 "\"trafficViolationList\":[\n" +
