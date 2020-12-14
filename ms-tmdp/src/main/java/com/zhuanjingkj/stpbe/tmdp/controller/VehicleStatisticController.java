@@ -493,7 +493,7 @@ public class VehicleStatisticController {
                 "            {\n" +
                 "                \"vehicleTypePercentage\": \"0.23\",\n" +
                 "                \"id\": 2,\n" +
-                "                \"vehicleTypeName\": \"SUV\"\n" +
+                "                \"vehicleTypeName\": \"SUV*\"\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"vehicleTypePercentage\": \"0.11\",\n" +
@@ -503,7 +503,7 @@ public class VehicleStatisticController {
                 "            {\n" +
                 "                \"vehicleTypePercentage\": \"0.06\",\n" +
                 "                \"id\": 4,\n" +
-                "                \"vehicleTypeName\": \"面包车\"\n" +
+                "                \"vehicleTypeName\": \"面包车*\"\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"vehicleTypePercentage\": \"0.09\",\n" +
