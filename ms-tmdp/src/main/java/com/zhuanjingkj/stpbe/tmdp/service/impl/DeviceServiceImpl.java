@@ -34,4 +34,9 @@ public class DeviceServiceImpl implements DeviceService {
     public List<CameraType> getDeviceType() {
         return deviceMapper.getDeviceType();
     }
+
+    @Override
+    public void deleteDevice(Integer cameraId) {
+        deviceMapper.deleteDevice(cameraId);
+    }
 }
