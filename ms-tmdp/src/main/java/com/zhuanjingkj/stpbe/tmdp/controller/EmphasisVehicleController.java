@@ -51,12 +51,12 @@ public class EmphasisVehicleController {
         String s = "{\n" +
                 "\"emphasisVehiclePercentageList\":[\n" +
                 "{\n" +
-                "\"emphasisVehicleTypeName\":\"仓栅式货车\",\n" +
+                "\"emphasisVehicleTypeName\":\"仓栅式货车*\",\n" +
                 "\"emphasisVehicleNum\":4654654,\n" +
                 "\"percentage\":\"0.9997\"\n" +
                 "},\n" +
                 "{\n" +
-                "\"emphasisVehicleTypeName\":\"平板式货车\",\n" +
+                "\"emphasisVehicleTypeName\":\"平板式货车#\",\n" +
                 "\"emphasisVehicleNum\":123,\n" +
                 "\"percentage\":\"0.0000\"\n" +
                 "},\n" +
