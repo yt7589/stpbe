@@ -3,6 +3,7 @@ package com.zhuanjingkj.stpbe.tmdp.service;
 import com.github.pagehelper.PageInfo;
 import com.zhuanjingkj.stpbe.data.entity.CameraType;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO;
+import com.zhuanjingkj.stpbe.tmdp.rto.CameraRTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.DeviceRTO;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,4 +33,16 @@ public interface DeviceService {
      * @param cameraId
      */
     void deleteDevice(Integer cameraId);
+
+    /**
+     * 插入设备
+     * @param cameraRTO
+     */
+    void insertDevice(CameraRTO cameraRTO);
+
+    /**
+     * 更新设备信息
+     * @param cameraRTO
+     */
+    void updateDevice(CameraRTO cameraRTO);
 }
