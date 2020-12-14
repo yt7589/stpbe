@@ -60,73 +60,73 @@ public class VehicleStatisticController {
                 "        },\n" +
                 "        \"vehicleTypeNumberList\": [\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 545455,\n" +
+                "                \"vehicleNumber\": 100,\n" +
                 "                \"id\": 1,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 2\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 32132,\n" +
+                "                \"vehicleNumber\": 80,\n" +
                 "                \"id\": 2,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 4\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 65423,\n" +
+                "                \"vehicleNumber\": 100,\n" +
                 "                \"id\": 3,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 6\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 894654,\n" +
+                "                \"vehicleNumber\": 260,\n" +
                 "                \"id\": 4,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 8\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 321232,\n" +
+                "                \"vehicleNumber\": 500,\n" +
                 "                \"id\": 5,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 10\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 326545,\n" +
+                "                \"vehicleNumber\": 200,\n" +
                 "                \"id\": 6,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 12\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 654654,\n" +
+                "                \"vehicleNumber\": 160,\n" +
                 "                \"id\": 7,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 14\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 533245,\n" +
+                "                \"vehicleNumber\": 320,\n" +
                 "                \"id\": 8,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 16\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 895451,\n" +
+                "                \"vehicleNumber\": 600,\n" +
                 "                \"id\": 9,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 18\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 11655,\n" +
+                "                \"vehicleNumber\": 360,\n" +
                 "                \"id\": 10,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 20\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 65323,\n" +
+                "                \"vehicleNumber\": 280,\n" +
                 "                \"id\": 11,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 22\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"vehicleNumber\": 3254,\n" +
+                "                \"vehicleNumber\": 190,\n" +
                 "                \"id\": 12,\n" +
                 "                \"vehicleTypeName\": \"小型车\",\n" +
                 "                \"timeFrame\": 24\n" +
@@ -493,7 +493,7 @@ public class VehicleStatisticController {
                 "            {\n" +
                 "                \"vehicleTypePercentage\": \"0.23\",\n" +
                 "                \"id\": 2,\n" +
-                "                \"vehicleTypeName\": \"SUV*\"\n" +
+                "                \"vehicleTypeName\": \"SUV\"\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"vehicleTypePercentage\": \"0.11\",\n" +
@@ -503,7 +503,7 @@ public class VehicleStatisticController {
                 "            {\n" +
                 "                \"vehicleTypePercentage\": \"0.06\",\n" +
                 "                \"id\": 4,\n" +
-                "                \"vehicleTypeName\": \"面包车*\"\n" +
+                "                \"vehicleTypeName\": \"面包车\"\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"vehicleTypePercentage\": \"0.09\",\n" +
