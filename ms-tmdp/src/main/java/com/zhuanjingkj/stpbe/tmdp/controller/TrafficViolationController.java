@@ -116,7 +116,7 @@ public class TrafficViolationController {
                 "\"trafficViolationList\":[\n" +
                 "{\n" +
                 "\"id\":3,\n" +
-                "\"location\":\"天安门广场\",\n" +
+                "\"location\":\"金融街\",\n" +
                 "\"vehicleType\":\"奔驰\",\n" +
                 "\"vehicleStyle\":\"2020\",\n" +
                 "\"violationTypeId\":3,\n" +
@@ -128,7 +128,7 @@ public class TrafficViolationController {
                 "},\n" +
                 "{\n" +
                 "\"id\":2,\n" +
-                "\"location\":\"上地街十字\",\n" +
+                "\"location\":\"上地信息路\",\n" +
                 "\"vehicleType\":\"帕萨特\",\n" +
                 "\"vehicleStyle\":\"2020\",\n" +
                 "\"violationTypeId\":2,\n" +
