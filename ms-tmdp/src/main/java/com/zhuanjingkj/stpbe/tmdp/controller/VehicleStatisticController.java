@@ -424,51 +424,51 @@ public class VehicleStatisticController {
                 "        \"streetList\": [\n" +
                 "            {\n" +
                 "                \"streetName\": \"上地街十字\",\n" +
-                "                \"passedNumber\": 456456\n" +
+                "                \"passedNumber\": 10\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"streetName\": \"清华大学正门\",\n" +
-                "                \"passedNumber\": 5646512\n" +
+                "                \"passedNumber\": 8\n" +
                 "            },\n" +
 
                 "            {\n" +
                 "                \"streetName\": \"国家大剧院十字\",\n" +
-                "                \"passedNumber\": 451369\n" +
+                "                \"passedNumber\": 20\n" +
                 "            },\n" +
 
                 "            {\n" +
                 "                \"streetName\": \"西华门十字\",\n" +
-                "                \"passedNumber\": 5465465\n" +
+                "                \"passedNumber\": 15\n" +
                 "            },\n" +
 
                 "            {\n" +
                 "                \"streetName\": \"天安门广场\",\n" +
-                "                \"passedNumber\": 4561264\n" +
+                "                \"passedNumber\": 18\n" +
                 "            },\n" +
 
                 "            {\n" +
                 "                \"streetName\": \"朝阳大街十字\",\n" +
-                "                \"passedNumber\": 6541245\n" +
+                "                \"passedNumber\": 12\n" +
                 "            },\n" +
 
                 "            {\n" +
                 "                \"streetName\": \"中关村十字\",\n" +
-                "                \"passedNumber\": 945213\n" +
+                "                \"passedNumber\": 11\n" +
                 "            },\n" +
 
                 "            {\n" +
                 "                \"streetName\": \"上地西里十字\",\n" +
-                "                \"passedNumber\": 123456\n" +
+                "                \"passedNumber\": 15\n" +
                 "            },\n" +
 
                 "            {\n" +
                 "                \"streetName\": \"上地东里十字\",\n" +
-                "                \"passedNumber\": 257962\n" +
+                "                \"passedNumber\": 16\n" +
                 "            },\n" +
 
                 "            {\n" +
                 "                \"streetName\": \"西二旗街十字\",\n" +
-                "                \"passedNumber\": 41981\n" +
+                "                \"passedNumber\": 19\n" +
                 "            }\n" +
 
                 "        ],\n" +
