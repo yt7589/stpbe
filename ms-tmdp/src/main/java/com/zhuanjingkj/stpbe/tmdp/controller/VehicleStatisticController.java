@@ -54,6 +54,9 @@ public class VehicleStatisticController {
         // 车辆类型流量
         DkVttfDTO vttf = getDkVttfDTO_exp();
         mainDto.setDkVttf(vttf);
+        // 拥堵路段过车量
+        DkTjrsDTO tjrs = getDkTjrsDTO_exp();
+        mainDto.setDkTjrs(tjrs);
         return dto;
     }
 
@@ -249,9 +252,38 @@ public class VehicleStatisticController {
         return vttf;
     }
 
+    private DkTjrsDTO getDkTjrsDTO_exp() {
+        DkTjrsDTO tjrs = new DkTjrsDTO();
+        List<DkTjrsItemDTO> items = new ArrayList<>();
+        DkTjrsItemDTO item = null;
+        //
+        item = new DkTjrsItemDTO("西直门外大街", 1890000);
+        items.add(item);
+        item = new DkTjrsItemDTO("五道口", 1390000);
+        items.add(item);
+        item = new DkTjrsItemDTO("成府路", 890000);
+        items.add(item);
+        item = new DkTjrsItemDTO("西三旗", 1580000);
+        items.add(item);
+        item = new DkTjrsItemDTO("朝阳北路", 1220000);
+        items.add(item);
+        item = new DkTjrsItemDTO("清华西门", 1560000);
+        items.add(item);
+        item = new DkTjrsItemDTO("上地南口", 1120000);
+        items.add(item);
+        item = new DkTjrsItemDTO("北京西站", 880000);
+        items.add(item);
+        item = new DkTjrsItemDTO("六里桥", 1070000);
+        items.add(item);
+        item = new DkTjrsItemDTO("大山子", 1230000);
+        items.add(item);
+        tjrs.setItems(items);
+        return tjrs;
+    }
 
 
-    private void bk() {
+
+    private String bk() {
 
 //        List<VehicleDistributionDTO> vehicleDistributionList = vehicleStatisticService.getVehicleDistribution();
 //
@@ -744,6 +776,7 @@ public class VehicleStatisticController {
                 "        ]\n" +
                 "    }" ;
         Object j = JSON.parse(s);
+        return s;
         //return ResultDTO.success(j);
     }
 
