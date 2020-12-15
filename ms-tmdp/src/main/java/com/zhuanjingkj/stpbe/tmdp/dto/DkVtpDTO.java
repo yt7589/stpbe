@@ -6,14 +6,29 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 import java.util.Map;
 
 public class DkVtpDTO extends BaseDTO {
-    @JSONField(name = "percents")
-    private Map<String, Integer> percents;
+    @JSONField(name = "name")
+    private String name;
+    @JSONField(name = "count")
+    private int count;
 
-    public Map<String, Integer> getPercents() {
-        return percents;
+    public DkVtpDTO(String name, int count) {
+        this.name = name;
+        this.count = count;
     }
 
-    public void setPercents(Map<String, Integer> percents) {
-        this.percents = percents;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

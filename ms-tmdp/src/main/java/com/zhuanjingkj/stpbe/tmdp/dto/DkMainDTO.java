@@ -8,8 +8,8 @@ import java.util.List;
 public class DkMainDTO extends BaseDTO {
     @JSONField(name = "dkVtie")
     private DkVtieDTO dkVtie;
-    @JSONField(name = "dkVtp")
-    private DkVtpDTO dkVtp;
+    @JSONField(name = "dkVtps")
+    private List<DkVtpDTO> dkVtps;
     @JSONField(name = "dkTitf")
     private DkTitfDTO dkTitf;
     @JSONField(name = "dkVttf")
@@ -27,12 +27,12 @@ public class DkMainDTO extends BaseDTO {
         this.dkVtie = dkVtie;
     }
 
-    public DkVtpDTO getDkVtp() {
-        return dkVtp;
+    public List<DkVtpDTO> getDkVtps() {
+        return dkVtps;
     }
 
-    public void setDkVtp(DkVtpDTO dkVtp) {
-        this.dkVtp = dkVtp;
+    public void setDkVtps(List<DkVtpDTO> dkVtps) {
+        this.dkVtps = dkVtps;
     }
 
     public DkTitfDTO getDkTitf() {

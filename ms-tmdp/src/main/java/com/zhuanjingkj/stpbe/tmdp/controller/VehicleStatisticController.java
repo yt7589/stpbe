@@ -44,8 +44,8 @@ public class VehicleStatisticController {
         DkVtieDTO vtie = getDkVtie_exp();
         mainDto.setDkVtie(vtie);
         // 车辆类型占比
-        DkVtpDTO vtp = getDkVtpDTO_exp();
-        mainDto.setDkVtp(vtp);
+        List<DkVtpDTO> vtps = getDkVtpDTOs_exp();
+        mainDto.setDkVtps(vtps);
         // 分时段过车统计
         DkTitfDTO titf = getDkTitfDTO_exp();
         mainDto.setDkTitf(titf);
@@ -70,18 +70,24 @@ public class VehicleStatisticController {
         return vtie;
     }
 
-    private DkVtpDTO getDkVtpDTO_exp() {
-        DkVtpDTO vtp = new DkVtpDTO();
-        Map<String, Integer> vtpPercents = new HashMap<>();
-        vtpPercents.put(DK_VT_CAR, 41);
-        vtpPercents.put(DK_VT_SUV, 23);
-        vtpPercents.put(DK_VT_MPV, 11);
-        vtpPercents.put(DK_VT_VAN, 6);
-        vtpPercents.put(DK_VT_TANK_TRUCK, 9);
-        vtpPercents.put(DK_VT_NORMAL_TRUCK, 5);
-        vtpPercents.put(DK_VT_OTHERS, 3);
-        vtp.setPercents(vtpPercents);
-        return vtp;
+    private List<DkVtpDTO> getDkVtpDTOs_exp() {
+        List<DkVtpDTO> vtps = new ArrayList<>();
+        DkVtpDTO item = null;
+        item = new DkVtpDTO(DK_VT_CAR, 41);
+        vtps.add(item);
+        item = new DkVtpDTO(DK_VT_SUV, 23);
+        vtps.add(item);
+        item = new DkVtpDTO(DK_VT_MPV, 11);
+        vtps.add(item);
+        item = new DkVtpDTO(DK_VT_VAN, 6);
+        vtps.add(item);
+        item = new DkVtpDTO(DK_VT_TANK_TRUCK, 9);
+        vtps.add(item);
+        item = new DkVtpDTO(DK_VT_NORMAL_TRUCK, 5);
+        vtps.add(item);
+        item = new DkVtpDTO(DK_VT_OTHERS, 3);
+        vtps.add(item);
+        return vtps;
     }
 
     private DkTitfDTO getDkTitfDTO_exp() {
