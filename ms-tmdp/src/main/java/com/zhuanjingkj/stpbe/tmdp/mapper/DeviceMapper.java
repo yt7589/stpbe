@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.mapper;
 
 import com.zhuanjingkj.stpbe.data.entity.CameraType;
+import com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteInfoDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.CameraRTO;
@@ -60,4 +61,22 @@ public interface DeviceMapper {
      * @return
      */
     Integer getDeviceById(@Param("cameraId")Integer cameraId);
+
+    /**
+     * 查询地区
+     * @return
+     */
+    List<RegionBaseDTO> getRegion();
+
+    /**
+     * 删除地区
+     * @param id
+     */
+    void deleteRegion(@Param("id")Integer id);
+
+    /**
+     * 根据父ID查询地区
+     * @return
+     */
+    List<RegionBaseDTO> getRegionByParentId(RegionBaseDTO regionBaseDTO);
 }
