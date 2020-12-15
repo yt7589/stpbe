@@ -69,7 +69,7 @@ public class TmdpController {
         data.setDkVtie(dkVtie);
         // 车辆类型占比
         DkVtpDTO dkVtp = dkVtpService.getDkVtp();
-        data.setDkVtp(dkVtp);
+        //data.setDkVtp(dkVtp);
         // 获取交通流量分时段显示
         DkTitfDTO dkTitf = dkTitfService.countTrafficFlow();
         data.setDkTitf(dkTitf);
