@@ -52,8 +52,8 @@ public class VehicleStatisticController {
         ResultDTO<DkMainDTO> dto = new ResultDTO<>();
         dto.setData(mainDto);
         // 车辆类型流量
-        DkVttfDTO vttf = getDkVttfDTO_exp();
-        mainDto.setDkVttf(vttf);
+        List<DkVttfSeriesDTO> vttfs = getDkVttfSeriesDTOs_exp();
+        mainDto.setDkVttf(vttfs);
         // 拥堵路段过车量
         DkTjrsDTO tjrs = getDkTjrsDTO_exp();
         mainDto.setDkTjrs(tjrs);
@@ -153,8 +153,7 @@ public class VehicleStatisticController {
         return titf;
     }
 
-    private DkVttfDTO getDkVttfDTO_exp() {
-        DkVttfDTO vttf = new DkVttfDTO();
+    private List<DkVttfSeriesDTO> getDkVttfSeriesDTOs_exp() {
         List<DkVttfSeriesDTO> seriesDTOS = new ArrayList<>();
         DkVttfSeriesDTO seriesDTO = new DkVttfSeriesDTO();
         List<DkVttfSeriesItemDTO> items = null;
@@ -248,8 +247,7 @@ public class VehicleStatisticController {
         seriesDTO.setSeriesName("小型车");
         seriesDTO.setDatas(items);
         seriesDTOS.add(seriesDTO);
-        vttf.setSerieses(seriesDTOS);
-        return vttf;
+        return seriesDTOS;
     }
 
     private DkTjrsDTO getDkTjrsDTO_exp() {

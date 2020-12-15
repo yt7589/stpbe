@@ -3,6 +3,8 @@ package com.zhuanjingkj.stpbe.tmdp.dto;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
+import java.util.List;
+
 public class DkMainDTO extends BaseDTO {
     @JSONField(name = "dkVtie")
     private DkVtieDTO dkVtie;
@@ -11,7 +13,7 @@ public class DkMainDTO extends BaseDTO {
     @JSONField(name = "dkTitf")
     private DkTitfDTO dkTitf;
     @JSONField(name = "dkVttf")
-    private DkVttfDTO dkVttf;
+    private List<DkVttfSeriesDTO> dkVttf;
     @JSONField(name = "dkTjrs")
     private DkTjrsDTO dkTjrs;
 
@@ -39,11 +41,11 @@ public class DkMainDTO extends BaseDTO {
         this.dkTitf = dkTitf;
     }
 
-    public DkVttfDTO getDkVttf() {
+    public List<DkVttfSeriesDTO> getDkVttf() {
         return dkVttf;
     }
 
-    public void setDkVttf(DkVttfDTO dkVttf) {
+    public void setDkVttf(List<DkVttfSeriesDTO> dkVttf) {
         this.dkVttf = dkVttf;
     }
 
