@@ -42,7 +42,75 @@ public class TrafficViolationController {
     private VehicleStatisticService vehicleStatisticService;
 
     @GetMapping()
-    public ResultDTO<Object> getTrafficViolationInfo() {
+    public ResultDTO<DkViolationDTO> getTrafficViolationInfo() {
+        ResultDTO<DkViolationDTO> dto = new ResultDTO<>();
+        DkViolationDTO data = new DkViolationDTO();
+        data.setDkRtvrs(getDkRtvrDTOs_exp());
+        data.setDkMvtss(getDkMvtsDTOs_exp());
+        data.setDkTvts(getDkTvtDTOs_exp());
+        dto.setData(data);
+        return dto;
+    }
+
+    private List<DkRtvrDTO> getDkRtvrDTOs_exp() {
+        List<DkRtvrDTO> rtvrs = new ArrayList<>();
+        DkRtvrDTO item = null;
+        item = new DkRtvrDTO(1, 101, "不系安全带",
+                "奥迪", "A6L", "京A-TN518", "2020-08-30 12:01:39",
+                201, "http://222.128.117.234:8090/cloud/images/a001.jpg");
+        rtvrs.add(item);
+        item = new DkRtvrDTO(2, 2101, "不系安全带",
+                "奔驰", "E级", "苏B-TN123", "2020-09-08 12:01:39",
+                2202, "http://222.128.117.234:8090/cloud/images/a002.jpg");
+        rtvrs.add(item);
+        return rtvrs;
+    }
+
+    private List<DkMvtsDTO> getDkMvtsDTOs_exp() {
+        List<DkMvtsDTO> mvtss = new ArrayList<>();
+        DkMvtsDTO item = null;
+        item = new DkMvtsDTO("主驾驶不系安全带", 30000);
+        mvtss.add(item);
+        item = new DkMvtsDTO("主驾驶打电话", 50000);
+        mvtss.add(item);
+        item = new DkMvtsDTO("主驾驶看手机", 90000);
+        mvtss.add(item);
+        item = new DkMvtsDTO("副驾驶不系安全带", 10000);
+        mvtss.add(item);
+        return mvtss;
+    }
+
+    private List<DkTvtDTO> getDkTvtDTOs_exp() {
+        List<DkTvtDTO> tvts = new ArrayList<>();
+        DkTvtDTO item = null;
+        item = new DkTvtDTO("2", 10000);
+        tvts.add(item);
+        item = new DkTvtDTO("4", 8000);
+        tvts.add(item);
+        item = new DkTvtDTO("6", 90000);
+        tvts.add(item);
+        item = new DkTvtDTO("8", 120000);
+        tvts.add(item);
+        item = new DkTvtDTO("10", 200000);
+        tvts.add(item);
+        item = new DkTvtDTO("12", 80000);
+        tvts.add(item);
+        item = new DkTvtDTO("14", 85000);
+        tvts.add(item);
+        item = new DkTvtDTO("16", 96000);
+        tvts.add(item);
+        item = new DkTvtDTO("18", 120000);
+        tvts.add(item);
+        item = new DkTvtDTO("20", 320000);
+        tvts.add(item);
+        item = new DkTvtDTO("22", 180000);
+        tvts.add(item);
+        item = new DkTvtDTO("24", 95000);
+        tvts.add(item);
+        return tvts;
+    }
+
+    private void t001() {
 //        TrafficViolationListDTO trafficViolationListDTO = new TrafficViolationListDTO();
 
 //        List<TrafficViolationStatisticDTO> trafficViolationTimeFrameNumberList = trafficViolationService.getTrafficViolationTimeFrameNumber();
@@ -141,7 +209,7 @@ public class TrafficViolationController {
                 "]\n" +
                 "}";
         Object j = JSON.parse(s);
-        return ResultDTO.success(j);
+        //return ResultDTO.success(j);
     }
     @PostMapping("/list")
     public ResultDTO<PageInfo> getTrafficViolationList(@RequestBody TrafficViolationRTO trafficViolationRTO) {
