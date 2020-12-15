@@ -13,15 +13,19 @@ import java.util.List;
 public class DkVttfService implements IDkVttfService {
     @Override
     public DkVttfDTO getDkVttf() {
-        return getDkVttfExp();
+        return null;
     }
+    //@Override
+    /*public DkVttfDTO getDkVttf() {
+        return getDkVttfExp();
+    }*/
 
 
 
 
 
 
-    public DkVttfDTO getDkVttfExp() {
+    /*public DkVttfDTO getDkVttfExp() {
         List<DkVttfSeriesDTO> serieses = new ArrayList<>();
         // 小型车
         DkVttfSeriesDTO small = new DkVttfSeriesDTO();
@@ -72,5 +76,5 @@ public class DkVttfService implements IDkVttfService {
         DkVttfDTO dkVttf = new DkVttfDTO();
         dkVttf.setSerieses(serieses);
         return dkVttf;
-    }
+    }*/
 }
