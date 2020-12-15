@@ -14,8 +14,8 @@ public class DkMainDTO extends BaseDTO {
     private DkTitfDTO dkTitf;
     @JSONField(name = "dkVttf")
     private List<DkVttfSeriesDTO> dkVttf;
-    @JSONField(name = "dkTjrs")
-    private DkTjrsDTO dkTjrs;
+    @JSONField(name = "dkTjrss")
+    private List<DkTjrsItemDTO> dkTjrss;
 
     public DkVtieDTO getDkVtie() {
         return dkVtie;
@@ -49,11 +49,11 @@ public class DkMainDTO extends BaseDTO {
         this.dkVttf = dkVttf;
     }
 
-    public DkTjrsDTO getDkTjrs() {
-        return dkTjrs;
+    public List<DkTjrsItemDTO> getDkTjrss() {
+        return dkTjrss;
     }
 
-    public void setDkTjrs(DkTjrsDTO dkTjrs) {
-        this.dkTjrs = dkTjrs;
+    public void setDkTjrss(List<DkTjrsItemDTO> dkTjrss) {
+        this.dkTjrss = dkTjrss;
     }
 }

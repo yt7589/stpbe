@@ -55,8 +55,8 @@ public class VehicleStatisticController {
         List<DkVttfSeriesDTO> vttfs = getDkVttfSeriesDTOs_exp();
         mainDto.setDkVttf(vttfs);
         // 拥堵路段过车量
-        DkTjrsDTO tjrs = getDkTjrsDTO_exp();
-        mainDto.setDkTjrs(tjrs);
+        List<DkTjrsItemDTO> tjrss = getDkTjrsItemDTOs_exp();
+        mainDto.setDkTjrss(tjrss);
         return dto;
     }
 
@@ -250,8 +250,7 @@ public class VehicleStatisticController {
         return seriesDTOS;
     }
 
-    private DkTjrsDTO getDkTjrsDTO_exp() {
-        DkTjrsDTO tjrs = new DkTjrsDTO();
+    private List<DkTjrsItemDTO> getDkTjrsItemDTOs_exp() {
         List<DkTjrsItemDTO> items = new ArrayList<>();
         DkTjrsItemDTO item = null;
         //
@@ -275,8 +274,7 @@ public class VehicleStatisticController {
         items.add(item);
         item = new DkTjrsItemDTO("大山子", 1230000);
         items.add(item);
-        tjrs.setItems(items);
-        return tjrs;
+        return items;
     }
 
 
