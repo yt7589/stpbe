@@ -2,13 +2,12 @@ package com.zhuanjingkj.stpbe.tmdp.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+import java.util.List;
+
 public class DkVttfSeriesDTO {
     @JSONField(name = "seriesName")
     private String seriesName;
-    @JSONField(name = "x")
-    private String[] x;
-    @JSONField(name = "y")
-    private String[] y;
+    private List<DkVttfSeriesItemDTO> datas;
 
     public String getSeriesName() {
         return seriesName;
@@ -18,19 +17,11 @@ public class DkVttfSeriesDTO {
         this.seriesName = seriesName;
     }
 
-    public String[] getX() {
-        return x;
+    public List<DkVttfSeriesItemDTO> getDatas() {
+        return datas;
     }
 
-    public void setX(String[] x) {
-        this.x = x;
-    }
-
-    public String[] getY() {
-        return y;
-    }
-
-    public void setY(String[] y) {
-        this.y = y;
+    public void setDatas(List<DkVttfSeriesItemDTO> datas) {
+        this.datas = datas;
     }
 }

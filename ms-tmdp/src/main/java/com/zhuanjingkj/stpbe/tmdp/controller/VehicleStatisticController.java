@@ -37,6 +37,26 @@ public class VehicleStatisticController {
     @Autowired
     private VehicleStatisticService vehicleStatisticService;
 
+    @GetMapping()
+    public ResultDTO<DkMainDTO> getVehicleStatisticInfo() {
+        DkMainDTO mainDto = new DkMainDTO();
+        // 本地外地车辆占比
+        DkVtieDTO vtie = getDkVtie_exp();
+        mainDto.setDkVtie(vtie);
+        // 车辆类型占比
+        DkVtpDTO vtp = getDkVtpDTO_exp();
+        mainDto.setDkVtp(vtp);
+        // 分时段过车统计
+        DkTitfDTO titf = getDkTitfDTO_exp();
+        mainDto.setDkTitf(titf);
+        ResultDTO<DkMainDTO> dto = new ResultDTO<>();
+        dto.setData(mainDto);
+        // 车辆类型流量
+        DkVttfDTO vttf = getDkVttfDTO_exp();
+        mainDto.setDkVttf(vttf);
+        return dto;
+    }
+
     private DkVtieDTO getDkVtie_exp() {
         DkVtieDTO vtie = new DkVtieDTO();
         vtie.setInternalPercent(36);
@@ -129,6 +149,106 @@ public class VehicleStatisticController {
         titf.setTodayTraffics(today);
         return titf;
     }
+
+    private DkVttfDTO getDkVttfDTO_exp() {
+        DkVttfDTO vttf = new DkVttfDTO();
+        List<DkVttfSeriesDTO> seriesDTOS = new ArrayList<>();
+        DkVttfSeriesDTO seriesDTO = new DkVttfSeriesDTO();
+        List<DkVttfSeriesItemDTO> items = null;
+        DkVttfSeriesItemDTO item = null;
+        // 生成大型车数据
+        items = new ArrayList<>();
+        item = new DkVttfSeriesItemDTO("2", 1120000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("4", 1230000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("6", 1350000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("8", 1660000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("10", 1590000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("12", 1480000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("14", 1280000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("16", 1390000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("18", 1980000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("20", 1720000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("22", 1520000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("24", 1330000);
+        seriesDTO = new DkVttfSeriesDTO();
+        seriesDTO.setSeriesName("大型车");
+        seriesDTO.setDatas(items);
+        seriesDTOS.add(seriesDTO);
+        // 生成中型车数据
+        items = new ArrayList<>();
+        item = new DkVttfSeriesItemDTO("2", 1520000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("4", 1730000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("6", 1650000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("8", 1860000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("10", 1790000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("12", 1380000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("14", 1180000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("16", 1690000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("18", 1780000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("20", 2120000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("22", 2520000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("24", 2330000);
+        items.add(item);
+        seriesDTO = new DkVttfSeriesDTO();
+        seriesDTO.setSeriesName("中型车");
+        seriesDTO.setDatas(items);
+        seriesDTOS.add(seriesDTO);
+        // 生成小型车数据
+        items = new ArrayList<>();
+        item = new DkVttfSeriesItemDTO("2", 520000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("4", 730000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("6", 950000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("8", 3860000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("10", 2790000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("12", 1080000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("14", 980000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("16", 1690000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("18", 2780000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("20", 4120000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("22", 2520000);
+        items.add(item);
+        item = new DkVttfSeriesItemDTO("24", 330000);
+        items.add(item);
+        seriesDTO = new DkVttfSeriesDTO();
+        seriesDTO.setSeriesName("小型车");
+        seriesDTO.setDatas(items);
+        seriesDTOS.add(seriesDTO);
+        return vttf;
+    }
+
+
 
     private void bk() {
 
@@ -626,20 +746,4 @@ public class VehicleStatisticController {
         //return ResultDTO.success(j);
     }
 
-    @GetMapping()
-    public ResultDTO<DkMainDTO> getVehicleStatisticInfo() {
-        DkMainDTO mainDto = new DkMainDTO();
-        // 本地外地车辆占比
-        DkVtieDTO vtie = getDkVtie_exp();
-        mainDto.setDkVtie(vtie);
-        // 车辆类型占比
-        DkVtpDTO vtp = getDkVtpDTO_exp();
-        mainDto.setDkVtp(vtp);
-        // 分时段过车统计
-        DkTitfDTO titf = getDkTitfDTO_exp();
-        mainDto.setDkTitf(titf);
-        ResultDTO<DkMainDTO> dto = new ResultDTO<>();
-        dto.setData(mainDto);
-        return dto;
-    }
 }
