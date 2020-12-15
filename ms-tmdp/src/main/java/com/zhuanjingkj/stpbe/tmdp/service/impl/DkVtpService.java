@@ -18,8 +18,8 @@ public class DkVtpService implements IDkVtpService {
         percents.put("面包车", 40);
         percents.put("厢式货车", 50);
         percents.put("普通货车", 60);
-        DkVtpDTO dkVtp = new DkVtpDTO();
-        dkVtp.setPercents(percents);
-        return dkVtp;
+        //DkVtpDTO dkVtp = new DkVtpDTO();
+        //dkVtp.setPercents(percents);
+        return null;
     }
 }
