@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhuanjingkj.stpbe.data.dto.Code;
 import com.zhuanjingkj.stpbe.data.entity.CameraType;
+import com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteInfoDTO;
@@ -30,7 +31,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public PageInfo<CameraDTO> getDevice(DeviceRTO deviceRTO) {
         PageHelper.startPage(deviceRTO.getPageNum(), deviceRTO.getPageSize());
-        PageInfo<CameraDTO> pageInfo = new PageInfo<CameraDTO>(deviceMapper.getDevice(deviceRTO.getCameraCode(),deviceRTO.getCameraTypeId()));
+        PageInfo<CameraDTO> pageInfo = new PageInfo<>(deviceMapper.getDevice(deviceRTO.getCameraCode(),deviceRTO.getCameraTypeId()));
         return pageInfo;
     }
 
@@ -58,5 +59,24 @@ public class DeviceServiceImpl implements DeviceService {
             throw  new ServiceException(Code.DEVICE_NOT_EXIST,"设备不存在");
         }
         deviceMapper.updateDevice(cameraRTO);
+    }
+
+    @Override
+    public PageInfo<RegionBaseDTO> getRegion(Integer pageNum, Integer pageSize) {
+
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<RegionBaseDTO> pageInfo = new PageInfo<>(deviceMapper.getRegion());
+        return pageInfo;
+    }
+
+    @Override
+    public void deleteRegion(Integer id) {
+        RegionBaseDTO regionBaseDTO = new RegionBaseDTO();
+        regionBaseDTO.setParentId(id);
+        List<RegionBaseDTO> list = deviceMapper.getRegionByParentId(regionBaseDTO);
+        if(list !=null && list.size()>0){
+            throw new ServiceException(Code.SUB_REGION_EXIST,"此地区存在未删除的子地区");
+        }
+        deviceMapper.deleteRegion(id);
     }
 }

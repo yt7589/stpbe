@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -57,6 +58,18 @@ public class DeviceController {
     @PostMapping("/update")
     public ResultDTO<Object> updateDevice(@Validated({Update.class}) @RequestBody CameraRTO cameraRTO) {
         deviceService.updateDevice(cameraRTO);
+        return ResultDTO.success();
+    }
+
+    @GetMapping("/region")
+    public ResultDTO<PageInfo> getRegion(@Min(1) @NotNull(message = "页码不能为空") Integer pageNum,
+                                         @Min(1) @NotNull(message = "每页显示数量不能为空") Integer pageSize) {
+        PageInfo pageInfo = deviceService.getRegion(pageNum,pageSize);
+        return ResultDTO.success(pageInfo);
+    }
+    @GetMapping("/region/delete")
+    public ResultDTO<Object> deleteRegion(@NotNull(message = "地区ID不能为空") Integer id) {
+        deviceService.deleteRegion(id);
         return ResultDTO.success();
     }
 }

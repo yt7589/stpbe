@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zhuanjingkj.stpbe.data.entity.CameraType;
+import com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.CameraRTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.DeviceRTO;
@@ -45,4 +46,17 @@ public interface DeviceService {
      * @param cameraRTO
      */
     void updateDevice(CameraRTO cameraRTO);
+
+    /**
+     * 查询地区
+     * @return
+     */
+    PageInfo<RegionBaseDTO> getRegion(Integer pageNum,Integer pageSize);
+
+
+    /**
+     * 删除地区
+     * @param id
+     */
+    void deleteRegion(Integer id);
 }

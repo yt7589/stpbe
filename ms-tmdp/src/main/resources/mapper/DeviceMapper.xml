@@ -166,4 +166,57 @@
         where
         camera_id = #{cameraId}
     </select>
+
+    <select id="getRegion" resultType="com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO">
+        select
+        t.id as id,
+        t.region_name as regionName,
+        t.parent_id as parentId,
+        t.level as level ,
+        t.is_emphasis_region as isEmphasisRegion,
+        t1.region_name as parentRegionName,
+        t1.level as parentLevel
+        FROM
+        t_region t
+        LEFT JOIN t_region t1 ON t.parent_id = t1.id
+    </select>
+
+    <delete id="deleteRegion" parameterType="java.lang.Integer">
+        delete
+        from
+        t_region
+        where
+        id=#{id}
+    </delete>
+
+    <select id="getRegionByParentId" resultType="com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO" parameterType="com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO">
+        select
+        t.id as id,
+        t.region_name as regionName,
+        t.parent_id as parentId,
+        t.level as level ,
+        t.is_emphasis_region as isEmphasisRegion,
+        t1.region_name as parentRegionName,
+        t1.level as parentLevel
+        FROM
+        t_region t
+        LEFT JOIN t_region t1 ON t.parent_id = t1.id
+        where
+        1=1
+        <if test="id != null">
+            and t.parent_id = #{id}
+        </if>
+        <if test="regionName != null and regionName!=''">
+            and t.region_name = #{regionName}
+        </if>
+        <if test="parentId != null">
+            and t.parent_id = #{parentId}
+        </if>
+        <if test="level != null">
+            and t.level = #{level}
+        </if>
+        <if test="isEmphasisRegion != null">
+            and t.is_emphasis_region = #{isEmphasisRegion}
+        </if>
+    </select>
 </mapper>
