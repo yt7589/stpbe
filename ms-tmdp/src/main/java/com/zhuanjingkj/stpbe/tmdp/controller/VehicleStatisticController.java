@@ -245,6 +245,7 @@ public class VehicleStatisticController {
         seriesDTO.setSeriesName("小型车");
         seriesDTO.setDatas(items);
         seriesDTOS.add(seriesDTO);
+        vttf.setSerieses(seriesDTOS);
         return vttf;
     }
 
