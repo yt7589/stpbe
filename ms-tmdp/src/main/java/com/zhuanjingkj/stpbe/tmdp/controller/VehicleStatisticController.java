@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.*;
 import com.zhuanjingkj.stpbe.tmdp.dto.res.VehicleStatisticListDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
 import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * author by guoqiang
@@ -22,12 +26,112 @@ import java.util.List;
 @RequestMapping("/vehicle/statistic")
 @CrossOrigin(origins = "*")
 public class VehicleStatisticController {
+    public final static String DK_VT_CAR = "小汽车";
+    public final static String DK_VT_SUV = "SUV";
+    public final static String DK_VT_MPV = "MPV";
+    public final static String DK_VT_VAN = "面包车";
+    public final static String DK_VT_TANK_TRUCK = "罐式货车";
+    public final static String DK_VT_NORMAL_TRUCK = "普通货车";
+    public final static String DK_VT_OTHERS = "其他";
 
     @Autowired
     private VehicleStatisticService vehicleStatisticService;
 
-    @GetMapping()
-    public ResultDTO<Object> getVehicleStatisticInfo() {
+    private DkVtieDTO getDkVtie_exp() {
+        DkVtieDTO vtie = new DkVtieDTO();
+        vtie.setInternalPercent(36);
+        vtie.setExternalPercent(64);
+        return vtie;
+    }
+
+    private DkVtpDTO getDkVtpDTO_exp() {
+        DkVtpDTO vtp = new DkVtpDTO();
+        Map<String, Integer> vtpPercents = new HashMap<>();
+        vtpPercents.put(DK_VT_CAR, 41);
+        vtpPercents.put(DK_VT_SUV, 23);
+        vtpPercents.put(DK_VT_MPV, 11);
+        vtpPercents.put(DK_VT_VAN, 6);
+        vtpPercents.put(DK_VT_TANK_TRUCK, 9);
+        vtpPercents.put(DK_VT_NORMAL_TRUCK, 5);
+        vtpPercents.put(DK_VT_OTHERS, 3);
+        vtp.setPercents(vtpPercents);
+        return vtp;
+    }
+
+    private DkTitfDTO getDkTitfDTO_exp() {
+        DkTitfDTO titf = new DkTitfDTO();
+        DkTitfItemDTO item;
+        // 昨天
+        List<DkTitfItemDTO> yesterday = new ArrayList<>();
+        // 昨天4时
+        item = new DkTitfItemDTO();
+        item.setReportTime("4");
+        item.setCount(1230000);
+        yesterday.add(item);
+        // 昨天8时
+        item = new DkTitfItemDTO();
+        item.setReportTime("8");
+        item.setCount(2891111);
+        yesterday.add(item);
+        // 昨天12时
+        item = new DkTitfItemDTO();
+        item.setReportTime("12");
+        item.setCount(2020000);
+        yesterday.add(item);
+        // 昨天16时
+        item = new DkTitfItemDTO();
+        item.setReportTime("16");
+        item.setCount(186000);
+        yesterday.add(item);
+        // 昨天20时
+        item = new DkTitfItemDTO();
+        item.setReportTime("20");
+        item.setCount(3080000);
+        yesterday.add(item);
+        // 昨天24时
+        item = new DkTitfItemDTO();
+        item.setReportTime("24");
+        item.setCount(980000);
+        yesterday.add(item);
+        // 昨天
+        List<DkTitfItemDTO> today = new ArrayList<>();
+        // 今天4时
+        item = new DkTitfItemDTO();
+        item.setReportTime("4");
+        item.setCount(1630000);
+        today.add(item);
+        // 今天8时
+        item = new DkTitfItemDTO();
+        item.setReportTime("8");
+        item.setCount(3191111);
+        today.add(item);
+        // 今天12时
+        item = new DkTitfItemDTO();
+        item.setReportTime("12");
+        item.setCount(2220000);
+        today.add(item);
+        // 今天16时
+        item = new DkTitfItemDTO();
+        item.setReportTime("16");
+        item.setCount(156000);
+        today.add(item);
+        // 今天20时
+        item = new DkTitfItemDTO();
+        item.setReportTime("20");
+        item.setCount(3180000);
+        today.add(item);
+        // 昨天24时
+        item = new DkTitfItemDTO();
+        item.setReportTime("24");
+        item.setCount(1280000);
+        today.add(item);
+        titf.setYesterdayTraffics(yesterday);
+        titf.setTodayTraffics(today);
+        return titf;
+    }
+
+    private void bk() {
+
 //        List<VehicleDistributionDTO> vehicleDistributionList = vehicleStatisticService.getVehicleDistribution();
 //
 //        List<VehicleTypeDTO> vehicleTypeList = vehicleStatisticService.getVehicleType();
@@ -50,6 +154,7 @@ public class VehicleStatisticController {
 //        vehicleDistributionListDTO.setStreetList(streetList);
 //        vehicleDistributionListDTO.setRegionList(regionList);
 //        vehicleDistributionListDTO.setVehiclePassedNumber(vehiclePassedNumber);
+
 
         String s = "{\n" +
                 "        \"vehiclePassedNumber\": {\n" +
@@ -518,6 +623,23 @@ public class VehicleStatisticController {
                 "        ]\n" +
                 "    }" ;
         Object j = JSON.parse(s);
-        return ResultDTO.success(j);
+        //return ResultDTO.success(j);
+    }
+
+    @GetMapping()
+    public ResultDTO<DkMainDTO> getVehicleStatisticInfo() {
+        DkMainDTO mainDto = new DkMainDTO();
+        // 本地外地车辆占比
+        DkVtieDTO vtie = getDkVtie_exp();
+        mainDto.setDkVtie(vtie);
+        // 车辆类型占比
+        DkVtpDTO vtp = getDkVtpDTO_exp();
+        mainDto.setDkVtp(vtp);
+        // 分时段过车统计
+        DkTitfDTO titf = getDkTitfDTO_exp();
+        mainDto.setDkTitf(titf);
+        ResultDTO<DkMainDTO> dto = new ResultDTO<>();
+        dto.setData(mainDto);
+        return dto;
     }
 }

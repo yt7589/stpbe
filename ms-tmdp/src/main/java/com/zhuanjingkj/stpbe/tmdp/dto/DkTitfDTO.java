@@ -5,6 +5,9 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 import java.util.List;
 
+/**
+ * 分时段过车统计
+ */
 public class DkTitfDTO extends BaseDTO {
     @JSONField(name = "todayTraffics")
     private List<DkTitfItemDTO> todayTraffics;

@@ -3,6 +3,9 @@ package com.zhuanjingkj.stpbe.tmdp.dto;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
+/**
+ * 首页=》数据看板：左侧第一行第一个，本地外地车辆占比
+ */
 public class DkVtieDTO extends BaseDTO {
     @JSONField(name = "internalPercent")
     private int internalPercent;
