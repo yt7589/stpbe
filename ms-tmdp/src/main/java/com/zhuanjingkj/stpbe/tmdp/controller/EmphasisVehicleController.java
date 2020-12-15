@@ -52,7 +52,7 @@ public class EmphasisVehicleController {
                 "\"emphasisVehiclePercentageList\":[\n" +
                 "{\n" +
                 "\"emphasisVehicleTypeName\":\"仓栅式货车*\",\n" +
-                "\"emphasisVehicleNum\":4654654,\n" +
+                "\"emphasisVehicleNum\":600,\n" +
                 "\"percentage\":\"0.9997\"\n" +
                 "},\n" +
                 "{\n" +

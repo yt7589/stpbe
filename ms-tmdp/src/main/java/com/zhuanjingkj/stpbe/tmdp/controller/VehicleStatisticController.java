@@ -349,74 +349,74 @@ public class VehicleStatisticController {
                 "        \"timeFrameNumberList\": [\n" +
                 "            {\n" +
                 "                \"date\": \"2020-11-26 11:51:55\",\n" +
-                "                \"vehicleNumber\": 82456666,\n" +
+                "                \"vehicleNumber\": 1230000,\n" +
                 "                \"id\": 1,\n" +
                 "                \"timeFrame\": 4\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"date\": \"2020-11-26 11:53:50\",\n" +
-                "                \"vehicleNumber\": 65465465,\n" +
+                "                \"vehicleNumber\": 2080000,\n" +
                 "                \"id\": 2,\n" +
                 "                \"timeFrame\": 8\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"date\": \"2020-11-26 11:54:01\",\n" +
-                "                \"vehicleNumber\": 465465465,\n" +
+                "                \"vehicleNumber\": 1598888,\n" +
                 "                \"id\": 3,\n" +
                 "                \"timeFrame\": 12\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"date\": \"2020-11-26 11:54:11\",\n" +
-                "                \"vehicleNumber\": 35165465,\n" +
+                "                \"vehicleNumber\": 1982222,\n" +
                 "                \"id\": 4,\n" +
                 "                \"timeFrame\": 16\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"date\": \"2020-11-26 11:54:32\",\n" +
-                "                \"vehicleNumber\": 4685465,\n" +
+                "                \"vehicleNumber\": 1120000,\n" +
                 "                \"id\": 5,\n" +
                 "                \"timeFrame\": 20\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"date\": \"2020-11-26 11:54:49\",\n" +
-                "                \"vehicleNumber\": 98798798,\n" +
+                "                \"vehicleNumber\": 980000,\n" +
                 "                \"id\": 6,\n" +
                 "                \"timeFrame\": 24\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"date\": \"2020-11-25 11:55:02\",\n" +
-                "                \"vehicleNumber\": 4654654,\n" +
+                "                \"vehicleNumber\": 1280000,\n" +
                 "                \"id\": 7,\n" +
                 "                \"timeFrame\": 4\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"date\": \"2020-11-25 11:55:15\",\n" +
-                "                \"vehicleNumber\": 65465465,\n" +
+                "                \"vehicleNumber\": 2030000,\n" +
                 "                \"id\": 8,\n" +
                 "                \"timeFrame\": 8\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"date\": \"2020-11-25 11:55:27\",\n" +
-                "                \"vehicleNumber\": 465456,\n" +
+                "                \"vehicleNumber\": 1660000,\n" +
                 "                \"id\": 9,\n" +
                 "                \"timeFrame\": 12\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"date\": \"2020-11-25 11:55:37\",\n" +
-                "                \"vehicleNumber\": 6846854,\n" +
+                "                \"vehicleNumber\": 2050000,\n" +
                 "                \"id\": 10,\n" +
                 "                \"timeFrame\": 16\n" +
                 "            },\n" +
                 "            {\n" +
                 "                \"date\": \"2020-11-25 11:55:37\",\n" +
-                "                \"vehicleNumber\": 7841562,\n" +
+                "                \"vehicleNumber\": 1028888,\n" +
                 "                \"id\": 11,\n" +
                 "                \"timeFrame\": 20\n" +
                 "            },\n" +
 
                 "            {\n" +
                 "                \"date\": \"2020-11-25 11:55:48\",\n" +
-                "                \"vehicleNumber\": 5645641,\n" +
+                "                \"vehicleNumber\": 660000,\n" +
                 "                \"id\": 12,\n" +
                 "                \"timeFrame\": 24\n" +
                 "            }\n" +
