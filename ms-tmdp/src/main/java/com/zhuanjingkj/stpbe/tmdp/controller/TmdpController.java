@@ -75,7 +75,7 @@ public class TmdpController {
         data.setDkTitf(dkTitf);
         // 显示车辆类型分时段交通流量
         DkVttfDTO dkVttf = dkVttfService.getDkVttf();
-        data.setDkVttf(dkVttf);
+        //data.setDkVttf(dkVttf);
         //
         dto.setData(data);
         return dto;
