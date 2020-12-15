@@ -57,6 +57,9 @@ public class VehicleStatisticController {
         // 拥堵路段过车量
         List<DkTjrsItemDTO> tjrss = getDkTjrsItemDTOs_exp();
         mainDto.setDkTjrss(tjrss);
+        // 区县过车量
+        List<DkDctfItemDTO> dctfs = getDkDctfItemDTOs_exp();
+        mainDto.setDkDctfs(dctfs);
         return dto;
     }
 
@@ -277,6 +280,43 @@ public class VehicleStatisticController {
         return items;
     }
 
+    private List<DkDctfItemDTO> getDkDctfItemDTOs_exp() {
+        List<DkDctfItemDTO> dctfs = new ArrayList<>();
+        DkDctfItemDTO item = null;
+        item = new DkDctfItemDTO("东城区", 1850000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("西城区", 20800000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("海淀区", 1980000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("朝阳区", 1810000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("石景山区", 1010000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("丰台区", 1130000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("大兴区", 980000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("通州区", 1550000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("房山区", 1020000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("门头沟区", 880000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("昌平区", 1080000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("延庆区", 550000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("怀柔区", 880000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("顺义区", 990000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("平谷区", 770000);
+        dctfs.add(item);
+        item = new DkDctfItemDTO("密云区", 660000);
+        dctfs.add(item);
+        return dctfs;
+    }
 
 
     private String bk() {
