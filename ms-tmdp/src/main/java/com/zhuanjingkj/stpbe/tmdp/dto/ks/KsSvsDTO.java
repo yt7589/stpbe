@@ -8,6 +8,8 @@ import java.util.List;
 public class KsSvsDTO extends BaseDTO {
     @JSONField(name = "htfs")
     private KsSvsHtfsDTO htfs; // 中间头部流量统计
+    @JSONField(name = "ltvi")
+    private KsSvsLtviDTO ltvi; // 最新违章信息
     @JSONField(name = "ksvmc")
     private List<KsSvsKsvmcDTO> ksvmcs; // 左侧第一行：重点监控车辆车型组成
     @JSONField(name = "Ksvads")
@@ -29,6 +31,14 @@ public class KsSvsDTO extends BaseDTO {
 
     public void setKsvmcs(List<KsSvsKsvmcDTO> ksvmcs) {
         this.ksvmcs = ksvmcs;
+    }
+
+    public KsSvsLtviDTO getLtvi() {
+        return ltvi;
+    }
+
+    public void setLtvi(KsSvsLtviDTO ltvi) {
+        this.ltvi = ltvi;
     }
 
     public List<KsSvsKsvadDTO> getKsvads() {
