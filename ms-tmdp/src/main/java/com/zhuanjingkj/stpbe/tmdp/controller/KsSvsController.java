@@ -29,6 +29,7 @@ public class KsSvsController {
         data.setSvtvs(getKsSvsSvtvDTOs_exp());
         data.setKsvtitfs(getKsSvsKsvtitfDTOs_exp());
         data.setKsvsss(getKsSvsKsvssDTOs_exp());
+        data.setKsvtvrps(getKsSvsKsvtvrpDTOs_exp());
         dto.setData(data);
         return dto;
     }
@@ -125,5 +126,12 @@ public class KsSvsController {
         ksvsss.add(new KsSvsKsvssDTO(106, "六里桥", 15335));
         ksvsss.add(new KsSvsKsvssDTO(107, "王府井", 18221));
         return ksvsss;
+    }
+
+    private List<KsSvsKsvtvrpDTO> getKsSvsKsvtvrpDTOs_exp() {
+        List<KsSvsKsvtvrpDTO> ksvtvrps = new ArrayList<>();
+        ksvtvrps.add(new KsSvsKsvtvrpDTO(102, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
+        ksvtvrps.add(new KsSvsKsvtvrpDTO(101, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
+        return ksvtvrps;
     }
 }
