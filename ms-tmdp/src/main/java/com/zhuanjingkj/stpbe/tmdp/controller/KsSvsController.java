@@ -4,6 +4,7 @@ import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsSvsDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsSvsHtfsDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsSvsKsvadDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsSvsKsvmcDTO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class KsSvsController {
         ResultDTO<KsSvsDTO> dto = new ResultDTO<>();
         KsSvsDTO data = new KsSvsDTO();
         data.setHtfs(getKsSvsHtfsDTO_exp());
+        data.setKsvmcs(getKsSvsKsvmcDTOs_exp());
         data.setKsvads(getKsSvsKsvadDTOs_exp());
         dto.setData(data);
         return dto;
@@ -37,6 +39,17 @@ public class KsSvsController {
         htfs.setTodayWarnNum(155);
         htfs.setTodayKakvNum(8188);
         return htfs;
+    }
+
+    private List<KsSvsKsvmcDTO> getKsSvsKsvmcDTOs_exp() {
+        List<KsSvsKsvmcDTO> ksvmcs = new ArrayList<>();
+        ksvmcs.add(new KsSvsKsvmcDTO("平板式货车", 189035));
+        ksvmcs.add(new KsSvsKsvmcDTO("厢式货车", 109035));
+        ksvmcs.add(new KsSvsKsvmcDTO("罐式货车", 69035));
+        ksvmcs.add(new KsSvsKsvmcDTO("栏板式货车", 129035));
+        ksvmcs.add(new KsSvsKsvmcDTO("仓栅式货车", 239035));
+        ksvmcs.add(new KsSvsKsvmcDTO("普通货车", 289035));
+        return ksvmcs;
     }
 
     private List<KsSvsKsvadDTO> getKsSvsKsvadDTOs_exp() {
