@@ -202,6 +202,7 @@ public class VehicleStatisticController {
         item = new DkVttfSeriesItemDTO("22", 1520000);
         items.add(item);
         item = new DkVttfSeriesItemDTO("24", 1330000);
+        items.add(item);
         seriesDTO = new DkVttfSeriesDTO();
         seriesDTO.setSeriesName("大型车");
         seriesDTO.setDatas(items);
