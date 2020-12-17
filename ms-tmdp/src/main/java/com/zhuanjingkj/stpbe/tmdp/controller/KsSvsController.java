@@ -28,6 +28,7 @@ public class KsSvsController {
         data.setKsvrps(getKsSvsKsvrpDTOs_exp());
         data.setSvtvs(getKsSvsSvtvDTOs_exp());
         data.setKsvtitfs(getKsSvsKsvtitfDTOs_exp());
+        data.setKsvsss(getKsSvsKsvssDTOs_exp());
         dto.setData(data);
         return dto;
     }
@@ -112,5 +113,17 @@ public class KsSvsController {
         ksvtitfs.add(new KsSvsKsvtitfDTO("22", 138976));
         ksvtitfs.add(new KsSvsKsvtitfDTO("24", 76543));
         return ksvtitfs;
+    }
+
+    private List<KsSvsKsvssDTO> getKsSvsKsvssDTOs_exp() {
+        List<KsSvsKsvssDTO> ksvsss = new ArrayList<>();
+        ksvsss.add(new KsSvsKsvssDTO(101, "上地三街", 1231));
+        ksvsss.add(new KsSvsKsvssDTO(102, "西三旗", 2345));
+        ksvsss.add(new KsSvsKsvssDTO(103,"西二旗", 1102));
+        ksvsss.add(new KsSvsKsvssDTO(104, "王道口", 12345));
+        ksvsss.add(new KsSvsKsvssDTO(105, "西直门", 19321));
+        ksvsss.add(new KsSvsKsvssDTO(106, "六里桥", 15335);
+        ksvsss.add(new KsSvsKsvssDTO(107, "王府井", 18221));
+        return ksvsss;
     }
 }
