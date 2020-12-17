@@ -1,10 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsSvsDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsSvsHtfsDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsSvsKsvadDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsSvsKsvmcDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.ks.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +25,7 @@ public class KsSvsController {
         data.setHtfs(getKsSvsHtfsDTO_exp());
         data.setKsvmcs(getKsSvsKsvmcDTOs_exp());
         data.setKsvads(getKsSvsKsvadDTOs_exp());
+        data.setKsvrps(getKsSvsKsvrpDTOs_exp());
         dto.setData(data);
         return dto;
     }
@@ -62,5 +60,12 @@ public class KsSvsController {
         ksvads.add(new KsSvsKsvadDTO("清河地区", 82468));
         ksvads.add(new KsSvsKsvadDTO("西三旗地区", 65432));
         return ksvads;
+    }
+
+    private List<KsSvsKsvrpDTO> getKsSvsKsvrpDTOs_exp() {
+        List<KsSvsKsvrpDTO> ksvrps = new ArrayList<>();
+        ksvrps.add(new KsSvsKsvrpDTO(101, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
+        ksvrps.add(new KsSvsKsvrpDTO(102, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
+        return ksvrps;
     }
 }

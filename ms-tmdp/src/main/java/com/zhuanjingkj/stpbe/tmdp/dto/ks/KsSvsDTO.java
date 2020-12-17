@@ -12,6 +12,8 @@ public class KsSvsDTO extends BaseDTO {
     private List<KsSvsKsvmcDTO> ksvmcs; // 左侧第一行：重点监控车辆车型组成
     @JSONField(name = "Ksvads")
     private List<KsSvsKsvadDTO> ksvads; // 左侧第二行：重点监控车辆区域分布
+    @JSONField(name = "ksvrps")
+    private List<KsSvsKsvrpDTO> ksvrps; // 左侧第三行：重点监控车辆实时图片
 
     public List<KsSvsKsvmcDTO> getKsvmcs() {
         return ksvmcs;
@@ -35,5 +37,13 @@ public class KsSvsDTO extends BaseDTO {
 
     public void setHtfs(KsSvsHtfsDTO htfs) {
         this.htfs = htfs;
+    }
+
+    public List<KsSvsKsvrpDTO> getKsvrps() {
+        return ksvrps;
+    }
+
+    public void setKsvrps(List<KsSvsKsvrpDTO> ksvrps) {
+        this.ksvrps = ksvrps;
     }
 }
