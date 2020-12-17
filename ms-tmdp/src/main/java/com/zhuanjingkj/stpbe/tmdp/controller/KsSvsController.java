@@ -27,6 +27,7 @@ public class KsSvsController {
         data.setKsvads(getKsSvsKsvadDTOs_exp());
         data.setKsvrps(getKsSvsKsvrpDTOs_exp());
         data.setSvtvs(getKsSvsSvtvDTOs_exp());
+        data.setKsvtitfs(getKsSvsKsvtitfDTOs_exp());
         dto.setData(data);
         return dto;
     }
@@ -94,5 +95,22 @@ public class KsSvsController {
                 105, "六里桥AO3", "2020-12-17 16:56:29");
         svtvs.add(svtv);
         return svtvs;
+    }
+
+    private List<KsSvsKsvtitfDTO> getKsSvsKsvtitfDTOs_exp() {
+        List<KsSvsKsvtitfDTO> ksvtitfs = new ArrayList<>();
+        ksvtitfs.add(new KsSvsKsvtitfDTO("2", 38976));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("4", 28989));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("6", 32345));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("8", 153567));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("10", 167891));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("12", 89765));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("14", 81234));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("16", 99321));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("18", 118909));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("20", 189883));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("22", 138976));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("24", 76543));
+        return ksvtitfs;
     }
 }
