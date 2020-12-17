@@ -26,6 +26,7 @@ public class KsSvsController {
         data.setKsvmcs(getKsSvsKsvmcDTOs_exp());
         data.setKsvads(getKsSvsKsvadDTOs_exp());
         data.setKsvrps(getKsSvsKsvrpDTOs_exp());
+        data.setSvtvs(getKsSvsSvtvDTOs_exp());
         dto.setData(data);
         return dto;
     }
@@ -67,5 +68,31 @@ public class KsSvsController {
         ksvrps.add(new KsSvsKsvrpDTO(101, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
         ksvrps.add(new KsSvsKsvrpDTO(102, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
         return ksvrps;
+    }
+
+    private List<KsSvsSvtvDTO> getKsSvsSvtvDTOs_exp() {
+        List<KsSvsSvtvDTO> svtvs = new ArrayList<>();
+        KsSvsSvtvDTO svtv = null;
+        svtv = new KsSvsSvtvDTO(1, "京A-xy001", "奥迪-A6L",
+                1, "驾驶员不系安全带",
+                101, "上地三街路口", "2020-12-17 16:56:29");
+        svtvs.add(svtv);
+        svtv = new KsSvsSvtvDTO(2, "京N-xy998", "奔驰-E级",
+                2, "主驾驶打电话",
+                102, "西三旗环岛", "2020-12-17 16:56:29");
+        svtvs.add(svtv);
+        svtv = new KsSvsSvtvDTO(3, "京Q-xy001", "宝马-3系",
+                3, "主驾驶看电话",
+                103, "西小口", "2020-12-17 16:56:29");
+        svtvs.add(svtv);
+        svtv = new KsSvsSvtvDTO(4, "京B-xy001", "北汽-索纳塔",
+                4, "副驾驶不系安全带",
+                104, "西直门", "2020-12-17 16:56:29");
+        svtvs.add(svtv);
+        svtv = new KsSvsSvtvDTO(105, "京C-xy801", "沃尔沃-S90",
+                1, "驾驶员不系安全带",
+                105, "六里桥AO3", "2020-12-17 16:56:29");
+        svtvs.add(svtv);
+        return svtvs;
     }
 }
