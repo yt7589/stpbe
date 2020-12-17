@@ -24,10 +24,15 @@ public class KsSvsLtviDTO extends BaseDTO {
     private long imageId;
     @JSONField(name = "imageUrl")
     private String imageUrl;
+    @JSONField(name = "lng")
+    private double lng; // 精度
+    @JSONField(name = "lat")
+    private double lat; // 纬度
 
     public KsSvsLtviDTO(int siteId, String siteName, String direction,
                         String type, long cameraId, String cameraName,
-                        String hphm, int totalTvs, long imageId, String imageUrl) {
+                        String hphm, int totalTvs, long imageId,
+                        String imageUrl, double lng, double lat) {
         this.siteId = siteId;
         this.siteName = siteName;
         this.direction = direction;
@@ -38,6 +43,8 @@ public class KsSvsLtviDTO extends BaseDTO {
         this.totalTvs = totalTvs;
         this.imageId = imageId;
         this.imageUrl = imageUrl;
+        this.lng = lng;
+        this.lat = lat;
     }
 
     public int getSiteId() {
@@ -118,5 +125,21 @@ public class KsSvsLtviDTO extends BaseDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 }
