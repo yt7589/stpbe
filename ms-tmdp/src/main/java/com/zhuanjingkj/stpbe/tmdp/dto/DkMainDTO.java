@@ -6,6 +6,8 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 import java.util.List;
 
 public class DkMainDTO extends BaseDTO {
+    @JSONField(name = "dkHtfs")
+    private DkHtfsDTO dkHtfs;
     @JSONField(name = "dkVtie")
     private DkVtieDTO dkVtie;
     @JSONField(name = "dkVtps")
@@ -18,6 +20,14 @@ public class DkMainDTO extends BaseDTO {
     private List<DkTjrsItemDTO> dkTjrss;
     @JSONField(name = "dkDctfs")
     private List<DkDctfItemDTO> dkDctfs;
+
+    public DkHtfsDTO getDkHtfs() {
+        return dkHtfs;
+    }
+
+    public void setDkHtfs(DkHtfsDTO dkHtfs) {
+        this.dkHtfs = dkHtfs;
+    }
 
     public DkVtieDTO getDkVtie() {
         return dkVtie;

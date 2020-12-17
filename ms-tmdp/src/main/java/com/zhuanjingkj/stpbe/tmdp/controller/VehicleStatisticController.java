@@ -40,6 +40,7 @@ public class VehicleStatisticController {
     @GetMapping()
     public ResultDTO<DkMainDTO> getVehicleStatisticInfo() {
         DkMainDTO mainDto = new DkMainDTO();
+        mainDto.setDkHtfs(getDkHtfsDTO_exp()); // 中间上部过车量统计
         // 本地外地车辆占比
         DkVtieDTO vtie = getDkVtie_exp();
         mainDto.setDkVtie(vtie);
@@ -61,6 +62,15 @@ public class VehicleStatisticController {
         List<DkDctfItemDTO> dctfs = getDkDctfItemDTOs_exp();
         mainDto.setDkDctfs(dctfs);
         return dto;
+    }
+
+    private DkHtfsDTO getDkHtfsDTO_exp() {
+        DkHtfsDTO htfs = new DkHtfsDTO();
+        htfs.setTodayTf(12222222); // 千万
+        htfs.setWeekTf(133333333); // 亿
+        htfs.setMonthTf(1555555555);
+        htfs.setDailyTf(16666666);
+        return htfs;
     }
 
     private DkVtieDTO getDkVtie_exp() {
