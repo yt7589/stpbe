@@ -122,7 +122,7 @@ public class KsSvsController {
         ksvsss.add(new KsSvsKsvssDTO(103,"西二旗", 1102));
         ksvsss.add(new KsSvsKsvssDTO(104, "王道口", 12345));
         ksvsss.add(new KsSvsKsvssDTO(105, "西直门", 19321));
-        ksvsss.add(new KsSvsKsvssDTO(106, "六里桥", 15335);
+        ksvsss.add(new KsSvsKsvssDTO(106, "六里桥", 15335));
         ksvsss.add(new KsSvsKsvssDTO(107, "王府井", 18221));
         return ksvsss;
     }
