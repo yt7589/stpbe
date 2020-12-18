@@ -1,11 +1,9 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
-import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
-import com.zhuanjingkj.stpbe.data.dto.DbInsertResultDTO;
-import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
-import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.dto.*;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.AreaDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.ks.AddAreasToKeyAreasRTO;
+import com.zhuanjingkj.stpbe.tmdp.rto.ks.DeleteAreaFromKeyAreasRTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -29,6 +27,7 @@ public class KsAsController {
     ) {
         return queryKeyAreas_exp();
     }
+
     @GetMapping("as/queryAreas")
     public ResultDTO<DbQrsDTO> queryAreas(
             @RequestParam(name = "p", required = false) String platform,
@@ -47,6 +46,14 @@ public class KsAsController {
             @RequestParam(name = "v", required = false) String version,
             @RequestBody AddAreasToKeyAreasRTO rto) {
         return addAreasToKeyAreas_exp(rto);
+    }
+
+    @DeleteMapping("as/deleteAreaFromKeyAreas")
+    public ResultDTO<DbDeleteResultDTO> deleteAreaFromKeyAreas(
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestBody DeleteAreaFromKeyAreasRTO rto) {
+        return deleteAreaFromKeyAreas_exp(rto);
     }
 
     private ResultDTO<DbQrsDTO> queryKeyAreas_exp() {
@@ -78,4 +85,43 @@ public class KsAsController {
         dto.setData(data);
         return dto;
     }
+
+    private ResultDTO<DbDeleteResultDTO> deleteAreaFromKeyAreas_exp(DeleteAreaFromKeyAreasRTO rto) {
+        System.out.println("delete area: " + rto.getAreaId() + "!");
+        ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
+        DbDeleteResultDTO data = new DbDeleteResultDTO(1);
+        dto.setData(data);
+        return dto;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
