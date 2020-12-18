@@ -27,10 +27,12 @@ public class DkRtvrDTO extends BaseDTO {
     @JSONField(name = "imgId")
     private int imgId;
 
-    public DkRtvrDTO(int id, int violationTypeId, String violationTypeName,
+    public DkRtvrDTO(int id, int siteId, String siteName, int violationTypeId, String violationTypeName,
                      String clpp, String ppcx, String hphm, String occurTime,
                      int imgId, String imgUrl) {
         this.id = id;
+        this.siteId = siteId;
+        this.siteName = siteName;
         this.violationTypeId = violationTypeId;
         this.violationTypeName = violationTypeName;
         this.clpp = clpp;
