@@ -21,9 +21,9 @@ public class KsAsController {
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
             @RequestParam(name = "areaName", required = false) String areaName,
-            @RequestParam(name = "startIndex", required = false) int startIndex,
-            @RequestParam(name = "amount", required = false) int amount,
-            @RequestParam(name = "driection", required = false) int direction
+            @RequestParam(name = "startIndex", required = false) Integer startIndex,
+            @RequestParam(name = "amount", required = false) Integer amount,
+            @RequestParam(name = "driection", required = false) Integer direction
     ) {
         return queryKeyAreas_exp();
     }
