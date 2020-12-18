@@ -70,4 +70,12 @@ public class DbQrsDTO extends BaseDTO{
     public void setRecs(List<? extends BaseDTO> recs) {
         this.recs = recs;
     }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
 }
