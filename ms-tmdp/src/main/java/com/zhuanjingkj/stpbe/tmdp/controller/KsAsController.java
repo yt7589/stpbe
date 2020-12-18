@@ -30,7 +30,7 @@ public class KsAsController {
 
     private ResultDTO<DbQrsDTO> queryKeyAreas_exp() {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        DbQrsDTO data = new DbQrsDTO(100, 5, 0, 10, null);
+        DbQrsDTO data = new DbQrsDTO(100, 5, 0, 10, 0,null);
         List<AreaDTO> recs = new ArrayList<>();
         recs.add(new AreaDTO(101, "上地", 0, 3, "1_1_1"));
         recs.add(new AreaDTO(102, "五道口", 1, 3, "1_1_2"));

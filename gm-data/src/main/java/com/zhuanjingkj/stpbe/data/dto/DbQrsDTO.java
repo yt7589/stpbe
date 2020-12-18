@@ -16,14 +16,18 @@ public class DbQrsDTO extends BaseDTO{
     private int startIndex; // 开始下标
     @JSONField(name = "amount")
     private int amount; // 计划取的记录数
+    @JSONField(name = "direction")
+    private int direction;
     @JSONField(name = "recs")
     private List<? extends BaseDTO> recs;
 
-    public DbQrsDTO(int total, int realNum, int startIndex, int amount, List<? extends BaseDTO> recs) {
+    public DbQrsDTO(int total, int realNum, int startIndex, int amount,
+                    int direction, List<? extends BaseDTO> recs) {
         this.total = total;
         this.realNum = realNum;
         this.startIndex = startIndex;
         this.amount = amount;
+        this.direction = direction;
         this.recs = recs;
     }
 
