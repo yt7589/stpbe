@@ -6,6 +6,10 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 public class DkRtvrDTO extends BaseDTO {
     @JSONField(name = "id")
     private int id;
+    @JSONField(name = "siteId")
+    private int siteId;
+    @JSONField(name = "siteName")
+    private String siteName;
     @JSONField(name = "violationTypeId")
     private int violationTypeId;
     @JSONField(name = "violationTypeName")
@@ -43,6 +47,30 @@ public class DkRtvrDTO extends BaseDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(int siteId) {
+        this.siteId = siteId;
+    }
+
+    public String getSiteName() {
+        return siteName;
+    }
+
+    public void setSiteName(String siteName) {
+        this.siteName = siteName;
+    }
+
+    public String getOccurTime() {
+        return occurTime;
+    }
+
+    public void setOccurTime(String occurTime) {
+        this.occurTime = occurTime;
     }
 
     public int getViolationTypeId() {
