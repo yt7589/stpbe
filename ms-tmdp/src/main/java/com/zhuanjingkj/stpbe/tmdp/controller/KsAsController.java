@@ -1,9 +1,11 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
+import com.zhuanjingkj.stpbe.data.dto.DbInsertResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.AreaDTO;
+import com.zhuanjingkj.stpbe.tmdp.rto.ks.AddAreasToKeyAreasRTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,6 +29,25 @@ public class KsAsController {
     ) {
         return queryKeyAreas_exp();
     }
+    @GetMapping("as/queryAreas")
+    public ResultDTO<DbQrsDTO> queryAreas(
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestParam(name = "areaName", required = false) String areaName,
+            @RequestParam(name = "startIndex", required = false) Integer startIndex,
+            @RequestParam(name = "amount", required = false) Integer amount,
+            @RequestParam(name = "driection", required = false) Integer direction
+    ) {
+        return queryKeyAreas_exp();
+    }
+
+    @PostMapping("as/addAreasToKeyAreas")
+    public ResultDTO<DbInsertResultDTO> addAreasToKeyAreas(
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestBody AddAreasToKeyAreasRTO rto) {
+        return addAreasToKeyAreas_exp(rto);
+    }
 
     private ResultDTO<DbQrsDTO> queryKeyAreas_exp() {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
@@ -43,6 +64,17 @@ public class KsAsController {
         recs.add(new AreaDTO(109, "人大双安", 1, 3, "1_1_2"));
         recs.add(new AreaDTO(110, "联想桥", 1, 3, "1_1_2"));
         data.setRecs(recs);
+        dto.setData(data);
+        return dto;
+    }
+
+    private ResultDTO<DbInsertResultDTO> addAreasToKeyAreas_exp(AddAreasToKeyAreasRTO rto) {
+        List<Integer> areas = rto.getAreas();
+        for (int area : areas) {
+            System.out.println("add area: " + area + "!");
+        }
+        ResultDTO<DbInsertResultDTO> dto = new ResultDTO<>();
+        DbInsertResultDTO data = new DbInsertResultDTO(108, 1);
         dto.setData(data);
         return dto;
     }
