@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/ks")
 @CrossOrigin(origins = "*")
 public class KsAsController {
-    @GetMapping("as/kaq")
+    @GetMapping("as/queryKeyAreas")
     public ResultDTO<DbQrsDTO> queryKeyAreas(
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
