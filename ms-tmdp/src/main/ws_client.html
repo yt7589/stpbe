@@ -1,0 +1,15 @@
+<html>
+<script>
+function initPage() {
+    let ws = new WebSocket('ws://222.128.117.234:9003/user')
+    ws.onMessage = function(data) {
+        let jo = JSON.parse(data.data)
+        console.log(data.data)
+    }
+
+}
+</script>
+<body onload="initPage()">
+Hello World.
+</body>
+</html>
