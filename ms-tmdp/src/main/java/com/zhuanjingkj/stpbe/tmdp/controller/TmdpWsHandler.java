@@ -31,17 +31,27 @@ public class TmdpWsHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         JSONObject jsonObject = new JSONObject(payload);
 
+        System.out.println("payload: " + payload + "!");
+
         String user = jsonObject.getString("userId");
         String type = jsonObject.getString("type");
         String topic = jsonObject.getString("topic");
         synchronized (topics) {
+            System.out.println("step 1");
             if (topics.get(topic) != null) {
+                System.out.println("step 2");
                 if (type.equals("sub")) {
+                    System.out.println("step 3");
                     topics.get(topic).put(user, session);
+                    System.out.println("step 4");
                 } else {
+                    System.out.println("step 5");
                     topics.get(topic).remove(user);
+                    System.out.println("step 6");
                 }
+                System.out.println("step 7");
             }
+            System.out.println("step 8");
         }
         System.out.println("receive: " + payload + "!");
     }
@@ -61,14 +71,21 @@ public class TmdpWsHandler extends TextWebSocketHandler {
     }
 
     public void pushWsMsg(String topic, String msg) {
+        System.out.println("push 1");
         if (!topics.containsKey(topic)) {
+            System.out.println("push 1.1");
             return ;
         }
+        System.out.println("push 2");
         Map<String, WebSocketSession> sessions = topics.get(topic);
+        System.out.println("push 3 session=" + sessions + "!");
         for (WebSocketSession sess : sessions.values()) {
             try {
+                System.out.println("push 4");
                 sess.sendMessage(new TextMessage(msg));
+                System.out.println("push 5");
             } catch (IOException e) {
+                System.out.println("push 6 exception: " + e.getMessage() + "!");
                 e.printStackTrace();
             }
         }
