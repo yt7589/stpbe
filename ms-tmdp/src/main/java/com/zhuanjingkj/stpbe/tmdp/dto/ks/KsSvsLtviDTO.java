@@ -12,10 +12,10 @@ public class KsSvsLtviDTO extends BaseDTO {
     private String direction; // 朝向
     @JSONField(name = "type")
     private String type; // 车头车尾
-    @JSONField(name = "cameraId")
-    private long cameraId;
-    @JSONField(name = "cameraName")
-    private String cameraName;
+    @JSONField(name = "violationTypeId")
+    private int violationTypeId;
+    @JSONField(name = "violationTypeName")
+    private String violationTypeName;
     @JSONField(name = "hphm")
     private String hphm; // 号牌号码
     @JSONField(name = "clpp")
@@ -34,15 +34,15 @@ public class KsSvsLtviDTO extends BaseDTO {
     private String occurTime;
 
     public KsSvsLtviDTO(int siteId, String siteName, String direction,
-                        String type, long cameraId, String cameraName,
+                        String type, int violationTypeId, String violationTypeName,
                         String hphm, String clpp, int totalTvs, long imageId,
                         String imageUrl, double lng, double lat, String occurTime) {
         this.siteId = siteId;
         this.siteName = siteName;
         this.direction = direction;
         this.type = type;
-        this.cameraId = cameraId;
-        this.cameraName = cameraName;
+        this.violationTypeId = violationTypeId;
+        this.violationTypeName = violationTypeName;
         this.hphm = hphm;
         this.clpp = clpp;
         this.totalTvs = totalTvs;
@@ -85,20 +85,20 @@ public class KsSvsLtviDTO extends BaseDTO {
         this.type = type;
     }
 
-    public long getCameraId() {
-        return cameraId;
+    public int getViolationTypeId() {
+        return violationTypeId;
     }
 
-    public void setCameraId(long cameraId) {
-        this.cameraId = cameraId;
+    public void setViolationTypeId(int violationTypeId) {
+        this.violationTypeId = violationTypeId;
     }
 
-    public String getCameraName() {
-        return cameraName;
+    public String getViolationTypeName() {
+        return violationTypeName;
     }
 
-    public void setCameraName(String cameraName) {
-        this.cameraName = cameraName;
+    public void setViolationTypeName(String violationTypeName) {
+        this.violationTypeName = violationTypeName;
     }
 
     public String getHphm() {
