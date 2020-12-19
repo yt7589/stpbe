@@ -16,6 +16,7 @@ import java.util.Map;
 public class TmdpWsHandler extends TextWebSocketHandler {
     public final static String KS_SVS_LTVIS = "ksSvsLtvis"; // Latest Traffic Violation Infos
     public final static String KS_AS_SFVS = "ksAsSfvs"; // Site Frequent Vehicles
+    public final static String KS_AS_LSVS = "ksAsLsvs"; // Latest Site Vehicles
 
 
     private static Map<String, Map<String, WebSocketSession>> topics = null;
@@ -23,6 +24,7 @@ public class TmdpWsHandler extends TextWebSocketHandler {
         topics = new HashMap<>();
         topics.put(KS_SVS_LTVIS, new HashMap<>());
         topics.put(KS_AS_SFVS, new HashMap<>());
+        topics.put(KS_AS_LSVS, new HashMap<>());
     }
 
     @Override

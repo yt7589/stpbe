@@ -6,38 +6,30 @@ function initPage() {
     console.log('hello')
     let ws = new WebSocket('ws://222.128.117.234:9003/stp')
     ws.onmessage = function(data) {
-        console.log(data)
+        console.log(data.data)
     }
     ws.onopen = function() {
         console.log('onOpen...')
-        sendSubscribeMsg(ws)
+        sendSubscribeMsg(ws, 'ksAsSfvs')
+        sendSubscribeMsg(ws, 'ksAsLsvs')
     }
 }
 
-function sendMessage(ws) {
-    console.log('sendMessage...')
-    var data = JSON.stringify({
-		'user': 'u001',
-		'ctx': 'tmdp'
-	})
-	ws.send(data)
-}
-
-function sendSubscribeMsg(ws) {
+function sendSubscribeMsg(ws, topic) {
     console.log('sendSubscribeMsg...')
     let msg = {
         'userId': '' + g_userId,
         'type': 'sub',
-        'topic': 'ksAsSfvs'
+        'topic': topic
     }
     ws.send(JSON.stringify(msg))
 }
 
-function sendUnsubscribe(ws) {
+function sendUnsubscribe(ws, topic) {
     let msg = {
         'user': '' + g_userId,
         'type': 'unsub',
-        'topic': 'ksAsSfvs'
+        'topic': topic
     }
     ws.send(JSON.stringify(msg))
 }

@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.task;
 
 import com.zhuanjingkj.stpbe.tmdp.controller.TmdpWsHandler;
+import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsAsLsvDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsAsSfvDTO;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,6 +24,8 @@ public class TmdpScheduledTask {
         System.out.println("发送WebSocket推送信息......");
         // 处理重点监管区域监管点位频繁经过车辆列表
         pushKsAsSfvsMsg();
+        // 处理重点监管=》区域监管=》右侧监管动态列表
+        pushKsAsLsvsMsg();
         // 处理重点监管特殊车辆监管最新违章信息
     }
 
@@ -41,5 +44,52 @@ public class TmdpScheduledTask {
         data.put(sfv.toJsonObject());
         seq++;
         tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_AS_SFVS, data.toString());
+    }
+
+    private void pushKsAsLsvsMsg() {
+        JSONArray data = new JSONArray();
+        KsAsLsvDTO lsv = null;
+        //
+        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
+                "2020-12-19 16:50:39", "京A-XA001", 11);
+        data.put(lsv.toJsonObject());
+        //
+        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
+                "2020-12-19 16:50:39", "京A-XA001", 11);
+        data.put(lsv.toJsonObject());
+        //
+        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
+                "2020-12-19 16:50:39", "京A-XA001", 11);
+        data.put(lsv.toJsonObject());
+        //
+        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
+                "2020-12-19 16:50:39", "京A-XA001", 11);
+        data.put(lsv.toJsonObject());
+        //
+        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
+                "2020-12-19 16:50:39", "京A-XA001", 11);
+        data.put(lsv.toJsonObject());
+        //
+        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
+                "2020-12-19 16:50:39", "京A-XA001", 11);
+        data.put(lsv.toJsonObject());
+        //
+        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
+                "2020-12-19 16:50:39", "京A-XA001", 11);
+        data.put(lsv.toJsonObject());
+        //
+        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
+                "2020-12-19 16:50:39", "京A-XA001", 11);
+        data.put(lsv.toJsonObject());
+        //
+        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
+                "2020-12-19 16:50:39", "京A-XA001", 11);
+        data.put(lsv.toJsonObject());
+        //
+        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
+                "2020-12-19 16:50:39", "京A-XA001", 11);
+        data.put(lsv.toJsonObject());
+        seq++;
+        tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_AS_LSVS, data.toString());
     }
 }
