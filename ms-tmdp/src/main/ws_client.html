@@ -1,12 +1,25 @@
 <html>
 <script>
 function initPage() {
+    console.log('hello')
     let ws = new WebSocket('ws://222.128.117.234:9003/stp')
-    ws.onMessage = function(data) {
+    ws.onmessage = function(data) {
         let jo = JSON.parse(data.data)
         console.log(data.data)
     }
+    ws.onopen = function() {
+        console.log('onOpen...')
+        sendMessage(ws)
+    }
+}
 
+function sendMessage(ws) {
+    console.log('sendMessage...')
+    var data = JSON.stringify({
+		'user': 'u001',
+		'ctx': 'tmdp'
+	})
+	ws.send(data)
 }
 </script>
 <body onload="initPage()">
