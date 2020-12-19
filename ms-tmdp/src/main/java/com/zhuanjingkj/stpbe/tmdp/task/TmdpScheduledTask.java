@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TmdpScheduledTask {
-    @Autowired
-    private TmdpWsHandler tmdpWsHandler;
+    /*@Autowired
+    private TmdpWsHandler tmdpWsHandler;*/
 
     @Async("tmdpPool")
-    @Scheduled(cron = "*/3 * * * * ?")
+    @Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
         System.out.println("发送WebSocket推送信息......");
-        tmdpWsHandler.pushLtvis("Hello World");
+        //tmdpWsHandler.pushLtvis("Hello World");
     }
 }
