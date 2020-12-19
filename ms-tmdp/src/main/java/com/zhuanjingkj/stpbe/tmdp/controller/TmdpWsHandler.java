@@ -70,11 +70,19 @@ public class TmdpWsHandler extends TextWebSocketHandler {
             try {
                 sess.sendMessage(new TextMessage(msg));
             } catch (IOException e) {
-                System.out.println("TmdpWsHandler.pushWsMsg exception: " + e.getMessage() + "!");
+                System.out.println("TmdpWsHandler.pushWsMsg exception1: " + e.getMessage() + "!");
                 if (!sess.isOpen()) {
                     synchronized (sessions) {
                         sessions.remove(key);
-                        System.out.println("关闭Websocket session...");
+                        System.out.println("关闭Websocket session1...");
+                    }
+                }
+            } catch (Exception ex) {
+                System.out.println("TmdpWsHandler.pushWsMsg exception2: " + ex.getMessage() + "!");
+                if (!sess.isOpen()) {
+                    synchronized (sessions) {
+                        sessions.remove(key);
+                        System.out.println("关闭Websocket session2...");
                     }
                 }
             }
