@@ -33,10 +33,12 @@ public class TmdpWsHandler extends TextWebSocketHandler {
         cleanWsSession(KS_AS_LSVS);
     }
     private static void cleanWsSession(String topic) {
+        System.out.println("请理" + topic + "!");
         Map<String, WebSocketSession> sesss = topics.get(topic);
         synchronized (sesss) {
             for (String key : sesss.keySet()) {
                 if (!sesss.get(key).isOpen()) {
+                    System.out.println(topic + "清理工作进行中...");
                     sesss.remove(key);
                 }
             }

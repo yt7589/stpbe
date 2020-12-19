@@ -37,7 +37,7 @@ public class TmdpScheduledTask {
     }
 
     private void cleanKsAsWsSess() {
-
+        TmdpWsHandler.cleanWsSessions();
     }
 
     private static int seq = 0;
