@@ -11,7 +11,7 @@ public class TmdpScheduledTask {
     @Autowired
     private TmdpWsHandler tmdpWsHandler;
 
-    @Async("tmdpServerPool")
+    @Async("tmdpPool")
     @Scheduled(cron = "*/3 * * * * ?")
     public void runTasScheduledTask() {
         System.out.println("发送WebSocket推送信息......");
