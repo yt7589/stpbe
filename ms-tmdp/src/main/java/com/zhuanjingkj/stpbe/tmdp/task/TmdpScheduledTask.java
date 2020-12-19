@@ -15,6 +15,6 @@ public class TmdpScheduledTask {
     @Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
         System.out.println("发送WebSocket推送信息......");
-        tmdpWsHandler.pushLtvis("Hello World");
+        tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_AS_SFVS, "Hello World");
     }
 }

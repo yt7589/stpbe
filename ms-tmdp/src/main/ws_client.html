@@ -1,15 +1,16 @@
 <html>
 <script>
+let g_userId = 101;
+
 function initPage() {
     console.log('hello')
     let ws = new WebSocket('ws://222.128.117.234:9003/stp')
     ws.onmessage = function(data) {
-        let jo = JSON.parse(data.data)
-        console.log(data.data)
+        console.log(data)
     }
     ws.onopen = function() {
         console.log('onOpen...')
-        sendMessage(ws)
+        sendSubscribeMsg(ws)
     }
 }
 
@@ -20,6 +21,25 @@ function sendMessage(ws) {
 		'ctx': 'tmdp'
 	})
 	ws.send(data)
+}
+
+function sendSubscribeMsg(ws) {
+    console.log('sendSubscribeMsg...')
+    let msg = {
+        'user': '' + g_userId,
+        'type': 'sub',
+        'topic': 'ksAsSfvs'
+    }
+    ws.send(JSON.stringify(msg))
+}
+
+function sendUnsubscribe(ws) {
+    let msg = {
+        'user': '' + g_userId,
+        'type': 'unsub',
+        'topic': 'ksAsSfvs'
+    }
+    ws.send(JSON.stringify(msg))
 }
 </script>
 <body onload="initPage()">

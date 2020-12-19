@@ -7,21 +7,43 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
 public class TmdpWsHandler extends TextWebSocketHandler {
-    private static Map<String, WebSocketSession> users = new HashMap<>();
+    public final static String KS_SVS_LTVIS = "ksSvsLtvis"; // Latest Traffic Violation Infos
+    public final static String KS_AS_SFVS = "KsAsSfvs"; // Site Frequent Vehicles
+
+
+    private static Map<String, Map<String, WebSocketSession>> topics = null;
+    public static void initialize() {
+        topics = new HashMap<>();
+        topics.put(KS_SVS_LTVIS, new HashMap<>());
+        topics.put(KS_AS_SFVS, new HashMap<>());
+    }
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message)
             throws InterruptedException, IOException {
         String payload = message.getPayload();
         JSONObject jsonObject = new JSONObject(payload);
-        users.put((String)jsonObject.get("user"), session);
+
+        String user = jsonObject.getString("userId");
+        String type = jsonObject.getString("type");
+        String topic = jsonObject.getString("topic");
+        synchronized (topics) {
+            if (topics.get(topic) != null) {
+                if (type.equals("sub")) {
+                    topics.get(topic).put(user, session);
+                } else {
+                    topics.get(topic).remove(user);
+                }
+            }
+        }
         System.out.println("receive: " + payload + "!");
-        //session.sendMessage(new TextMessage("Hi " + jsonObject.get("user") + " how may we help you?"));
     }
 
     @Override
@@ -30,16 +52,20 @@ public class TmdpWsHandler extends TextWebSocketHandler {
     }
 
     public void pushMessage(String user, String msg) {
-        WebSocketSession session = users.get(user);
+        /*WebSocketSession session = users.get(user);
         try {
             session.sendMessage(new TextMessage(msg));
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
-    public void pushLtvis(String msg) {
-        for (WebSocketSession sess : users.values()) {
+    public void pushWsMsg(String topic, String msg) {
+        if (!topics.containsKey(topic)) {
+            return ;
+        }
+        Map<String, WebSocketSession> sessions = topics.get(topic);
+        for (WebSocketSession sess : sessions.values()) {
             try {
                 sess.sendMessage(new TextMessage(msg));
             } catch (IOException e) {
