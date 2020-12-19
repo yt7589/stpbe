@@ -7,10 +7,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class TmdpWsHandler extends TextWebSocketHandler {
@@ -25,24 +22,6 @@ public class TmdpWsHandler extends TextWebSocketHandler {
         topics.put(KS_SVS_LTVIS, new HashMap<>());
         topics.put(KS_AS_SFVS, new HashMap<>());
         topics.put(KS_AS_LSVS, new HashMap<>());
-    }
-
-    public static void cleanWsSessions() {
-        cleanWsSession(KS_SVS_LTVIS);
-        cleanWsSession(KS_AS_SFVS);
-        cleanWsSession(KS_AS_LSVS);
-    }
-    private static void cleanWsSession(String topic) {
-        System.out.println("请理" + topic + "!");
-        Map<String, WebSocketSession> sesss = topics.get(topic);
-        synchronized (sesss) {
-            for (String key : sesss.keySet()) {
-                if (!sesss.get(key).isOpen()) {
-                    System.out.println(topic + "清理工作进行中...");
-                    sesss.remove(key);
-                }
-            }
-        }
     }
 
     @Override
@@ -84,11 +63,20 @@ public class TmdpWsHandler extends TextWebSocketHandler {
             return ;
         }
         Map<String, WebSocketSession> sessions = topics.get(topic);
-        for (WebSocketSession sess : sessions.values()) {
+        WebSocketSession sess = null;
+        Set<String> keys = sessions.keySet();
+        for (String key : keys) {
+            sess = sessions.get(key);
             try {
                 sess.sendMessage(new TextMessage(msg));
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("TmdpWsHandler.pushWsMsg exception: " + e.getMessage() + "!");
+                if (!sess.isOpen()) {
+                    synchronized (sessions) {
+                        sessions.remove(key);
+                        System.out.println("关闭Websocket session...");
+                    }
+                }
             }
         }
     }
