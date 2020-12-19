@@ -15,6 +15,8 @@ import java.util.List;
 
 @Component
 public class TmdpScheduledTask {
+    private static int KS_AS_WS_SESS_CLEAN_TI = 60 * 1000;
+    private static int ksAsWsSessCleanTi = 0;
     @Autowired
     private TmdpWsHandler tmdpWsHandler;
 
@@ -27,6 +29,15 @@ public class TmdpScheduledTask {
         // 处理重点监管=》区域监管=》右侧监管动态列表
         pushKsAsLsvsMsg();
         // 处理重点监管特殊车辆监管最新违章信息
+        ksAsWsSessCleanTi++;
+        if (ksAsWsSessCleanTi >= KS_AS_WS_SESS_CLEAN_TI) {
+            ksAsWsSessCleanTi = 0;
+            cleanKsAsWsSess();
+        }
+    }
+
+    private void cleanKsAsWsSess() {
+
     }
 
     private static int seq = 0;

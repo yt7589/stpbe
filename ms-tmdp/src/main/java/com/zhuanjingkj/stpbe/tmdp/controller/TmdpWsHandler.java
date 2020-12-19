@@ -27,6 +27,22 @@ public class TmdpWsHandler extends TextWebSocketHandler {
         topics.put(KS_AS_LSVS, new HashMap<>());
     }
 
+    public static void cleanWsSessions() {
+        cleanWsSession(KS_SVS_LTVIS);
+        cleanWsSession(KS_AS_SFVS);
+        cleanWsSession(KS_AS_LSVS);
+    }
+    private static void cleanWsSession(String topic) {
+        Map<String, WebSocketSession> sesss = topics.get(topic);
+        synchronized (sesss) {
+            for (String key : sesss.keySet()) {
+                if (!sesss.get(key).isOpen()) {
+                    sesss.remove(key);
+                }
+            }
+        }
+    }
+
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message)
             throws InterruptedException, IOException {
