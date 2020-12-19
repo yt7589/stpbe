@@ -28,7 +28,7 @@ public class KsSvsController {
         data.setKsvads(getKsSvsKsvadDTOs_exp());
         data.setKsvrps(getKsSvsKsvrpDTOs_exp());
         data.setSvtvs(getKsSvsSvtvDTOs_exp());
-        data.setKsvtitfs(getKsSvsKsvtitfDTOs_exp());
+        data.setKsvtitfs(getKsSvsKsvtitfsDTOs_exp());
         data.setKsvsss(getKsSvsKsvssDTOs_exp());
         data.setKsvtvrps(getKsSvsKsvtvrpDTOs_exp());
         dto.setData(data);
@@ -108,8 +108,11 @@ public class KsSvsController {
         return svtvs;
     }
 
-    private List<KsSvsKsvtitfDTO> getKsSvsKsvtitfDTOs_exp() {
-        List<KsSvsKsvtitfDTO> ksvtitfs = new ArrayList<>();
+    private List<KsSvsKsvtitfsDTO> getKsSvsKsvtitfsDTOs_exp() {
+        List<KsSvsKsvtitfsDTO> rst = new ArrayList<>();
+        List<KsSvsKsvtitfDTO> ksvtitfs = null;
+        // 重点车
+        ksvtitfs = new ArrayList<>();
         ksvtitfs.add(new KsSvsKsvtitfDTO("2", 38976));
         ksvtitfs.add(new KsSvsKsvtitfDTO("4", 28989));
         ksvtitfs.add(new KsSvsKsvtitfDTO("6", 32345));
@@ -122,7 +125,23 @@ public class KsSvsController {
         ksvtitfs.add(new KsSvsKsvtitfDTO("20", 189883));
         ksvtitfs.add(new KsSvsKsvtitfDTO("22", 138976));
         ksvtitfs.add(new KsSvsKsvtitfDTO("24", 76543));
-        return ksvtitfs;
+        rst.add(new KsSvsKsvtitfsDTO("重点车", ksvtitfs));
+        // 大货车
+        ksvtitfs = new ArrayList<>();
+        ksvtitfs.add(new KsSvsKsvtitfDTO("2", 18976));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("4", 38989));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("6", 22345));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("8", 253567));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("10", 367891));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("12", 79765));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("14", 61234));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("16", 79321));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("18", 128909));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("20", 159883));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("22", 138976));
+        ksvtitfs.add(new KsSvsKsvtitfDTO("24", 86543));
+        rst.add(new KsSvsKsvtitfsDTO("大货车", ksvtitfs));
+        return rst;
     }
 
     private List<KsSvsKsvssDTO> getKsSvsKsvssDTOs_exp() {

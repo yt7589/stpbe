@@ -19,7 +19,7 @@ public class KsSvsDTO extends BaseDTO {
     @JSONField(name = "svtvs")
     private List<KsSvsSvtvDTO> svtvs; // 中间底部：交通违法信息
     @JSONField(name = "ksvtitfs")
-    private List<KsSvsKsvtitfDTO> ksvtitfs; // 右侧第一行：本日重点监控车辆小时分布图
+    private List<KsSvsKsvtitfsDTO> ksvtitfs; // 右侧第一行：本日重点监控车辆小时分布图
     @JSONField(name = "ksvsss")
     private List<KsSvsKsvssDTO> ksvsss; // 右侧第二行：本日重点监控车辆点位分布图
     @JSONField(name = "ksvtvrps")
@@ -73,11 +73,11 @@ public class KsSvsDTO extends BaseDTO {
         this.svtvs = svtvs;
     }
 
-    public List<KsSvsKsvtitfDTO> getKsvtitfs() {
+    public List<KsSvsKsvtitfsDTO> getKsvtitfs() {
         return ksvtitfs;
     }
 
-    public void setKsvtitfs(List<KsSvsKsvtitfDTO> ksvtitfs) {
+    public void setKsvtitfs(List<KsSvsKsvtitfsDTO> ksvtitfs) {
         this.ksvtitfs = ksvtitfs;
     }
 
