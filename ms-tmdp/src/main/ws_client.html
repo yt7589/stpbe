@@ -1,7 +1,7 @@
 <html>
 <script>
 function initPage() {
-    let ws = new WebSocket('ws://222.128.117.234:9003/user')
+    let ws = new WebSocket('ws://222.128.117.234:9003/stp')
     ws.onMessage = function(data) {
         let jo = JSON.parse(data.data)
         console.log(data.data)

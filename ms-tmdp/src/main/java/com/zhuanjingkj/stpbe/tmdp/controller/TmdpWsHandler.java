@@ -24,6 +24,11 @@ public class TmdpWsHandler extends TextWebSocketHandler {
         //session.sendMessage(new TextMessage("Hi " + jsonObject.get("user") + " how may we help you?"));
     }
 
+    @Override
+    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        //the messages will be broadcasted to all users.
+    }
+
     public void pushMessage(String user, String msg) {
         WebSocketSession session = users.get(user);
         try {
