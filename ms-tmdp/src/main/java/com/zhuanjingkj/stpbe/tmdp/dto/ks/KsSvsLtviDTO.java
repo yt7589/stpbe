@@ -18,6 +18,8 @@ public class KsSvsLtviDTO extends BaseDTO {
     private String cameraName;
     @JSONField(name = "hphm")
     private String hphm; // 号牌号码
+    @JSONField(name = "clpp")
+    private String clpp;
     @JSONField(name = "totalTvs")
     private int totalTvs; // 累计违章数量
     @JSONField(name = "imageId")
@@ -28,11 +30,13 @@ public class KsSvsLtviDTO extends BaseDTO {
     private double lng; // 精度
     @JSONField(name = "lat")
     private double lat; // 纬度
+    @JSONField(name = "occurTime")
+    private String occurTime;
 
     public KsSvsLtviDTO(int siteId, String siteName, String direction,
                         String type, long cameraId, String cameraName,
-                        String hphm, int totalTvs, long imageId,
-                        String imageUrl, double lng, double lat) {
+                        String hphm, String clpp, int totalTvs, long imageId,
+                        String imageUrl, double lng, double lat, String occurTime) {
         this.siteId = siteId;
         this.siteName = siteName;
         this.direction = direction;
@@ -40,11 +44,13 @@ public class KsSvsLtviDTO extends BaseDTO {
         this.cameraId = cameraId;
         this.cameraName = cameraName;
         this.hphm = hphm;
+        this.clpp = clpp;
         this.totalTvs = totalTvs;
         this.imageId = imageId;
         this.imageUrl = imageUrl;
         this.lng = lng;
         this.lat = lat;
+        this.occurTime = occurTime;
     }
 
     public int getSiteId() {
@@ -103,6 +109,14 @@ public class KsSvsLtviDTO extends BaseDTO {
         this.hphm = hphm;
     }
 
+    public String getClpp() {
+        return clpp;
+    }
+
+    public void setClpp(String clpp) {
+        this.clpp = clpp;
+    }
+
     public int getTotalTvs() {
         return totalTvs;
     }
@@ -141,5 +155,13 @@ public class KsSvsLtviDTO extends BaseDTO {
 
     public void setLat(double lat) {
         this.lat = lat;
+    }
+
+    public String getOccurTime() {
+        return occurTime;
+    }
+
+    public void setOccurTime(String occurTime) {
+        this.occurTime = occurTime;
     }
 }

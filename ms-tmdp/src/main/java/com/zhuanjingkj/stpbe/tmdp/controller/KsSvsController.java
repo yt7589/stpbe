@@ -47,9 +47,10 @@ public class KsSvsController {
     private KsSvsLtviDTO getKsSvsLtviDTO_exp() {
         return new KsSvsLtviDTO(101, "上地三街", "东南",
                 "车头", 201, "003摄像机", "京A-SY270",
-                8, 301,
+                "东风",8, 301,
                 "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg",
-                    116.31129731152342, 40.03570782927839);
+                    116.31129731152342, 40.03570782927839,
+                "2020-12-19 08:32:59");
     }
 
     private List<KsSvsKsvmcDTO> getKsSvsKsvmcDTOs_exp() {
