@@ -9,6 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement(proxyTargetClass = true)
 @ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.tmdp.*"})
 @MapperScan("com.zhuanjingkj.stpbe.tmdp.mapper")
+@EnableScheduling
 public class MsTmdpApplication {
     public static ConfigurableApplicationContext appCtx = null;
     public static void main(String[] args) {
