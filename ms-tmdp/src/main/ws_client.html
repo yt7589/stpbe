@@ -26,9 +26,9 @@ function sendMessage(ws) {
 function sendSubscribeMsg(ws) {
     console.log('sendSubscribeMsg...')
     let msg = {
-        'user': '' + g_userId,
+        'userId': '' + g_userId,
         'type': 'sub',
-        'topic': 'ksAsSfvs'
+        'topic': 'KsAsSfvs'
     }
     ws.send(JSON.stringify(msg))
 }
