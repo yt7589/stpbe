@@ -49,6 +49,7 @@ public class IpfsClient {
         boolean rst = true;
         try {
             url = new URL(AppConst.IPFS_GW_URL + fileHash);
+            System.out.println("download:" + AppConst.IPFS_GW_URL + fileHash + "; dstFn=" + dstFn + "!");
             conn = url.openConnection();
             ins = conn.getInputStream();
             fos = new FileOutputStream(dstFn);
@@ -56,6 +57,7 @@ public class IpfsClient {
             int readLen = 0;
             while ((readLen = ins.read(buf)) != -1) {
                 fos.write(buf, 0, readLen);
+                System.out.println("write: " + readLen + "!");
             }
         } catch (MalformedURLException e) {
             rst = false;
