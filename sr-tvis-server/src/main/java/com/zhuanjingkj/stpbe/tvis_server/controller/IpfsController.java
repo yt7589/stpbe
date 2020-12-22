@@ -3,11 +3,9 @@ package com.zhuanjingkj.stpbe.tvis_server.controller;
 
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.tvis_server.dto.DownloadIpfsDTO;
 import com.zhuanjingkj.stpbe.tvis_server.dto.UploadIpfsFileDTO;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -50,6 +48,24 @@ public class IpfsController {
         ResultDTO<UploadIpfsFileDTO> dto = new ResultDTO<>();
         UploadIpfsFileDTO data = new UploadIpfsFileDTO("");
         rst.ifPresent((str) -> {data.setFileHash(str);});
+        dto.setData(data);
+        return dto;
+    }
+
+    @GetMapping("/download")
+    public ResultDTO<DownloadIpfsDTO> downloadIpfsFile(
+            @RequestParam(name = "fileHash") String fileHash,
+            @RequestParam(name = "dstFile") String dstFile) {
+        boolean rst = IpfsClient.downloadFile(fileHash, dstFile);
+        int state = -1;
+        long fileSize = 0;
+        if (rst) {
+            state = 0;
+            File f = new File(dstFile);
+            fileSize = f.length();
+        }
+        ResultDTO<DownloadIpfsDTO> dto = new ResultDTO<>();
+        DownloadIpfsDTO data = new DownloadIpfsDTO(state, dstFile, fileSize);
         dto.setData(data);
         return dto;
     }
