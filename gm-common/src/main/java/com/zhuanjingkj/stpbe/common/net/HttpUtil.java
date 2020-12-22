@@ -30,13 +30,13 @@ public class HttpUtil {
         return httpclient;
     }
 
-    public static String postFile(String url, Map<String, Object> data) throws IOException {
+    public static String postFile(String url, Map<String, ? extends Object> data) throws IOException {
         httpclient = getHttpclient();
         HttpPost post = new HttpPost(url);
         try {
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            for (Map.Entry<String, Object> entry : data.entrySet()) {
+            for (Map.Entry<String, ? extends Object> entry : data.entrySet()) {
                 if (entry.getValue() instanceof File) {
                     builder.addBinaryBody(entry.getKey(), (File) entry.getValue());
                 } else {
