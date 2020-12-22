@@ -52,7 +52,7 @@ public class IpfsController {
         return dto;
     }
 
-    @GetMapping("/download")
+    @GetMapping("/downloadIpfsFile")
     public ResultDTO<DownloadIpfsDTO> downloadIpfsFile(
             @RequestParam(name = "fileHash") String fileHash,
             @RequestParam(name = "dstFile") String dstFile) {
