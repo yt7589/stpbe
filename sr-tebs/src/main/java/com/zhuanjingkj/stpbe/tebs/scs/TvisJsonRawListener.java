@@ -20,7 +20,7 @@ public class TvisJsonRawListener {
 
     @KafkaListener(id = "TvisJsonRawListener", topics = "tvis")
     public void listen(String json) {
-        logger.info("TvisJsonRawListener 监听到消息!");
+        logger.info("TvisJsonRawListener 监听到消息:" + json + "!");
         JSONObject jo = JSONObject.parseObject(json);
         String relativeImageFile = jo.getString("ImageUrl");
         String imageFile = AppConst.VIDEO_FRAME_IMG_BASE_DIR + relativeImageFile.substring(2);
