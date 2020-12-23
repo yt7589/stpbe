@@ -35,7 +35,7 @@ public class TvisJsonRawListener {
         OutputStreamWriter osw = null;
         BufferedWriter bw = null;
         Random rand = new Random();
-        String jf = "json_" + System.currentTimeMillis() + "_" + rand.nextInt() + ".json";
+        String jf = AppConst.JSON_TMP_BASE_DIR + "json_" + System.currentTimeMillis() + "_" + rand.nextInt() + ".json";
         try {
             fos = new FileOutputStream(new File(jf));
             bw = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
