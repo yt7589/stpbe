@@ -14,6 +14,8 @@ public class TmdpWsHandler extends TextWebSocketHandler {
     public final static String KS_SVS_LTVIS = "ksSvsLtvis"; // Latest Traffic Violation Infos
     public final static String KS_AS_SFVS = "ksAsSfvs"; // Site Frequent Vehicles
     public final static String KS_AS_LSVS = "ksAsLsvs"; // Latest Site Vehicles
+    public final static String KS_RSS_SFVS = "ksRssSfvs"; // 路段监控》现场频繁车辆
+    public final static String KS_RSS_LSVS = "ksRssLsvs"; // 路段监控》最新现场车辆
 
 
     private static Map<String, Map<String, WebSocketSession>> topics = null;
@@ -22,6 +24,8 @@ public class TmdpWsHandler extends TextWebSocketHandler {
         topics.put(KS_SVS_LTVIS, new HashMap<>());
         topics.put(KS_AS_SFVS, new HashMap<>());
         topics.put(KS_AS_LSVS, new HashMap<>());
+        topics.put(KS_RSS_SFVS, new HashMap<>());
+        topics.put(KS_RSS_LSVS, new HashMap<>());
     }
 
     @Override
