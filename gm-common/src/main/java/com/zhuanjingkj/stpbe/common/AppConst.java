@@ -23,4 +23,6 @@ public class AppConst {
     // IPFS相关
     public final static String IPFS_API_URL = "http://192.168.2.68:5005/api/v0/"; // 加命令 add, cat等
     public final static String IPFS_GW_URL = "http://192.168.2.68:9095/ipfs/"; // 加文件hash
+    public final static String VIDEO_FRAME_IMG_BASE_DIR = "/home/ps/yantao/stp/dev/car_analyzer/";
+    public final static String JSON_TMP_BASE_DIR = "/tmp/";
 }
