@@ -75,13 +75,23 @@ public class KsRssController {
         return addRsToRsSupervision_exp(rto);
     }
 
-    @PostMapping(value = "/rss/queryKeyRsSupervision")
+    /**
+     * 重点路段查询
+     * @param platform
+     * @param version
+     * @param rssName
+     * @param startIndex
+     * @param amount
+     * @param direction
+     * @return
+     */
+    @GetMapping(value = "/rss/queryKeyRsSupervision")
     public ResultDTO<DbQrsDTO> queryKeyRsSupervision(
         @RequestParam(name = "p", required = false) String platform,
         @RequestParam(name = "v", required = false) String version,
         @RequestParam(name = "rssName", required = false) String rssName,
-        @RequestParam(name = "startIndex", required = false) String startIndex,
-        @RequestParam(name = "amount", required = false) String amount,
+        @RequestParam(name = "startIndex", required = false) Integer startIndex,
+        @RequestParam(name = "amount", required = false) Integer amount,
         @RequestParam(name = "driection", required = false) Integer direction
     ) {
         return queryRsSupervision_exp();
