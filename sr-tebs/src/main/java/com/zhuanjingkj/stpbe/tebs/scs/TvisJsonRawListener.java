@@ -27,6 +27,7 @@ public class TvisJsonRawListener {
         Optional<String> imgRst = IpfsClient.uploadFile(imageFile);
         final StringBuilder imageHash = new StringBuilder();
         imgRst.ifPresent((str) -> {
+            System.out.println("*************** imageRst: " + str + "!");
             JSONObject imgJo = JSONObject.parseObject(str);
             imageHash.append(imgJo.getString("Hash"));
         });
