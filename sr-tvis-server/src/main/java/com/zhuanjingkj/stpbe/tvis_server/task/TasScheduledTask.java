@@ -28,6 +28,7 @@ public class TasScheduledTask {
         // 向Kafka的Topic发送请求
         StringBuilder msg = new StringBuilder("{\"cameraId\": \"-1\", \"json\": " + response + "}");
         kafkaTemplate.send("tvis", 0, msg.toString());
+        logger.info("send to Kafka: " + msg.toString() + "!");
         kafkaTemplate.flush();
     }
 }
