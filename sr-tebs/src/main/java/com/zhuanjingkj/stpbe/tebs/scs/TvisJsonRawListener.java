@@ -27,9 +27,7 @@ public class TvisJsonRawListener {
         Optional<String> imgRst = IpfsClient.uploadFile(imageFile);
         final StringBuilder imageHash = new StringBuilder();
         imgRst.ifPresent((str) -> {
-            System.out.println("*************** imageRst: " + str + "!");
-            JSONObject imgJo = JSONObject.parseObject(str);
-            imageHash.append(imgJo.getString("Hash"));
+            imageHash.append(str);
         });
         System.out.println("    @@@@@ imageHash: " + imageHash.toString() + "!");
         // 生成临时JSON文件，上传到IPFS得到jsonHash
@@ -58,8 +56,7 @@ public class TvisJsonRawListener {
         final StringBuilder jsonHash = new StringBuilder();
         Optional<String> jsonRst = IpfsClient.uploadFile(jf);
         jsonRst.ifPresent((jsonStr)->{
-            JSONObject jsonJo = JSONObject.parseObject(jsonStr);
-            jsonHash.append(jsonJo.getString("Hash"));
+            jsonHash.append(jsonStr);
         });
         System.out.println("    @@@@@ jsonHash: " + jsonHash.toString() + "!");
         logger.info("    raw: 上传到IPFS...");
