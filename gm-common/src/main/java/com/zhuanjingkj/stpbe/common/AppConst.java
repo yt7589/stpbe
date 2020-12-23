@@ -20,4 +20,7 @@ public class AppConst {
     // Milvus图搜相关
     public final static String MILVUS_SERVER_ADDR = "192.168.2.15";
     public final static short MILVUS_SERVER_PORT = 19530;
+    // IPFS相关
+    public final static String IPFS_API_URL = "http://192.168.2.68:5005/api/v0/"; // 加命令 add, cat等
+    public final static String IPFS_GW_URL = "http://192.168.2.68:9095/ipfs/"; // 加文件hash
 }
