@@ -2,8 +2,6 @@ package com.zhuanjingkj.stpbe.tebs.conf;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.tebs.scs.TvisJsonRawListener;
-import com.zhuanjingkj.stpbe.tebs.scs.TvisKbTitfListener;
-import com.zhuanjingkj.stpbe.tebs.scs.TvisKbVtieListener;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
@@ -58,16 +56,6 @@ public class KafkaConfig {
     @Bean
     public TvisJsonRawListener tvisListener() {
         return new TvisJsonRawListener();
-    }
-
-    @Bean
-    public TvisKbTitfListener tvisKbTitfListener() {
-        return new TvisKbTitfListener();
-    }
-
-    @Bean
-    public TvisKbVtieListener tvisKbVtieListener() {
-        return new TvisKbVtieListener();
     }
 
     @Bean
