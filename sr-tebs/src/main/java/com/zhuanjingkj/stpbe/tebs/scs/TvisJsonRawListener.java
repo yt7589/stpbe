@@ -40,6 +40,7 @@ public class TvisJsonRawListener {
             fos = new FileOutputStream(new File(jf));
             bw = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
             bw.write(json);
+            bw.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
