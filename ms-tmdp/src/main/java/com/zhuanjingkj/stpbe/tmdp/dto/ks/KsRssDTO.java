@@ -9,17 +9,14 @@ public class KsRssDTO extends BaseDTO {
     private long rssId;
     @JSONField(name = "rssName")
     private String rssName;
-    @JSONField(name = "parentId")
-    private long parentId;
     @JSONField(name = "level")
     private int level;
     @JSONField(name = "groupCode")
     private String groupCode;
 
-    public KsRssDTO(long rssId, String rssName, long parentId, int level, String groupCode) {
+    public KsRssDTO(long rssId, String rssName, int level, String groupCode) {
         this.rssId = rssId;
         this.rssName = rssName;
-        this.parentId = parentId;
         this.level = level;
         this.groupCode = groupCode;
     }
@@ -28,7 +25,6 @@ public class KsRssDTO extends BaseDTO {
         JSONObject obj = new JSONObject();
         obj.put("rssId", this.rssId);
         obj.put("rssName", this.rssName);
-        obj.put("parentId", this.parentId);
         obj.put("level", this.level);
         obj.put("groupCode", this.groupCode);
         return obj;
@@ -48,14 +44,6 @@ public class KsRssDTO extends BaseDTO {
 
     public void setRssName(String rssName) {
         this.rssName = rssName;
-    }
-
-    public long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(long parentId) {
-        this.parentId = parentId;
     }
 
     public int getLevel() {
