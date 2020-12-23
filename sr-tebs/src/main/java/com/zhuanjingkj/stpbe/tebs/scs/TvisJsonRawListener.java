@@ -22,7 +22,7 @@ public class TvisJsonRawListener {
     public void listen(String json) {
         logger.info("TvisJsonRawListener 监听到消息:" + json + "!");
         JSONObject jo = JSONObject.parseObject(json);
-        String relativeImageFile = jo.getString("ImageUrl");
+        String relativeImageFile = jo.getJSONObject("json").getString("ImageUrl");
         String imageFile = AppConst.VIDEO_FRAME_IMG_BASE_DIR + relativeImageFile.substring(2);
         Optional<String> imgRst = IpfsClient.uploadFile(imageFile);
         final StringBuilder imageHash = new StringBuilder();
