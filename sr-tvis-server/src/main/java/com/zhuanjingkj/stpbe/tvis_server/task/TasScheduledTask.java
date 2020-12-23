@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tvis_server.task;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.AppConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,8 @@ public class TasScheduledTask {
     public void runTasScheduledTask() {
         logger.info("TasScheduledTask.run ... v0.0.1 " + System.currentTimeMillis() + "!");
         // String response = (String)redisTemplate.opsForValue().get(AppConst.VIDEO_RECOG_RST_REDIS_KEY);
-        String response = (String)redisTemplate.opsForList().leftPop(AppConst.VIDEO_RECOG_RST_REDIS_KEY);
+        JSONObject jo = (JSONObject) redisTemplate.opsForList().leftPop(AppConst.VIDEO_RECOG_RST_REDIS_KEY);
+        String response = jo.toString();
         // 从Redis中读出视频识别结果，将其发送到Kafka
         // 向Kafka的Topic发送请求
         StringBuilder msg = new StringBuilder("{\"cameraId\": \"-1\", \"json\": " + response + "}");
