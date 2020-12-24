@@ -9,7 +9,7 @@
         limit 0, 1
     </select>
 
-    <update id="createTvisJsonTbl" parameterType="String">
+    <update id="createTvisJsonTbl">
         CREATE TABLE IF NOT EXISTS ${tblName} (
         tvis_json_id BIGINT NOT NULL,
         occur_time DATETIME NULL,
