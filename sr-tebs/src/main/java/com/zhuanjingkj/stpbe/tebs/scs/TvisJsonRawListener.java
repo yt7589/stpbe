@@ -3,8 +3,10 @@ package com.zhuanjingkj.stpbe.tebs.scs;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
+import com.zhuanjingkj.stpbe.tebs.mapper.TvisJsonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import java.io.*;
@@ -17,9 +19,26 @@ import java.util.Random;
  */
 public class TvisJsonRawListener {
     public final static Logger logger = LoggerFactory.getLogger(TvisJsonRawListener.class);
+    private static boolean isInitialized = false;
+    @Autowired
+    private TvisJsonMapper tvisJsonMapper;
+
+    private void initialize() {
+        // 生成当前数据表
+        String tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
+        System.out.println("表名：" + tvisJsonTblName + "!!!!!");
+        String[] arrs = tvisJsonTblName.split("_");
+        long idx = Long.parseLong(arrs[arrs.length - 1]);
+        System.out.println("idx=" + idx + "!");
+        System.exit(0);
+        isInitialized = true;
+    }
 
     @KafkaListener(id = "TvisJsonRawListener", topics = "tvis")
     public void listen(String json) {
+        if (!isInitialized) {
+            initialize();
+        }
         logger.info("TvisJsonRawListener 监听到消息:" + json + "!");
         JSONObject jo = JSONObject.parseObject(json);
         String relativeImageFile = jo.getJSONObject("json").getString("ImageUrl");
