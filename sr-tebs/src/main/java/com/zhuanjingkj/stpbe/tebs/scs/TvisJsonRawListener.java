@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tebs.scs;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.tebs.mapper.TvisJsonMapper;
 import org.slf4j.Logger;
@@ -24,12 +25,16 @@ public class TvisJsonRawListener {
     private TvisJsonMapper tvisJsonMapper;
 
     private void initialize() {
+        if (isInitialized) {
+            return ;
+        }
         // 生成当前数据表
         String tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
-        System.out.println("表名：" + tvisJsonTblName + "!!!!!");
         String[] arrs = tvisJsonTblName.split("_");
         long idx = Long.parseLong(arrs[arrs.length - 1]);
-        System.out.println("idx=" + idx + "!");
+        AppRegistry.tvisJsonTblName = AppConst.TVIS_JSON_TBL_PREFIX + String.format("%08d", idx+1);
+        AppRegistry.tvisJsonTblRecs = 0;
+        tvisJsonMapper.createTvisJsonTbl(AppRegistry.tvisJsonTblName);
         System.exit(0);
         isInitialized = true;
     }
@@ -37,7 +42,9 @@ public class TvisJsonRawListener {
     @KafkaListener(id = "TvisJsonRawListener", topics = "tvis")
     public void listen(String json) {
         if (!isInitialized) {
-            initialize();
+            synchronized (logger) {
+                initialize();
+            }
         }
         logger.info("TvisJsonRawListener 监听到消息:" + json + "!");
         JSONObject jo = JSONObject.parseObject(json);

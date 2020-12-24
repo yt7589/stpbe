@@ -19,4 +19,8 @@ public class AppRegistry {
             return Optional.empty();
         }
     }
+
+    //
+    public static String tvisJsonTblName = "";
+    public static long tvisJsonTblRecs = 0;
 }

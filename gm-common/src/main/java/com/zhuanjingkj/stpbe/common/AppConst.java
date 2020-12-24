@@ -25,4 +25,6 @@ public class AppConst {
     public final static String IPFS_GW_URL = "http://192.168.2.68:9095/ipfs/"; // 加文件hash
     public final static String VIDEO_FRAME_IMG_BASE_DIR = "/home/ps/yantao/stp/dev/car_analyzer/";
     public final static String JSON_TMP_BASE_DIR = "/tmp/";
+    //
+    public final static String TVIS_JSON_TBL_PREFIX = "StpDb.t_tvis_json_";
 }

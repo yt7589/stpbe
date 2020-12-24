@@ -8,4 +8,17 @@
         table_name like 't_tvis_json_%' order by table_name
         limit 0, 1
     </select>
+
+    <update id="createTvisJsonTbl" parameterType="String">
+        CREATE TABLE IF NOT EXISTS #{tblName} (
+        tvis_json_id BIGINT NOT NULL,
+        occur_time DATETIME NULL,
+        camera_id BIGINT NULL,
+        stream_id BIGINT NULL,
+        pts BIGINT NULL',
+        image_hash VARCHAR(200) NULL,
+        json_hash VARCHAR(200) NULL,
+        PRIMARY KEY (tvis_json_id))
+        ENGINE = InnoDB
+    </update>
 </mapper>
