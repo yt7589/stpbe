@@ -1,6 +1,6 @@
 package com.zhuanjingkj.stpbe.tebs.mapper;
 
-import io.lettuce.core.dynamic.annotation.Param;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
