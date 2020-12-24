@@ -20,7 +20,7 @@ public class TvisJsonVO {
         this.streamId = streamId;
         this.pts = pts;
         this.imageHash = imageHash;
-        this.streamId = streamId;
+        this.jsonHash = jsonHash;
     }
 
     public String getTblName() {

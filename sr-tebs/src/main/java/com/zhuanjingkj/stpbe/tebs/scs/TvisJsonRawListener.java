@@ -9,10 +9,14 @@ import com.zhuanjingkj.stpbe.tebs.vo.TvisJsonVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 
@@ -23,12 +27,19 @@ public class TvisJsonRawListener {
     public final static Logger logger = LoggerFactory.getLogger(TvisJsonRawListener.class);
     private static boolean isInitialized = false;
     @Autowired
+    private RedisTemplate redisTemplate;
+    @Autowired
     private TvisJsonMapper tvisJsonMapper;
 
     private void initialize() {
         if (isInitialized) {
             return ;
         }
+        rotateTvisJsonTbl();
+        isInitialized = true;
+    }
+
+    private void rotateTvisJsonTbl() {
         // 生成当前数据表
         String tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         String[] arrs = tvisJsonTblName.split("_");
@@ -36,11 +47,6 @@ public class TvisJsonRawListener {
         AppRegistry.tvisJsonTblName = AppConst.TVIS_JSON_TBL_PREFIX + String.format("%08d", idx+1);
         AppRegistry.tvisJsonTblRecs = 0;
         tvisJsonMapper.createTvisJsonTbl(AppRegistry.tvisJsonTblName);
-
-        TvisJsonVO vo = new TvisJsonVO(AppRegistry.tvisJsonTblName, 1, "2020-12-24", 101, 201, 301, "ish", "jsh");
-        tvisJsonMapper.insertTvisJson(vo);
-
-        isInitialized = true;
     }
 
     @KafkaListener(id = "TvisJsonRawListener", topics = "tvis")
@@ -93,5 +99,23 @@ public class TvisJsonRawListener {
         logger.info("    raw: 上传到IPFS...");
         // 获取imageHash、cameraId、streamId、pts，将其存入mysql数据库中
         logger.info("    raw: 保存到数据库中...");
+
+        long tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HI:mm:ss");
+        String occurTime = df.format(new Date());
+        String cameraIdStr = jo.getString("cameraId");
+        long cameraId = Long.parseLong(cameraIdStr);
+        JSONObject rstJo = jo.getJSONObject("json");
+        String streamIdStr = rstJo.getString("StreamID");
+        long streamId = Long.parseLong(streamIdStr);
+        String ptsStr = rstJo.getString("TimeStamp");
+        long pts = Long.parseLong(ptsStr);
+        TvisJsonVO vo = new TvisJsonVO(AppRegistry.tvisJsonTblName, tvisJsonId, occurTime,
+                cameraId, streamId, pts, imageHash.toString(), jsonHash.toString());
+        tvisJsonMapper.insertTvisJson(vo);
+        AppRegistry.tvisJsonTblRecs++;
+        if (AppRegistry.tvisJsonTblRecs >= AppConst.TVIS_JSON_TBL_MAX_RECS) {
+            rotateTvisJsonTbl();
+        }
     }
 }

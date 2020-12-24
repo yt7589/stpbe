@@ -27,4 +27,6 @@ public class AppConst {
     public final static String JSON_TMP_BASE_DIR = "/tmp/";
     //
     public final static String TVIS_JSON_TBL_PREFIX = "StpDb.t_tvis_json_";
+    public final static String TVIS_JSON_TBL_ID_KEY = "t_tvis_json_x.id";
+    public final static long TVIS_JSON_TBL_MAX_RECS = 100000;
 }
