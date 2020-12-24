@@ -101,7 +101,7 @@ public class TvisJsonRawListener {
         logger.info("    raw: 保存到数据库中...");
 
         long tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HI:mm:ss");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String occurTime = df.format(new Date());
         String cameraIdStr = jo.getString("cameraId");
         long cameraId = Long.parseLong(cameraIdStr);
