@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tebs.mapper;
 
+import com.zhuanjingkj.stpbe.tebs.vo.TvisJsonVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,6 @@ public interface TvisJsonMapper {
      * @return 是否创建成功
      */
     public int createTvisJsonTbl(@Param("tblName") String tblName);
+
+    public int insertTvisJson(@Param("tvisJsonVO") TvisJsonVO tvisJsonVO);
 }

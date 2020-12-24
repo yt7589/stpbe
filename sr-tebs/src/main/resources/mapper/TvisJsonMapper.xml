@@ -21,4 +21,17 @@
         PRIMARY KEY (tvis_json_id))
         ENGINE = InnoDB
     </update>
+
+    <update id="insertTvisJson" parameterType="com.zhuanjingkj.stpbe.tebs.vo.TvisJsonVO">
+        insert into ${tvisJsonVO.tblName}(tvis_json_id, occur_time, camera_id, stream_id, pts, image_hash, json_hash)
+        values(#{tvisJsonVO.tvisJsonId},
+        #{tvisJsonVO.occurTime},
+        #{tvisJsonVO.cameraId},
+        #{tvisJsonVO.streamId},
+        #{tvisJsonVO.pts},
+        #{tvisJsonVO.imageHash},
+        #{tvisJsonVO.jsonHash}
+        );
+    </update>
+
 </mapper>

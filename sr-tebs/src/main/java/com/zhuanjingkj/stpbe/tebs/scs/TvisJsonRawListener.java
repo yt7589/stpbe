@@ -5,6 +5,7 @@ import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.tebs.mapper.TvisJsonMapper;
+import com.zhuanjingkj.stpbe.tebs.vo.TvisJsonVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,10 @@ public class TvisJsonRawListener {
         AppRegistry.tvisJsonTblName = AppConst.TVIS_JSON_TBL_PREFIX + String.format("%08d", idx+1);
         AppRegistry.tvisJsonTblRecs = 0;
         tvisJsonMapper.createTvisJsonTbl(AppRegistry.tvisJsonTblName);
-        System.exit(0);
+
+        TvisJsonVO vo = new TvisJsonVO(AppRegistry.tvisJsonTblName, 1, "2020-12-24", 101, 201, 301, "ish", "jsh");
+        tvisJsonMapper.insertTvisJson(vo);
+
         isInitialized = true;
     }
 
