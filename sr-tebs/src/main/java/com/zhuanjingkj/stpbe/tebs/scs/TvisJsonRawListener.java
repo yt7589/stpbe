@@ -100,7 +100,12 @@ public class TvisJsonRawListener {
         // 获取imageHash、cameraId、streamId、pts，将其存入mysql数据库中
         logger.info("    raw: 保存到数据库中...");
 
-        long tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
+        long tvisJsonId = 0;
+        if (jo.containsKey("tvisJsonId")) {
+            tvisJsonId = jo.getLong("tvisJsonId");
+        } else {
+            tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
+        }
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String occurTime = df.format(new Date());
         String cameraIdStr = jo.getString("cameraId");
