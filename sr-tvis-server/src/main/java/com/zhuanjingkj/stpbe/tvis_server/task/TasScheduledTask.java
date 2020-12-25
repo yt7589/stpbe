@@ -26,7 +26,9 @@ public class TasScheduledTask {
         String response = jo.toString();
         // 从Redis中读出视频识别结果，将其发送到Kafka
         // 向Kafka的Topic发送请求
-        StringBuilder msg = new StringBuilder("{\"cameraId\": \"-1\", \"json\": " + response + "}");
+        long tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
+        StringBuilder msg = new StringBuilder("{\"cameraId\": \"-1\", \"tvisJsonId\": "
+                + tvisJsonId + ", \"json\": " + response + "}");
         kafkaTemplate.send("tvis", 0, msg.toString());
         logger.info("send to Kafka: " + msg.toString() + "!");
         kafkaTemplate.flush();

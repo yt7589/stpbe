@@ -19,5 +19,10 @@ public interface TvisJsonMapper {
      */
     public int createTvisJsonTbl(@Param("tblName") String tblName);
 
+    /**
+     * 向数据库表t_tvis_json中插入记录，记录JSON识别结果相关信息
+     * @param tvisJsonVO
+     * @return
+     */
     public int insertTvisJson(@Param("tvisJsonVO") TvisJsonVO tvisJsonVO);
 }
