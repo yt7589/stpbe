@@ -2,40 +2,47 @@ package com.zhuanjingkj.stpbe.tmdp.dto.ks;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
-import org.json.JSONObject;
 
-public class KsRssSfvsDTO extends BaseDTO {
+public class KsVcLsvsDTO extends BaseDTO {
+    @JSONField(name = "gcxh")
+    private long gcxh; // 过车序号（原始图片）
+    @JSONField(name = "sxh")
+    private long sxh; // 全局顺序号（小图序号）
     @JSONField(name = "siteId")
     private long siteId;
     @JSONField(name = "siteName")
     private String siteName;
+    @JSONField(name = "cccurTime")
+    private String occurTime;
     @JSONField(name = "hphm")
     private String hphm;
     @JSONField(name = "totalTimes")
     private int totalTimes;
-    @JSONField(name = "lng")
-    private double lng;
-    @JSONField(name = "lat")
-    private double lat;
 
-    public KsRssSfvsDTO(long siteId, String siteName, String hphm, int totalTimes, double lng, double lat) {
+    public KsVcLsvsDTO(long gcxh, long sxh, long siteId, String siteName, String occurTime, String hphm, int totalTimes) {
+        this.gcxh = gcxh;
+        this.sxh = sxh;
         this.siteId = siteId;
         this.siteName = siteName;
+        this.occurTime = occurTime;
         this.hphm = hphm;
         this.totalTimes = totalTimes;
-        this.lng = lng;
-        this.lat = lat;
     }
 
-    public JSONObject toJsonObject(){
-        JSONObject obj = new JSONObject();
-        obj.put("siteId", this.siteId);
-        obj.put("siteName", this.siteName);
-        obj.put("hphm", this.hphm);
-        obj.put("totalTimes", this.totalTimes);
-        obj.put("lng", this.lng);
-        obj.put("lat", this.lat);
-        return obj;
+    public long getGcxh() {
+        return gcxh;
+    }
+
+    public void setGcxh(long gcxh) {
+        this.gcxh = gcxh;
+    }
+
+    public long getSxh() {
+        return sxh;
+    }
+
+    public void setSxh(long sxh) {
+        this.sxh = sxh;
     }
 
     public long getSiteId() {
@@ -54,6 +61,14 @@ public class KsRssSfvsDTO extends BaseDTO {
         this.siteName = siteName;
     }
 
+    public String getOccurTime() {
+        return occurTime;
+    }
+
+    public void setOccurTime(String occurTime) {
+        this.occurTime = occurTime;
+    }
+
     public String getHphm() {
         return hphm;
     }
@@ -68,21 +83,5 @@ public class KsRssSfvsDTO extends BaseDTO {
 
     public void setTotalTimes(int totalTimes) {
         this.totalTimes = totalTimes;
-    }
-
-    public double getLng() {
-        return lng;
-    }
-
-    public void setLng(double lng) {
-        this.lng = lng;
-    }
-
-    public double getLat() {
-        return lat;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
     }
 }

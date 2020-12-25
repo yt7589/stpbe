@@ -113,27 +113,39 @@ public class TmdpScheduledTask {
 
         KsRssSfvsDTO ksRssSfvsDTO = null;
 
-        ksRssSfvsDTO = new KsRssSfvsDTO(100, "A上地5街", 36.6666, 100.28855);
+        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+                "京A-YB023", 12,
+                116.31129731152342, 40.03570782927839);
 
         data.put(ksRssSfvsDTO.toJsonObject());
 
-        ksRssSfvsDTO = new KsRssSfvsDTO(200, "A上地6街", 60.6666, 110.28855);
+        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+                "京A-YB023", 12,
+                116.31129731152342, 40.03570782927839);
 
         data.put(ksRssSfvsDTO.toJsonObject());
 
-        ksRssSfvsDTO = new KsRssSfvsDTO(300, "A上地7街", 70.6666, 120.28855);
+        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+                "京A-YB023", 12,
+                116.31129731152342, 40.03570782927839);
 
         data.put(ksRssSfvsDTO.toJsonObject());
 
-        ksRssSfvsDTO = new KsRssSfvsDTO(400, "A上地8街", 50.6666, 80.28855);
+        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+                "京A-YB023", 12,
+                116.31129731152342, 40.03570782927839);
 
         data.put(ksRssSfvsDTO.toJsonObject());
 
-        ksRssSfvsDTO = new KsRssSfvsDTO(500, "A上地9街", 100.6666, 50.28855);
+        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+                "京A-YB023", 12,
+                116.31129731152342, 40.03570782927839);
 
         data.put(ksRssSfvsDTO.toJsonObject());
 
-        ksRssSfvsDTO = new KsRssSfvsDTO(600, "A上地10街", 36.6666, 100.28855);
+        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+                "京A-YB023", 12,
+                116.31129731152342, 40.03570782927839);
 
         data.put(ksRssSfvsDTO.toJsonObject());
         tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_RSS_SFVS, data.toString());

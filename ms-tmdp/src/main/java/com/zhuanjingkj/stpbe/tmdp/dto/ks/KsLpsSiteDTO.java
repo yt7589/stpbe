@@ -2,9 +2,8 @@ package com.zhuanjingkj.stpbe.tmdp.dto.ks;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
-import org.json.JSONObject;
 
-public class KsRssSfvsDTO extends BaseDTO {
+public class KsLpsSiteDTO extends BaseDTO {
     @JSONField(name = "siteId")
     private long siteId;
     @JSONField(name = "siteName")
@@ -18,24 +17,13 @@ public class KsRssSfvsDTO extends BaseDTO {
     @JSONField(name = "lat")
     private double lat;
 
-    public KsRssSfvsDTO(long siteId, String siteName, String hphm, int totalTimes, double lng, double lat) {
+    public KsLpsSiteDTO(long siteId, String siteName, String hphm, int totalTimes, double lng, double lat) {
         this.siteId = siteId;
         this.siteName = siteName;
         this.hphm = hphm;
         this.totalTimes = totalTimes;
         this.lng = lng;
         this.lat = lat;
-    }
-
-    public JSONObject toJsonObject(){
-        JSONObject obj = new JSONObject();
-        obj.put("siteId", this.siteId);
-        obj.put("siteName", this.siteName);
-        obj.put("hphm", this.hphm);
-        obj.put("totalTimes", this.totalTimes);
-        obj.put("lng", this.lng);
-        obj.put("lat", this.lat);
-        return obj;
     }
 
     public long getSiteId() {

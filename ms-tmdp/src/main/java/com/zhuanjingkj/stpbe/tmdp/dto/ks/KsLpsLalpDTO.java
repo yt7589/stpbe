@@ -1,10 +1,9 @@
 package com.zhuanjingkj.stpbe.tmdp.dto.ks;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
-public class KsRssLsvsDTO extends BaseDTO {
+public class KsLpsLalpDTO extends BaseDTO {
     @JSONField(name = "gcxh")
     private long gcxh; // 过车序号（原始图片）
     @JSONField(name = "sxh")
@@ -19,8 +18,12 @@ public class KsRssLsvsDTO extends BaseDTO {
     private String hphm;
     @JSONField(name = "totalTimes")
     private int totalTimes;
+    @JSONField(name = "imageId")
+    private int imageId;
+    @JSONField(name = "imageUrl")
+    private String imageUrl;
 
-    public KsRssLsvsDTO(long gcxh, long sxh, long siteId, String siteName, String occurTime, String hphm, int totalTimes) {
+    public KsLpsLalpDTO(long gcxh, long sxh, long siteId, String siteName, String occurTime, String hphm, int totalTimes, int imageId, String imageUrl) {
         this.gcxh = gcxh;
         this.sxh = sxh;
         this.siteId = siteId;
@@ -28,18 +31,8 @@ public class KsRssLsvsDTO extends BaseDTO {
         this.occurTime = occurTime;
         this.hphm = hphm;
         this.totalTimes = totalTimes;
-    }
-
-    public com.alibaba.fastjson.JSONObject toJsonObject() {
-        com.alibaba.fastjson.JSONObject obj = new JSONObject();
-        obj.put("gcxh", gcxh);
-        obj.put("sxh", sxh);
-        obj.put("siteId", siteId);
-        obj.put("siteName", siteName);
-        obj.put("occurTime", occurTime);
-        obj.put("hphm", hphm);
-        obj.put("totalTimes", totalTimes);
-        return obj;
+        this.imageId = imageId;
+        this.imageUrl = imageUrl;
     }
 
     public long getGcxh() {
@@ -96,5 +89,21 @@ public class KsRssLsvsDTO extends BaseDTO {
 
     public void setTotalTimes(int totalTimes) {
         this.totalTimes = totalTimes;
+    }
+
+    public int getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
