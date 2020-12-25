@@ -9,10 +9,10 @@ public class KsRssLsvsDTO extends BaseDTO {
     private long gcxh; // 过车序号（原始图片）
     @JSONField(name = "sxh")
     private long sxh; // 全局顺序号（小图序号）
-    @JSONField(name = "rssId")
-    private long rssId;
-    @JSONField(name = "rssName")
-    private String rssName;
+    @JSONField(name = "siteId")
+    private long siteId;
+    @JSONField(name = "siteName")
+    private String siteName;
     @JSONField(name = "cccurTime")
     private String occurTime;
     @JSONField(name = "hphm")
@@ -20,12 +20,11 @@ public class KsRssLsvsDTO extends BaseDTO {
     @JSONField(name = "totalTimes")
     private int totalTimes;
 
-    public KsRssLsvsDTO(long gcxh, long sxh, long rssId, String rssName,
-                      String occurTime, String hphm, int totalTimes) {
+    public KsRssLsvsDTO(long gcxh, long sxh, long siteId, String siteName, String occurTime, String hphm, int totalTimes) {
         this.gcxh = gcxh;
         this.sxh = sxh;
-        this.rssId = rssId;
-        this.rssName = rssName;
+        this.siteId = siteId;
+        this.siteName = siteName;
         this.occurTime = occurTime;
         this.hphm = hphm;
         this.totalTimes = totalTimes;
@@ -35,8 +34,8 @@ public class KsRssLsvsDTO extends BaseDTO {
         com.alibaba.fastjson.JSONObject obj = new JSONObject();
         obj.put("gcxh", gcxh);
         obj.put("sxh", sxh);
-        obj.put("rssId", rssId);
-        obj.put("rssName", rssName);
+        obj.put("siteId", siteId);
+        obj.put("siteName", siteName);
         obj.put("occurTime", occurTime);
         obj.put("hphm", hphm);
         obj.put("totalTimes", totalTimes);
@@ -59,20 +58,20 @@ public class KsRssLsvsDTO extends BaseDTO {
         this.sxh = sxh;
     }
 
-    public long getRssId() {
-        return rssId;
+    public long getSiteId() {
+        return siteId;
     }
 
-    public void setRssId(long rssId) {
-        this.rssId = rssId;
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
     }
 
-    public String getRssName() {
-        return rssName;
+    public String getSiteName() {
+        return siteName;
     }
 
-    public void setRssName(String rssName) {
-        this.rssName = rssName;
+    public void setSiteName(String siteName) {
+        this.siteName = siteName;
     }
 
     public String getOccurTime() {

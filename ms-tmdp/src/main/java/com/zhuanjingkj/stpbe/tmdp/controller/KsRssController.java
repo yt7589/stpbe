@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Key Supervision => Special Vehicle Supervision
+ * Key Supervision =>Road Section Supervision
  * 重点监管=》路段监管
  */
 @RestController
