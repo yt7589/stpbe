@@ -103,6 +103,8 @@ public class TvisJsonRawListener {
         long tvisJsonId = 0;
         if (jo.containsKey("tvisJsonId")) {
             tvisJsonId = jo.getLong("tvisJsonId");
+        } else {
+            tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
         }
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String occurTime = df.format(new Date());
