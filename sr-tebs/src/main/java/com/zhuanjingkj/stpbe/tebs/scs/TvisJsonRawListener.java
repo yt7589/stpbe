@@ -100,7 +100,10 @@ public class TvisJsonRawListener {
         // 获取imageHash、cameraId、streamId、pts，将其存入mysql数据库中
         logger.info("    raw: 保存到数据库中...");
 
-        long tvisJsonId = jo.getLong("tvisJsonId");
+        long tvisJsonId = 0;
+        if (jo.containsKey("tvisJsonId")) {
+            tvisJsonId = jo.getLong("tvisJsonId");
+        }
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String occurTime = df.format(new Date());
         String cameraIdStr = jo.getString("cameraId");
