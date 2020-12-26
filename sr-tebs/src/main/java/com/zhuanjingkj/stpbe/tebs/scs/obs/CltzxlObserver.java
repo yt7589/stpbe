@@ -22,7 +22,11 @@ public class CltzxlObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
-        System.out.println("############ 保存到图搜库 #########");
+        System.out.println("############ 保存到图搜库 redisTemplate=" + redisTemplate + "#########");
+        if (null == redisTemplate) {
+            System.out.println("##### 直接返回 #####");
+            return ;
+        }
         VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
         VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
         VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
