@@ -29,7 +29,7 @@ public class TvisJsonStpListener {
 
     @KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
     public void listen(String json) {
-        System.out.println("TvisJsonStpListener监听到消息");
+        System.out.println("TvisJsonStpListener监听到消息 ##########");
         System.out.println("    解析为值对象");
         JSONObject rawJo = JSONObject.parseObject(json);
         long tvisJsonId = rawJo.getLong("tvisJsonId");
