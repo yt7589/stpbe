@@ -31,7 +31,9 @@ public class TvisUtil {
             if ("file".equals(type)) {
                 map.put("TPXX", f);
                 map.put("TPLX", "1");
+                System.out.println("recognizeImageFile.recognizeImageFile 1");
                 response = HttpUtil.postFile(url, map);
+                System.out.println("recognizeImageFile.recognizeImageFile 2 response:" + response + "!");
             } else {
                 map.put("TPLX", "2");
                 map.put("TPXX", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(f)));
