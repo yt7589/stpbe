@@ -49,14 +49,13 @@ public class TvisJsonRawListener {
         tvisJsonMapper.createTvisJsonTbl(AppRegistry.tvisJsonTblName);
     }
 
-    //@KafkaListener(id = "TvisJsonRawListener", topics = "tvis")
+    @KafkaListener(id = "TvisJsonRawListener", topics = "tvis")
     public void listen(String json) {
         if (!isInitialized) {
             synchronized (logger) {
                 initialize();
             }
         }
-        logger.info("TvisJsonRawListener 监听到消息:" + json + "!");
         JSONObject jo = JSONObject.parseObject(json);
         String relativeImageFile = jo.getJSONObject("json").getString("ImageUrl");
         String imageFile = AppConst.VIDEO_FRAME_IMG_BASE_DIR + relativeImageFile.substring(2);
@@ -65,7 +64,6 @@ public class TvisJsonRawListener {
         imgRst.ifPresent((str) -> {
             imageHash.append(str);
         });
-        System.out.println("    @@@@@ imageHash: " + imageHash.toString() + "!");
         // 生成临时JSON文件，上传到IPFS得到jsonHash
         FileOutputStream fos = null;
         OutputStreamWriter osw = null;
@@ -95,10 +93,7 @@ public class TvisJsonRawListener {
         jsonRst.ifPresent((jsonStr)->{
             jsonHash.append(jsonStr);
         });
-        System.out.println("    @@@@@ jsonHash: " + jsonHash.toString() + "!");
-        logger.info("    raw: 上传到IPFS...");
         // 获取imageHash、cameraId、streamId、pts，将其存入mysql数据库中
-        logger.info("    raw: 保存到数据库中...");
 
         long tvisJsonId = 0;
         if (jo.containsKey("tvisJsonId")) {
