@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class SrTebsApplication {
     public static void main(String[] args) {
         System.out.println("Traffic Event Bus System v0.0.1");
-        //SpringApplication.run(SrTebsApplication.class, args);
+        SpringApplication.run(SrTebsApplication.class, args);
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // 将删除所有数据！！！！！！！！！！！！！！！！！！！！！！！！！！！
-        GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         GrqEngine.initializeGrp();
     }
