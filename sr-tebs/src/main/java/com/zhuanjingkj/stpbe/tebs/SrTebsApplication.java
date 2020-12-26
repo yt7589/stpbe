@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tebs;
 
+import com.zhuanjingkj.stpbe.common.mgq.GrqEngine;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +18,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class SrTebsApplication {
     public static void main(String[] args) {
         System.out.println("Traffic Event Bus System v0.0.1");
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // 将删除所有数据！！！！！！！！！！！！！！！！！！！！！！！！！！！
+        GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        GrqEngine.initializeGrp();
         SpringApplication.run(SrTebsApplication.class, args);
     }
 }
