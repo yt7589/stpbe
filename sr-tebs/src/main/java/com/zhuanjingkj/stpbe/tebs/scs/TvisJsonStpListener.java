@@ -27,7 +27,7 @@ public class TvisJsonStpListener {
         observers.add(new DkVtpObserver());
     }
 
-    @KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
+    //@KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
     public void listen(String json) {
         System.out.println("TvisJsonStpListener监听到消息 ##########");
         System.out.println("    解析为值对象");
