@@ -23,6 +23,9 @@ public class TasScheduledTask {
     @Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
         JSONObject jo = (JSONObject) redisTemplate.opsForList().leftPop(AppConst.VIDEO_RECOG_RST_REDIS_KEY);
+        if (null == jo) {
+            return ;
+        }
         String response = jo.toString();
         // 从Redis中读出视频识别结果，将其发送到Kafka
         // 向Kafka的Topic发送请求
