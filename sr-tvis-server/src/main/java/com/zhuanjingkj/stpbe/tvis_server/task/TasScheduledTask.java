@@ -19,8 +19,8 @@ public class TasScheduledTask {
     private KafkaTemplate<Integer, String> kafkaTemplate;
     private static Logger logger = LoggerFactory.getLogger(TasScheduledTask.class);
 
-    @Async("tvisServerPool")
-    @Scheduled(cron = "*/1 * * * * ?")
+    //@Async("tvisServerPool")
+    //@Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
         JSONObject jo = (JSONObject) redisTemplate.opsForList().leftPop(AppConst.VIDEO_RECOG_RST_REDIS_KEY);
         if (null == jo) {
