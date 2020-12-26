@@ -25,7 +25,6 @@ import java.util.Random;
 @CrossOrigin(origins = "*")
 public class KsLpsController {
 
-
     @GetMapping(value = "/lps/queryAbnormalLicensePlate")
     public ResultDTO<KsLpsDTO> queryAbnormalLicensePlate() {
         ResultDTO<KsLpsDTO> dto = new ResultDTO<>();
