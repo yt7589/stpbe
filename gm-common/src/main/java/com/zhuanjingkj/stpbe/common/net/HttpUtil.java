@@ -33,6 +33,7 @@ public class HttpUtil {
     public static String postFile(String url, Map<String, ? extends Object> data) throws IOException {
         httpclient = getHttpclient();
         HttpPost post = new HttpPost(url);
+        System.out.println("HttpUrl.postFile 1 url:" + url + "!");
         try {
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -44,7 +45,11 @@ public class HttpUtil {
                 }
             }
             post.setEntity(builder.build());
+            System.out.println("HttpUrl.postFile 1.5 resp: " + post.getURI() + "!");
             CloseableHttpResponse response = httpclient.execute(post);
+            System.out.println("HttpUrl.postFile 2 resp: " + response + "!");
+            System.out.println("HttpUrl.postFile 3 resp: " + response.getEntity() + "!");
+            System.out.println("HttpUrl.postFile 4 resp: " + response.getEntity().toString() + "!");
             return EntityUtils.toString(response.getEntity());
         } finally {
         }

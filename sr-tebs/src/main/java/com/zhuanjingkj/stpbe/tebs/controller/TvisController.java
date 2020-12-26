@@ -62,7 +62,6 @@ public class TvisController {
         map.put("TPLX", "1");
         String response = null;
         try {
-            System.out.println("???????????????? URL: " + AppConst.TVIS_SERVER_URL);
             response = HttpUtil.postFile(AppConst.TVIS_SERVER_URL, map);
         } catch (IOException e) {
             e.printStackTrace();
