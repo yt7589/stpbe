@@ -100,13 +100,20 @@ public class GrqEngine {
                                 AppConst.GRQ_VEHS_IDX + "\", \"embedding\"]}");
         SearchResult searchResult = client.search(searchParam);
         int idx = 0;
-        long tzxlId = searchResult.getResultIdsList().get(0).get(idx);
-        float top1Dist = searchResult.getResultDistancesList().get(0).get(idx);
-        Map<String, Object> rec = searchResult.getFieldsMap().get(0).get(idx);
         TvisGrqRstVo vo = new TvisGrqRstVo();
-        vo.setGrqId(tzxlId);
-        vo.setTvisJsonId((Long)rec.get(AppConst.GRQ_TVIS_JSON_ID));
-        vo.setVehsIdx((long)rec.get(AppConst.GRQ_VEHS_IDX));
+        System.out.println("GrqEngine.findTopK 1 size=" + searchResult.getResultIdsList().size() + "!");
+        if (searchResult.getResultIdsList().size() > 0) {
+            long tzxlId = searchResult.getResultIdsList().get(0).get(idx);
+            float top1Dist = searchResult.getResultDistancesList().get(0).get(idx);
+            Map<String, Object> rec = searchResult.getFieldsMap().get(0).get(idx);
+            vo.setGrqId(tzxlId);
+            vo.setTvisJsonId((Long) rec.get(AppConst.GRQ_TVIS_JSON_ID));
+            vo.setVehsIdx((long) rec.get(AppConst.GRQ_VEHS_IDX));
+        } else {
+            vo.setGrqId(-1);
+            vo.setTvisJsonId(-1);
+            vo.setVehsIdx(-1);
+        }
         return vo;
     }
 

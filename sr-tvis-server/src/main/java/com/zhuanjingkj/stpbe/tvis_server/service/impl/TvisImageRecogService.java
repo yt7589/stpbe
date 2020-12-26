@@ -64,21 +64,15 @@ public class TvisImageRecogService implements ITvisImageRecogService {
 
     @Override
     public Map<String, Object> recognition(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData) {
-        logger.info("recognition step 1");
         String response = sendByteRequest(LIST_VEHICLE_RECOGNITION, imageData);
-        logger.info("recognition step 2");
         if(StringUtils.equals(response,"0")){
-            logger.info("recognition step 3");
             TvisImageErrorResponse responseError = new TvisImageErrorResponse(4,gcxh,MSG);
             return JSON.parseObject(JSON.toJSONString(responseError));
         }
-        logger.info("recognition step 4");
         // 向Kafka的Topic发送请求
         StringBuilder msg = new StringBuilder("{\"cameraId\": \"" + cameraId + "\", \"json\": " + response + "}");
         kafkaTemplate.send("tvis", 0, msg.toString());
-        logger.info("kafka 1 " + response + "!");
         kafkaTemplate.flush();
-        logger.info("kafka 2");
         return JSON.parseObject(response);
     }
 
@@ -101,15 +95,12 @@ public class TvisImageRecogService implements ITvisImageRecogService {
     }
 
     private String sendByteRequest(String requestQueue, byte[] data) {
-        logger.info("sendByteRequest 1");
         String requestId = UUID.randomUUID().toString();
 
         byte[] id = requestId.getBytes(Charset.forName("UTF-8"));
-        logger.info("sendByteRequest 2");
         byte[] requestData = new byte[id.length + data.length];
         System.arraycopy(id, 0, requestData, 0, id.length);
         System.arraycopy(data, 0, requestData, id.length, data.length);
-        logger.info("sendByteRequest 3");
         data = null;
         return sendRequest(requestQueue, requestId, requestData);
     }
@@ -167,7 +158,6 @@ public class TvisImageRecogService implements ITvisImageRecogService {
                 }
                 redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
             }*/
-            System.out.println("##### save [" + requestId + "] to redis......");
             redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
         }
 
@@ -178,9 +168,7 @@ public class TvisImageRecogService implements ITvisImageRecogService {
                 Thread.sleep(3);
             } catch (InterruptedException ignore) {
             }
-            System.out.println("##### read [" + requestId + "] ....");
             response = redisTemplate.opsForValue().get(requestId);
-            System.out.println("#### response is [" + response + "]");
             if (response != null) {
                 break;
             }
