@@ -58,14 +58,14 @@ public class TvisController {
         map.put("MRHPT", "test");
         map.put("cameraId", "101");
         map.put("TPMC", f.getName());
-        map.put("TPXX", f);
-        map.put("TPLX", "1");
-        String response = null;
+        String response = TvisUtil.recognizeImageFile(map, f);
+
+        /*String response = null;
         try {
             response = HttpUtil.postFile(AppConst.TVIS_SERVER_URL, map);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         // 返回结果
         ResultDTO<GrqDemoDTO> dto = new ResultDTO<>();
         System.out.println("识别结果：" + response + "!!!!!!!!!!!!!!!!!!!!!!");
