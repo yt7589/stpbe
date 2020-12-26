@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class FileUtil {
 
-    public static void export(FileExpDTO fileExp) {
+    public static void export(HttpServletResponse response, FileExpDTO fileExp) {
 
         HSSFWorkbook workbook = new HSSFWorkbook();
 
@@ -119,12 +120,32 @@ public class FileUtil {
                 column ++;
             }
         }
-
+        /**
         try {
             //指定文件导出的路径
+            re
             workbook.write(new File(fileExp.getPath() + "//" + fileExp.getFileName() + ".xls"));
         } catch (IOException e) {
             e.printStackTrace();
+        } */
+        OutputStream os = null;
+        try {
+            os = response.getOutputStream();
+            response.setContentType("application/x-download");
+            response.setCharacterEncoding("UTF-8");
+            response.setHeader("Content-disposition", "attachment;filename=" + new String(fileExp.getFileName().getBytes(), "ISO8859-1") + ".xls");
+            workbook.write(os);
+            os.flush();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            if(os!=null){
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
