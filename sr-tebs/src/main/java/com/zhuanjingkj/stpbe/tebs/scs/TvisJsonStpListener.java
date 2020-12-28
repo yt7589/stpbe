@@ -25,19 +25,23 @@ public class TvisJsonStpListener {
     private static List<ITvisStpObserver> observers = new ArrayList<>();
     private static boolean isFirstRun = true;
     @Autowired
+    private DkVtieObserver dkVtieObserver;
+    @Autowired
     private Environment environment;
     @Autowired
     private RedisTemplate redisTemplate;
 
-    public TvisJsonStpListener() {
+    /*public TvisJsonStpListener() {
         observers.add(new CltzxlObserver());
         observers.add(new DkVtieObserver());
         observers.add(new DkVtpObserver());
-    }
+    }*/
 
     @KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
     public void listen(String json) {
         if (isFirstRun) {
+            System.out.println("    !!!###!!! dkVtieObserver=" + dkVtieObserver + "!");
+            observers.add(dkVtieObserver);
             for (ITvisStpObserver obs : observers) {
                 obs.initialize(environment);
             }
