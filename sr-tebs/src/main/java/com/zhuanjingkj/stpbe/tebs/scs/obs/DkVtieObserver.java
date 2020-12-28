@@ -23,21 +23,19 @@ public class DkVtieObserver implements ITvisStpObserver {
     @Override
     public void notifyObserver(VehicleVo vo) {
         String hphm = vo.getVehicleHptzVO().getHphm();
-        System.out.println("    ????? hphm=" + hphm + "; hphmNativePrefix=" + hphmNativePrefix
-                + "; redisTemplate=" + redisTemplate + "!");
         if (hphm != null && !hphm.equals("")) {
             if (hphm.indexOf(hphmNativePrefix) >= 0) {
-                System.out.println("    ##### 本地号牌：" + hphm + "!");
+                System.out.println("    ##### 本地号牌：" + hphm + "; num="
+                        + redisTemplate.opsForValue().increment("dkInternalNum") + "!");
             } else {
-                System.out.println("    ##### 外埠号牌：" + hphm + "!");
+                System.out.println("    ##### 外埠号牌：" + hphm + "; num="
+                        + redisTemplate.opsForValue().increment("dkExternalNum") + "!");
             }
         }
     }
 
     @Override
     public void initialize(Environment env) {
-        System.out.println("    DkVtieObserver.initialize env=" + env + "!");
         hphmNativePrefix = env.getProperty("hphm.native.prefix");
-        System.out.println("    hphmNativePrefix=" + hphmNativePrefix + "!");
     }
 }

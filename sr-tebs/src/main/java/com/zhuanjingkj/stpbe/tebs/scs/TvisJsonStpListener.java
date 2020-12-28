@@ -25,26 +25,21 @@ public class TvisJsonStpListener {
     private static List<ITvisStpObserver> observers = new ArrayList<>();
     private static boolean isFirstRun = true;
     @Autowired
-    private DkVtieObserver dkVtieObserver;
-    @Autowired
     private Environment environment;
     @Autowired
     private RedisTemplate redisTemplate;
-
-    /*public TvisJsonStpListener() {
-        observers.add(new CltzxlObserver());
-        observers.add(new DkVtieObserver());
-        observers.add(new DkVtpObserver());
-    }*/
+    @Autowired
+    private DkVtieObserver dkVtieObserver; // 首页数据看板左侧第一行第一个：本地外埠车辆占比
+    @Autowired
+    private DkVtpObserver dkVtpObserver; // 首页数据看板左侧第一行第二个：车辆类型饼图
 
     @KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
     public void listen(String json) {
         if (isFirstRun) {
-            System.out.println("    !!!###!!! dkVtieObserver=" + dkVtieObserver + "!");
+            dkVtieObserver.initialize(environment);
             observers.add(dkVtieObserver);
-            for (ITvisStpObserver obs : observers) {
-                obs.initialize(environment);
-            }
+            dkVtpObserver.initialize(environment);
+            observers.add(dkVtpObserver);
             isFirstRun = false;
         }
         System.out.println("    解析为值对象");
