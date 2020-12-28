@@ -13,11 +13,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class DkVtieObserver implements ITvisStpObserver {
     @Value("${hphm.native.prefix}")
-    private String hphmNativePrefix;
+    private String hphmNativePrefix = "苏";
 
     @Override
     public void notifyObserver(VehicleVo vo) {
         String hphm = vo.getVehicleHptzVO().getHphm();
         System.out.println("    ????? hphm=" + hphm + "; hphmNativePrefix=" + hphmNativePrefix + "!");
+        if (hphm != null && !hphm.equals("")) {
+            if (hphm.indexOf(hphmNativePrefix) >= 0) {
+                System.out.println("    ##### 本地号牌：" + hphm + "!");
+            } else {
+                System.out.println("    ##### 外埠号牌：" + hphm + "!");
+            }
+        }
     }
 }
