@@ -21,7 +21,7 @@ public class SrTebsApplication {
         SpringApplication.run(SrTebsApplication.class, args);
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // 将删除所有数据！！！！！！！！！！！！！！！！！！！！！！！！！！！
-        //GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         GrqEngine.initializeGrp();
     }

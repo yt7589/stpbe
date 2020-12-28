@@ -26,7 +26,7 @@ public class CltzxlObserver implements ITvisStpObserver {
     @Override
     public void notifyObserver(VehicleVo vo) {
         System.out.println("############ 保存到图搜库 redisTemplate=" + redisTemplate + "#########");
-        if (null == redisTemplate || 1>0) {
+        if (null == redisTemplate) {
             System.out.println("##### 直接返回 #####");
             return ;
         }
@@ -38,7 +38,9 @@ public class CltzxlObserver implements ITvisStpObserver {
                 vehicleCxtzVo.getCllxflCode(),
                 vehicleCxtzVo.getCllxzflCode()
         );
-        GrqEngine.insertRecord(redisTemplate, partitionTag, vo);
+        System.out.println("CltzxlObserver.notifyObserver partitionTag=" + partitionTag + "!");
+        long tid = GrqEngine.insertRecord(redisTemplate, partitionTag, vo);
+        System.out.println("CltzxlObserver.notifyObserver tid=" + tid + "!");
     }
 
     @Override
