@@ -20,17 +20,19 @@ public class DkVtieObserver implements ITvisStpObserver {
     private Environment environment;
     @Autowired
     private RedisTemplate redisTemplate;
-    private String hphmNativePrefix;
+    private String hphmNativePrefix = null;
 
     public DkVtieObserver() {
         hphmNativePrefix = System.getProperty("hphm.native.prefix", "京");
-        System.out.println("    v000 ############# hphmNativePrefix=" + hphmNativePrefix + "!!!!!!!!!!!!!!!!!!!!");
-        System.out.println("    v001 " + environment + "!");
-        System.out.println("    v002 redisTemplate=" + redisTemplate + "!!!!!!!!!!!!!!");
     }
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        if (hphmNativePrefix == null) {
+            System.out.println("    v000 ????? ############# hphmNativePrefix=" + hphmNativePrefix + "!!!!!!!!!!!!!!!!!!!!");
+            System.out.println("    v001 " + environment + "!");
+            System.out.println("    v002 redisTemplate=" + redisTemplate + "!!!!!!!!!!!!!!");
+        }
         String hphm = vo.getVehicleHptzVO().getHphm();
         System.out.println("    ????? hphm=" + hphm + "; hphmNativePrefix=" + hphmNativePrefix + "!");
         if (hphm != null && !hphm.equals("")) {
