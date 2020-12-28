@@ -3,13 +3,16 @@ package com.zhuanjingkj.stpbe.tmdp.dto.vm;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
-public class VehicleTypesDTO extends BaseDTO {
+/**
+ * 违章监管 =》 车辆类型
+ */
+public class VmVehicleTypesDTO extends BaseDTO {
     @JSONField(name = "typeId")
     private long typeId;
     @JSONField(name = "typeName")
     private String typeName;
 
-    public VehicleTypesDTO(long typeId, String typeName) {
+    public VmVehicleTypesDTO(long typeId, String typeName) {
         this.typeId = typeId;
         this.typeName = typeName;
     }

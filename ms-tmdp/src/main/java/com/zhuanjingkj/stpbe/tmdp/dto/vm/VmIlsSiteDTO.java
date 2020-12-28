@@ -3,17 +3,26 @@ package com.zhuanjingkj.stpbe.tmdp.dto.vm;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
-public class IlsTopSiteDTO extends BaseDTO {
+/**
+ * 违章分布 =》 违章点位分布
+ */
+public class VmIlsSiteDTO extends BaseDTO {
     @JSONField(name = "siteId")
     private long siteId;
     @JSONField(name = "siteName")
     private String siteName;
+    @JSONField(name = "lng")
+    private double lng;
+    @JSONField(name = "lat")
+    private double lat;
     @JSONField(name = "count")
     private Integer count;
 
-    public IlsTopSiteDTO(long siteId, String siteName, Integer count) {
+    public VmIlsSiteDTO(long siteId, String siteName, double lng, double lat, Integer count) {
         this.siteId = siteId;
         this.siteName = siteName;
+        this.lng = lng;
+        this.lat = lat;
         this.count = count;
     }
 
@@ -31,6 +40,22 @@ public class IlsTopSiteDTO extends BaseDTO {
 
     public void setSiteName(String siteName) {
         this.siteName = siteName;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
     public Integer getCount() {

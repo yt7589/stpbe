@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Violation Management => Illegal Supervision
- * 违章管理=》违章监管
+ * 违章管理 =》 违章监管
  */
 @RestController
 @RequestMapping(value = "/vm")
@@ -47,10 +47,73 @@ public class VmIlsController {
      * @return
      */
     @GetMapping(value = "/ils/queryVehicleTypes")
-    public ResultDTO<List<VehicleTypesDTO>> queryVehicleTypes() {
+    public ResultDTO<List<VmVehicleTypesDTO>> queryVehicleTypes(
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version
+    ) {
         return  queryVehicleType_exp();
     }
 
+    /**
+     * 违章车辆详情
+     * @param platform
+     * @param version
+     * @param ilId
+     * @return
+     */
+    @GetMapping(value = "/ils/queryIlsDat")
+    public ResultDTO<VmIlsVdDTO> queryIlsDat(
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version,
+        @RequestParam(name = "ilId", required = false) Integer ilId
+    ) {
+        return queryIlsDat_exp();
+    }
+    /**
+     * 车辆违章历史
+     * @param platform
+     * @param version
+     * @param hphm 车牌
+     * @param startIndex
+     * @param amount
+     * @param direction
+     * @return
+     */
+    @GetMapping(value = "/ils/queryIlsVehicleHistoric")
+    public ResultDTO<DbQrsDTO> queryIlsVehicleHistoric(
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version,
+        @RequestParam(name = "hphm", required = false) String hphm,
+        @RequestParam(name = "startIndex", required = false) Integer startIndex,
+        @RequestParam(name = "amount", required = false) Integer amount,
+        @RequestParam(name = "driection", required = false) Integer direction
+    ) {
+        return queryIlsVehicleHistoric_exp();
+    }
+
+
+    /**
+     *
+     * 车辆信息及违章历史分类统计
+     * @param platform
+     * @param version
+     * @param hphm  车牌
+     * @param startIndex
+     * @param amount
+     * @param direction
+     * @return
+     */
+    @GetMapping(value = "/ils/queryIlsVsInfo")
+    public ResultDTO<VmIlsVsInfoDTO> queryIlsVsInfo(
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version,
+        @RequestParam(name = "hphm", required = false) String hphm,
+        @RequestParam(name = "startIndex", required = false) Integer startIndex,
+        @RequestParam(name = "amount", required = false) Integer amount,
+        @RequestParam(name = "driection", required = false) Integer direction
+    ) {
+        return queryIlsVsInfo_exp();
+    }
     /**
      * 违章数据导出
      * @param response
@@ -93,20 +156,63 @@ public class VmIlsController {
     }
 
     /**
+     * 违章车辆历史数据导出
+     * @param response
+     */
+    @GetMapping(value = "/ils/exportvs")
+    public void exportvs(HttpServletResponse response){
+        List<Object> recs = new ArrayList<>();
+
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+
+        String[] columns = {"违章编号", "时间", "地点", "违章类型", "详情"};
+
+        List<Object> resc = recs;
+
+        FileExpDTO fed = new FileExpDTO("违章监管" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
+
+        FileUtil.export(response, fed);
+    }
+    /**
      * 违章分类统计
      * @param platform
      * @param version
      * @return
      */
     @GetMapping(value = "/ils/queryIllegalDistribution")
-    public ResultDTO<IlsTopDTO> queryIllegalDistribution(
+    public ResultDTO<VmIlsTopDTO> queryIllegalDistribution(
         @RequestParam(name = "p", required = false) String platform,
         @RequestParam(name = "v", required = false) String version
     ) {
-        ResultDTO<IlsTopDTO> dto = new ResultDTO<>();
-        IlsTopDTO data = new IlsTopDTO();
-        List<IlsTopAreaDTO> ilsArea = queryIllArea();
-        List<IlsTopSiteDTO> ilsSite = queryIllSite();
+        ResultDTO<VmIlsTopDTO> dto = new ResultDTO<>();
+        VmIlsTopDTO data = new VmIlsTopDTO();
+        List<VmIlsTopAreaDTO> ilsArea = queryIllArea();
+        List<VmIlsTopSiteDTO> ilsSite = queryIllSite();
         data.setIlsAreaDTO(ilsArea);
         data.setIlsSiteDTO(ilsSite);
         dto.setData(data);
@@ -183,68 +289,68 @@ public class VmIlsController {
 
     }
 
-    private ResultDTO<List<VehicleTypesDTO>> queryVehicleType_exp() {
-        ResultDTO<List<VehicleTypesDTO>> dto = new ResultDTO<>();
-        List<VehicleTypesDTO> recs = new ArrayList<>();
-        recs.add(new VehicleTypesDTO(101,"小轿车"));
-        recs.add(new VehicleTypesDTO(102,"平板车"));
-        recs.add(new VehicleTypesDTO(103,"大型客车"));
-        recs.add(new VehicleTypesDTO(104,"重型货车"));
-        recs.add(new VehicleTypesDTO(105,"摩托车"));
-        recs.add(new VehicleTypesDTO(106,"挂车"));
-        recs.add(new VehicleTypesDTO(107,"SUV"));
-        recs.add(new VehicleTypesDTO(108,"普通货车"));
-        recs.add(new VehicleTypesDTO(109,"MPV"));
-        recs.add(new VehicleTypesDTO(110,"面包车"));
+    private ResultDTO<List<VmVehicleTypesDTO>> queryVehicleType_exp() {
+        ResultDTO<List<VmVehicleTypesDTO>> dto = new ResultDTO<>();
+        List<VmVehicleTypesDTO> recs = new ArrayList<>();
+        recs.add(new VmVehicleTypesDTO(101,"小轿车"));
+        recs.add(new VmVehicleTypesDTO(102,"平板车"));
+        recs.add(new VmVehicleTypesDTO(103,"大型客车"));
+        recs.add(new VmVehicleTypesDTO(104,"重型货车"));
+        recs.add(new VmVehicleTypesDTO(105,"摩托车"));
+        recs.add(new VmVehicleTypesDTO(106,"挂车"));
+        recs.add(new VmVehicleTypesDTO(107,"SUV"));
+        recs.add(new VmVehicleTypesDTO(108,"普通货车"));
+        recs.add(new VmVehicleTypesDTO(109,"MPV"));
+        recs.add(new VmVehicleTypesDTO(110,"面包车"));
         dto.setData(recs);
         return  dto;
     }
 
-    private List<IlsTopAreaDTO> queryIllArea() {
-       List<IlsTopAreaDTO> ilsArea = new ArrayList<>();
-       ilsArea.add(new IlsTopAreaDTO(102,"西二旗",1500000));
-       ilsArea.add(new IlsTopAreaDTO(103,"上地1街",1500000));
-       ilsArea.add(new IlsTopAreaDTO(104,"上地2街",1500000));
-       ilsArea.add(new IlsTopAreaDTO(105,"上地3街",1500000));
-       ilsArea.add(new IlsTopAreaDTO(106,"上地4街",1500000));
-       ilsArea.add(new IlsTopAreaDTO(107,"上地5街",1500000));
-       ilsArea.add(new IlsTopAreaDTO(108,"上地6街",1500000));
-       ilsArea.add(new IlsTopAreaDTO(109,"上地7街",1500000));
-       ilsArea.add(new IlsTopAreaDTO(101,"上地8街",1500000));
-       ilsArea.add(new IlsTopAreaDTO(110,"上地9街",1500000));
+    private List<VmIlsTopAreaDTO> queryIllArea() {
+       List<VmIlsTopAreaDTO> ilsArea = new ArrayList<>();
+       ilsArea.add(new VmIlsTopAreaDTO(102,"西二旗",1500000));
+       ilsArea.add(new VmIlsTopAreaDTO(103,"上地1街",1500000));
+       ilsArea.add(new VmIlsTopAreaDTO(104,"上地2街",1500000));
+       ilsArea.add(new VmIlsTopAreaDTO(105,"上地3街",1500000));
+       ilsArea.add(new VmIlsTopAreaDTO(106,"上地4街",1500000));
+       ilsArea.add(new VmIlsTopAreaDTO(107,"上地5街",1500000));
+       ilsArea.add(new VmIlsTopAreaDTO(108,"上地6街",1500000));
+       ilsArea.add(new VmIlsTopAreaDTO(109,"上地7街",1500000));
+       ilsArea.add(new VmIlsTopAreaDTO(101,"上地8街",1500000));
+       ilsArea.add(new VmIlsTopAreaDTO(110,"上地9街",1500000));
        return ilsArea;
     }
 
-    private List<IlsTopSiteDTO> queryIllSite() {
-        List<IlsTopSiteDTO> ilsSite = new ArrayList<>();
-        ilsSite.add(new IlsTopSiteDTO(102,"西二旗",1500000));
-        ilsSite.add(new IlsTopSiteDTO(103,"上地1街",1500000));
-        ilsSite.add(new IlsTopSiteDTO(104,"上地2街",1500000));
-        ilsSite.add(new IlsTopSiteDTO(105,"上地3街",1500000));
-        ilsSite.add(new IlsTopSiteDTO(106,"上地4街",1500000));
-        ilsSite.add(new IlsTopSiteDTO(107,"上地5街",1500000));
-        ilsSite.add(new IlsTopSiteDTO(108,"上地6街",1500000));
-        ilsSite.add(new IlsTopSiteDTO(109,"上地7街",1500000));
-        ilsSite.add(new IlsTopSiteDTO(101,"上地8街",1500000));
-        ilsSite.add(new IlsTopSiteDTO(110,"上地9街",1500000));
+    private List<VmIlsTopSiteDTO> queryIllSite() {
+        List<VmIlsTopSiteDTO> ilsSite = new ArrayList<>();
+        ilsSite.add(new VmIlsTopSiteDTO(102,"西二旗",1500000));
+        ilsSite.add(new VmIlsTopSiteDTO(103,"上地1街",1500000));
+        ilsSite.add(new VmIlsTopSiteDTO(104,"上地2街",1500000));
+        ilsSite.add(new VmIlsTopSiteDTO(105,"上地3街",1500000));
+        ilsSite.add(new VmIlsTopSiteDTO(106,"上地4街",1500000));
+        ilsSite.add(new VmIlsTopSiteDTO(107,"上地5街",1500000));
+        ilsSite.add(new VmIlsTopSiteDTO(108,"上地6街",1500000));
+        ilsSite.add(new VmIlsTopSiteDTO(109,"上地7街",1500000));
+        ilsSite.add(new VmIlsTopSiteDTO(101,"上地8街",1500000));
+        ilsSite.add(new VmIlsTopSiteDTO(110,"上地9街",1500000));
         return ilsSite;
     }
 
     private ResultDTO<DbQrsDTO> queryIllegal_exp() {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(102,10,0,20,0,null);
-        List<IlsDTO> recs = new ArrayList<>();
-        recs.add(new IlsDTO(101,"北京市海淀区上地8街12号",1000000));
-        recs.add(new IlsDTO(102,"北京市海淀区上地8街13号",1000000));
-        recs.add(new IlsDTO(103,"北京市海淀区上地8街14号",1000000));
-        recs.add(new IlsDTO(104,"北京市海淀区上地8街15号",1000000));
-        recs.add(new IlsDTO(105,"北京市海淀区上地8街16号",1000000));
-        recs.add(new IlsDTO(106,"北京市海淀区上地8街17号",1000000));
-        recs.add(new IlsDTO(107,"北京市海淀区上地8街18号",1000000));
-        recs.add(new IlsDTO(108,"北京市海淀区上地8街19号",1000000));
-        recs.add(new IlsDTO(109,"北京市海淀区上地8街20号",1000000));
-        recs.add(new IlsDTO(110,"北京市海淀区上地8街21号",1000000));
-        recs.add(new IlsDTO(111,"北京市海淀区上地8街22号",1000000));
+        List<VmIlssDTO> recs = new ArrayList<>();
+        recs.add(new VmIlssDTO(101,"北京市海淀区上地8街12号",1000000));
+        recs.add(new VmIlssDTO(102,"北京市海淀区上地8街13号",1000000));
+        recs.add(new VmIlssDTO(103,"北京市海淀区上地8街14号",1000000));
+        recs.add(new VmIlssDTO(104,"北京市海淀区上地8街15号",1000000));
+        recs.add(new VmIlssDTO(105,"北京市海淀区上地8街16号",1000000));
+        recs.add(new VmIlssDTO(106,"北京市海淀区上地8街17号",1000000));
+        recs.add(new VmIlssDTO(107,"北京市海淀区上地8街18号",1000000));
+        recs.add(new VmIlssDTO(108,"北京市海淀区上地8街19号",1000000));
+        recs.add(new VmIlssDTO(109,"北京市海淀区上地8街20号",1000000));
+        recs.add(new VmIlssDTO(110,"北京市海淀区上地8街21号",1000000));
+        recs.add(new VmIlssDTO(111,"北京市海淀区上地8街22号",1000000));
         data.setRecs(recs);
         dto.setData(data);
         return dto;
@@ -253,19 +359,85 @@ public class VmIlsController {
     private ResultDTO<DbQrsDTO> querySiteIllegal_exp() {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,15,0,15,0,null);
-        List<IlsSiteDTO> recs = new ArrayList<>();
-        recs.add(new IlsSiteDTO(101,"北京市海淀区上地8街12号",50.9875,90.9875,180000));
-        recs.add(new IlsSiteDTO(101,"北京市海淀区上地8街13号",89.9875,80.9875,180000));
-        recs.add(new IlsSiteDTO(101,"北京市海淀区上地8街14号",98.9875,70.9875,180000));
-        recs.add(new IlsSiteDTO(101,"北京市海淀区上地8街15号",92.9875,60.9875,180000));
-        recs.add(new IlsSiteDTO(101,"北京市海淀区上地8街16号",96.9875,79.9875,180000));
-        recs.add(new IlsSiteDTO(101,"北京市海淀区上地8街17号",53.9875,59.9875,180000));
-        recs.add(new IlsSiteDTO(101,"北京市海淀区上地8街18号",57.9875,20.9875,180000));
-        recs.add(new IlsSiteDTO(101,"北京市海淀区上地8街19号",59.9875,82.9875,180000));
-        recs.add(new IlsSiteDTO(101,"北京市海淀区上地8街20号",60.9875,45.9875,180000));
-        recs.add(new IlsSiteDTO(101,"北京市海淀区上地8街21号",90.9875,80.9875,180000));
+        List<VmIlsSiteDTO> recs = new ArrayList<>();
+        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街12号",50.9875,90.9875,180000));
+        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街13号",89.9875,80.9875,180000));
+        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街14号",98.9875,70.9875,180000));
+        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街15号",92.9875,60.9875,180000));
+        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街16号",96.9875,79.9875,180000));
+        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街17号",53.9875,59.9875,180000));
+        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街18号",57.9875,20.9875,180000));
+        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街19号",59.9875,82.9875,180000));
+        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街20号",60.9875,45.9875,180000));
+        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街21号",90.9875,80.9875,180000));
         data.setRecs(recs);
         dto.setData(data);
+        return dto;
+    }
+
+    private ResultDTO<DbQrsDTO> queryIlsVehicleHistoric_exp() {
+        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
+        DbQrsDTO data = new DbQrsDTO(100,15,0,15,0,null);
+        List<VmIlsVhsDTO> recs = new ArrayList<>();
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
+                "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+        data.setRecs(recs);
+        dto.setData(data);
+        return dto;
+    }
+
+    private ResultDTO<VmIlsVsInfoDTO> queryIlsVsInfo_exp() {
+        ResultDTO<VmIlsVsInfoDTO> dto = new ResultDTO<>();
+        VmIlsVsInfoDTO vmIlsVsInfoDTO = new VmIlsVsInfoDTO();
+        vmIlsVsInfoDTO.setHphm("豫E88452");
+        vmIlsVsInfoDTO.setIlsCount(1234567);
+        vmIlsVsInfoDTO.setAvCount(12345);
+        List<VmIlsVsType> types = new ArrayList<>();
+        types.add(new VmIlsVsType("闯红灯", 30));
+        types.add(new VmIlsVsType("行车打电话", 10));
+        types.add(new VmIlsVsType("副驾驶不系安全带", 15));
+        types.add(new VmIlsVsType("违反限行", 15));
+        types.add(new VmIlsVsType("逆行", 20));
+        vmIlsVsInfoDTO.setIlsVstype(types);
+        List<VmIlsVsTrend> trend = new ArrayList<>();
+        trend.add(new VmIlsVsTrend("" + 2013,35));
+        trend.add(new VmIlsVsTrend("" + 2014,35));
+        trend.add(new VmIlsVsTrend("" + 2015,35));
+        trend.add(new VmIlsVsTrend("" + 2016,35));
+        trend.add(new VmIlsVsTrend("" + 2017,35));
+        trend.add(new VmIlsVsTrend("" + 2018,35));
+        trend.add(new VmIlsVsTrend("" + 2019,35));
+        trend.add(new VmIlsVsTrend("" + 2020,35));
+        vmIlsVsInfoDTO.setIlsVsTrend(trend);
+        dto.setData(vmIlsVsInfoDTO);
+        return dto;
+    }
+
+    private ResultDTO<VmIlsVdDTO> queryIlsDat_exp() {
+        ResultDTO<VmIlsVdDTO> dto = new ResultDTO<>();
+        VmIlsVdDTO vmIlsVdDTO = new VmIlsVdDTO(98,"http://222.128.117.234:8090/cloud/images/a002.jpg","2020-12-28 15:26:30",
+                "北京市海淀区上地三街123号", "本市",
+                "京A48520", "未系安全带","大货车", "挂车","车头", 0,0,
+                0,0,0,0,0,0,"白色", "大众",
+                "小型车", "2020",99,1,"白色","蓝底白字","民用车牌",0,
+                98,"京98 A97...");
+        dto.setData(vmIlsVdDTO);
         return dto;
     }
 }

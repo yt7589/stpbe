@@ -6,10 +6,7 @@ import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.*;
 import com.zhuanjingkj.stpbe.tmdp.dto.licencePlate.*;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -26,7 +23,10 @@ import java.util.Random;
 public class KsLpsController {
 
     @GetMapping(value = "/lps/queryAbnormalLicensePlate")
-    public ResultDTO<KsLpsDTO> queryAbnormalLicensePlate() {
+    public ResultDTO<KsLpsDTO> queryAbnormalLicensePlate(
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version
+    ) {
         ResultDTO<KsLpsDTO> dto = new ResultDTO<>();
         KsLpsDTO data = new KsLpsDTO();
         List<KsLpsTimeDTO> timeDTO = getTimeAbnormalLicensePlate();

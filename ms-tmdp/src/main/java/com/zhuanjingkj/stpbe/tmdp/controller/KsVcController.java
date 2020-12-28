@@ -99,8 +99,8 @@ public class KsVcController {
      */
     @GetMapping(value = "/vc/queryVcLsvs")
     public ResultDTO<DbQrsDTO> queryVcLsvs(
-            @RequestParam(name = "p", required = false) String platform,
-            @RequestParam(name = "v", required = false) String version
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version
     ) {
         return queryVcLsvs_exp();
     }
@@ -113,8 +113,8 @@ public class KsVcController {
      */
     @GetMapping(value = "/vc/queryVcLtvis")
     public ResultDTO<DbQrsDTO> queryVcLtvis(
-            @RequestParam(name = "p", required = false) String platform,
-            @RequestParam(name = "v", required = false) String version
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version
     ) {
         return queryVcLsvs_exp();
     }
