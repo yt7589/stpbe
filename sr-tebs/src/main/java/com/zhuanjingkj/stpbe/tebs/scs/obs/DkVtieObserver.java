@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tebs.scs.obs;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.data.vo.VehicleHptzVO;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
@@ -16,7 +17,9 @@ public class DkVtieObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
-        if (vo == null || vo.getVehicleHptzVO()==null) {
+        if (vo == null || vo.getVehicleHptzVO()==null || vo.getVehicleHptzVO().getHphm()==null) {
+            System.out.println("    ????? hptz:" + vo.getVehicleHptzVO().toString()
+                    + "! hphmNativePrefix=" + hphmNativePrefix + "!");
             return;
         }
         String hphm = vo.getVehicleHptzVO().getHphm();
