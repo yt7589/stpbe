@@ -1,11 +1,14 @@
 package com.zhuanjingkj.stpbe.tebs.scs.obs;
 
 import com.alibaba.fastjson.JSONObject;
+import com.netflix.discovery.converters.Auto;
 import com.zhuanjingkj.stpbe.data.vo.VehicleHptzVO;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
-import org.omg.CORBA.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,11 +16,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DkVtieObserver implements ITvisStpObserver {
+    @Autowired
+    private Environment environment;
+    @Autowired
+    private RedisTemplate redisTemplate;
     private String hphmNativePrefix;
-    
+
     public DkVtieObserver() {
         hphmNativePrefix = System.getProperty("hphm.native.prefix", "京");
-        System.out.println("############# hphmNativePrefix=" + hphmNativePrefix + "!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(" ##### 000 " + environment.getProperty("hphm.native.prefix") + "!");
+        System.out.println("    v001 ############# hphmNativePrefix=" + hphmNativePrefix + "!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("    v002 redisTemplate=" + redisTemplate + "!!!!!!!!!!!!!!");
     }
 
     @Override
