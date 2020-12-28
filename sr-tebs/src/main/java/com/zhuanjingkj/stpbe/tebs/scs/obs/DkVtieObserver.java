@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DkVtieObserver implements ITvisStpObserver {
     @Value("${hphm.native.prefix}")
-    private String hphmNativePrefix = "苏";
+    private String hphmNativePrefix;
 
     @Override
     public void notifyObserver(VehicleVo vo) {
