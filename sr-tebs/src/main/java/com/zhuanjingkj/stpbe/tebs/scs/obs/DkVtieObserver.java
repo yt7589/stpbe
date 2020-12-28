@@ -22,10 +22,6 @@ public class DkVtieObserver implements ITvisStpObserver {
     private RedisTemplate redisTemplate;
     private String hphmNativePrefix = null;
 
-    public DkVtieObserver() {
-        hphmNativePrefix = System.getProperty("hphm.native.prefix", "京");
-    }
-
     @Override
     public void notifyObserver(VehicleVo vo) {
         if (hphmNativePrefix == null) {
