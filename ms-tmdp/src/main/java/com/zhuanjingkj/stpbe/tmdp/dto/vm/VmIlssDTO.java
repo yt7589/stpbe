@@ -3,7 +3,10 @@ package com.zhuanjingkj.stpbe.tmdp.dto.vm;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
-public class IlsDTO extends BaseDTO {
+/**
+ * 违章分布 =》 违章点位列表统计
+ */
+public class VmIlssDTO extends BaseDTO {
     @JSONField(name = "siteId")
     private long siteId;
     @JSONField(name = "siteName")
@@ -11,7 +14,7 @@ public class IlsDTO extends BaseDTO {
     @JSONField(name = "count")
     private Integer count;
 
-    public IlsDTO(long siteId, String siteName, Integer count) {
+    public VmIlssDTO(long siteId, String siteName, Integer count) {
         this.siteId = siteId;
         this.siteName = siteName;
         this.count = count;

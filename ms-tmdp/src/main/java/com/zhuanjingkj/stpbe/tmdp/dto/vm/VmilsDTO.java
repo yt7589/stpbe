@@ -3,6 +3,9 @@ package com.zhuanjingkj.stpbe.tmdp.dto.vm;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
+/**
+ * 违章监管 =》 违章列表
+ */
 public class VmilsDTO extends BaseDTO {
     @JSONField(name = "ilid")
     private long ilId;
