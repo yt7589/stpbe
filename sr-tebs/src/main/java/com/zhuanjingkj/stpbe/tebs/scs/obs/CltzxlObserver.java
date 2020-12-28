@@ -8,6 +8,7 @@ import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
 import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.io.Serializable;
@@ -36,5 +37,10 @@ public class CltzxlObserver implements ITvisStpObserver {
                 vehicleCxtzVo.getCllxzflCode()
         );
         GrqEngine.insertRecord(redisTemplate, partitionTag, vo);
+    }
+
+    @Override
+    public void initialize(Environment env) {
+
     }
 }

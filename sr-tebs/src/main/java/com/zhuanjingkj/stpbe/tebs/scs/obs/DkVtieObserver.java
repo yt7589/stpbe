@@ -16,19 +16,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DkVtieObserver implements ITvisStpObserver {
-    @Autowired
-    private Environment environment;
-    @Autowired
-    private RedisTemplate redisTemplate;
     private String hphmNativePrefix = null;
 
     @Override
     public void notifyObserver(VehicleVo vo) {
-        if (hphmNativePrefix == null) {
-            System.out.println("    v000 ????? ############# hphmNativePrefix=" + hphmNativePrefix + "!!!!!!!!!!!!!!!!!!!!");
-            System.out.println("    v001 " + environment + "!");
-            System.out.println("    v002 redisTemplate=" + redisTemplate + "!!!!!!!!!!!!!!");
-        }
         String hphm = vo.getVehicleHptzVO().getHphm();
         System.out.println("    ????? hphm=" + hphm + "; hphmNativePrefix=" + hphmNativePrefix + "!");
         if (hphm != null && !hphm.equals("")) {
@@ -38,5 +29,12 @@ public class DkVtieObserver implements ITvisStpObserver {
                 System.out.println("    ##### 外埠号牌：" + hphm + "!");
             }
         }
+    }
+
+    @Override
+    public void initialize(Environment env) {
+        System.out.println("    DkVtieObserver.initialize env=" + env + "!");
+        hphmNativePrefix = env.getProperty("hphm.native.prefix");
+        System.out.println("    hphmNativePrefix=" + hphmNativePrefix + "!");
     }
 }

@@ -10,6 +10,7 @@ import com.zhuanjingkj.stpbe.tebs.scs.obs.DkVtpObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 
@@ -22,11 +23,13 @@ import java.util.List;
 public class TvisJsonStpListener {
     private final static Logger logger = LoggerFactory.getLogger(TvisJsonStpListener.class);
     private static List<ITvisStpObserver> observers = new ArrayList<>();
+    private static boolean isFirstRun = true;
+    @Autowired
+    private Environment environment;
     @Autowired
     private RedisTemplate redisTemplate;
 
     public TvisJsonStpListener() {
-        System.out.println("    @@@@@ redisTemplate=" + redisTemplate + "!");
         observers.add(new CltzxlObserver());
         observers.add(new DkVtieObserver());
         observers.add(new DkVtpObserver());
@@ -34,7 +37,12 @@ public class TvisJsonStpListener {
 
     @KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
     public void listen(String json) {
-        System.out.println("TvisJsonStpListener监听到消息 ########## redisTemplate=" + redisTemplate + "!");
+        if (isFirstRun) {
+            for (ITvisStpObserver obs : observers) {
+                obs.initialize(environment);
+            }
+            isFirstRun = false;
+        }
         System.out.println("    解析为值对象");
         JSONObject rawJo = JSONObject.parseObject(json);
         long tvisJsonId = rawJo.getLong("tvisJsonId");
