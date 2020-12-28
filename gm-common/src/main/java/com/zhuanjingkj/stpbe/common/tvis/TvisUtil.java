@@ -105,6 +105,7 @@ public class TvisUtil {
     }
 
     private static VehicleHptzVO parseHptzJson(JSONObject hptzJson) {
+        System.out.println("###### hptz:" + hptzJson.toJSONString() + "!");
         VehicleHptzVO hptzVO = new VehicleHptzVO(
                 hptzJson.getString("hpzt"),
                 hptzJson.getString("hpwz"),
