@@ -98,12 +98,10 @@ public class TvisImageRecogService implements ITvisImageRecogService {
 
     private String sendByteRequest(String requestQueue, byte[] data) {
         String requestId = UUID.randomUUID().toString();
-        System.out.println("TvisImageRecogService.sendByteRequest Ln101 1 requestId=" + requestId + "!");
         byte[] id = requestId.getBytes(Charset.forName("UTF-8"));
         byte[] requestData = new byte[id.length + data.length];
         System.arraycopy(id, 0, requestData, 0, id.length);
         System.arraycopy(data, 0, requestData, id.length, data.length);
-        System.out.println("TvisImageRecogService.sendByteRequest 2");
         data = null;
         return sendRequest(requestQueue, requestId, requestData);
     }
@@ -121,9 +119,7 @@ public class TvisImageRecogService implements ITvisImageRecogService {
 
     private final static String REQUEST_ID_PREFIX = "a_";
     private String sendRequest(String requestList, String requestId, Object requestData) {
-        System.out.println("TvisImageRecogServer.sendRequest Ln124 1");
         if (requestData instanceof String) {
-            System.out.println("TvisImageRecogServer.sendRequest 2");
             redisTemplate.opsForList().leftPush(requestList, (String) requestData);
         } else {
             /*
@@ -163,7 +159,6 @@ public class TvisImageRecogService implements ITvisImageRecogService {
                 }
                 redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
             }*/
-            System.out.println("TvisImageRecogServer.sendRequest 3");
             redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
         }
 
@@ -174,15 +169,11 @@ public class TvisImageRecogService implements ITvisImageRecogService {
                 Thread.sleep(3);
             } catch (InterruptedException ignore) {
             }
-            System.out.println("TvisImageRecogServer.sendRequest 4");
             response = redisTemplate.opsForValue().get(requestId);
-            System.out.println("TvisImageRecogServer.sendRequest 5 response=" + response + "!");
             if (response != null) {
                 break;
             }
         } while (System.currentTimeMillis() - startTime < timeout);
-        System.out.println("TvisImageRecogServer.sendRequest 6 response=" + response + "!");
-
         if (response == null) {
             //throw new RuntimeException("等待执行结果超时");
             response = "{\"timestamp\":\"2020-11-26T08:29:34.273+0000\",\"status\":404,\"error\":\"Not Found\",\"message\":\"No message available\",\"path\":\"/vehicle/function/recognition\"}";
