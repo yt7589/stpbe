@@ -24,8 +24,8 @@ public class DkVtieObserver implements ITvisStpObserver {
 
     public DkVtieObserver() {
         hphmNativePrefix = System.getProperty("hphm.native.prefix", "京");
-        System.out.println(" ##### 000 " + environment.getProperty("hphm.native.prefix") + "!");
-        System.out.println("    v001 ############# hphmNativePrefix=" + hphmNativePrefix + "!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("    v000 ############# hphmNativePrefix=" + hphmNativePrefix + "!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("    v001 " + environment + "!");
         System.out.println("    v002 redisTemplate=" + redisTemplate + "!!!!!!!!!!!!!!");
     }
 

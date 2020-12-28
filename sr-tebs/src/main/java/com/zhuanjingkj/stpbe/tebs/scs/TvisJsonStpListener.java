@@ -9,6 +9,8 @@ import com.zhuanjingkj.stpbe.tebs.scs.obs.DkVtieObserver;
 import com.zhuanjingkj.stpbe.tebs.scs.obs.DkVtpObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import java.util.ArrayList;
@@ -20,8 +22,11 @@ import java.util.List;
 public class TvisJsonStpListener {
     private final static Logger logger = LoggerFactory.getLogger(TvisJsonStpListener.class);
     private static List<ITvisStpObserver> observers = new ArrayList<>();
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     public TvisJsonStpListener() {
+        System.out.println("    @@@@@ redisTemplate=" + redisTemplate + "!");
         observers.add(new CltzxlObserver());
         observers.add(new DkVtieObserver());
         observers.add(new DkVtpObserver());
