@@ -8,10 +8,7 @@ import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.data.dto.BmyDTO;
 import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
 import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
-import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
+import com.zhuanjingkj.stpbe.data.vo.*;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -75,6 +72,7 @@ public class TvisUtil {
         List<VehicleVo> vos = new ArrayList<>();
         VehicleVo vo = null;
         VehicleWztzVo vehicleWztzVo = null;
+        VehicleHptzVO hptzVO = null;
         VehicleCxtzVo vehicleCxtzVo = null;
         VehicleCltzxlVo vehicleCltzxlVo = null;
         for (Object veh : vehs) {
@@ -85,6 +83,8 @@ public class TvisUtil {
             wztzJson = vehJson.getJSONObject("WZTZ");
             vehicleWztzVo.setPsfx(wztzJson.getString("PSFX"));
             vo.setVehicleWztzVo(vehicleWztzVo);
+            // 解析号牌特征
+            vo.setVehicleHptzVO(parseHptzJson(vehJson.getJSONObject("HPTZ")));
             // 车型特征
             vehicleCxtzVo = new VehicleCxtzVo();
             cxtzJson = vehJson.getJSONObject("CXTZ");
@@ -102,6 +102,21 @@ public class TvisUtil {
             vos.add(vo);
         }
         return vos;
+    }
+
+    private static VehicleHptzVO parseHptzJson(JSONObject hptzJson) {
+        VehicleHptzVO hptzVO = new VehicleHptzVO(
+                hptzJson.getString("hpzt"),
+                hptzJson.getString("hpwz"),
+                hptzJson.getString("hpzl"),
+                hptzJson.getString("hpys"),
+                hptzJson.getString("hpgg"),
+                hptzJson.getString("hphm"),
+                hptzJson.getString("hpkxd"),
+                hptzJson.getString("mwhpkxd"),
+                hptzJson.getString("ywlshp")
+        );
+        return hptzVO;
     }
 
 
