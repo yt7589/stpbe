@@ -29,6 +29,8 @@ public class TvisJsonStpListener {
     @Autowired
     private RedisTemplate redisTemplate;
     @Autowired
+    private CltzxlObserver cltzxlObserver; // 车辆特征向量保存到Milvus中
+    @Autowired
     private DkVtieObserver dkVtieObserver; // 首页数据看板左侧第一行第一个：本地外埠车辆占比
     @Autowired
     private DkVtpObserver dkVtpObserver; // 首页数据看板左侧第一行第二个：车辆类型饼图
@@ -36,6 +38,8 @@ public class TvisJsonStpListener {
     @KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
     public void listen(String json) {
         if (isFirstRun) {
+            cltzxlObserver.initialize(environment);
+            observers.add(cltzxlObserver);
             dkVtieObserver.initialize(environment);
             observers.add(dkVtieObserver);
             dkVtpObserver.initialize(environment);

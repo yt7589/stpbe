@@ -10,6 +10,7 @@ import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
  * 车辆特征向量观察者，将车辆特征向量加上tvisJsonId、wztz一起保存到Milvus中，
  * 供以图搜车进行查询
  */
+@Component
 public class CltzxlObserver implements ITvisStpObserver {
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
