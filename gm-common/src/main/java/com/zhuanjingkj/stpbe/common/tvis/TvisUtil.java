@@ -84,7 +84,7 @@ public class TvisUtil {
             vehicleWztzVo.setPsfx(wztzJson.getString("PSFX"));
             vo.setVehicleWztzVo(vehicleWztzVo);
             // 解析号牌特征
-            vo.setVehicleHptzVO(parseHptzJson(vehJson.getJSONObject("HPTZ")));
+            vo.setVehicleHptzVO(parseHptzJson(vehJson.getJSONObject(AppConst.TJ_HPTZ)));
             // 车型特征
             vehicleCxtzVo = new VehicleCxtzVo();
             cxtzJson = vehJson.getJSONObject("CXTZ");
@@ -107,15 +107,15 @@ public class TvisUtil {
     private static VehicleHptzVO parseHptzJson(JSONObject hptzJson) {
         System.out.println("###### hptz:" + hptzJson.toJSONString() + "!");
         VehicleHptzVO hptzVO = new VehicleHptzVO(
-                hptzJson.getString("hpzt"),
-                hptzJson.getString("hpwz"),
-                hptzJson.getString("hpzl"),
-                hptzJson.getString("hpys"),
-                hptzJson.getString("hpgg"),
-                hptzJson.getString("hphm"),
-                hptzJson.getString("hpkxd"),
-                hptzJson.getString("mwhpkxd"),
-                hptzJson.getString("ywlshp")
+                hptzJson.getString(AppConst.TJ_HPTZ_HPZT),
+                hptzJson.getString(AppConst.TJ_HPTZ_HPWZ),
+                hptzJson.getString(AppConst.TJ_HPTZ_HPZL),
+                hptzJson.getString(AppConst.TJ_HPTZ_HPYS),
+                hptzJson.getString(AppConst.TJ_HPTZ_HPGG),
+                hptzJson.getString(AppConst.TJ_HPTZ_HPHM),
+                hptzJson.getString(AppConst.TJ_HPTZ_HPKXD),
+                hptzJson.getString(AppConst.TJ_HPTZ_MWHPKXD),
+                hptzJson.getString(AppConst.TJ_HPTZ_YWLSHP)
         );
         return hptzVO;
     }

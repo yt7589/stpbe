@@ -40,4 +40,15 @@ public class AppConst {
     public final static String TVIS_JSON_TBL_PREFIX = "StpDb.t_tvis_json_";
     public final static String TVIS_JSON_TBL_ID_KEY = "t_tvis_json_x.id"; // 数据表名的序号
     public final static long TVIS_JSON_TBL_MAX_RECS = 100000;
+    // 车辆JSON识别结果字段定义
+    public final static String TJ_HPTZ = "HPTZ"; // 号牌特征
+    public final static String TJ_HPTZ_HPZT = "HPZT"; // 号牌状态
+    public final static String TJ_HPTZ_HPWZ = "HPWZ"; //
+    public final static String TJ_HPTZ_HPZL = "HPZL"; //
+    public final static String TJ_HPTZ_HPYS = "HPYS"; //
+    public final static String TJ_HPTZ_HPGG = "HPGG"; //
+    public final static String TJ_HPTZ_HPHM = "HPHM"; //
+    public final static String TJ_HPTZ_HPKXD = "HPKXD"; //
+    public final static String TJ_HPTZ_MWHPKXD = "MWHPKXD"; //
+    public final static String TJ_HPTZ_YWLSHP = "YWLSHP"; //
 }
