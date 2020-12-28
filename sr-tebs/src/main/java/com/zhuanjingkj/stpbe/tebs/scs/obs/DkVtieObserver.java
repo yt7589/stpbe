@@ -17,16 +17,7 @@ public class DkVtieObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
-        if (vo == null || vo.getVehicleHptzVO()==null || vo.getVehicleHptzVO().getHphm()==null) {
-            System.out.println("    ????? hptz:" + vo.getVehicleHptzVO().toString()
-                    + "! hphmNativePrefix=" + hphmNativePrefix + "!");
-            return;
-        }
         String hphm = vo.getVehicleHptzVO().getHphm();
-        if (hphm.indexOf(hphmNativePrefix) >= 0) {
-            System.out.println("    ##### 本埠车辆：" + hphm + "!");
-        } else {
-            System.out.println("    ##### 外地车辆：" + hphm + "!");
-        }
+        System.out.println("    ????? hphm=" + hphm + "; hphmNativePrefix=" + hphmNativePrefix + "!");
     }
 }
