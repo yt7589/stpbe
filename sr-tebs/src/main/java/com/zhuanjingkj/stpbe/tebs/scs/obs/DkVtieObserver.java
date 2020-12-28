@@ -17,11 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class DkVtieObserver implements ITvisStpObserver {
     private String hphmNativePrefix = null;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public void notifyObserver(VehicleVo vo) {
         String hphm = vo.getVehicleHptzVO().getHphm();
-        System.out.println("    ????? hphm=" + hphm + "; hphmNativePrefix=" + hphmNativePrefix + "!");
+        System.out.println("    ????? hphm=" + hphm + "; hphmNativePrefix=" + hphmNativePrefix
+                + "; redisTemplate=" + redisTemplate + "!");
         if (hphm != null && !hphm.equals("")) {
             if (hphm.indexOf(hphmNativePrefix) >= 0) {
                 System.out.println("    ##### 本地号牌：" + hphm + "!");
