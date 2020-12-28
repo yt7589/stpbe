@@ -9,7 +9,6 @@ import com.zhuanjingkj.stpbe.tebs.scs.obs.DkVtieObserver;
 import com.zhuanjingkj.stpbe.tebs.scs.obs.DkVtpObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import java.util.ArrayList;
@@ -19,14 +18,12 @@ import java.util.List;
  * 解析JSON字符串，将信息保存到各个界面元素对应的Redis对象中
  */
 public class TvisJsonStpListener {
-    @Autowired
-    private DkVtieObserver dkVtieObserver;
     private final static Logger logger = LoggerFactory.getLogger(TvisJsonStpListener.class);
     private static List<ITvisStpObserver> observers = new ArrayList<>();
 
     public TvisJsonStpListener() {
         observers.add(new CltzxlObserver());
-        observers.add(dkVtieObserver);
+        observers.add(new DkVtieObserver());
         observers.add(new DkVtpObserver());
     }
 
