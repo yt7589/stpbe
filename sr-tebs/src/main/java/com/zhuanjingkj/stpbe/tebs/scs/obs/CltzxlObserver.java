@@ -21,7 +21,7 @@ import java.io.Serializable;
 @Component
 public class CltzxlObserver implements ITvisStpObserver {
     @Autowired
-    private RedisTemplate<String, Serializable> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     @Override
     public void notifyObserver(VehicleVo vo) {
