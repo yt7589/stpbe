@@ -16,6 +16,7 @@ public class DkVtieService implements IDkVtieService {
     @Override
     public DkVtieDTO getDkVtie() {
         DkVtieDTO data = new DkVtieDTO();
+        System.out.println("######## incr=" + redisTemplate.opsForValue().get("dkInternalNum") + "!");
         long ti = Long.parseLong((String)redisTemplate.opsForValue().get("dkInternalNum"));
         long te = Long.parseLong((String)redisTemplate.opsForValue().get("dkExternalNum"));
         System.out.println("########## ti=" + ti + "; te=" + te + "!");
