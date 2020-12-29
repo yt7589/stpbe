@@ -17,8 +17,8 @@ public class DkVtieService implements IDkVtieService {
     @Override
     public DkVtieDTO getDkVtie() {
         DkVtieDTO data = new DkVtieDTO();
-        long ti = (Long)redisTemplate.opsForValue().get("dkInternalNum");
-        long te = (Long)redisTemplate.opsForValue().get("dkExternalNum");
+        int ti = (Integer)redisTemplate.opsForValue().get("dkInternalNum");
+        int te = (Integer)redisTemplate.opsForValue().get("dkExternalNum");
         data.setInternalPercent((int)(ti/(ti+te+0.001)*100));
         data.setExternalPercent((int)(te/(ti+te+0.001)*100));
         return data;
