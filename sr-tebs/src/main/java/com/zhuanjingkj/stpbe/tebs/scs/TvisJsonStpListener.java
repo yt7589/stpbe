@@ -35,7 +35,7 @@ public class TvisJsonStpListener {
     @Autowired
     private DkVtpObserver dkVtpObserver; // 首页数据看板左侧第一行第二个：车辆类型饼图
 
-    @KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
+    //@KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
     public void listen(String json) {
         if (isFirstRun) {
             cltzxlObserver.initialize(environment);

@@ -58,39 +58,28 @@ public class TvisController {
         map.put("MRHPT", "test");
         map.put("cameraId", "101");
         map.put("TPMC", f.getName());
-        Thread thd = new Thread(()->{
-            String response = TvisUtil.recognizeImageFile(map, f);
-            System.out.println("识别结果：" + response + "!!!!!!!!!!!!!!!!!!!!!!");
-            if (response != null && !response.equals("")) {
-                // 调用以图搜图得到结果
-                List<VehicleVo> vehs = TvisUtil.parseTvisJson(response);
-                if (vehs.size() > 0) {
-                    VehicleVo vo = vehs.get(0);
-                    VehicleWztzVo wztzVo = vo.getVehicleWztzVo();
-                    VehicleCltzxlVo cltzxlVo = vo.getVehicleCltzxlVo();
-                    VehicleCxtzVo cxtzVo = vo.getVehicleCxtzVo();
-                    String partitionName = GrqEngine.getPartitionTag(wztzVo.getPsfx(),
-                            cxtzVo.getCllxflCode(), cxtzVo.getCllxzflCode());
-                    List<List<Float>> embeddings = new ArrayList<>();
-                    embeddings.add(cltzxlVo.getCltzxl());
-                    long topK = 20;
-                    TvisGrqRstVo grv = GrqEngine.findTopK(partitionName, embeddings, topK);
-                    GrqDemoDTO data = new GrqDemoDTO(grv.getGrqId(), grv.getTvisJsonId(), grv.getVehsIdx());
-                }
-            }
-        });
-        thd.start();
-
-
-        /*String response = null;
-        try {
-            response = HttpUtil.postFile(AppConst.TVIS_SERVER_URL, map);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         // 返回结果
         ResultDTO<GrqDemoDTO> dto = new ResultDTO<>();
-        //dto.setData(data);
+        String response = TvisUtil.recognizeImageFile(map, f);
+        System.out.println("识别结果：" + response + "!!!!!!!!!!!!!!!!!!!!!!");
+        if (response != null && !response.equals("")) {
+            // 调用以图搜图得到结果
+            List<VehicleVo> vehs = TvisUtil.parseTvisJson(response);
+            if (vehs.size() > 0) {
+                VehicleVo vo = vehs.get(0);
+                VehicleWztzVo wztzVo = vo.getVehicleWztzVo();
+                VehicleCltzxlVo cltzxlVo = vo.getVehicleCltzxlVo();
+                VehicleCxtzVo cxtzVo = vo.getVehicleCxtzVo();
+                String partitionName = GrqEngine.getPartitionTag(wztzVo.getPsfx(),
+                        cxtzVo.getCllxflCode(), cxtzVo.getCllxzflCode());
+                List<List<Float>> embeddings = new ArrayList<>();
+                embeddings.add(cltzxlVo.getCltzxl());
+                long topK = 20;
+                TvisGrqRstVo grv = GrqEngine.findTopK(partitionName, embeddings, topK);
+                GrqDemoDTO data = new GrqDemoDTO(grv.getGrqId(), grv.getTvisJsonId(), grv.getVehsIdx());
+                dto.setData(data);
+            }
+        }
         return dto;
     }
 }
