@@ -29,12 +29,12 @@ public class DkVtieObserver implements ITvisStpObserver {
                 Long ti = redisTemplate.opsForValue().increment("dkInternalNum");
                 redisTemplate.opsForValue().set("dkInternalNum0", "" + ti);
                 System.out.println("    ##### 本地号牌：" + hphm + "; num="
-                        + ti + "!");
+                        + ti + "! vv=" + redisTemplate.opsForValue().get("dkInternalNum0") + "?????");
             } else {
                 Long te = redisTemplate.opsForValue().increment("dkExternalNum");
                 redisTemplate.opsForValue().set("dkExternalNum0", "" + te);
                 System.out.println("    ##### 外埠号牌：" + hphm + "; num="
-                        + te + "!");
+                        + te + "; te=" + redisTemplate.opsForValue().get("dkExternalNum0") + "??????");
             }
         }
     }
