@@ -1,15 +1,21 @@
 package com.zhuanjingkj.stpbe.tmdp.dto.tn;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 /**
  * 点位设备信息
  */
 public class TnSdInfoDTO extends BaseDTO {
+    @JSONField(name = "diId")
     private String diId; //设备id
+    @JSONField(name = "diAddr")
     private String diAddr; //设备位置
+    @JSONField(name = "direction")
     private String direction; //设备方向
+    @JSONField(name = "category")
     private String category; //设备类别
+    @JSONField(name = "status")
     private String status; //设备状态
 
     public TnSdInfoDTO(String diId, String diAddr, String direction, String category, String status) {
