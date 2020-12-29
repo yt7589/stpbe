@@ -27,7 +27,7 @@ public class DkVtieObserver implements ITvisStpObserver {
         if (hphm != null && !hphm.equals("")) {
             if (hphm.indexOf(hphmNativePrefix) >= 0) {
                 Long ti = redisTemplate.opsForValue().increment("dkInternalNum");
-                AppRegistry.putParam("dkExternalNum", ti);
+                AppRegistry.putParam("dkInternalNum", ti);
                 System.out.println("    ##### 本地号牌：" + hphm + "; num="
                         + ti + "!");
             } else {

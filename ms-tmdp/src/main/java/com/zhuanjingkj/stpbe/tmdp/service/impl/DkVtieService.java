@@ -17,8 +17,8 @@ public class DkVtieService implements IDkVtieService {
     @Override
     public DkVtieDTO getDkVtie() {
         DkVtieDTO data = new DkVtieDTO();
-        long ti = (Long)AppRegistry.getParam("dkInternalNum").get();
-        long te = (Long)AppRegistry.getParam("dkExternalNum").get();
+        long ti = (Long)AppRegistry.getParam("dkInternalNum").orElseGet(()->{return 0;});
+        long te = (Long)AppRegistry.getParam("dkExternalNum").orElseGet(()->{return 0;});
         System.out.println("########## ti=" + ti + "; te=" + te + "!");
         data.setInternalPercent((int)(ti/(ti+te+0.001)));
         data.setExternalPercent((int)(te/(ti+te+0.001)));
