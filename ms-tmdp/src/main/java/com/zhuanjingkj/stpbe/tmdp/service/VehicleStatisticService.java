@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.service;
 
 import com.zhuanjingkj.stpbe.data.entity.VehicleJoinType;
+import com.zhuanjingkj.stpbe.tmdp.dto.DkVtieDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
 
 import java.util.List;
@@ -10,7 +11,6 @@ import java.util.List;
  * date on 2020.11.20
  **/
 public interface VehicleStatisticService {
-
     /**
      * 查询车辆的本市的分布信息
      * @return

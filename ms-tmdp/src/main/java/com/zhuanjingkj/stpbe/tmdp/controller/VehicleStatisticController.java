@@ -6,6 +6,7 @@ import com.zhuanjingkj.stpbe.tmdp.dto.*;
 import com.zhuanjingkj.stpbe.tmdp.dto.res.VehicleStatisticListDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
 import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,13 +37,15 @@ public class VehicleStatisticController {
 
     @Autowired
     private VehicleStatisticService vehicleStatisticService;
+    @Autowired
+    private DkVtieService dkVtieService;
 
     @GetMapping()
     public ResultDTO<DkMainDTO> getVehicleStatisticInfo() {
         DkMainDTO mainDto = new DkMainDTO();
         mainDto.setDkHtfs(getDkHtfsDTO_exp()); // 中间上部过车量统计
         // 本地外地车辆占比
-        DkVtieDTO vtie = getDkVtie_exp();
+        DkVtieDTO vtie = getDkVtie();
         mainDto.setDkVtie(vtie);
         // 车辆类型占比
         List<DkVtpDTO> vtps = getDkVtpDTOs_exp();
@@ -73,11 +76,8 @@ public class VehicleStatisticController {
         return htfs;
     }
 
-    private DkVtieDTO getDkVtie_exp() {
-        DkVtieDTO vtie = new DkVtieDTO();
-        vtie.setInternalPercent(36);
-        vtie.setExternalPercent(64);
-        return vtie;
+    private DkVtieDTO getDkVtie() {
+        return dkVtieService.getDkVtie();
     }
 
     private List<DkVtpDTO> getDkVtpDTOs_exp() {
