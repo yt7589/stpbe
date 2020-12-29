@@ -49,7 +49,7 @@ public class TvisJsonRawListener {
         tvisJsonMapper.createTvisJsonTbl(AppRegistry.tvisJsonTblName);
     }
 
-    //@KafkaListener(id = "TvisJsonRawListener", topics = "tvis")
+    @KafkaListener(id = "TvisJsonRawListener", topics = "tvis")
     public void listen(String json) {
         if (!isInitialized) {
             synchronized (logger) {
