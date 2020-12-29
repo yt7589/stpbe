@@ -41,6 +41,7 @@ public class TmdpController {
     @PostMapping("/tvis-sdk/createRtspBind")
     public ResultDTO<CreateRtspBindDTO> createRtspBind(
             @RequestBody CreateRtspBindRTO rto) {
+        System.out.println("### creteRtspBind 1");
         return tvisSdkService.createRtspBind(rto.getRtspUrl());
     }
 
