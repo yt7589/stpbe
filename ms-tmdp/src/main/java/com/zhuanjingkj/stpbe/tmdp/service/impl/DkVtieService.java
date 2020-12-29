@@ -19,7 +19,7 @@ public class DkVtieService implements IDkVtieService {
         DkVtieDTO data = new DkVtieDTO();
         System.out.println("######## ?????? ti=" + redisTemplate.opsForValue().get("dkInternalNum0") + "!");
         long ti = Long.parseLong((String)redisTemplate.opsForValue().get("dkInternalNum0"));
-        long te = (Long)redisTemplate.opsForValue().get("dkExternalNum0");
+        long te = Long.parseLong((String)redisTemplate.opsForValue().get("dkExternalNum0"));
         System.out.println("########## ti=" + ti + "; te=" + te + "!");
         data.setInternalPercent((int)(ti/(ti+te+0.001)));
         data.setExternalPercent((int)(te/(ti+te+0.001)));
