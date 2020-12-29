@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.DkVtieDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IDkVtieService;
@@ -16,9 +17,8 @@ public class DkVtieService implements IDkVtieService {
     @Override
     public DkVtieDTO getDkVtie() {
         DkVtieDTO data = new DkVtieDTO();
-        System.out.println("######## incr=" + redisTemplate.opsForValue().increment("dkInternalNum") + "!");
-        long ti = redisTemplate.opsForValue().increment("dkInternalNum");
-        long te = redisTemplate.opsForValue().increment("dkExternalNum");
+        long ti = (Long)AppRegistry.getParam("dkInternalNum").get();
+        long te = (Long)AppRegistry.getParam("dkExternalNum").get();
         System.out.println("########## ti=" + ti + "; te=" + te + "!");
         data.setInternalPercent((int)(ti/(ti+te+0.001)));
         data.setExternalPercent((int)(te/(ti+te+0.001)));

@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tebs.scs.obs;
 
 import com.alibaba.fastjson.JSONObject;
 import com.netflix.discovery.converters.Auto;
+import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.data.vo.VehicleHptzVO;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
@@ -25,11 +26,15 @@ public class DkVtieObserver implements ITvisStpObserver {
         String hphm = vo.getVehicleHptzVO().getHphm();
         if (hphm != null && !hphm.equals("")) {
             if (hphm.indexOf(hphmNativePrefix) >= 0) {
+                Long ti = redisTemplate.opsForValue().increment("dkInternalNum");
+                AppRegistry.putParam("dkExternalNum", ti);
                 System.out.println("    ##### 本地号牌：" + hphm + "; num="
-                        + redisTemplate.opsForValue().increment("dkInternalNum") + "!");
+                        + ti + "!");
             } else {
+                Long te = redisTemplate.opsForValue().increment("dkExternalNum");
+                AppRegistry.putParam("dkExternalNum", te);
                 System.out.println("    ##### 外埠号牌：" + hphm + "; num="
-                        + redisTemplate.opsForValue().increment("dkExternalNum") + "!");
+                        + te + "!");
             }
         }
     }
