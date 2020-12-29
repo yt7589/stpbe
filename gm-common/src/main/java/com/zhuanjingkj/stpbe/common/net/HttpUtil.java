@@ -53,15 +53,19 @@ public class HttpUtil {
     public static String postString(String url, Map<String, Object> data) throws IOException {
         httpclient = getHttpclient();
         HttpPost post = new HttpPost(url);
+        CloseableHttpResponse response = null;
         try {
             List<BasicNameValuePair> pair = new ArrayList<>();
             for (Map.Entry<String, Object> entry : data.entrySet()) {
                 pair.add(new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue())));
             }
             post.setEntity(new UrlEncodedFormEntity(pair));
-            CloseableHttpResponse response = httpclient.execute(post);
+            response = httpclient.execute(post);
             return EntityUtils.toString(response.getEntity());
         } finally {
+            if (response != null) {
+                response.close();
+            }
         }
     }
 }
