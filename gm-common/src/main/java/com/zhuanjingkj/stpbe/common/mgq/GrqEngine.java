@@ -95,7 +95,7 @@ public class GrqEngine {
                                 "\"type\": \"float\", \"query\": %s"
                                 + "    }}}]}}",
                         topK, queryEmbedding.toString());
-
+        System.out.println("dsl: " + dsl + "!");
         // Only specified fields in `setParamsInJson` will be returned from search request.
         // If not set, all fields will be returned.
         SearchParam searchParam =
