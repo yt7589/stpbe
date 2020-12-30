@@ -49,6 +49,7 @@ public class TvisJsonStpListener {
         System.out.println("    解析为值对象");
         JSONObject rawJo = JSONObject.parseObject(json);
         long tvisJsonId = rawJo.getLong("tvisJsonId");
+        System.out.println("json:" + json + "!");
         System.out.println("### BUG001 ###: TvisJsonStpListener.listen tvisJsonId=" + tvisJsonId + "!");
         JSONObject rstJo = rawJo.getJSONObject("json");
         List<VehicleVo> vehs = TvisUtil.parseTvisJson(rstJo.toJSONString());
