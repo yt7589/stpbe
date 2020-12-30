@@ -57,11 +57,11 @@ public class TrafficViolationController {
         DkRtvrDTO item = null;
         item = new DkRtvrDTO(1, 11, "上地三街", 101, "不系安全带",
                 "奥迪", "A6L", "京A-TN518", "2020-08-30 12:01:39",
-                201, "http://222.128.117.234:8090/cloud/images/a001.jpg");
+                201, "http://222.128.117.234:8090/image/static/violation_001.jpg");
         rtvrs.add(item);
         item = new DkRtvrDTO(2, 21, "六里桥",2101, "不系安全带",
                 "奔驰", "E级", "苏B-TN123", "2020-09-08 12:01:39",
-                2202, "http://222.128.117.234:8090/cloud/images/a002.jpg");
+                2202, "http://222.128.117.234:8090/image/static/violation_002.jpg");
         rtvrs.add(item);
         return rtvrs;
     }
