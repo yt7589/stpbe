@@ -77,6 +77,14 @@ public class TrafficViolationController {
         mvtss.add(item);
         item = new DkMvtsDTO("副驾驶不系安全带", 10000);
         mvtss.add(item);
+        item = new DkMvtsDTO("未悬挂号牌", 22000);
+        mvtss.add(item);
+        item = new DkMvtsDTO("遮挡号牌", 19000);
+        mvtss.add(item);
+        item = new DkMvtsDTO("污损号牌", 29000);
+        mvtss.add(item);
+        item = new DkMvtsDTO("摩托车不带头盔", 31000);
+        mvtss.add(item);
         return mvtss;
     }
 
