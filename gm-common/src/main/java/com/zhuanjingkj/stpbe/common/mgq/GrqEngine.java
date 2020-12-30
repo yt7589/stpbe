@@ -56,15 +56,10 @@ public class GrqEngine {
         long grqId = getGrqId(redisTemplate);
         // 插入记录
         List<Long> ids = new ArrayList<>(Arrays.asList(grqId));
-        //VehicleVo vo = vos.get(0);
         VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
         VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
         VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
-        System.out.println("###### GrqEngine.insertRecord tvisJsonId=" + vo.getTvisJsonId() + "!");
         List<Long> tvisJsonIds = Arrays.asList(vo.getTvisJsonId());
-        for (Long tjid : tvisJsonIds) {
-            System.out.println("    " + tjid + "!");
-        }
         List<Long> vehsIdxs = Arrays.asList(vo.getVehsIdx());
         List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
         InsertParam insertParam =
