@@ -60,7 +60,11 @@ public class GrqEngine {
         VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
         VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
         VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
+        System.out.println("###### GrqEngine.insertRecord tvisJsonId=" + vo.getTvisJsonId() + "!");
         List<Long> tvisJsonIds = Arrays.asList(vo.getTvisJsonId());
+        for (Long tjid : tvisJsonIds) {
+            System.out.println("    " + tjid + "!");
+        }
         List<Long> vehsIdxs = Arrays.asList(vo.getVehsIdx());
         List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
         InsertParam insertParam =
@@ -75,6 +79,7 @@ public class GrqEngine {
         if (entityIds != null && !entityIds.isEmpty() && entityIds.size() > 0) {
             entityId = entityIds.get(0);
         }
+        System.out.println("##### after inserting to Milvus grpId=" + entityId + "!");
         client.flush(AppConst.GRQ_COLLECTION_NAME);
         return entityId;
     }

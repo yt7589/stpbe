@@ -30,6 +30,7 @@ public class CltzxlObserver implements ITvisStpObserver {
             System.out.println("##### 直接返回 #####");
             return ;
         }
+        System.out.println("### BUG ###: CltzxlObserver.notifyObserver step 1 tvisJsonId=" + vo.getTvisJsonId() + "!");
         VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
         VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
         VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
