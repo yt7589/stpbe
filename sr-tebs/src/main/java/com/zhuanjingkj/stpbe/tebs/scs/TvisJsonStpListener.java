@@ -46,6 +46,7 @@ public class TvisJsonStpListener {
             observers.add(dkVtpObserver);
             isFirstRun = false;
         }
+        System.out.println("TvisjsonStpListener.listen: " + json + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         JSONObject rawJo = JSONObject.parseObject(json);
         long tvisJsonId = rawJo.getLong("tvisJsonId");
         JSONObject rstJo = rawJo.getJSONObject("json");
