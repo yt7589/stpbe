@@ -39,6 +39,10 @@ public class CltzxlObserver implements ITvisStpObserver {
                 vehicleCxtzVo.getCllxflCode(),
                 vehicleCxtzVo.getCllxzflCode()
         );
+        if (partitionTag.indexOf("tail_") >= 0) {
+            System.out.println("忽略车尾数据......");
+            return ;
+        }
         System.out.println("CltzxlObserver.notifyObserver partitionTag=" + partitionTag + "!");
         long tid = GrqEngine.insertRecord(redisTemplate, partitionTag, vo);
         System.out.println("CltzxlObserver.notifyObserver tid=" + tid + "!");
