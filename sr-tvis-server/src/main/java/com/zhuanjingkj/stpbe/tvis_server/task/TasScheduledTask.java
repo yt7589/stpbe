@@ -36,6 +36,7 @@ public class TasScheduledTask {
             msg = new StringBuilder("{\"cameraId\": \"-1\", \"tvisJsonId\": "
                     + tvisJsonId + ", \"json\": " + response + "}");
         }
+        System.out.println("msg:" + msg + "!");
         kafkaTemplate.send("tvis", 0, msg.toString());
         logger.info("send to Kafka: tvisJsonId=" + tvisJsonId + "!");
         kafkaTemplate.flush();
