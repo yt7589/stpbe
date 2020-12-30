@@ -81,7 +81,7 @@ public class TvisController {
                 List<GrqDemoDTO> recs = new ArrayList<>();
                 GrqDemoDTO rec = null;
                 for (TvisGrqRstVo grv : grvs) {
-                    rec = new GrqDemoDTO(grv.getGrqId(), grv.getTvisJsonId(), grv.getVehsIdx());
+                    rec = new GrqDemoDTO(grv.getGrqId(), grv.getTvisJsonId(), grv.getVehsIdx(), grv.getDist());
                     recs.add(rec);
                 }
                 data.setRecs(recs);
