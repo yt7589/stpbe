@@ -10,6 +10,7 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.vo.*;
 import com.zhuanjingkj.stpbe.tebs.dto.GrqDemoDTO;
+import com.zhuanjingkj.stpbe.tebs.dto.GrqDemoListDTO;
 import com.zhuanjingkj.stpbe.tebs.dto.PostTvisJsonDTO;
 import com.zhuanjingkj.stpbe.tebs.rto.TvisJsonRTO;
 import com.zhuanjingkj.stpbe.tebs.scs.TvisJsonRawListener;
@@ -47,7 +48,7 @@ public class TvisController {
     }
 
     @GetMapping("/grqDemo")
-    public ResultDTO<GrqDemoDTO> grqDemo(@RequestParam(name = "imageFile") String imageFile) {
+    public ResultDTO<GrqDemoListDTO> grqDemo(@RequestParam(name = "imageFile") String imageFile) {
         System.out.println("查询图片：" + imageFile + "!");
         // 调用sr-tvis-server求特征向量
         final File f = new File(imageFile);
@@ -59,7 +60,7 @@ public class TvisController {
         map.put("cameraId", "101");
         map.put("TPMC", f.getName());
         // 返回结果
-        ResultDTO<GrqDemoDTO> dto = new ResultDTO<>();
+        ResultDTO<GrqDemoListDTO> dto = new ResultDTO<>();
         String response = TvisUtil.recognizeImageFile(map, f);
         System.out.println("识别结果：" + response + "!!!!!!!!!!!!!!!!!!!!!!");
         if (response != null && !response.equals("")) {
@@ -75,8 +76,16 @@ public class TvisController {
                 List<List<Float>> embeddings = new ArrayList<>();
                 embeddings.add(cltzxlVo.getCltzxl());
                 long topK = 20;
-                TvisGrqRstVo grv = GrqEngine.findTopK(partitionName, embeddings, topK);
-                GrqDemoDTO data = new GrqDemoDTO(grv.getGrqId(), grv.getTvisJsonId(), grv.getVehsIdx());
+                List<TvisGrqRstVo> grvs = GrqEngine.findTopK(partitionName, embeddings, topK);
+                GrqDemoListDTO data = new GrqDemoListDTO();
+                List<GrqDemoDTO> recs = new ArrayList<>();
+                GrqDemoDTO rec = null;
+                for (TvisGrqRstVo grv : grvs) {
+                    rec = new GrqDemoDTO(grv.getGrqId(), grv.getTvisJsonId(), grv.getVehsIdx());
+                    recs.add(rec);
+                }
+                data.setRecs(recs);
+                //GrqDemoDTO data = new GrqDemoDTO(grv.getGrqId(), grv.getTvisJsonId(), grv.getVehsIdx());
                 dto.setData(data);
             }
         }
