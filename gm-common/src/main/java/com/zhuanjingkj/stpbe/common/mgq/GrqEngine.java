@@ -79,7 +79,6 @@ public class GrqEngine {
         if (entityIds != null && !entityIds.isEmpty() && entityIds.size() > 0) {
             entityId = entityIds.get(0);
         }
-        System.out.println("##### after inserting to Milvus grpId=" + entityId + "!");
         client.flush(AppConst.GRQ_COLLECTION_NAME);
         return entityId;
     }

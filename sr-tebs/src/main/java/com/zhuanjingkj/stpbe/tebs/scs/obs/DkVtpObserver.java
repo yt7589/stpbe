@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class DkVtpObserver implements ITvisStpObserver {
     @Override
     public void notifyObserver(VehicleVo vo) {
-        System.out.println("    ##### 调用DkVtpObserver");
+        
     }
 
     @Override
