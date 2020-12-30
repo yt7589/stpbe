@@ -97,6 +97,7 @@ public class TvisJsonRawListener {
             jsonHash.append(jsonStr);
         });
         // 获取imageHash、cameraId、streamId、pts，将其存入mysql数据库中
+        System.out.println("@@@@@ imageFile=" + imageFile + "; json=" + jf + "!");
 
         long tvisJsonId = 0;
         if (jo.containsKey("tvisJsonId")) {
