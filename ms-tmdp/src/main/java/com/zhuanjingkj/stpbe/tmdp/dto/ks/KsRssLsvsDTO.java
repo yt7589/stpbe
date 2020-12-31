@@ -30,8 +30,8 @@ public class KsRssLsvsDTO extends BaseDTO {
         this.totalTimes = totalTimes;
     }
 
-    public com.alibaba.fastjson.JSONObject toJsonObject() {
-        com.alibaba.fastjson.JSONObject obj = new JSONObject();
+    public JSONObject toJsonObject() {
+        JSONObject obj = new JSONObject();
         obj.put("gcxh", gcxh);
         obj.put("sxh", sxh);
         obj.put("siteId", siteId);
