@@ -47,7 +47,6 @@ public class TnVaController {
      * 点位设备信息
      * @param platform
      * @param version
-     * @param rto
      * @return
      */
     @GetMapping(value  = "/va/querySdInfo")
@@ -57,25 +56,24 @@ public class TnVaController {
         @RequestParam(name = "startIndex", required = false) String startIndex,
         @RequestParam(name = "amount", required = false) String amount,
         @RequestParam(name = "direction", required = false) String direction,
-        @RequestBody TnVaSiteInfoRTO rto
+        @RequestParam(name = "siteId", required = false) String siteId
     ) {
-        return querySdInfo_exp(rto);
+        return querySdInfo_exp();
     }
 
     /**
      * 点位视图详情
      * @param platform
      * @param version
-     * @param rto
      * @return
      */
     @GetMapping(value = "/va/querySdPic")
     public ResultDTO<DbQrsDTO> querySdPic(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestBody TnVaDeviceRTO rto
+        @RequestParam(name = "diId") long diId
     ) {
-        return querySdPic_exp(rto);
+        return querySdPic_exp();
     }
 
     private ResultDTO<DbQrsDTO> queryDeviceDeploy_exp() {
@@ -107,8 +105,7 @@ public class TnVaController {
         return dto;
     }
 
-    private ResultDTO<TnVaSiteInfoDTO> querySdInfo_exp(TnVaSiteInfoRTO rto) {
-        System.out.println(rto.getSiteId());
+    private ResultDTO<TnVaSiteInfoDTO> querySdInfo_exp() {
         ResultDTO<TnVaSiteInfoDTO> dto = new ResultDTO<>();
         TnVaSiteInfoDTO ts = new TnVaSiteInfoDTO();
         List<TnVaSdInfoDTO> recs = new ArrayList<TnVaSdInfoDTO>();
@@ -122,8 +119,7 @@ public class TnVaController {
         return dto;
     }
 
-    private ResultDTO<DbQrsDTO> querySdPic_exp(TnVaDeviceRTO rto) {
-        System.out.println(rto.getDiId());
+    private ResultDTO<DbQrsDTO> querySdPic_exp() {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,15,0,15,0,null);
         List<TnVaSdPicDTO> recs = new ArrayList<>();
