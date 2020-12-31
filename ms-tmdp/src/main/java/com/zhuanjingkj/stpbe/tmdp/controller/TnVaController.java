@@ -53,8 +53,7 @@ public class TnVaController {
     @GetMapping(value  = "/va/querySdInfo")
     public ResultDTO<TnSiteInfoDTO> querySdInfo(
         @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestBody TnSiteInfoRTO rto
+        @RequestParam(name = "v") String version
     ) {
         return querySdInfo_exp();
     }
