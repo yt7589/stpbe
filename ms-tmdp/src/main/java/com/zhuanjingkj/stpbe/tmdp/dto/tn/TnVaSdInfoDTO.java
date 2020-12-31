@@ -8,7 +8,7 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
  */
 public class TnVaSdInfoDTO extends BaseDTO {
     @JSONField(name = "diId")
-    private String diId; //设备id
+    private long diId; //设备id
     @JSONField(name = "diAddr")
     private String diAddr; //设备位置
     @JSONField(name = "direction")
@@ -18,7 +18,7 @@ public class TnVaSdInfoDTO extends BaseDTO {
     @JSONField(name = "status")
     private String status; //设备状态
 
-    public TnVaSdInfoDTO(String diId, String diAddr, String direction, String category, String status) {
+    public TnVaSdInfoDTO(long diId, String diAddr, String direction, String category, String status) {
         this.diId = diId;
         this.diAddr = diAddr;
         this.direction = direction;
@@ -26,11 +26,11 @@ public class TnVaSdInfoDTO extends BaseDTO {
         this.status = status;
     }
 
-    public String getDiId() {
+    public long getDiId() {
         return diId;
     }
 
-    public void setDiId(String diId) {
+    public void setDiId(long diId) {
         this.diId = diId;
     }
 
