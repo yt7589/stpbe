@@ -10,11 +10,14 @@ public class GrqDemoDTO extends BaseDTO {
     private long tvisJsonId;
     @JSONField(name = "vehsIdx")
     private long vehsIdx;
+    @JSONField(name = "dist")
+    private double dist;
 
-    public GrqDemoDTO(long grqId, long tvisJsonId, long vehsIdx) {
+    public GrqDemoDTO(long grqId, long tvisJsonId, long vehsIdx, double dist) {
         this.grqId = grqId;
         this.tvisJsonId = tvisJsonId;
         this.vehsIdx = vehsIdx;
+        this.dist = dist;
     }
 
     public long getGrqId() {
@@ -39,5 +42,13 @@ public class GrqDemoDTO extends BaseDTO {
 
     public void setVehsIdx(long vehsIdx) {
         this.vehsIdx = vehsIdx;
+    }
+
+    public double getDist() {
+        return dist;
+    }
+
+    public void setDist(double dist) {
+        this.dist = dist;
     }
 }

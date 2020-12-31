@@ -58,6 +58,9 @@ public class TvisJsonRawListener {
         }
         JSONObject jo = JSONObject.parseObject(json);
         String relativeImageFile = jo.getJSONObject("json").getString("ImageUrl");
+        if (relativeImageFile==null || relativeImageFile.equals("") || relativeImageFile.length()<2) {
+            return;
+        }
         String imageFile = AppConst.VIDEO_FRAME_IMG_BASE_DIR + relativeImageFile.substring(2);
         Optional<String> imgRst = IpfsClient.uploadFile(imageFile);
         final StringBuilder imageHash = new StringBuilder();
@@ -94,6 +97,7 @@ public class TvisJsonRawListener {
             jsonHash.append(jsonStr);
         });
         // 获取imageHash、cameraId、streamId、pts，将其存入mysql数据库中
+        System.out.println("@@@@@ imageFile=" + imageFile + "; json=" + jf + "!");
 
         long tvisJsonId = 0;
         if (jo.containsKey("tvisJsonId")) {

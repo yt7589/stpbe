@@ -57,11 +57,11 @@ public class TrafficViolationController {
         DkRtvrDTO item = null;
         item = new DkRtvrDTO(1, 11, "上地三街", 101, "不系安全带",
                 "奥迪", "A6L", "京A-TN518", "2020-08-30 12:01:39",
-                201, "http://222.128.117.234:8090/cloud/images/a001.jpg");
+                201, "http://192.168.2.68:8081/image/static/violation_001.jpg");
         rtvrs.add(item);
         item = new DkRtvrDTO(2, 21, "六里桥",2101, "不系安全带",
                 "奔驰", "E级", "苏B-TN123", "2020-09-08 12:01:39",
-                2202, "http://222.128.117.234:8090/cloud/images/a002.jpg");
+                2202, "http://192.168.2.68:8081/image/static/violation_002.jpg");
         rtvrs.add(item);
         return rtvrs;
     }
@@ -76,6 +76,14 @@ public class TrafficViolationController {
         item = new DkMvtsDTO("主驾驶看手机", 90000);
         mvtss.add(item);
         item = new DkMvtsDTO("副驾驶不系安全带", 10000);
+        mvtss.add(item);
+        item = new DkMvtsDTO("未悬挂号牌", 22000);
+        mvtss.add(item);
+        item = new DkMvtsDTO("遮挡号牌", 19000);
+        mvtss.add(item);
+        item = new DkMvtsDTO("污损号牌", 29000);
+        mvtss.add(item);
+        item = new DkMvtsDTO("摩托车不带头盔", 31000);
         mvtss.add(item);
         return mvtss;
     }

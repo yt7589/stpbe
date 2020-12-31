@@ -35,11 +35,11 @@ public class TpController {
         ResultDTO<TpDTO> dto = new ResultDTO<TpDTO>();
         TpDTO td = new TpDTO();
         List<TpTfpsDTO> tfps = new ArrayList<>();
-        tfps.add(new TpTfpsDTO(104, "上地七街", 100, 70));
-        tfps.add(new TpTfpsDTO(104, "上地东路", 90, 80));
-        tfps.add(new TpTfpsDTO(104, "上地西路", 80, 90));
-        tfps.add(new TpTfpsDTO(104, "上地二街", 70, 10));
-        tfps.add(new TpTfpsDTO(104, "上地一街", 60, 20));
+        tfps.add(new TpTfpsDTO(104, "上地七街", 116.08901, 40.05698));
+        tfps.add(new TpTfpsDTO(104, "上地东路", 116.18901, 40.15698));
+        tfps.add(new TpTfpsDTO(104, "上地西路", 116.28901, 40.25698));
+        tfps.add(new TpTfpsDTO(104, "上地二街", 116.38901, 40.35698));
+        tfps.add(new TpTfpsDTO(104, "上地一街", 116.48901, 40.45698));
         td.setTfps(tfps);
         dto.setData(td);
         return dto;

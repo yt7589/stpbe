@@ -89,11 +89,11 @@ public class TnVsController {
 
     private List<TnVsSiteDTO> getTvsdDTO_exp() {
         List<TnVsSiteDTO> tvtv = new ArrayList<>();
-        tvtv.add(new TnVsSiteDTO(105,"上地街道78号",89.987,59.365));
-        tvtv.add(new TnVsSiteDTO(105,"上地街道78号",95.987,63.365));
-        tvtv.add(new TnVsSiteDTO(105,"上地街道178号",96.987,74.365));
-        tvtv.add(new TnVsSiteDTO(105,"上地街道728号",100.987,89.365));
-        tvtv.add(new TnVsSiteDTO(105,"上地街道278号",105.987,109.365));
+        tvtv.add(new TnVsSiteDTO(105,"上地街道78号",116.1987,40.9365));
+        tvtv.add(new TnVsSiteDTO(105,"上地街道78号",116.2987,40.8365));
+        tvtv.add(new TnVsSiteDTO(105,"上地街道178号",116.3987,40.7365));
+        tvtv.add(new TnVsSiteDTO(105,"上地街道728号",116.4987,40.6365));
+        tvtv.add(new TnVsSiteDTO(105,"上地街道278号",116.5987,40.5365));
         return tvtv;
     }
 }

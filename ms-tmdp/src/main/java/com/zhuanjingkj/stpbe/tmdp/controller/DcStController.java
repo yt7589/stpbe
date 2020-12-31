@@ -80,11 +80,11 @@ public class DcStController {
 
     private List<DcStVSiteDTO> getVSite_exp() {
         List<DcStVSiteDTO> recs = new ArrayList<>();
-        recs.add(new DcStVSiteDTO(107,"上地四街",88,99,100000));
-        recs.add(new DcStVSiteDTO(107,"上地五街",77,88,200000));
-        recs.add(new DcStVSiteDTO(107,"上地六街",66,77,300000));
-        recs.add(new DcStVSiteDTO(107,"上地七街",55,66,400000));
-        recs.add(new DcStVSiteDTO(107,"上地八街",44,55,500000));
+        recs.add(new DcStVSiteDTO(107,"上地四街",116.0854321,40.823654,100000));
+        recs.add(new DcStVSiteDTO(107,"上地五街",116.0754321,40.723654,200000));
+        recs.add(new DcStVSiteDTO(107,"上地六街",116.0654321,40.623654,300000));
+        recs.add(new DcStVSiteDTO(107,"上地七街",116.0554321,40.523654,400000));
+        recs.add(new DcStVSiteDTO(107,"上地八街",116.0454321,40.423654,500000));
         return recs;
     }
 
@@ -102,37 +102,37 @@ public class DcStController {
 
     private List<DcStIlSiteDTO> getIlSite_exp() {
         List<DcStIlSiteDTO> recs = new ArrayList<>();
-        recs.add(new DcStIlSiteDTO(107,"上地八街",44,55,500000));
-        recs.add(new DcStIlSiteDTO(108,"上地四街",88,99,100000));
-        recs.add(new DcStIlSiteDTO(109,"上地五街",77,88,200000));
-        recs.add(new DcStIlSiteDTO(101,"上地六街",66,77,300000));
-        recs.add(new DcStIlSiteDTO(102,"上地七街",55,66,400000));
-        recs.add(new DcStIlSiteDTO(103,"上地八街",44,55,500000));
-        recs.add(new DcStIlSiteDTO(104,"上地八街",44,55,500000));
+        recs.add(new DcStIlSiteDTO(107,"上地八街",116.0454321,40.423654,500000));
+        recs.add(new DcStIlSiteDTO(108,"上地四街",116.0554321,40.443654,100000));
+        recs.add(new DcStIlSiteDTO(109,"上地五街",116.0654321,40.463654,200000));
+        recs.add(new DcStIlSiteDTO(101,"上地六街",116.0754321,40.483654,300000));
+        recs.add(new DcStIlSiteDTO(102,"上地七街",116.0854321,40.403654,400000));
+        recs.add(new DcStIlSiteDTO(103,"上地八街",116.0954321,40.413654,500000));
+        recs.add(new DcStIlSiteDTO(104,"上地八街",116.1454321,40.553654,500000));
         return recs;
     }
 
     private List<DcStKvSiteDTO> getDcKvs_exp() {
         List<DcStKvSiteDTO> recs = new ArrayList<>();
-        recs.add(new DcStKvSiteDTO(107,"上地八街",44,55,500000));
-        recs.add(new DcStKvSiteDTO(108,"上地四街",88,99,100000));
-        recs.add(new DcStKvSiteDTO(109,"上地五街",77,88,200000));
-        recs.add(new DcStKvSiteDTO(101,"上地六街",66,77,300000));
-        recs.add(new DcStKvSiteDTO(102,"上地七街",55,66,400000));
-        recs.add(new DcStKvSiteDTO(103,"上地八街",44,55,500000));
-        recs.add(new DcStKvSiteDTO(104,"上地九街",44,55,500000));
+        recs.add(new DcStKvSiteDTO(107,"上地八街",116.1454321,40.553654,500000));
+        recs.add(new DcStKvSiteDTO(108,"上地四街",116.2454321,40.653654,100000));
+        recs.add(new DcStKvSiteDTO(109,"上地五街",116.3454321,40.753654,200000));
+        recs.add(new DcStKvSiteDTO(101,"上地六街",116.4454321,40.853654,300000));
+        recs.add(new DcStKvSiteDTO(102,"上地七街",116.5454321,40.953654,400000));
+        recs.add(new DcStKvSiteDTO(103,"上地八街",116.6454321,40.353654,500000));
+        recs.add(new DcStKvSiteDTO(104,"上地九街",116.7454321,40.573654,500000));
         return recs;
     }
 
     private List<DcStTruckSiteDTO> getDcTruckSite_exp() {
         List<DcStTruckSiteDTO> recs = new ArrayList<>();
-        recs.add(new DcStTruckSiteDTO(107,"上地八街",44,55,500000));
-        recs.add(new DcStTruckSiteDTO(108,"上地四街",88,99,100000));
-        recs.add(new DcStTruckSiteDTO(109,"上地五街",77,88,200000));
-        recs.add(new DcStTruckSiteDTO(101,"上地六街",66,77,300000));
-        recs.add(new DcStTruckSiteDTO(102,"上地七街",55,66,400000));
-        recs.add(new DcStTruckSiteDTO(103,"上地八街",44,55,500000));
-        recs.add(new DcStTruckSiteDTO(104,"上地九街",44,55,500000));
+        recs.add(new DcStTruckSiteDTO(107,"上地八街",116.7454321,40.573654,500000));
+        recs.add(new DcStTruckSiteDTO(108,"上地四街",116.6454321,40.673654,100000));
+        recs.add(new DcStTruckSiteDTO(109,"上地五街",116.5454321,40.773654,200000));
+        recs.add(new DcStTruckSiteDTO(101,"上地六街",116.4454321,40.873654,300000));
+        recs.add(new DcStTruckSiteDTO(102,"上地七街",116.3454321,40.5973654,400000));
+        recs.add(new DcStTruckSiteDTO(103,"上地八街",116.2454321,40.5573654,500000));
+        recs.add(new DcStTruckSiteDTO(104,"上地九街",116.1454321,40.5273654,500000));
         return recs;
     }
 }

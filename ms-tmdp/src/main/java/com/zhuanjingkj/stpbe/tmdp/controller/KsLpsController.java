@@ -73,7 +73,7 @@ public class KsLpsController {
     private List<KsLpsSiteDTO> getSiteAbnormalLicensePlate() {
         List<KsLpsSiteDTO> lpsSite = new ArrayList<>();
         for (int i = 1; i < 11; i++ ) {
-            lpsSite.add(new KsLpsSiteDTO(i + 1, "上地" + i + "街",("豫E" + (2222 + i)),(30 + i),(58.3954 + i),(69.082 + i)));
+            lpsSite.add(new KsLpsSiteDTO(i + 1, "上地" + i + "街",("豫E" + (2222 + i)),(30 + i),(116.3954 + i * 001),(40.082 + i * 0.02)));
         }
         return lpsSite;
     }

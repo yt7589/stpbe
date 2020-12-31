@@ -56,7 +56,6 @@ public class GrqEngine {
         long grqId = getGrqId(redisTemplate);
         // 插入记录
         List<Long> ids = new ArrayList<>(Arrays.asList(grqId));
-        //VehicleVo vo = vos.get(0);
         VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
         VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
         VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
@@ -79,7 +78,7 @@ public class GrqEngine {
         return entityId;
     }
 
-    public static TvisGrqRstVo findTopK(String partitionTag, List<List<Float>> queryEmbedding, long topK) {
+    public static List<TvisGrqRstVo> findTopK(String partitionTag, List<List<Float>> queryEmbedding, long topK) {
         String dsl =
                 String.format(
                         "{\"bool\": {"
@@ -90,7 +89,7 @@ public class GrqEngine {
                                 "\"type\": \"float\", \"query\": %s"
                                 + "    }}}]}}",
                         topK, queryEmbedding.toString());
-
+        System.out.println("dsl: " + dsl + "!");
         // Only specified fields in `setParamsInJson` will be returned from search request.
         // If not set, all fields will be returned.
         SearchParam searchParam =
@@ -100,21 +99,26 @@ public class GrqEngine {
                                 AppConst.GRQ_VEHS_IDX + "\", \"embedding\"]}");
         SearchResult searchResult = client.search(searchParam);
         int idx = 0;
-        TvisGrqRstVo vo = new TvisGrqRstVo();
+        List<TvisGrqRstVo> rst = new ArrayList<>();
+        TvisGrqRstVo vo = null;
+        long grpId = 0;
+        double dist = 0.0;
         System.out.println("GrqEngine.findTopK 1 size=" + searchResult.getResultIdsList().size() + "!");
-        if (searchResult.getResultIdsList().size() > 0) {
-            long tzxlId = searchResult.getResultIdsList().get(0).get(idx);
-            float top1Dist = searchResult.getResultDistancesList().get(0).get(idx);
-            Map<String, Object> rec = searchResult.getFieldsMap().get(0).get(idx);
-            vo.setGrqId(tzxlId);
+        if (searchResult.getResultIdsList().size() <= 0) {
+            return rst;
+        }
+        int baseIdx = 0;
+        int count = searchResult.getResultIdsList().get(baseIdx).size();
+        for (idx=0; idx<count; idx++) {
+            vo = new TvisGrqRstVo();
+            vo.setGrqId(searchResult.getResultIdsList().get(baseIdx).get(idx));
+            vo.setDist(searchResult.getResultDistancesList().get(baseIdx).get(idx));
+            Map<String, Object> rec = searchResult.getFieldsMap().get(baseIdx).get(idx);
             vo.setTvisJsonId((Long) rec.get(AppConst.GRQ_TVIS_JSON_ID));
             vo.setVehsIdx((long) rec.get(AppConst.GRQ_VEHS_IDX));
-        } else {
-            vo.setGrqId(-1);
-            vo.setTvisJsonId(-1);
-            vo.setVehsIdx(-1);
+            rst.add(vo);
         }
-        return vo;
+        return rst;
     }
 
     /**

@@ -73,16 +73,16 @@ public class DcRtController {
 
     private List<DcRtAreaJamDTO> getRaj_exp() {
         List<DcRtAreaJamDTO> recs = new ArrayList<>();
-        recs.add(new DcRtAreaJamDTO(101,"朝阳区",50,140,0.3,0.1));
-        recs.add(new DcRtAreaJamDTO(102,"海淀区",60,130,0.4,0.2));
-        recs.add(new DcRtAreaJamDTO(103,"东城区",70,120,0.5,0.3));
-        recs.add(new DcRtAreaJamDTO(104,"西城区",80,110,0.6,0.4));
-        recs.add(new DcRtAreaJamDTO(105,"昌平区",90,100,0.7,0.5));
-        recs.add(new DcRtAreaJamDTO(106,"丰台区",100,90,0.2,0.6));
-        recs.add(new DcRtAreaJamDTO(107,"密云区",110,80,0.5,0.7));
-        recs.add(new DcRtAreaJamDTO(108,"通州区",120,70,0.4,0.8));
-        recs.add(new DcRtAreaJamDTO(109,"石景山区",130,60,0.7,0.3));
-        recs.add(new DcRtAreaJamDTO(110,"门头沟区",140,50,0.8,0.4));
+        recs.add(new DcRtAreaJamDTO(101,"朝阳区",116.056780,40.03189,0.3,0.1));
+        recs.add(new DcRtAreaJamDTO(102,"海淀区",116.066780,40.03289,0.4,0.2));
+        recs.add(new DcRtAreaJamDTO(103,"东城区",116.076780,40.03389,0.5,0.3));
+        recs.add(new DcRtAreaJamDTO(104,"西城区",116.086780,40.03489,0.6,0.4));
+        recs.add(new DcRtAreaJamDTO(105,"昌平区",116.096780,40.0659,0.7,0.5));
+        recs.add(new DcRtAreaJamDTO(106,"丰台区",116.026780,40.04689,0.2,0.6));
+        recs.add(new DcRtAreaJamDTO(107,"密云区",116.016780,40.02789,0.5,0.7));
+        recs.add(new DcRtAreaJamDTO(108,"通州区",116.046780,40.04889,0.4,0.8));
+        recs.add(new DcRtAreaJamDTO(109,"石景山区",116.076780,40.03869,0.7,0.3));
+        recs.add(new DcRtAreaJamDTO(110,"门头沟区",116.049780,40.03471,0.8,0.4));
         return recs;
     }
 
@@ -96,31 +96,31 @@ public class DcRtController {
 
     private List<DcRtAreaVehicleDTO> getRav_exp() {
         List<DcRtAreaVehicleDTO> recs = new ArrayList<>();
-        recs.add(new DcRtAreaVehicleDTO(101,"朝阳区",50,140,92346,0.1));
-        recs.add(new DcRtAreaVehicleDTO(102,"海淀区",60,130,82346,0.2));
-        recs.add(new DcRtAreaVehicleDTO(103,"东城区",70,120,72346,0.3));
-        recs.add(new DcRtAreaVehicleDTO(104,"西城区",80,110,62346,0.4));
-        recs.add(new DcRtAreaVehicleDTO(105,"昌平区",90,100,52346,0.5));
-        recs.add(new DcRtAreaVehicleDTO(106,"丰台区",100,90,42346,0.6));
-        recs.add(new DcRtAreaVehicleDTO(107,"密云区",110,80,12346,0.7));
-        recs.add(new DcRtAreaVehicleDTO(108,"通州区",120,70,12346,0.8));
-        recs.add(new DcRtAreaVehicleDTO(109,"石景山区",130,60,12346,0.3));
-        recs.add(new DcRtAreaVehicleDTO(110,"门头沟区",140,50,12346,0.4));
+        recs.add(new DcRtAreaVehicleDTO(101,"朝阳区",116.058931,40.060807,92346,0.1));
+        recs.add(new DcRtAreaVehicleDTO(102,"海淀区",116.048931,40.060707,82346,0.2));
+        recs.add(new DcRtAreaVehicleDTO(103,"东城区",116.038931,40.060607,72346,0.3));
+        recs.add(new DcRtAreaVehicleDTO(104,"西城区",116.028931,40.060507,62346,0.4));
+        recs.add(new DcRtAreaVehicleDTO(105,"昌平区",116.018931,40.060407,52346,0.5));
+        recs.add(new DcRtAreaVehicleDTO(106,"丰台区",116.078931,40.060307,42346,0.6));
+        recs.add(new DcRtAreaVehicleDTO(107,"密云区",116.080931,40.060207,12346,0.7));
+        recs.add(new DcRtAreaVehicleDTO(108,"通州区",116.070931,40.060107,12346,0.8));
+        recs.add(new DcRtAreaVehicleDTO(109,"石景山区",116.044931,40.062807,12346,0.3));
+        recs.add(new DcRtAreaVehicleDTO(110,"门头沟区",116.033931,40.069807,12346,0.4));
         return recs;
     }
 
     private List<DcRtRoadJamDTO> getRrj_exp() {
         List<DcRtRoadJamDTO> recs = new ArrayList<>();
-        recs.add(new DcRtRoadJamDTO(101,"朝阳区三里屯街道",50,140,0.3,0.1));
-        recs.add(new DcRtRoadJamDTO(102,"海淀区海淀街道",60,130,0.4,0.2));
-        recs.add(new DcRtRoadJamDTO(103,"东城区东四街道",70,120,0.5,0.3));
-        recs.add(new DcRtRoadJamDTO(104,"西城区德胜街道",80,110,0.6,0.4));
-        recs.add(new DcRtRoadJamDTO(105,"昌平区城北街道",90,100,0.7,0.5));
-        recs.add(new DcRtRoadJamDTO(106,"丰台区丰台街道",100,90,0.2,0.6));
-        recs.add(new DcRtRoadJamDTO(107,"密云区鼓楼街道",110,80,0.5,0.7));
-        recs.add(new DcRtRoadJamDTO(108,"通州区玉桥街道",120,70,0.4,0.8));
-        recs.add(new DcRtRoadJamDTO(109,"石景山区八宝山街道",130,60,0.7,0.3));
-        recs.add(new DcRtRoadJamDTO(110,"门头沟区大峪街道",140,50,0.8,0.4));
+        recs.add(new DcRtRoadJamDTO(101,"朝阳区三里屯街道",116.033931,40.081807,0.3,0.1));
+        recs.add(new DcRtRoadJamDTO(102,"海淀区海淀街道",116.032931,40.082807,0.4,0.2));
+        recs.add(new DcRtRoadJamDTO(103,"东城区东四街道",116.031931,40.063807,0.5,0.3));
+        recs.add(new DcRtRoadJamDTO(104,"西城区德胜街道",116.034931,40.064807,0.6,0.4));
+        recs.add(new DcRtRoadJamDTO(105,"昌平区城北街道",116.035931,40.065807,0.7,0.5));
+        recs.add(new DcRtRoadJamDTO(106,"丰台区丰台街道",116.036931,40.066807,0.2,0.6));
+        recs.add(new DcRtRoadJamDTO(107,"密云区鼓楼街道",116.037931,40.067807,0.5,0.7));
+        recs.add(new DcRtRoadJamDTO(108,"通州区玉桥街道",116.038931,40.0618907,0.4,0.8));
+        recs.add(new DcRtRoadJamDTO(109,"石景山区八宝山街道",116.039931,40.0169807,0.7,0.3));
+        recs.add(new DcRtRoadJamDTO(110,"门头沟区大峪街道",116.036031,40.0269807,0.8,0.4));
         return recs;
     }
 }

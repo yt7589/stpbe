@@ -4,6 +4,7 @@ public class TvisGrqRstVo {
     private long grqId;
     private long tvisJsonId;
     private long vehsIdx;
+    private double dist;
 
     public long getGrqId() {
         return grqId;
@@ -27,5 +28,13 @@ public class TvisGrqRstVo {
 
     public void setVehsIdx(long vehsIdx) {
         this.vehsIdx = vehsIdx;
+    }
+
+    public double getDist() {
+        return dist;
+    }
+
+    public void setDist(double dist) {
+        this.dist = dist;
     }
 }
