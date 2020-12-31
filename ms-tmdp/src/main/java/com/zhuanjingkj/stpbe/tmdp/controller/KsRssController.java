@@ -50,7 +50,7 @@ public class KsRssController {
      * @param rto
      * @return
      */
-    @PostMapping(value = "/rss/deleteKsRsSupervision")
+    @DeleteMapping(value = "/rss/deleteKsRsSupervision")
     public ResultDTO<DbDeleteResultDTO> deleteKsRsSupervision(
         @RequestParam(name = "p", required = false) String platform,
         @RequestParam(name = "v", required = false) String version,

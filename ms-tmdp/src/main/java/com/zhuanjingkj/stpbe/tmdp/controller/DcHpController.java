@@ -2,10 +2,10 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcDaDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpDaDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcIlTrendDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcRgTrendDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpIlTrendDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpRgTrendDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.dc.DcHpRTO;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,14 +25,23 @@ public class DcHpController {
      * 数据记录列表
      * @param platform
      * @param version
-     * @param rto
      * @return
      */
     @GetMapping(value = "/hp/queryAllData")
     public ResultDTO<DbQrsDTO> queryAllData(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestBody DcHpRTO rto
+        @RequestParam(name = "startIndex", required = false) String startIndex,
+        @RequestParam(name = "amount", required = false) String amount,
+        @RequestParam(name = "direction", required = false) String direction,
+        @RequestParam(name = "startTime", required = false) String startTime,
+        @RequestParam(name = "endTime", required = false) String endTime,
+        @RequestParam(name = "category", required = false) String category,
+        @RequestParam(name = "vType", required = false) String vType,
+        @RequestParam(name = "ilType", required = false) String ilType,
+        @RequestParam(name = "hphm", required = false) String hphm,
+        @RequestParam(name = "fcId", required = false) String fcId,
+        @RequestParam(name = "vAddr", required = false) String vAddr
     ){
         return queryAllData_exp();
     }
@@ -42,11 +51,11 @@ public class DcHpController {
      * @return
      */
     @GetMapping(value = "/hp/queryDataAnalysis")
-    public ResultDTO<DcDaDTO> queryDataAnalysis() {
-        ResultDTO<DcDaDTO> dto = new ResultDTO<>();
-        DcDaDTO data = new DcDaDTO();
-        List<DcIlTrendDTO> dit = getDit_exp();
-        List<DcRgTrendDTO> drt = getDrt_exp();
+    public ResultDTO<DcHpDaDTO> queryDataAnalysis() {
+        ResultDTO<DcHpDaDTO> dto = new ResultDTO<>();
+        DcHpDaDTO data = new DcHpDaDTO();
+        List<DcHpIlTrendDTO> dit = getDit_exp();
+        List<DcHpRgTrendDTO> drt = getDrt_exp();
         data.setDit(dit);
         data.setDrt(drt);
         data.setTotal_recognition(20000);
@@ -86,19 +95,20 @@ public class DcHpController {
         return dto;
     }
 
-    private List<DcIlTrendDTO> getDit_exp() {
-        List<DcIlTrendDTO> dit = new ArrayList<>();
+    private List<DcHpIlTrendDTO> getDit_exp() {
+        List<DcHpIlTrendDTO> dit = new ArrayList<>();
         for(int i = 0; i < 31; i++) {
-            dit.add(new DcIlTrendDTO(""+(i+1),(2300000 + i * 100000)));
+            dit.add(new DcHpIlTrendDTO(""+(i+1),(2300000 + i * 100000)));
         }
         return dit;
     }
 
-    private List<DcRgTrendDTO> getDrt_exp() {
-        List<DcRgTrendDTO> drt = new ArrayList<>();
+    private List<DcHpRgTrendDTO> getDrt_exp() {
+        List<DcHpRgTrendDTO> drt = new ArrayList<>();
         for(int i = 0; i < 31; i++) {
-            drt.add(new DcRgTrendDTO(""+(i+1),(2300000 + i * 100000)));
+            drt.add(new DcHpRgTrendDTO(""+(i+1),(2300000 + i * 100000)));
         }
         return drt;
     }
+
 }

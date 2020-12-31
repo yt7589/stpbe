@@ -10,93 +10,93 @@ import java.util.List;
  */
 public class DcStDTO extends BaseDTO {
     @JSONField(name = "dcSys")
-    private DcSysDTO dcSys; //系统对象
+    private DcStSysDTO dcSys; //系统对象
     @JSONField(name = "dcToday")
-    private DcTodayDTO dcToday; //今日概况
+    private DcStTodayDTO dcToday; //今日概况
     @JSONField(name = "dcVSt")
-    List<DcVstDTO> dcVSt; //过车量统计
+    List<DcStVDTO> dcVSt; //过车量统计
     @JSONField(name = "dcVArea")
-    List<DcVAreaDTO> dcVArea; //过车量地区前5
+    List<DcStVAreaDTO> dcVArea; //过车量地区前5
     @JSONField(name = "dcVSite")
-    List<DcVSiteDTO> dcVSite; //过车量点位前5
+    List<DcStVSiteDTO> dcVSite; //过车量点位前5
     @JSONField(name = "dcVTrend")
-    List<DcVTrendDTO> dcVTrend; //过车量7日走势图
+    List<DcStVTrendDTO> dcVTrend; //过车量7日走势图
     @JSONField(name = "dcIlSite")
-    List<DcIlSiteDTO> dcIlSite; //违法点位前7
+    List<DcStIlSiteDTO> dcIlSite; //违法点位前7
     @JSONField(name = "dcKvSite")
-    List<DcKvSiteDTO> dcKvSite; //重点车辆违法点位前7
+    List<DcStKvSiteDTO> dcKvSite; //重点车辆违法点位前7
     @JSONField(name = "dcTsSite")
-    List<DcTruckSiteDTO> dcTsSite; //大货车点位前7
+    List<DcStTruckSiteDTO> dcTsSite; //大货车点位前7
 
-    public DcSysDTO getDcSys() {
+    public DcStSysDTO getDcSys() {
         return dcSys;
     }
 
-    public void setDcSys(DcSysDTO dcSys) {
+    public void setDcSys(DcStSysDTO dcSys) {
         this.dcSys = dcSys;
     }
 
-    public DcTodayDTO getDcToday() {
+    public DcStTodayDTO getDcToday() {
         return dcToday;
     }
 
-    public void setDcToday(DcTodayDTO dcToday) {
+    public void setDcToday(DcStTodayDTO dcToday) {
         this.dcToday = dcToday;
     }
 
-    public List<DcVstDTO> getDcVSt() {
+    public List<DcStVDTO> getDcVSt() {
         return dcVSt;
     }
 
-    public void setDcVSt(List<DcVstDTO> dcVSt) {
+    public void setDcVSt(List<DcStVDTO> dcVSt) {
         this.dcVSt = dcVSt;
     }
 
-    public List<DcVAreaDTO> getDcVArea() {
+    public List<DcStVAreaDTO> getDcVArea() {
         return dcVArea;
     }
 
-    public void setDcVArea(List<DcVAreaDTO> dcVArea) {
+    public void setDcVArea(List<DcStVAreaDTO> dcVArea) {
         this.dcVArea = dcVArea;
     }
 
-    public List<DcVSiteDTO> getDcVSite() {
+    public List<DcStVSiteDTO> getDcVSite() {
         return dcVSite;
     }
 
-    public void setDcVSite(List<DcVSiteDTO> dcVSite) {
+    public void setDcVSite(List<DcStVSiteDTO> dcVSite) {
         this.dcVSite = dcVSite;
     }
 
-    public List<DcVTrendDTO> getDcVTrend() {
+    public List<DcStVTrendDTO> getDcVTrend() {
         return dcVTrend;
     }
 
-    public void setDcVTrend(List<DcVTrendDTO> dcVTrend) {
+    public void setDcVTrend(List<DcStVTrendDTO> dcVTrend) {
         this.dcVTrend = dcVTrend;
     }
 
-    public List<DcIlSiteDTO> getDcIlSite() {
+    public List<DcStIlSiteDTO> getDcIlSite() {
         return dcIlSite;
     }
 
-    public void setDcIlSite(List<DcIlSiteDTO> dcIlSite) {
+    public void setDcIlSite(List<DcStIlSiteDTO> dcIlSite) {
         this.dcIlSite = dcIlSite;
     }
 
-    public List<DcKvSiteDTO> getDcKvSite() {
+    public List<DcStKvSiteDTO> getDcKvSite() {
         return dcKvSite;
     }
 
-    public void setDcKvSite(List<DcKvSiteDTO> dcKvSite) {
+    public void setDcKvSite(List<DcStKvSiteDTO> dcKvSite) {
         this.dcKvSite = dcKvSite;
     }
 
-    public List<DcTruckSiteDTO> getDcTsSite() {
+    public List<DcStTruckSiteDTO> getDcTsSite() {
         return dcTsSite;
     }
 
-    public void setDcTsSite(List<DcTruckSiteDTO> dcTsSite) {
+    public void setDcTsSite(List<DcStTruckSiteDTO> dcTsSite) {
         this.dcTsSite = dcTsSite;
     }
 }

@@ -24,9 +24,9 @@ public class TpController {
     public ResultDTO<TpDTO> queryTrafficPrognosis(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestParam(name = "startTime") String startTime,
-        @RequestParam(name = "endTime") String endTime,
-        @RequestParam(name = "hphm") String hphm
+        @RequestParam(name = "startTime", required = false) String startTime,
+        @RequestParam(name = "endTime", required = false) String endTime,
+        @RequestParam(name = "hphm", required = false) String hphm
     ) {
         return queryTrafficPrognosis_exp();
     }

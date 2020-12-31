@@ -3,8 +3,8 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.tn.*;
-import com.zhuanjingkj.stpbe.tmdp.rto.tn.TnDeviceRTO;
-import com.zhuanjingkj.stpbe.tmdp.rto.tn.TnSiteInfoRTO;
+import com.zhuanjingkj.stpbe.tmdp.rto.tn.TnVaDeviceRTO;
+import com.zhuanjingkj.stpbe.tmdp.rto.tn.TnVaSiteInfoRTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class TnVaController {
      * @return
      */
     @GetMapping(value = "/va/queryDevice")
-    public ResultDTO<TnDeviceDTO> queryDevice(
+    public ResultDTO<TnVaDeviceDTO> queryDevice(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version
     ) {
@@ -51,12 +51,15 @@ public class TnVaController {
      * @return
      */
     @GetMapping(value  = "/va/querySdInfo")
-    public ResultDTO<TnSiteInfoDTO> querySdInfo(
+    public ResultDTO<TnVaSiteInfoDTO> querySdInfo(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestBody TnSiteInfoRTO rto
+        @RequestParam(name = "startIndex", required = false) String startIndex,
+        @RequestParam(name = "amount", required = false) String amount,
+        @RequestParam(name = "direction", required = false) String direction,
+        @RequestBody TnVaSiteInfoRTO rto
     ) {
-        return querySdInfo_exp();
+        return querySdInfo_exp(rto);
     }
 
     /**
@@ -70,42 +73,43 @@ public class TnVaController {
     public ResultDTO<DbQrsDTO> querySdPic(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestBody TnDeviceRTO rto
+        @RequestBody TnVaDeviceRTO rto
     ) {
-        return querySdPic_exp();
+        return querySdPic_exp(rto);
     }
 
     private ResultDTO<DbQrsDTO> queryDeviceDeploy_exp() {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
-        List<TnDeviceDeployDTO> recs = new ArrayList<>();
-        recs.add(new TnDeviceDeployDTO(100,"上地三街10号", 80.985, 60.655));
-        recs.add(new TnDeviceDeployDTO(100,"上地三街10号", 89.985, 70.655));
-        recs.add(new TnDeviceDeployDTO(100,"上地三街10号", 10.985, 80.655));
-        recs.add(new TnDeviceDeployDTO(100,"上地三街10号", 87.985, 90.655));
-        recs.add(new TnDeviceDeployDTO(100,"上地三街10号", 50.985, 50.655));
-        recs.add(new TnDeviceDeployDTO(100,"上地三街10号", 60.985, 30.655));
-        recs.add(new TnDeviceDeployDTO(100,"上地三街10号", 69.985, 20.655));
-        recs.add(new TnDeviceDeployDTO(100,"上地三街10号", 15.985, 90.655));
+        List<TnVaDeviceDeployDTO> recs = new ArrayList<>();
+        recs.add(new TnVaDeviceDeployDTO(100,"上地三街10号", 80.985, 60.655));
+        recs.add(new TnVaDeviceDeployDTO(100,"上地三街10号", 89.985, 70.655));
+        recs.add(new TnVaDeviceDeployDTO(100,"上地三街10号", 10.985, 80.655));
+        recs.add(new TnVaDeviceDeployDTO(100,"上地三街10号", 87.985, 90.655));
+        recs.add(new TnVaDeviceDeployDTO(100,"上地三街10号", 50.985, 50.655));
+        recs.add(new TnVaDeviceDeployDTO(100,"上地三街10号", 60.985, 30.655));
+        recs.add(new TnVaDeviceDeployDTO(100,"上地三街10号", 69.985, 20.655));
+        recs.add(new TnVaDeviceDeployDTO(100,"上地三街10号", 15.985, 90.655));
         data.setRecs(recs);
         dto.setData(data);
         return dto;
     }
 
-    private ResultDTO<TnDeviceDTO> queryDevice_exp() {
-        ResultDTO<TnDeviceDTO> dto = new ResultDTO<>();
-        TnDeviceDTO data = new TnDeviceDTO(18000, 20,19000, 10);
+    private ResultDTO<TnVaDeviceDTO> queryDevice_exp() {
+        ResultDTO<TnVaDeviceDTO> dto = new ResultDTO<>();
+        TnVaDeviceDTO data = new TnVaDeviceDTO(18000, 20,19000, 10);
         dto.setData(data);
         return dto;
     }
 
-    private ResultDTO<TnSiteInfoDTO> querySdInfo_exp() {
-        ResultDTO<TnSiteInfoDTO> dto = new ResultDTO<>();
-        TnSiteInfoDTO ts = new TnSiteInfoDTO();
-        List<TnSdInfoDTO> recs = new ArrayList<TnSdInfoDTO>();
-        recs.add(new TnSdInfoDTO("C20201228","海淀区>上地","东南","普通摄像头","已接入"));
-        recs.add(new TnSdInfoDTO("S20201228","海淀区>西二旗","西北","抓拍机","异常"));
-        recs.add(new TnSdInfoDTO("S20201228","海淀区>西二旗","西北","抓拍机","已接入"));
+    private ResultDTO<TnVaSiteInfoDTO> querySdInfo_exp(TnVaSiteInfoRTO rto) {
+        System.out.println(rto.getSiteId());
+        ResultDTO<TnVaSiteInfoDTO> dto = new ResultDTO<>();
+        TnVaSiteInfoDTO ts = new TnVaSiteInfoDTO();
+        List<TnVaSdInfoDTO> recs = new ArrayList<TnVaSdInfoDTO>();
+        recs.add(new TnVaSdInfoDTO("C20201228","海淀区>上地","东南","普通摄像头","已接入"));
+        recs.add(new TnVaSdInfoDTO("S20201228","海淀区>西二旗","西北","抓拍机","异常"));
+        recs.add(new TnVaSdInfoDTO("S20201228","海淀区>西二旗","西北","抓拍机","已接入"));
         ts.setRecs(recs);
         ts.setCamera(1);
         ts.setSnapshot(2);
@@ -113,29 +117,30 @@ public class TnVaController {
         return dto;
     }
 
-    private ResultDTO<DbQrsDTO> querySdPic_exp() {
+    private ResultDTO<DbQrsDTO> querySdPic_exp(TnVaDeviceRTO rto) {
+        System.out.println(rto.getDiId());
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,15,0,15,0,null);
-        List<TnSdPicDTO> recs = new ArrayList<>();
-        recs.add(new TnSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
+        List<TnVaSdPicDTO> recs = new ArrayList<>();
+        recs.add(new TnVaSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
                 "上地三街12号","小型车","2020","京B00022","未系安全带","2020-12-28 17:27:33"));
 
-        recs.add(new TnSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
+        recs.add(new TnVaSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
                 "上地三街12号","小型车","2020","京B00032","主驾驶打电话","2020-12-28 17:27:33"));
 
-        recs.add(new TnSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
+        recs.add(new TnVaSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
                 "上地三街12号","小型车","2020","京B00042","主驾驶看手机","2020-12-28 17:27:33"));
 
-        recs.add(new TnSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
+        recs.add(new TnVaSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
                 "上地三街12号","小型车","2020","京B00052","未系安全带","2020-12-28 17:27:33"));
 
-        recs.add(new TnSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
+        recs.add(new TnVaSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
                 "上地三街12号","小型车","2020","京B00062","未系安全带","2020-12-28 17:27:33"));
 
-        recs.add(new TnSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
+        recs.add(new TnVaSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
                 "上地三街12号","小型车","2020","京B00072","未系安全带","2020-12-28 17:27:33"));
 
-        recs.add(new TnSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
+        recs.add(new TnVaSdPicDTO(10250,"http://222.128.117.234:8090/cloud/images/a002.jpg","http://222.128.117.234:8090/cloud/images/a002.jpg",108,
                 "上地三街12号","小型车","2020","京B00082","未系安全带","2020-12-28 17:27:33"));
 
         data.setRecs(recs);

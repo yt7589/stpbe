@@ -47,7 +47,7 @@ public class VmIlsController {
      * @return
      */
     @GetMapping(value = "/ils/queryVehicleTypes")
-    public ResultDTO<List<VmVehicleTypesDTO>> queryVehicleTypes(
+    public ResultDTO<List<VmIlsVehicleTypesDTO>> queryVehicleTypes(
         @RequestParam(name = "p", required = false) String platform,
         @RequestParam(name = "v", required = false) String version
     ) {
@@ -120,35 +120,33 @@ public class VmIlsController {
      */
     @GetMapping(value = "/ils/export")
     public void ilsExport(HttpServletResponse response){
-        List<Object> recs = new ArrayList<>();
+        List<VmIlsDTO> recs = new ArrayList<>();
 
-        recs.add(new VmilsDTO(101,"2020-12-25 16:18:52","上地南路","豫E88858","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(101,"2020-12-25 16:18:52","上地南路","豫E88858","外埠","大货车","超速行驶",
                 102,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(102,"2020-12-25 16:18:52","上地南路","豫E88868","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(102,"2020-12-25 16:18:52","上地南路","豫E88868","外埠","大货车","超速行驶",
                 103,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(103,"2020-12-25 16:18:52","上地南路","豫E88878","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(103,"2020-12-25 16:18:52","上地南路","豫E88878","外埠","大货车","超速行驶",
                 104,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(10,"2020-12-25 16:18:52","上地南路","豫E88888","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(10,"2020-12-25 16:18:52","上地南路","豫E88888","外埠","大货车","超速行驶",
                 105,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(105,"2020-12-25 16:18:52","上地南路","豫E88828","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(105,"2020-12-25 16:18:52","上地南路","豫E88828","外埠","大货车","超速行驶",
                 106,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(106,"2020-12-25 16:18:52","上地南路","豫E88838","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(106,"2020-12-25 16:18:52","上地南路","豫E88838","外埠","大货车","超速行驶",
                 107,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(107,"2020-12-25 16:18:52","上地南路","豫E88818","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(107,"2020-12-25 16:18:52","上地南路","豫E88818","外埠","大货车","超速行驶",
                 108,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(108,"2020-12-25 16:18:52","上地南路","豫E88838","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(108,"2020-12-25 16:18:52","上地南路","豫E88838","外埠","大货车","超速行驶",
                 109,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
         String[] columns = {"违章编号", "时间", "地点", "车牌号" ,"类别" , "车辆类型", "违章类型编号", "违章类型", "详情"};
-
-        List<Object> resc = recs;
 
         FileExpDTO fed = new FileExpDTO("违章监管" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
 
@@ -161,7 +159,7 @@ public class VmIlsController {
      */
     @GetMapping(value = "/ils/exportvs")
     public void exportvs(HttpServletResponse response){
-        List<Object> recs = new ArrayList<>();
+        List<VmIlsVhsDTO> recs = new ArrayList<>();
 
         recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地街道209号","主驾驶未系安全带",
                 "http://222.128.117.234:8090/cloud/images/a002.jpg"));
@@ -191,8 +189,6 @@ public class VmIlsController {
                 "http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
         String[] columns = {"违章编号", "时间", "地点", "违章类型", "详情"};
-
-        List<Object> resc = recs;
 
         FileExpDTO fed = new FileExpDTO("违章监管" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
 
@@ -256,29 +252,29 @@ public class VmIlsController {
     private ResultDTO<DbQrsDTO> queryIllegalVehicle_epx() {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,15,0,15,0,null);
-        List<VmilsDTO> recs = new ArrayList<>();
-        recs.add(new VmilsDTO(101,"2020-12-25 16:18:52","上地南路","豫E88858","外埠","大货车","超速行驶",
+        List<VmIlsDTO> recs = new ArrayList<>();
+        recs.add(new VmIlsDTO(101,"2020-12-25 16:18:52","上地南路","豫E88858","外埠","大货车","超速行驶",
                 102,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(102,"2020-12-25 16:18:52","上地南路","豫E88868","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(102,"2020-12-25 16:18:52","上地南路","豫E88868","外埠","大货车","超速行驶",
                 103,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(103,"2020-12-25 16:18:52","上地南路","豫E88878","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(103,"2020-12-25 16:18:52","上地南路","豫E88878","外埠","大货车","超速行驶",
                 104,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(10,"2020-12-25 16:18:52","上地南路","豫E88888","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(10,"2020-12-25 16:18:52","上地南路","豫E88888","外埠","大货车","超速行驶",
                 105,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(105,"2020-12-25 16:18:52","上地南路","豫E88828","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(105,"2020-12-25 16:18:52","上地南路","豫E88828","外埠","大货车","超速行驶",
                 106,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(106,"2020-12-25 16:18:52","上地南路","豫E88838","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(106,"2020-12-25 16:18:52","上地南路","豫E88838","外埠","大货车","超速行驶",
                 107,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(107,"2020-12-25 16:18:52","上地南路","豫E88818","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(107,"2020-12-25 16:18:52","上地南路","豫E88818","外埠","大货车","超速行驶",
                 108,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
-        recs.add(new VmilsDTO(108,"2020-12-25 16:18:52","上地南路","豫E88838","外埠","大货车","超速行驶",
+        recs.add(new VmIlsDTO(108,"2020-12-25 16:18:52","上地南路","豫E88838","外埠","大货车","超速行驶",
                 109,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
 
         data.setRecs(recs);
@@ -289,19 +285,19 @@ public class VmIlsController {
 
     }
 
-    private ResultDTO<List<VmVehicleTypesDTO>> queryVehicleType_exp() {
-        ResultDTO<List<VmVehicleTypesDTO>> dto = new ResultDTO<>();
-        List<VmVehicleTypesDTO> recs = new ArrayList<>();
-        recs.add(new VmVehicleTypesDTO(101,"小轿车"));
-        recs.add(new VmVehicleTypesDTO(102,"平板车"));
-        recs.add(new VmVehicleTypesDTO(103,"大型客车"));
-        recs.add(new VmVehicleTypesDTO(104,"重型货车"));
-        recs.add(new VmVehicleTypesDTO(105,"摩托车"));
-        recs.add(new VmVehicleTypesDTO(106,"挂车"));
-        recs.add(new VmVehicleTypesDTO(107,"SUV"));
-        recs.add(new VmVehicleTypesDTO(108,"普通货车"));
-        recs.add(new VmVehicleTypesDTO(109,"MPV"));
-        recs.add(new VmVehicleTypesDTO(110,"面包车"));
+    private ResultDTO<List<VmIlsVehicleTypesDTO>> queryVehicleType_exp() {
+        ResultDTO<List<VmIlsVehicleTypesDTO>> dto = new ResultDTO<>();
+        List<VmIlsVehicleTypesDTO> recs = new ArrayList<>();
+        recs.add(new VmIlsVehicleTypesDTO(101,"小轿车"));
+        recs.add(new VmIlsVehicleTypesDTO(102,"平板车"));
+        recs.add(new VmIlsVehicleTypesDTO(103,"大型客车"));
+        recs.add(new VmIlsVehicleTypesDTO(104,"重型货车"));
+        recs.add(new VmIlsVehicleTypesDTO(105,"摩托车"));
+        recs.add(new VmIlsVehicleTypesDTO(106,"挂车"));
+        recs.add(new VmIlsVehicleTypesDTO(107,"SUV"));
+        recs.add(new VmIlsVehicleTypesDTO(108,"普通货车"));
+        recs.add(new VmIlsVehicleTypesDTO(109,"MPV"));
+        recs.add(new VmIlsVehicleTypesDTO(110,"面包车"));
         dto.setData(recs);
         return  dto;
     }

@@ -3,6 +3,7 @@ package com.zhuanjingkj.stpbe.tmdp.dto;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class FileExpDTO extends BaseDTO {
@@ -17,11 +18,11 @@ public class FileExpDTO extends BaseDTO {
     @JSONField(name = "path")
     private String path;
 
-    public FileExpDTO(String fileName, String title, String[] columns, List<Object> list, String path) {
+    public FileExpDTO(String fileName, String title, String[] columns, List<?> list, String path) {
         this.fileName = fileName;
         this.title = title;
         this.columns = columns;
-        this.list = list;
+        this.list = Arrays.asList(list.toArray());;
         this.path = path;
     }
 

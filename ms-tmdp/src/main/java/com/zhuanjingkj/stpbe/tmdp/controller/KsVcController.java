@@ -68,7 +68,7 @@ public class KsVcController {
      * @param rto
      * @return
      */
-    @PostMapping(value = "/vc/deleteVehicle")
+    @DeleteMapping(value = "/vc/deleteVehicle")
     public ResultDTO<DbDeleteResultDTO> deleteVehicle(
         @RequestParam(name = "p", required = false) String platform,
         @RequestParam(name = "v", required = false) String version,
