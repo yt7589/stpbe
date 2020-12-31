@@ -120,7 +120,7 @@ public class VmIlsController {
      */
     @GetMapping(value = "/ils/export")
     public void ilsExport(HttpServletResponse response){
-        List<VmIlsDTO> recs = new ArrayList<>();
+        List<VmIlsDTO> recs = new ArrayList<VmIlsDTO>();
 
         recs.add(new VmIlsDTO(101,"2020-12-25 16:18:52","上地南路","豫E88858","外埠","大货车","超速行驶",
                 102,"http://222.128.117.234:8090/cloud/images/a002.jpg"));
