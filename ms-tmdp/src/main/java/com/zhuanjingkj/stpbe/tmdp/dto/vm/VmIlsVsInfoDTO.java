@@ -15,9 +15,9 @@ public class VmIlsVsInfoDTO {
     @JSONField(name = "avCount")
     private Integer avCount; // Annual violation 年度违章
     @JSONField(name = "ilsVstype")
-    List<VmIlsVsType> ilsVstype; //违章类别统计
+    List<VmIlsVsTypeDTO> ilsVstype; //违章类别统计
     @JSONField(name = "ilsVsTrend")
-    List<VmIlsVsTrend> ilsVsTrend; //违章趋势
+    List<VmIlsVsTrendDTO> ilsVsTrend; //违章趋势
 
     public String getHphm() {
         return hphm;
@@ -43,19 +43,19 @@ public class VmIlsVsInfoDTO {
         this.avCount = avCount;
     }
 
-    public List<VmIlsVsType> getIlsVstype() {
+    public List<VmIlsVsTypeDTO> getIlsVstype() {
         return ilsVstype;
     }
 
-    public void setIlsVstype(List<VmIlsVsType> ilsVstype) {
+    public void setIlsVstype(List<VmIlsVsTypeDTO> ilsVstype) {
         this.ilsVstype = ilsVstype;
     }
 
-    public List<VmIlsVsTrend> getIlsVsTrend() {
+    public List<VmIlsVsTrendDTO> getIlsVsTrend() {
         return ilsVsTrend;
     }
 
-    public void setIlsVsTrend(List<VmIlsVsTrend> ilsVsTrend) {
+    public void setIlsVsTrend(List<VmIlsVsTrendDTO> ilsVsTrend) {
         this.ilsVsTrend = ilsVsTrend;
     }
 }

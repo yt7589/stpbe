@@ -7,13 +7,13 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 /**
  * 车辆违章走势（年）
  */
-public class VmIlsVsTrend extends BaseDTO {
+public class VmIlsVsTrendDTO extends BaseDTO {
     @JSONField(name = "year")
     private String year;
     @JSONField(name = "count")
     private Integer count;
 
-    public VmIlsVsTrend(String year, Integer count) {
+    public VmIlsVsTrendDTO(String year, Integer count) {
         this.year = "Y_" + year;
         this.count = count;
     }

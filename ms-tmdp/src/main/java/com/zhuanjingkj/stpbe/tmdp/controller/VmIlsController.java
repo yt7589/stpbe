@@ -51,9 +51,22 @@ public class VmIlsController {
         @RequestParam(name = "p", required = false) String platform,
         @RequestParam(name = "v", required = false) String version
     ) {
-        return  queryVehicleType_exp();
+        return queryVehicleType_exp();
     }
 
+    /**
+     * 违章类型
+     * @param platform
+     * @param version
+     * @return
+     */
+    @GetMapping(value = "/ils/queryIlsTypes")
+    public ResultDTO<List<VmIlsTypeDTO>> queryIlsTypes(
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version
+    ) {
+        return queryIlsTypes_exp();
+    }
     /**
      * 违章车辆详情
      * @param platform
@@ -302,6 +315,21 @@ public class VmIlsController {
         return  dto;
     }
 
+    private ResultDTO<List<VmIlsTypeDTO>> queryIlsTypes_exp() {
+        ResultDTO<List<VmIlsTypeDTO>> dto = new ResultDTO<>();
+        List<VmIlsTypeDTO> ilsType = new ArrayList<>();
+        ilsType.add(new VmIlsTypeDTO(104,"闯红灯"));
+        ilsType.add(new VmIlsTypeDTO(105,"行车打电话"));
+        ilsType.add(new VmIlsTypeDTO(106,"副驾驶不系安全带"));
+        ilsType.add(new VmIlsTypeDTO(107,"违反限行"));
+        ilsType.add(new VmIlsTypeDTO(108,"逆行"));
+        ilsType.add(new VmIlsTypeDTO(108,"未随车携带行驶证"));
+        ilsType.add(new VmIlsTypeDTO(108,"未随车携带驾驶证"));
+        ilsType.add(new VmIlsTypeDTO(108,"使用汽车吊车牵引车辆"));
+        ilsType.add(new VmIlsTypeDTO(108,"牵引摩托车"));
+        dto.setData(ilsType);
+        return dto;
+    }
     private List<VmIlsTopAreaDTO> queryIllArea() {
        List<VmIlsTopAreaDTO> ilsArea = new ArrayList<>();
        ilsArea.add(new VmIlsTopAreaDTO(102,"西二旗",1500000));
@@ -404,22 +432,22 @@ public class VmIlsController {
         vmIlsVsInfoDTO.setHphm("豫E88452");
         vmIlsVsInfoDTO.setIlsCount(1234567);
         vmIlsVsInfoDTO.setAvCount(12345);
-        List<VmIlsVsType> types = new ArrayList<>();
-        types.add(new VmIlsVsType("闯红灯", 30));
-        types.add(new VmIlsVsType("行车打电话", 10));
-        types.add(new VmIlsVsType("副驾驶不系安全带", 15));
-        types.add(new VmIlsVsType("违反限行", 15));
-        types.add(new VmIlsVsType("逆行", 20));
+        List<VmIlsVsTypeDTO> types = new ArrayList<>();
+        types.add(new VmIlsVsTypeDTO("闯红灯", 30));
+        types.add(new VmIlsVsTypeDTO("行车打电话", 10));
+        types.add(new VmIlsVsTypeDTO("副驾驶不系安全带", 15));
+        types.add(new VmIlsVsTypeDTO("违反限行", 15));
+        types.add(new VmIlsVsTypeDTO("逆行", 20));
         vmIlsVsInfoDTO.setIlsVstype(types);
-        List<VmIlsVsTrend> trend = new ArrayList<>();
-        trend.add(new VmIlsVsTrend("" + 2013,35));
-        trend.add(new VmIlsVsTrend("" + 2014,35));
-        trend.add(new VmIlsVsTrend("" + 2015,35));
-        trend.add(new VmIlsVsTrend("" + 2016,35));
-        trend.add(new VmIlsVsTrend("" + 2017,35));
-        trend.add(new VmIlsVsTrend("" + 2018,35));
-        trend.add(new VmIlsVsTrend("" + 2019,35));
-        trend.add(new VmIlsVsTrend("" + 2020,35));
+        List<VmIlsVsTrendDTO> trend = new ArrayList<>();
+        trend.add(new VmIlsVsTrendDTO("" + 2013,35));
+        trend.add(new VmIlsVsTrendDTO("" + 2014,35));
+        trend.add(new VmIlsVsTrendDTO("" + 2015,35));
+        trend.add(new VmIlsVsTrendDTO("" + 2016,35));
+        trend.add(new VmIlsVsTrendDTO("" + 2017,35));
+        trend.add(new VmIlsVsTrendDTO("" + 2018,35));
+        trend.add(new VmIlsVsTrendDTO("" + 2019,35));
+        trend.add(new VmIlsVsTrendDTO("" + 2020,35));
         vmIlsVsInfoDTO.setIlsVsTrend(trend);
         dto.setData(vmIlsVsInfoDTO);
         return dto;

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class KsLpsDTO extends BaseDTO {
     @JSONField(name = "wpCount")
-    private Integer wpCount; //无牌  unlicensed
+    private Integer wpCount; //无牌
     @JSONField(name = "tpCount")
     private Integer tpCount; //套牌
     @JSONField(name = "jpCount")
