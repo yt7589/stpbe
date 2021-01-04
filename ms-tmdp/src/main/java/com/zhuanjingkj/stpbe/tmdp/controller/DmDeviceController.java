@@ -26,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/dm")
+@CrossOrigin(origins = "*")
 public class DmDeviceController {
 
     /**

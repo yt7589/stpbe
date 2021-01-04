@@ -6,6 +6,14 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 import java.util.List;
 
 public class KsLpsDTO extends BaseDTO {
+    @JSONField(name = "wpCount")
+    private Integer wpCount; //无牌  unlicensed
+    @JSONField(name = "tpCount")
+    private Integer tpCount; //套牌
+    @JSONField(name = "jpCount")
+    private Integer jpCount; //假牌
+    @JSONField(name = "hpzdCount")
+    private Integer hpzdCount; //号牌遮挡
     @JSONField(name = "Lalp")
     List<KsLpsLalpDTO> Lalp;
     @JSONField(name = "site")
@@ -14,6 +22,38 @@ public class KsLpsDTO extends BaseDTO {
     List<KsLpsAreaDTO> area;
     @JSONField(name = "time")
     List<KsLpsTimeDTO> time;
+
+    public Integer getWpCount() {
+        return wpCount;
+    }
+
+    public void setWpCount(Integer wpCount) {
+        this.wpCount = wpCount;
+    }
+
+    public Integer getTpCount() {
+        return tpCount;
+    }
+
+    public void setTpCount(Integer tpCount) {
+        this.tpCount = tpCount;
+    }
+
+    public Integer getJpCount() {
+        return jpCount;
+    }
+
+    public void setJpCount(Integer jpCount) {
+        this.jpCount = jpCount;
+    }
+
+    public Integer getHpzdCount() {
+        return hpzdCount;
+    }
+
+    public void setHpzdCount(Integer hpzdCount) {
+        this.hpzdCount = hpzdCount;
+    }
 
     public List<KsLpsLalpDTO> getLalp() {
         return Lalp;
