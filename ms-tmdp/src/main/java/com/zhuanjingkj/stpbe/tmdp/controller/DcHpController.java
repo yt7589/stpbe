@@ -6,6 +6,7 @@ import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpDaDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpIlTrendDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpRgTrendDTO;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -30,8 +31,8 @@ public class DcHpController {
     public ResultDTO<DbQrsDTO> queryAllData(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false) String startIndex,
-        @RequestParam(name = "amount", required = false) String amount,
+        @RequestParam(name = "startIndex", required = false) int startIndex,
+        @RequestParam(name = "amount", required = false) int amount,
         @RequestParam(name = "direction", required = false) String direction,
         @RequestParam(name = "startTime", required = false) String startTime,
         @RequestParam(name = "endTime", required = false) String endTime,
@@ -42,7 +43,7 @@ public class DcHpController {
         @RequestParam(name = "fcId", required = false) String fcId,
         @RequestParam(name = "vAddr", required = false) String vAddr
     ){
-        return queryAllData_exp();
+        return queryAllData_exp(startIndex, amount, direction);
     }
 
     /**
@@ -65,30 +66,16 @@ public class DcHpController {
         return dto;
     }
 
-    private ResultDTO<DbQrsDTO> queryAllData_exp() {
+    private ResultDTO<DbQrsDTO> queryAllData_exp(int startIndex, int amount, String direction) {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        DbQrsDTO data = new DbQrsDTO(100,10,0,10,0,null);
+        DbQrsDTO data = new DbQrsDTO(180,10,0,10,0,null);
         List<DcHpDTO> recs = new ArrayList<>();
-        recs.add(new DcHpDTO(103,"2020-12-29 14:50:03","北京市海淀区上地8街12号","京A789456",
-                "外埠","是","主驾驶未系安全带","http://222.128.117.234:8090/cloud/images/a002.jpg"));
-        recs.add(new DcHpDTO(103,"2020-12-29 14:50:03","北京市海淀区上地8街12号","京A789456",
-                "外埠","否","主驾驶未系安全带","http://222.128.117.234:8090/cloud/images/a002.jpg"));
-        recs.add(new DcHpDTO(103,"2020-12-29 14:50:03","北京市海淀区上地8街12号","京A789456",
-                "外埠","否","主驾驶未系安全带","http://222.128.117.234:8090/cloud/images/a002.jpg"));
-        recs.add(new DcHpDTO(103,"2020-12-29 14:50:03","北京市海淀区上地8街12号","京A789456",
-                "外埠","否","主驾驶未系安全带","http://222.128.117.234:8090/cloud/images/a002.jpg"));
-        recs.add(new DcHpDTO(103,"2020-12-29 14:50:03","北京市海淀区上地8街12号","京A789456",
-                "外埠","否","主驾驶未系安全带","http://222.128.117.234:8090/cloud/images/a002.jpg"));
-        recs.add(new DcHpDTO(103,"2020-12-29 14:50:03","北京市海淀区上地8街12号","京A789456",
-                "外埠","是","主驾驶未系安全带","http://222.128.117.234:8090/cloud/images/a002.jpg"));
-        recs.add(new DcHpDTO(103,"2020-12-29 14:50:03","北京市海淀区上地8街12号","京A789456",
-                "外埠","是","主驾驶未系安全带","http://222.128.117.234:8090/cloud/images/a002.jpg"));
-        recs.add(new DcHpDTO(103,"2020-12-29 14:50:03","北京市海淀区上地8街12号","京A789456",
-                "外埠","是","主驾驶未系安全带","http://222.128.117.234:8090/cloud/images/a002.jpg"));
-        recs.add(new DcHpDTO(103,"2020-12-29 14:50:03","北京市海淀区上地8街12号","京A789456",
-                "外埠","是","主驾驶未系安全带","http://222.128.117.234:8090/cloud/images/a002.jpg"));
-        recs.add(new DcHpDTO(103,"2020-12-29 14:50:03","北京市海淀区上地8街12号","京A789456",
-                "外埠","是","主驾驶未系安全带","http://222.128.117.234:8090/cloud/images/a002.jpg"));
+        for (int i=0; i<amount; i++) {
+            recs.add(new DcHpDTO(startIndex+i,"2020-12-29 14:50:03",
+                    "北京" + startIndex + "-" + i,"京A-"+ startIndex + "-" + i,
+                    "外埠","是","违章",
+                    "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+        }
         data.setRecs(recs);
         dto.setData(data);
         return dto;
