@@ -323,10 +323,10 @@ public class VmIlsController {
         ilsType.add(new VmIlsTypeDTO(106,"副驾驶不系安全带"));
         ilsType.add(new VmIlsTypeDTO(107,"违反限行"));
         ilsType.add(new VmIlsTypeDTO(108,"逆行"));
-        ilsType.add(new VmIlsTypeDTO(108,"未随车携带行驶证"));
-        ilsType.add(new VmIlsTypeDTO(108,"未随车携带驾驶证"));
-        ilsType.add(new VmIlsTypeDTO(108,"使用汽车吊车牵引车辆"));
-        ilsType.add(new VmIlsTypeDTO(108,"牵引摩托车"));
+        ilsType.add(new VmIlsTypeDTO(109,"未随车携带行驶证"));
+        ilsType.add(new VmIlsTypeDTO(110,"未随车携带驾驶证"));
+        ilsType.add(new VmIlsTypeDTO(111,"使用汽车吊车牵引车辆"));
+        ilsType.add(new VmIlsTypeDTO(112,"牵引摩托车"));
         dto.setData(ilsType);
         return dto;
     }
