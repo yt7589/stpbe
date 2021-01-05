@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tebs.scs.obs.CltzxlObserver;
+import com.zhuanjingkj.stpbe.tebs.scs.obs.DkTitfObserver;
 import com.zhuanjingkj.stpbe.tebs.scs.obs.DkVtieObserver;
 import com.zhuanjingkj.stpbe.tebs.scs.obs.DkVtpObserver;
 import org.slf4j.Logger;
@@ -34,7 +35,8 @@ public class TvisJsonStpListener {
     private DkVtieObserver dkVtieObserver; // 首页数据看板左侧第一行第一个：本地外埠车辆占比
     @Autowired
     private DkVtpObserver dkVtpObserver; // 首页数据看板左侧第一行第二个：车辆类型饼图
-
+    @Autowired
+    private DkTitfObserver dkTitfObserver; //首页数据分时段过车统计柱状图
     @KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
     public void listen(String json) {
         if (isFirstRun) {
@@ -44,6 +46,9 @@ public class TvisJsonStpListener {
             observers.add(dkVtieObserver);
             dkVtpObserver.initialize(environment);
             observers.add(dkVtpObserver);
+
+            dkTitfObserver.initialize(environment);
+            observers.add(dkTitfObserver);
             isFirstRun = false;
         }
         System.out.println("TvisjsonStpListener.listen: " + json + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!");

@@ -78,31 +78,33 @@ public class DateUtil {
 		LocalDateTime localDateTime = LocalDateTime.now();
 		return localDateTime.plusMonths(num).format(dtf).toString();
 	}
+
+	public static String plusDays(Integer num) {
+		LocalDate localDate = LocalDate.now();
+		return localDate.plusDays(num).format(dtfMd).toString();
+	}
 	public static void main(String[] args) {
-		
 		System.out.println(getLocalDateTime());
 		System.out.println(isBefore("2020-08-03 14:48:26"));
-		
 		System.out.println(getMonthOfYear());
-		
 		System.out.println(isTimeBefore("17:00"));
 		System.out.println(isTimeAfter("05:00"));
-		
-		
 		System.out.println(plusMonth("2020-09-27 10:19:22", 3));
-		
 		System.out.println(getDay());
 		System.out.println(LocalDate.now().getMonthValue());
 		System.out.println(getDayOfMonth(LocalDate.now().plusDays(3)));
-		
 		System.out.println(plusHours("2020-09-27 10:19:22", 72));
-		
 		System.out.println(countMonth(-1));
 		System.out.println(plusDays("2020-08-27 10:19:22", -1));
 		System.out.println(countDays(-1));
-		
-		
-		System.out.println(plusDaysForDate("2020-08-27 10:19:22", -1));
+		System.out.println(plusDaysForDate("2021-01-04", -1));
+		System.out.println(LocalDateTime.now().getHour());
+		int hour = LocalDateTime.now().getHour();
+		String date = "" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + (hour < 10 ? ("0" + hour) : hour) ;
+		System.out.println(date);
+
+		System.out.println(plusDays(-1));
+		System.out.println(plusDays(0));
 	}
 
 	
