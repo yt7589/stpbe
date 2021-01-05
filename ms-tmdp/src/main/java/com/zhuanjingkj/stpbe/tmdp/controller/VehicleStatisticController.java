@@ -65,11 +65,6 @@ public class VehicleStatisticController {
     }
 
     private DkHtfsDTO getDkHtfsDTO_exp() {
-        DkHtfsDTO htfs = new DkHtfsDTO();
-        htfs.setTodayTf(12222222); // 千万
-        htfs.setWeekTf(133333333); // 亿
-        htfs.setMonthTf(1555555555);
-        htfs.setDailyTf(16666666);
         return dkHtfsService.getDkHtfsDTO_exp();
     }
 
