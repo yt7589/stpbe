@@ -3,6 +3,10 @@ package com.zhuanjingkj.stpbe.tmdp.service;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.DkMainDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.DkTitfDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.DkTitfItemDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public interface IDkTitfService {
     /**
@@ -10,4 +14,7 @@ public interface IDkTitfService {
      * @return
      */
     public DkTitfDTO countTrafficFlow();
+
+    public DkTitfDTO getDkTitfDTO_exp();
+
 }

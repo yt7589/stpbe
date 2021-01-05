@@ -3,10 +3,10 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 import com.alibaba.fastjson.JSON;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.*;
-import com.zhuanjingkj.stpbe.tmdp.dto.res.VehicleStatisticListDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.DkTitfService;
 import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtieService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * author by guoqiang
@@ -27,18 +25,15 @@ import java.util.Map;
 @RequestMapping("/vehicle/statistic")
 @CrossOrigin(origins = "*")
 public class VehicleStatisticController {
-    public final static String DK_VT_CAR = "小汽车";
-    public final static String DK_VT_SUV = "SUV";
-    public final static String DK_VT_MPV = "MPV";
-    public final static String DK_VT_VAN = "面包车";
-    public final static String DK_VT_TANK_TRUCK = "罐式货车";
-    public final static String DK_VT_NORMAL_TRUCK = "普通货车";
-    public final static String DK_VT_OTHERS = "其他";
 
     @Autowired
     private VehicleStatisticService vehicleStatisticService;
     @Autowired
     private DkVtieService dkVtieService;
+    @Autowired
+    private DkVtpService dkVtpService;
+    @Autowired
+    private DkTitfService dkTitfService;
 
     @GetMapping()
     public ResultDTO<DkMainDTO> getVehicleStatisticInfo() {
@@ -81,95 +76,11 @@ public class VehicleStatisticController {
     }
 
     private List<DkVtpDTO> getDkVtpDTOs_exp() {
-        List<DkVtpDTO> vtps = new ArrayList<>();
-        DkVtpDTO item = null;
-        item = new DkVtpDTO(DK_VT_CAR, 41);
-        vtps.add(item);
-        item = new DkVtpDTO(DK_VT_SUV, 23);
-        vtps.add(item);
-        item = new DkVtpDTO(DK_VT_MPV, 11);
-        vtps.add(item);
-        item = new DkVtpDTO(DK_VT_VAN, 6);
-        vtps.add(item);
-        item = new DkVtpDTO(DK_VT_TANK_TRUCK, 9);
-        vtps.add(item);
-        item = new DkVtpDTO(DK_VT_NORMAL_TRUCK, 5);
-        vtps.add(item);
-        item = new DkVtpDTO(DK_VT_OTHERS, 3);
-        vtps.add(item);
-        return vtps;
+        return dkVtpService.getDkVtpDTOs_exp();
     }
 
     private DkTitfDTO getDkTitfDTO_exp() {
-        DkTitfDTO titf = new DkTitfDTO();
-        DkTitfItemDTO item;
-        // 昨天
-        List<DkTitfItemDTO> yesterday = new ArrayList<>();
-        // 昨天4时
-        item = new DkTitfItemDTO();
-        item.setReportTime("4");
-        item.setCount(1230000);
-        yesterday.add(item);
-        // 昨天8时
-        item = new DkTitfItemDTO();
-        item.setReportTime("8");
-        item.setCount(2891111);
-        yesterday.add(item);
-        // 昨天12时
-        item = new DkTitfItemDTO();
-        item.setReportTime("12");
-        item.setCount(2020000);
-        yesterday.add(item);
-        // 昨天16时
-        item = new DkTitfItemDTO();
-        item.setReportTime("16");
-        item.setCount(186000);
-        yesterday.add(item);
-        // 昨天20时
-        item = new DkTitfItemDTO();
-        item.setReportTime("20");
-        item.setCount(3080000);
-        yesterday.add(item);
-        // 昨天24时
-        item = new DkTitfItemDTO();
-        item.setReportTime("24");
-        item.setCount(980000);
-        yesterday.add(item);
-        // 昨天
-        List<DkTitfItemDTO> today = new ArrayList<>();
-        // 今天4时
-        item = new DkTitfItemDTO();
-        item.setReportTime("4");
-        item.setCount(1630000);
-        today.add(item);
-        // 今天8时
-        item = new DkTitfItemDTO();
-        item.setReportTime("8");
-        item.setCount(3191111);
-        today.add(item);
-        // 今天12时
-        item = new DkTitfItemDTO();
-        item.setReportTime("12");
-        item.setCount(2220000);
-        today.add(item);
-        // 今天16时
-        item = new DkTitfItemDTO();
-        item.setReportTime("16");
-        item.setCount(156000);
-        today.add(item);
-        // 今天20时
-        item = new DkTitfItemDTO();
-        item.setReportTime("20");
-        item.setCount(3180000);
-        today.add(item);
-        // 昨天24时
-        item = new DkTitfItemDTO();
-        item.setReportTime("24");
-        item.setCount(1280000);
-        today.add(item);
-        titf.setYesterdayTraffics(yesterday);
-        titf.setTodayTraffics(today);
-        return titf;
+        return dkTitfService.getDkTitfDTO_exp();
     }
 
     private List<DkVttfSeriesDTO> getDkVttfSeriesDTOs_exp() {
