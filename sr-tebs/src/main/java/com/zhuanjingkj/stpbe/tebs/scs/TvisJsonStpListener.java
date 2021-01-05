@@ -49,6 +49,7 @@ public class TvisJsonStpListener {
 
             dkTitfObserver.initialize(environment);
             observers.add(dkTitfObserver);
+
             dkHtfsObserver.initialize(environment);
             observers.add(dkHtfsObserver);
             isFirstRun = false;

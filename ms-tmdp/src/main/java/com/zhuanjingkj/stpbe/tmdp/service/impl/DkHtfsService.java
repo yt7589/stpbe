@@ -31,7 +31,7 @@ public class DkHtfsService implements IDkHtfsService {
         Integer total = 0;
         while(c.hasNext()) {
             System.out.println(new String((byte[]) c.next()));
-            total += (int)redisTemplate.opsForValue().get(new String((byte[]) c.next()));
+            total += (int)(redisTemplate.opsForValue().get(new String((byte[]) c.next()))== null ? 0 : redisTemplate.opsForValue().get(new String((byte[]) c.next())));
         }
         htfs.setTodayTf((int)(redisTemplate.opsForValue().get("dk_htfs_" + date)  == null ? 0 : redisTemplate.opsForValue().get("dk_htfs_" + date)));
         htfs.setWeekTf((int)(redisTemplate.opsForValue().get("dk_htfs_" + date) == null ? 0 : redisTemplate.opsForValue().get("dk_htfs_" + date))

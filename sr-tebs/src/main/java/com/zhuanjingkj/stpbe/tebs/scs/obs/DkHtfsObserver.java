@@ -22,6 +22,7 @@ public class DkHtfsObserver implements ITvisStpObserver {
     @Override
     public void notifyObserver(VehicleVo vo) {
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        System.out.println("dk_htfs_" + date);
         redisTemplate.opsForValue().increment("dk_htfs_" + date);
     }
 
