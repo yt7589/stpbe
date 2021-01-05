@@ -13,6 +13,7 @@ import java.util.Map;
 
 @Service
 public class DkVtpService implements IDkVtpService {
+
     public final static String DK_VT_CAR = "小汽车";
     public final static String DK_VT_SUV = "SUV";
     public final static String DK_VT_MPV = "MPV";

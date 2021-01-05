@@ -31,9 +31,9 @@ public class DmNodeController {
     public ResultDTO<DbQrsDTO> queryNode(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false) String startIndex,
-        @RequestParam(name = "amount", required = false) String amount,
-        @RequestParam(name = "direction", required = false) String direction,
+        @RequestParam(name = "startIndex", required = false) Integer startIndex,
+        @RequestParam(name = "amount", required = false) Integer amount,
+        @RequestParam(name = "direction", required = false) Integer direction,
         @RequestParam(name = "nodeName", required = false) String nodeName,
         @RequestParam(name = "nodeAddr", required = false) String nodeAddr
     ) {

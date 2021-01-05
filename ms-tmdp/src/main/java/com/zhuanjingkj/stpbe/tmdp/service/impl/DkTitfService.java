@@ -83,67 +83,68 @@ public class DkTitfService implements IDkTitfService {
         // 昨天4时
         item = new DkTitfItemDTO();
         item.setReportTime("4");
-        item.setCount((int)(redisTemplate.opsForValue().get(zt + "04") == null ? 0 : redisTemplate.opsForValue().get(zt + "04")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + zt + "04") == null ? 0 : redisTemplate.opsForValue().get("titf_" + zt + "04")));
         yesterday.add(item);
         // 昨天8时
         item = new DkTitfItemDTO();
         item.setReportTime("8");
-        item.setCount((int)(redisTemplate.opsForValue().get(zt + "08") == null ? 0 : redisTemplate.opsForValue().get(zt + "08")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + zt + "08") == null ? 0 : redisTemplate.opsForValue().get("titf_" + zt + "08")));
         yesterday.add(item);
         // 昨天12时
         item = new DkTitfItemDTO();
         item.setReportTime("12");
-        item.setCount((int)(redisTemplate.opsForValue().get(zt + "12") == null ? 0 : redisTemplate.opsForValue().get(zt + "12")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + zt + "12") == null ? 0 : redisTemplate.opsForValue().get("titf_" + zt + "12")));
         yesterday.add(item);
         // 昨天16时
         item = new DkTitfItemDTO();
         item.setReportTime("16");
-        item.setCount((int)(redisTemplate.opsForValue().get(zt + "16") == null ? 0 : redisTemplate.opsForValue().get(zt + "16")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + zt + "16") == null ? 0 : redisTemplate.opsForValue().get("titf_" + zt + "16")));
         yesterday.add(item);
         // 昨天20时
         item = new DkTitfItemDTO();
         item.setReportTime("20");
-        item.setCount((int)(redisTemplate.opsForValue().get(zt + "20") == null ? 0 : redisTemplate.opsForValue().get(zt + "20")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + zt + "20") == null ? 0 : redisTemplate.opsForValue().get("titf_" + zt + "20")));
         yesterday.add(item);
         // 昨天24时
         item = new DkTitfItemDTO();
         item.setReportTime("24");
-        item.setCount((int)(redisTemplate.opsForValue().get(zt + "24") == null ? 0 : redisTemplate.opsForValue().get(zt + "24")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + zt + "24") == null ? 0 : redisTemplate.opsForValue().get("titf_" + zt + "24")));
         yesterday.add(item);
         // 今天
         List<DkTitfItemDTO> today = new ArrayList<>();
         // 今天4时
         item = new DkTitfItemDTO();
         item.setReportTime("4");
-        item.setCount((int)(redisTemplate.opsForValue().get(jt + "04") == null ? 0 : redisTemplate.opsForValue().get(jt + "04")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + jt + "04") == null ? 0 : redisTemplate.opsForValue().get("titf_" + jt + "04")));
         today.add(item);
         // 今天8时
         item = new DkTitfItemDTO();
         item.setReportTime("8");
-        item.setCount((int)(redisTemplate.opsForValue().get(jt + "08") == null ? 0 : redisTemplate.opsForValue().get(jt + "08")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + jt + "08") == null ? 0 : redisTemplate.opsForValue().get("titf_" + jt + "08")));
         today.add(item);
         // 今天12时
         item = new DkTitfItemDTO();
         item.setReportTime("12");
-        item.setCount((int)(redisTemplate.opsForValue().get(jt + "12") == null ? 0 : redisTemplate.opsForValue().get(jt + "12")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + jt + "12") == null ? 0 : redisTemplate.opsForValue().get("titf_" + jt + "12")));
         today.add(item);
         // 今天16时
         item = new DkTitfItemDTO();
         item.setReportTime("16");
-        item.setCount((int)(redisTemplate.opsForValue().get(jt + "16") == null ? 0 : redisTemplate.opsForValue().get(jt + "16")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + jt + "16") == null ? 0 : redisTemplate.opsForValue().get("titf_" + jt + "16")));
         today.add(item);
         // 今天20时
         item = new DkTitfItemDTO();
         item.setReportTime("20");
-        item.setCount((int)(redisTemplate.opsForValue().get(jt + "20") == null ? 0 : redisTemplate.opsForValue().get(jt + "20")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + jt + "20") == null ? 0 : redisTemplate.opsForValue().get("titf_" + jt + "20")));
         today.add(item);
         // 今天24时
         item = new DkTitfItemDTO();
         item.setReportTime("24");
-        item.setCount((int)(redisTemplate.opsForValue().get(jt + "24") == null ? 0 : redisTemplate.opsForValue().get(jt + "24")));
+        item.setCount((int)(redisTemplate.opsForValue().get("titf_" + jt + "24") == null ? 0 : redisTemplate.opsForValue().get("titf_" + jt + "24")));
         today.add(item);
         titf.setYesterdayTraffics(yesterday);
         titf.setTodayTraffics(today);
         return titf;
     }
+
 }
