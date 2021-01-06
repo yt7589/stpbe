@@ -51,7 +51,6 @@ public class DkVtpService implements IDkVtpService {
         int nTruck = (Integer)(redisTemplate.opsForValue().get("DK_VT_NORMAL_TRUCK") == null ? 0 : redisTemplate.opsForValue().get("DK_VT_NORMAL_TRUCK"));
         int others = (Integer)(redisTemplate.opsForValue().get("DK_VT_OTHERS") == null ? 0 : redisTemplate.opsForValue().get("DK_VT_OTHERS"));
         int total = car + suv + mpv + van + tTruck + nTruck + others;
-        System.out.println("car：" +car +"; suv:" + suv + "; mpv:" + mpv +";van:" + van +"; tTruck:" + tTruck +"; nTruck:" + nTruck + "; others:" + others + "; total:" + total);
         item = new DkVtpDTO(DK_VT_CAR, (int)(car/(total+0.001)*100));
         vtps.add(item);
         item = new DkVtpDTO(DK_VT_SUV, (int)(suv/(total+0.001)*100));

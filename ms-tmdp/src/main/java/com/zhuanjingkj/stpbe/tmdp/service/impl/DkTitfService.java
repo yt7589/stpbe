@@ -76,9 +76,6 @@ public class DkTitfService implements IDkTitfService {
     public DkTitfDTO getDkTitfDTO_exp() {
         String zt = DateUtil.plusDays(-1);
         String jt = DateUtil.plusDays(0);
-        System.out.println("zt:" + zt);
-        System.out.println("zj:" + jt);
-        System.out.println(redisTemplate.opsForValue().get("dk_titf_" + jt + "24") == null ? 0 : redisTemplate.opsForValue().get("dk_titf_" + jt + "24"));
         DkTitfDTO titf = new DkTitfDTO();
         DkTitfItemDTO item;
         // 昨天
