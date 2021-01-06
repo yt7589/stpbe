@@ -1,7 +1,10 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
+import com.zhuanjingkj.stpbe.tmdp.service.impl.VideoAnalysisService;
+import com.zhuanjingkj.stpbe.tmdp.task.VideoAnalysisTask;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -20,9 +23,13 @@ public class TmdpWsHandler extends TextWebSocketHandler {
     // WebSocket消息类型
     public final static String WMT_RR_SPFX = "wmtRrSpfx"; // 路网实况=》视频分析
     public final static String KS_RR_SPFX = "ksRrSpfx";
+    public final static String WSS_ID = "wssId";
 
-
+    @Autowired
+    private VideoAnalysisService videoAnalysisService;
     private static Map<String, Map<String, WebSocketSession>> topics = null;
+
+
     public static void initialize() {
         topics = new HashMap<>();
         topics.put(KS_SVS_LTVIS, new HashMap<>());
@@ -51,7 +58,10 @@ public class TmdpWsHandler extends TextWebSocketHandler {
                 }
             }
             if (StringUtils.isNotBlank(type) && type.equals(WMT_RR_SPFX)) {
-                System.out.println("### 建立视频分析WebSocket连接...");
+                long wssId = videoAnalysisService.registerWs(session);
+                long streamId = jsonObject.getLong("streamId");
+                VideoAnalysisTask.putStream(streamId);
+                System.out.println("### 建立视频分析WebSocket连接...wssId=" + wssId + "; streamId=" + streamId + "!");
             }
         }
         System.out.println("receive: " + payload + "!");
