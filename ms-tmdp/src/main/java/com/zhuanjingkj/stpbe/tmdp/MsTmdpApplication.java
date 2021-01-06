@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableDiscoveryClient
 @EnableTransactionManagement(proxyTargetClass = true)
 @ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.tmdp.*"})
-@MapperScan("com.zhuanjingkj.stpbe.tmdp.mapper")
+@MapperScan({"com.zhuanjingkj.stpbe.tmdp.mapper", "com.zhuanjingkj.stpbe.common.mapper"})
 @EnableScheduling
 public class MsTmdpApplication {
     public static ConfigurableApplicationContext appCtx = null;
