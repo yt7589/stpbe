@@ -3,10 +3,8 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 import com.alibaba.fastjson.JSON;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.*;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.DkTitfService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.*;
 import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtieService;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +32,10 @@ public class VehicleStatisticController {
     private DkVtpService dkVtpService;
     @Autowired
     private DkTitfService dkTitfService;
+    @Autowired
+    private DkVttfService dkVttfService;
+    @Autowired
+    private DkHtfsService dkHtfsService;
 
     @GetMapping()
     public ResultDTO<DkMainDTO> getVehicleStatisticInfo() {
@@ -63,12 +65,7 @@ public class VehicleStatisticController {
     }
 
     private DkHtfsDTO getDkHtfsDTO_exp() {
-        DkHtfsDTO htfs = new DkHtfsDTO();
-        htfs.setTodayTf(12222222); // 千万
-        htfs.setWeekTf(133333333); // 亿
-        htfs.setMonthTf(1555555555);
-        htfs.setDailyTf(16666666);
-        return htfs;
+        return dkHtfsService.getDkHtfsDTO_exp();
     }
 
     private DkVtieDTO getDkVtie() {
@@ -84,101 +81,7 @@ public class VehicleStatisticController {
     }
 
     private List<DkVttfSeriesDTO> getDkVttfSeriesDTOs_exp() {
-        List<DkVttfSeriesDTO> seriesDTOS = new ArrayList<>();
-        DkVttfSeriesDTO seriesDTO = new DkVttfSeriesDTO();
-        List<DkVttfSeriesItemDTO> items = null;
-        DkVttfSeriesItemDTO item = null;
-        // 生成大型车数据
-        items = new ArrayList<>();
-        item = new DkVttfSeriesItemDTO("2", 1120000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("4", 1230000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("6", 1350000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("8", 1660000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("10", 1590000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("12", 1480000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("14", 1280000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("16", 1390000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("18", 1980000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("20", 1720000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("22", 1520000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("24", 1330000);
-        items.add(item);
-        seriesDTO = new DkVttfSeriesDTO();
-        seriesDTO.setSeriesName("大型车");
-        seriesDTO.setDatas(items);
-        seriesDTOS.add(seriesDTO);
-        // 生成中型车数据
-        items = new ArrayList<>();
-        item = new DkVttfSeriesItemDTO("2", 1520000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("4", 1730000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("6", 1650000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("8", 1860000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("10", 1790000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("12", 1380000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("14", 1180000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("16", 1690000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("18", 1780000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("20", 2120000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("22", 2520000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("24", 2330000);
-        items.add(item);
-        seriesDTO = new DkVttfSeriesDTO();
-        seriesDTO.setSeriesName("中型车");
-        seriesDTO.setDatas(items);
-        seriesDTOS.add(seriesDTO);
-        // 生成小型车数据
-        items = new ArrayList<>();
-        item = new DkVttfSeriesItemDTO("2", 520000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("4", 730000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("6", 950000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("8", 3860000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("10", 2790000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("12", 1080000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("14", 980000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("16", 1690000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("18", 2780000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("20", 4120000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("22", 2520000);
-        items.add(item);
-        item = new DkVttfSeriesItemDTO("24", 330000);
-        items.add(item);
-        seriesDTO = new DkVttfSeriesDTO();
-        seriesDTO.setSeriesName("小型车");
-        seriesDTO.setDatas(items);
-        seriesDTOS.add(seriesDTO);
-        return seriesDTOS;
+        return dkVttfService.getDkVttfSeriesDTOs_exp();
     }
 
     private List<DkTjrsItemDTO> getDkTjrsItemDTOs_exp() {

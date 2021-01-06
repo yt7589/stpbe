@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.tebs.scs.obs.CltzxlObserver;
-import com.zhuanjingkj.stpbe.tebs.scs.obs.DkTitfObserver;
-import com.zhuanjingkj.stpbe.tebs.scs.obs.DkVtieObserver;
-import com.zhuanjingkj.stpbe.tebs.scs.obs.DkVtpObserver;
+import com.zhuanjingkj.stpbe.tebs.scs.obs.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +34,9 @@ public class TvisJsonStpListener {
     private DkVtpObserver dkVtpObserver; // 首页数据看板左侧第一行第二个：车辆类型饼图
     @Autowired
     private DkTitfObserver dkTitfObserver; //首页数据分时段过车统计柱状图
+    @Autowired
+    private DkHtfsObserver dkHtfsObserver; //首页本月过车量统计
+
     @KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
     public void listen(String json) {
         if (isFirstRun) {
@@ -49,6 +49,9 @@ public class TvisJsonStpListener {
 
             dkTitfObserver.initialize(environment);
             observers.add(dkTitfObserver);
+
+            dkHtfsObserver.initialize(environment);
+            observers.add(dkHtfsObserver);
             isFirstRun = false;
         }
         System.out.println("TvisjsonStpListener.listen: " + json + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!");

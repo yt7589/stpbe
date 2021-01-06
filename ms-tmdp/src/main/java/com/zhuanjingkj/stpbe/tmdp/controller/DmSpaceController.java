@@ -31,9 +31,9 @@ public class DmSpaceController {
     public ResultDTO<DbQrsDTO> queryArea (
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false) String startIndex,
-        @RequestParam(name = "amount", required = false) String amount,
-        @RequestParam(name = "direction", required = false) String direction
+        @RequestParam(name = "startIndex", required = false) Integer startIndex,
+        @RequestParam(name = "amount", required = false) Integer amount,
+        @RequestParam(name = "direction", required = false) Integer direction
     ) {
         return queryArea_exp();
     }

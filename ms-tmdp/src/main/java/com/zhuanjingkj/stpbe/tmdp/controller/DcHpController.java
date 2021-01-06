@@ -31,9 +31,9 @@ public class DcHpController {
     public ResultDTO<DbQrsDTO> queryAllData(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false) int startIndex,
-        @RequestParam(name = "amount", required = false) int amount,
-        @RequestParam(name = "direction", required = false) String direction,
+        @RequestParam(name = "startIndex", required = false) Integer startIndex,
+        @RequestParam(name = "amount", required = false) Integer amount,
+        @RequestParam(name = "direction", required = false) Integer direction,
         @RequestParam(name = "startTime", required = false) String startTime,
         @RequestParam(name = "endTime", required = false) String endTime,
         @RequestParam(name = "category", required = false) String category,
@@ -66,7 +66,7 @@ public class DcHpController {
         return dto;
     }
 
-    private ResultDTO<DbQrsDTO> queryAllData_exp(int startIndex, int amount, String direction) {
+    private ResultDTO<DbQrsDTO> queryAllData_exp(int startIndex, int amount, Integer direction) {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(180,10,0,10,0,null);
         List<DcHpDTO> recs = new ArrayList<>();

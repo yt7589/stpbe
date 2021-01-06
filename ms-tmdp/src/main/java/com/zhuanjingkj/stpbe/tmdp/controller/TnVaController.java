@@ -53,10 +53,10 @@ public class TnVaController {
     public ResultDTO<TnVaSiteInfoDTO> querySdInfo(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false) String startIndex,
-        @RequestParam(name = "amount", required = false) String amount,
-        @RequestParam(name = "direction", required = false) String direction,
-        @RequestParam(name = "siteId", required = false) String siteId
+        @RequestParam(name = "startIndex", required = false) Integer startIndex,
+        @RequestParam(name = "amount", required = false) Integer amount,
+        @RequestParam(name = "direction", required = false) Integer direction,
+        @RequestParam(name = "siteId", required = false) long siteId
     ) {
         return querySdInfo_exp();
     }

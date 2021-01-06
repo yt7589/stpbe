@@ -41,9 +41,9 @@ public class DmDeviceController {
     public ResultDTO<DbQrsDTO> queryDevice(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false) String startIndex,
-        @RequestParam(name = "amount", required = false) String amount,
-        @RequestParam(name = "direction", required = false) String direction,
+        @RequestParam(name = "startIndex", required = false) Integer startIndex,
+        @RequestParam(name = "amount", required = false) Integer amount,
+        @RequestParam(name = "direction", required = false) Integer direction,
         @RequestParam(name = "type", required = false) String type,
         @RequestParam(name = "code", required = false) String code
     ) {
