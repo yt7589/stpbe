@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -24,22 +25,19 @@ public class DkHtfsService implements IDkHtfsService {
 
     @Override
     public DkHtfsDTO getDkHtfsDTO_exp() {
-//        RedisConnection connection = redisTemplate.getConnectionFactory().getConnection();
         DkHtfsDTO htfs = new DkHtfsDTO();
-//        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-//        System.out.println(date.substring(0,6));
-//        ScanOptions options = ScanOptions.scanOptions().match("*" + "dk_htfs_" +  date.substring(0,6) + "*").count(31).build();
-//        Cursor c = connection.scan(options);
-//        Integer total = 0;
-//        while(c.hasNext()) {
-//            System.out.println(new String((byte[]) c.next()));
-//        }
         Integer day = LocalDate.now().getDayOfMonth();
-        Integer month = (int)(redisTemplate.opsForValue().get("dk_htfs_month") == null ? 0 : redisTemplate.opsForValue().get("dk_htfs_month"));
-        htfs.setTodayTf((int)(redisTemplate.opsForValue().get("dk_htfs_today")  == null ? 0 : redisTemplate.opsForValue().get("dk_htfs_today")));
-        htfs.setWeekTf((int)(redisTemplate.opsForValue().get("dk_htfs_week") == null ? 0 : redisTemplate.opsForValue().get("dk_htfs_week"))); // 亿
-        htfs.setMonthTf(month);
-        htfs.setDailyTf(month/day);
+        Integer total = (int)(redisTemplate.opsForValue().get("dk_htfs_month") == null ? 0 : redisTemplate.opsForValue().get("dk_htfs_month"));
+        Integer vtToday = (int)(redisTemplate.opsForValue().get("dk_htfs_today")  == null ? 0 : redisTemplate.opsForValue().get("dk_htfs_today"));
+        List<Integer> vWeek = redisTemplate.opsForList().range("dk_htfs_week", 0,6);
+        Integer vtWeek = 0;
+        for (Integer i : vWeek) {
+            vtWeek += i;
+        }
+        htfs.setTodayTf(vtToday);
+        htfs.setWeekTf(vtWeek + vtToday); // 亿
+        htfs.setMonthTf(total);
+        htfs.setDailyTf(total/day);
         return htfs;
     }
 
