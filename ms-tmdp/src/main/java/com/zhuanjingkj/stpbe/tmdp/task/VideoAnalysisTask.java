@@ -20,7 +20,7 @@ public class VideoAnalysisTask {
     @Async("tmdpPool")
     @Scheduled(cron = "*/1 * * * * ?")
     public void runVideoAnalysisTask() {
-        if (StringUtils.isBlank(AppRegistry.tvisJsonTblName)) {
+        /*if (StringUtils.isBlank(AppRegistry.tvisJsonTblName)) {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
@@ -28,7 +28,7 @@ public class VideoAnalysisTask {
             System.out.println("##### 处理第" + (Long.parseLong(streamId) + 1) + "路视频...");
             // 找到当前原始信息表
             System.out.println("##### 表名：" + AppRegistry.tvisJsonTblName + "!");
-        }
+        }*/
     }
 
     public static void putStream(long streamId) {

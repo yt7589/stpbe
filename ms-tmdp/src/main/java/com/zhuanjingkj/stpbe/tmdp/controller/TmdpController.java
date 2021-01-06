@@ -1,5 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
+import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
+import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 import com.zhuanjingkj.stpbe.data.dto.CreateRtspBindDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.rto.CreateRtspBindRTO;
@@ -33,7 +35,19 @@ public class TmdpController {
     private DkVttfService dkVttfService;
     @Autowired
     private TvisSdkService tvisSdkService;
+    @Autowired
+    private TvisJsonMapper tvisJsonMapper;
     private final static Logger logger = LoggerFactory.getLogger(TmdpController.class);
+
+    @GetMapping("/t001")
+    public ResultDTO<BaseDTO> t001(
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version) {
+        String tblName = tvisJsonMapper.getLatesTvisJsonTblName();
+        System.out.println("tblName=" + tblName + "!");
+        ResultDTO<BaseDTO> dto = new ResultDTO<>();
+        return dto;
+    }
 
     @PostMapping("/tvis-sdk/createRtspBind")
     public ResultDTO<CreateRtspBindDTO> createRtspBind(
