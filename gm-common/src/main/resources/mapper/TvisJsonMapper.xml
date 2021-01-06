@@ -9,7 +9,7 @@
         limit 0, 1
     </select>
 
-    <update id="createTvisJsonTbl" parameterType="java.lang.String">
+    <update id="createTvisJsonTbl">
         CREATE TABLE IF NOT EXISTS ${_parameter} (
         tvis_json_id BIGINT NOT NULL,
         occur_time DATETIME NULL,
@@ -22,15 +22,15 @@
         ENGINE = InnoDB
     </update>
 
-    <update id="insertTvisJson" parameterType="com.zhuanjingkj.stpbe.data.vo.TvisJsonVO">
-        insert into ${tvisJsonVO.tblName}(tvis_json_id, occur_time, camera_id, stream_id, pts, image_hash, json_hash)
-        values(#{tvisJsonVO.tvisJsonId},
-        #{tvisJsonVO.occurTime},
-        #{tvisJsonVO.cameraId},
-        #{tvisJsonVO.streamId},
-        #{tvisJsonVO.pts},
-        #{tvisJsonVO.imageHash},
-        #{tvisJsonVO.jsonHash}
+    <update id="insertTvisJson">
+        insert into ${_parameter.tblName}(tvis_json_id, occur_time, camera_id, stream_id, pts, image_hash, json_hash)
+        values(#{_parameter.tvisJsonId},
+        #{_parameter.occurTime},
+        #{_parameter.cameraId},
+        #{_parameter.streamId},
+        #{_parameter.pts},
+        #{_parameter.imageHash},
+        #{_parameter.jsonHash}
         );
     </update>
 
