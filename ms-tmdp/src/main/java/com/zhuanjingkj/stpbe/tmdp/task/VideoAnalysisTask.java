@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp.task;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,7 +20,7 @@ public class VideoAnalysisTask {
     @Async("tmdpPool")
     @Scheduled(cron = "*/1 * * * * ?")
     public void runVideoAnalysisTask() {
-        if (null == AppRegistry.tvisJsonTblName) {
+        if (StringUtils.isBlank(AppRegistry.tvisJsonTblName)) {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
