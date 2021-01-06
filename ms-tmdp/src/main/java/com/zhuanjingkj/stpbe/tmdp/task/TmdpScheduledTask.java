@@ -47,8 +47,10 @@ public class TmdpScheduledTask {
             KS_RSS_LSVS_COUNT = 0;
         }
 
-        Integer hour = LocalDateTime.now().getHour() + LocalDateTime.now().getSecond() + LocalDateTime.now().getMinute();
-        if(hour == 42) {
+        Integer hour = LocalDateTime.now().getHour();
+        Integer second = LocalDateTime.now().getSecond();
+        Integer minute = LocalDateTime.now().getMinute();
+        if(hour == 13 && second == 00 && minute == 30) {
             resetHtfs();
         }
     }
