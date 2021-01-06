@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.zhuanjingkj.stpbe.tmdp.service.impl.VideoAnalysisService;
+import com.zhuanjingkj.stpbe.tmdp.task.VideoAnalysisTask;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,7 @@ public class TmdpWsHandler extends TextWebSocketHandler {
             if (StringUtils.isNotBlank(type) && type.equals(WMT_RR_SPFX)) {
                 long wssId = videoAnalysisService.registerWs(session);
                 long streamId = jsonObject.getLong("streamId");
+                VideoAnalysisTask.putStream(streamId);
                 System.out.println("### 建立视频分析WebSocket连接...wssId=" + wssId + "; streamId=" + streamId + "!");
             }
         }
