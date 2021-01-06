@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tebs.vo;
+package com.zhuanjingkj.stpbe.data.vo;
 
 public class TvisJsonVO {
     private String tblName;
@@ -87,3 +87,4 @@ public class TvisJsonVO {
         this.jsonHash = jsonHash;
     }
 }
+

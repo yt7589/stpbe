@@ -1,7 +1,7 @@
-package com.zhuanjingkj.stpbe.tebs.mapper;
+package com.zhuanjingkj.stpbe.common.mapper;
 
-import com.zhuanjingkj.stpbe.tebs.vo.TvisJsonVO;
-import org.apache.ibatis.annotations.Param;
+import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
