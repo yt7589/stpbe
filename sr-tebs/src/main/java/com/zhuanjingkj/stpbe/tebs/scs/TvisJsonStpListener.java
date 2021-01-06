@@ -36,6 +36,8 @@ public class TvisJsonStpListener {
     private DkTitfObserver dkTitfObserver; //首页数据分时段过车统计柱状图
     @Autowired
     private DkHtfsObserver dkHtfsObserver; //首页本月过车量统计
+    @Autowired
+    private DkVttfObserver dkVttfObserver; //车辆类型流量
 
     @KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
     public void listen(String json) {
@@ -46,12 +48,12 @@ public class TvisJsonStpListener {
             observers.add(dkVtieObserver);
             dkVtpObserver.initialize(environment);
             observers.add(dkVtpObserver);
-
             dkTitfObserver.initialize(environment);
             observers.add(dkTitfObserver);
-
             dkHtfsObserver.initialize(environment);
             observers.add(dkHtfsObserver);
+            dkVttfObserver.initialize(environment);
+            observers.add(dkVttfObserver);
             isFirstRun = false;
         }
         System.out.println("TvisjsonStpListener.listen: " + json + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!");

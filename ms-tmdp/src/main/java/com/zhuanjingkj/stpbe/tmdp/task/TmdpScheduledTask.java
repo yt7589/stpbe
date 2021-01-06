@@ -50,7 +50,7 @@ public class TmdpScheduledTask {
         Integer hour = LocalDateTime.now().getHour();
         Integer second = LocalDateTime.now().getSecond();
         Integer minute = LocalDateTime.now().getMinute();
-        if(hour == 13 && second == 00 && minute == 30) {
+        if(hour == 0 && second == 0 && minute == 0) {
             resetHtfs();
         }
     }
@@ -213,7 +213,7 @@ public class TmdpScheduledTask {
         }
         redisTemplate.opsForValue().set("dk_htfs_today",0); //重置今日过车数量
         Integer day = LocalDate.now().getDayOfMonth();
-        if(day == 6) {
+        if(day == 1) {
             redisTemplate.opsForValue().set("dk_htfs_month",0); //重置本月过车数量
         }
 
