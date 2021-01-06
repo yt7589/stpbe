@@ -5,7 +5,7 @@
     <select id="getLatesTvisJsonTblName" resultType="java.lang.String">
         select table_name from information_schema.tables
         where table_schema='StpDb' and
-        table_name like 't_tvis_json_%' order by table_name
+        table_name like 't_tvis_json_%' order by table_name desc
         limit 0, 1
     </select>
 
