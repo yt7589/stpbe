@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
@@ -16,6 +17,9 @@ public class TmdpWsHandler extends TextWebSocketHandler {
     public final static String KS_AS_LSVS = "ksAsLsvs"; // Latest Site Vehicles
     public final static String KS_RSS_SFVS = "ksRssSfvs"; // 路段监控》现场频繁车辆
     public final static String KS_RSS_LSVS = "ksRssLsvs"; // 路段监控》最新现场车辆
+    // WebSocket消息类型
+    public final static String WMT_RR_SPFX = "wmtRrSpfx"; // 路网实况=》视频分析
+    public final static String KS_RR_SPFX = "ksRrSpfx";
 
 
     private static Map<String, Map<String, WebSocketSession>> topics = null;
@@ -26,6 +30,8 @@ public class TmdpWsHandler extends TextWebSocketHandler {
         topics.put(KS_AS_LSVS, new HashMap<>());
         topics.put(KS_RSS_SFVS, new HashMap<>());
         topics.put(KS_RSS_LSVS, new HashMap<>());
+        // 路网实况=》视频分析
+        topics.put(KS_RR_SPFX, new HashMap<>());
     }
 
     @Override
@@ -43,6 +49,9 @@ public class TmdpWsHandler extends TextWebSocketHandler {
                 } else {
                     topics.get(topic).remove(user);
                 }
+            }
+            if (StringUtils.isNotBlank(type) && type.equals(WMT_RR_SPFX)) {
+                System.out.println("### 建立视频分析WebSocket连接...");
             }
         }
         System.out.println("receive: " + payload + "!");
