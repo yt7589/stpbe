@@ -9,8 +9,8 @@
         limit 0, 1
     </select>
 
-    <update id="createTvisJsonTbl">
-        CREATE TABLE IF NOT EXISTS ${tblName} (
+    <update id="createTvisJsonTbl" parameterType="java.lang.String">
+        CREATE TABLE IF NOT EXISTS ${_parameter} (
         tvis_json_id BIGINT NOT NULL,
         occur_time DATETIME NULL,
         camera_id BIGINT NULL,
