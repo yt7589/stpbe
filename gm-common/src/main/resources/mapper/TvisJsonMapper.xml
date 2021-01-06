@@ -22,7 +22,7 @@
         ENGINE = InnoDB
     </update>
 
-    <update id="insertTvisJson" parameterType="com.zhuanjingkj.stpbe.tebs.vo.TvisJsonVO">
+    <update id="insertTvisJson" parameterType="com.zhuanjingkj.stpbe.data.vo.TvisJsonVO">
         insert into ${tvisJsonVO.tblName}(tvis_json_id, occur_time, camera_id, stream_id, pts, image_hash, json_hash)
         values(#{tvisJsonVO.tvisJsonId},
         #{tvisJsonVO.occurTime},
