@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement(proxyTargetClass = true)
 @ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.*"})
 @EnableDiscoveryClient
-@MapperScan("com.zhuanjingkj.stpbe.tebs.mapper")
+@MapperScan({"com.zhuanjingkj.stpbe.tebs.mapper", "com.zhuanjingkj.stpbe.common.mapper"})
 public class SrTebsApplication {
     public static void main(String[] args) {
         System.out.println("Traffic Event Bus System v0.0.1");
