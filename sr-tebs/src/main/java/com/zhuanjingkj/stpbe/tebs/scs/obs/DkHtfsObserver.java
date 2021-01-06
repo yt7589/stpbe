@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -22,7 +23,7 @@ public class DkHtfsObserver implements ITvisStpObserver {
     @Override
     public void notifyObserver(VehicleVo vo) {
         redisTemplate.opsForValue().increment("dk_htfs_today");
-        redisTemplate.opsForValue().increment("dk_htfs_week");
+
         redisTemplate.opsForValue().increment("dk_htfs_month");
     }
 
@@ -30,4 +31,5 @@ public class DkHtfsObserver implements ITvisStpObserver {
     public void initialize(Environment env) {
 
     }
+
 }

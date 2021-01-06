@@ -5,10 +5,13 @@ import com.zhuanjingkj.stpbe.tmdp.dto.ks.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +23,8 @@ public class TmdpScheduledTask {
     private static int KS_RSS_LSVS_COUNT = 0;
     @Autowired
     private TmdpWsHandler tmdpWsHandler;
-
+    @Autowired
+    private RedisTemplate redisTemplate;
     @Async("tmdpPool")
     @Scheduled(cron = "*/1 * * * * ?")
     public void runTmdpScheduledTask() {
@@ -41,6 +45,13 @@ public class TmdpScheduledTask {
         if(KS_RSS_LSVS_COUNT > 6){
             pushKsRssLsvs();
             KS_RSS_LSVS_COUNT = 0;
+        }
+
+        Integer hour = LocalDateTime.now().getHour();
+        Integer second = LocalDateTime.now().getSecond();
+        Integer minute = LocalDateTime.now().getMinute();
+        if(hour == 13 && second == 00 && minute == 30) {
+            resetHtfs();
         }
     }
 
@@ -187,5 +198,24 @@ public class TmdpScheduledTask {
         data.put(ksRssLsvsDTO.toJsonObject());
 
         tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_RSS_SFVS, data.toString());
+    }
+
+    private void resetHtfs() {
+        /**
+         * 1.把今日过车量统计到本周过车量
+         * 2.今日过车量重置为0
+         * 3.如果当前日期为1号，重置本月累计过车量为0
+         */
+        Integer vToday = (int)(redisTemplate.opsForValue().get("dk_htfs_today") == null ? 0 : redisTemplate.opsForValue().get("dk_htfs_today"));
+        redisTemplate.opsForList().leftPush("dk_htfs_week", vToday);
+        if(redisTemplate.opsForList().size("dk_htfs_week") > 6) {
+            redisTemplate.opsForList().rightPop("dk_htfs_week");
+        }
+        redisTemplate.opsForValue().set("dk_htfs_today",0); //重置今日过车数量
+        Integer day = LocalDate.now().getDayOfMonth();
+        if(day == 6) {
+            redisTemplate.opsForValue().set("dk_htfs_month",0); //重置本月过车数量
+        }
+
     }
 }
