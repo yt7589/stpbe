@@ -29,4 +29,8 @@ public class DkTjrsItemDTO extends BaseDTO {
     public void setCount(int count) {
         this.count = count;
     }
+
+    static {
+        
+    }
 }

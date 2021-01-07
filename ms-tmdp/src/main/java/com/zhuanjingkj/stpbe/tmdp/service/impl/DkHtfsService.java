@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-@Component
+@Service
 public class DkHtfsService implements IDkHtfsService {
 
     @Autowired

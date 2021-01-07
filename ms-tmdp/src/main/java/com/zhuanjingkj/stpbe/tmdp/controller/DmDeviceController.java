@@ -13,12 +13,15 @@ import com.zhuanjingkj.stpbe.tmdp.rto.dm.DeleteDeviceFromDsRTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.dm.UpdateDeviceInfoRTO;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
 import com.zhuanjingkj.stpbe.tmdp.util.FileUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Device Management
@@ -29,6 +32,8 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class DmDeviceController {
 
+    @Autowired
+    private RedisTemplate redisTemplate;
     /**
      * 设备列表
      * @param platform
