@@ -37,7 +37,7 @@
     <select id="getLatestStreamFrame" resultType="com.zhuanjingkj.stpbe.data.vo.TvisJsonVO">
         select tvis_json_id, occur_time, camera_id, image_hash,
         json_hash, pts
-        from ${tblName} where stream_id=#{streamId} tvis_json_id=
+        from ${tblName} where stream_id=#{streamId} and tvis_json_id=
         (select max(tvis_json_id) from ${tblName})
     </select>
 
