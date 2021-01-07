@@ -38,22 +38,7 @@ public class DkDctfService implements IDkDctfService {
                 (id, transfer) -> {
                     transfer.stream().reduce((a,b) -> new DkDctfItemDTO(a.getName(), a.getCount() + b.getCount())).ifPresent(dklist :: add);
                 });
-        /** 合并数据后排序*/
-        Collections.sort(dklist, new Comparator<DkDctfItemDTO>() {
-            @Override
-            public int compare(DkDctfItemDTO o1, DkDctfItemDTO o2) {
-                return new Double(o2.getCount()).compareTo(new Double(o1.getCount()));
-            }
-        });
-        Integer rt = 0;
-        if(dklist.size() < 10) {
-            rt = dklist.size();
-        } else {
-            rt = 10;
-        }
-        /** 取出top10*/
-        List<DkDctfItemDTO> list = dklist.subList(0, rt);
-        return list;
+        return dklist;
     }
 
     @PostConstruct
