@@ -1,5 +1,10 @@
 package com.zhuanjingkj.stpbe.data.vo;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TvisJsonVO {
     private String tblName;
     private long tvisJsonId;
@@ -21,6 +26,18 @@ public class TvisJsonVO {
         this.pts = pts;
         this.imageHash = imageHash;
         this.jsonHash = jsonHash;
+    }
+
+    public TvisJsonVO(long tvisJsonId, Timestamp occurTime, long cameraId, String imageHash, String jsonHash, long pts) {
+        this.tvisJsonId = tvisJsonId;
+        Date d = new Date();
+        d.setTime(occurTime.getTime());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.occurTime = df.format(d);
+        this.cameraId = cameraId;
+        this.imageHash = imageHash;
+        this.jsonHash = jsonHash;
+        this.pts = pts;
     }
 
     public String getTblName() {
