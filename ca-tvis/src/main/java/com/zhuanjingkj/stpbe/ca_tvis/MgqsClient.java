@@ -30,6 +30,7 @@ public class MgqsClient implements ITvisClient {
 
     public void startup(String[] args) {
         System.out.println("启动图搜客户端......");
+        long cameraId = 101;
         // 1. 读出指定目录图片列表
         String imagePath = args[ARGS_ROOT_PATH_IDX];
         String tvisUrl = args[ARGS_TVIS_URL];
@@ -64,14 +65,14 @@ public class MgqsClient implements ITvisClient {
                 map.put("MRHPT", "test");
                 map.put("HPHM", "test");
                 map.put("MRHPT", "test");
-                map.put("cameraId", "101");
+                map.put("cameraId", "" + cameraId);
                 map.put("TPMC", f.getName());
                 String result = TvisUtil.recognizeImageFile(map, f);
                 if (result.equals(TvisUtil.ERROR_RESPONSE)) {
                     System.out.println("识别图片失败");
                 } else {
                     // SDK识别结果
-                    List<VehicleVo> vvos = TvisUtil.parseTvisJson(result);
+                    List<VehicleVo> vvos = TvisUtil.parseTvisJson(cameraId, result);
                     VehicleWztzVo vehicleWztzVo;
                     VehicleCxtzVo vehicleCxtzVo;
                     VehicleCltzxlVo vehicleCltzxlVo;

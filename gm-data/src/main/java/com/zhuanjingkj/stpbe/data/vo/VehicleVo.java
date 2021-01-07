@@ -3,6 +3,8 @@ package com.zhuanjingkj.stpbe.data.vo;
 public class VehicleVo {
     private long tvisJsonId; // JSON的唯一编号
     private long vehsIdx; // VEH数组的序号
+    private long cameraId;
+    private long streamId;
     private VehicleWztzVo vehicleWztzVo; // 位置特征
     private VehicleHptzVO vehicleHptzVO; // 号牌特征
     private VehicleCltzxlVo vehicleCltzxlVo; // 车辆特征向量
@@ -22,6 +24,22 @@ public class VehicleVo {
 
     public void setVehsIdx(long vehsIdx) {
         this.vehsIdx = vehsIdx;
+    }
+
+    public long getCameraId() {
+        return cameraId;
+    }
+
+    public void setCameraId(long cameraId) {
+        this.cameraId = cameraId;
+    }
+
+    public long getStreamId() {
+        return streamId;
+    }
+
+    public void setStreamId(long streamId) {
+        this.streamId = streamId;
     }
 
     public VehicleWztzVo getVehicleWztzVo() {

@@ -59,8 +59,9 @@ public class TvisJsonStpListener {
         System.out.println("TvisjsonStpListener.listen: " + json + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         JSONObject rawJo = JSONObject.parseObject(json);
         long tvisJsonId = rawJo.getLong("tvisJsonId");
+        long cameraId = rawJo.getLong("cameraId");
         JSONObject rstJo = rawJo.getJSONObject("json");
-        List<VehicleVo> vehs = TvisUtil.parseTvisJson(rstJo.toJSONString());
+        List<VehicleVo> vehs = TvisUtil.parseTvisJson(cameraId, rstJo.toJSONString());
         long vehsIdx = 0;
         for (VehicleVo veh : vehs) {
             veh.setTvisJsonId(tvisJsonId);

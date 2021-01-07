@@ -62,8 +62,9 @@ public class TvisUtil {
         }
     }
 
-    public static List<VehicleVo> parseTvisJson(String json) {
+    public static List<VehicleVo> parseTvisJson(long cameraId, String json) {
         JSONObject rstJson = JSONObject.parseObject(json);
+        long streamId = rstJson.getLong("StreamID");
         // 获取特征向量
         JSONArray vehs = rstJson.getJSONArray("VEH");
         JSONObject vehJson = null;
@@ -78,6 +79,8 @@ public class TvisUtil {
         for (Object veh : vehs) {
             vehJson = (JSONObject) veh;
             vo = new VehicleVo();
+            vo.setCameraId(cameraId);
+            vo.setStreamId(streamId);
             // 位置特征解析
             vehicleWztzVo = new VehicleWztzVo();
             wztzJson = vehJson.getJSONObject("WZTZ");

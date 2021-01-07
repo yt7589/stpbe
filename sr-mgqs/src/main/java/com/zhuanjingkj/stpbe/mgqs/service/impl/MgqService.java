@@ -71,6 +71,7 @@ public class MgqService implements IMgqService {
     private static int errorNum = 0;
     private static int savedNum = 0;
     public void processBatchDclFdsFiles(List<File> dsFiles) {
+        long cameraId = 101;
         String result = null;
         List<VehicleVo> vos = null;
         VehicleWztzVo vehicleWztzVo = null;
@@ -90,14 +91,14 @@ public class MgqService implements IMgqService {
             map.put("MRHPT", "test");
             map.put("HPHM", "test");
             map.put("MRHPT", "test");
-            map.put("cameraId", "101");
+            map.put("cameraId", "" + cameraId);
             map.put("TPMC", f.getName());
             result = TvisUtil.recognizeImageFile(map, f);
             if (result.equals(TvisUtil.ERROR_RESPONSE)) {
                 //System.out.println("识别图片失败");
                 errorNum++;
             } else {
-                vos = TvisUtil.parseTvisJson(result);
+                vos = TvisUtil.parseTvisJson(cameraId, result);
                 for (VehicleVo vo : vos) {
                     vehicleWztzVo = vo.getVehicleWztzVo();
                     vehicleCxtzVo = vo.getVehicleCxtzVo();

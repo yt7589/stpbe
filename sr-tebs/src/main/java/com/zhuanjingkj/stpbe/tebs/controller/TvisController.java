@@ -51,13 +51,14 @@ public class TvisController {
     public ResultDTO<GrqDemoListDTO> grqDemo(@RequestParam(name = "imageFile") String imageFile) {
         System.out.println("查询图片：" + imageFile + "!");
         // 调用sr-tvis-server求特征向量
+        long cameraId = 101;
         final File f = new File(imageFile);
         final Map<String, Object> map = new HashMap<>();
         map.put("GCXH", "111111");
         map.put("MRHPT", "test");
         map.put("HPHM", "test");
         map.put("MRHPT", "test");
-        map.put("cameraId", "101");
+        map.put("cameraId", "" + cameraId);
         map.put("TPMC", f.getName());
         // 返回结果
         ResultDTO<GrqDemoListDTO> dto = new ResultDTO<>();
@@ -65,7 +66,7 @@ public class TvisController {
         System.out.println("识别结果：" + response + "!!!!!!!!!!!!!!!!!!!!!!");
         if (response != null && !response.equals("")) {
             // 调用以图搜图得到结果
-            List<VehicleVo> vehs = TvisUtil.parseTvisJson(response);
+            List<VehicleVo> vehs = TvisUtil.parseTvisJson(cameraId, response);
             if (vehs.size() > 0) {
                 VehicleVo vo = vehs.get(0);
                 VehicleWztzVo wztzVo = vo.getVehicleWztzVo();
