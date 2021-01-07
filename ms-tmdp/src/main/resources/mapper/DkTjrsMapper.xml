@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.tmdp.mapper.DkTjrsMapper">
+    <select id ="getRoad" resultType = "hashmap">
+        SELECT tc.camera_code, tr.road_name
+          FROM t_camera tc
+     LEFT JOIN t_site ts
+            ON tc.site_id = ts.site_id
+     LEFT JOIN t_road_seg trs
+            ON ts.site_id = trs.src_site_id
+     LEFT JOIN t_road tr
+            ON trs.road_id = tr.road_id
+         WHERE tr.road_name is not null
+     UNION ALL
+        SELECT tc.camera_code, tr.road_name
+          FROM t_camera tc
+     LEFT JOIN t_site ts
+            ON tc.site_id = ts.site_id
+     LEFT JOIN t_road_seg trs
+            ON ts.site_id = trs.dst_site_id
+     LEFT JOIN t_road tr
+            ON trs.road_id = tr.road_id
+         WHERE tr.road_name is not null
+    </select>
+</mapper>

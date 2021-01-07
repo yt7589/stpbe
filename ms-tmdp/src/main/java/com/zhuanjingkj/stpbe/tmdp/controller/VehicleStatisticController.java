@@ -36,7 +36,10 @@ public class VehicleStatisticController {
     private DkVttfService dkVttfService;
     @Autowired
     private DkHtfsService dkHtfsService;
-
+    @Autowired
+    private DkTjrsService dkTjrsService;
+    @Autowired
+    private DkDctfService dkDctfService;
     @GetMapping()
     public ResultDTO<DkMainDTO> getVehicleStatisticInfo() {
         DkMainDTO mainDto = new DkMainDTO();
@@ -85,68 +88,11 @@ public class VehicleStatisticController {
     }
 
     private List<DkTjrsItemDTO> getDkTjrsItemDTOs_exp() {
-        List<DkTjrsItemDTO> items = new ArrayList<>();
-        DkTjrsItemDTO item = null;
-        //
-        item = new DkTjrsItemDTO("西直门外大街", 1890000);
-        items.add(item);
-        item = new DkTjrsItemDTO("五道口", 1390000);
-        items.add(item);
-        item = new DkTjrsItemDTO("成府路", 890000);
-        items.add(item);
-        item = new DkTjrsItemDTO("西三旗", 1580000);
-        items.add(item);
-        item = new DkTjrsItemDTO("朝阳北路", 1220000);
-        items.add(item);
-        item = new DkTjrsItemDTO("清华西门", 1560000);
-        items.add(item);
-        item = new DkTjrsItemDTO("上地南口", 1120000);
-        items.add(item);
-        item = new DkTjrsItemDTO("北京西站", 880000);
-        items.add(item);
-        item = new DkTjrsItemDTO("六里桥", 1070000);
-        items.add(item);
-        item = new DkTjrsItemDTO("大山子", 1230000);
-        items.add(item);
-        return items;
+        return dkTjrsService.getDkTjrsItemDTOs_exp();
     }
 
     private List<DkDctfItemDTO> getDkDctfItemDTOs_exp() {
-        List<DkDctfItemDTO> dctfs = new ArrayList<>();
-        DkDctfItemDTO item = null;
-        item = new DkDctfItemDTO("东城区", 1850000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("西城区", 20800000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("海淀区", 1980000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("朝阳区", 1810000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("石景山区", 1010000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("丰台区", 1130000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("大兴区", 980000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("通州区", 1550000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("房山区", 1020000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("门头沟区", 880000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("昌平区", 1080000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("延庆区", 550000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("怀柔区", 880000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("顺义区", 990000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("平谷区", 770000);
-        dctfs.add(item);
-        item = new DkDctfItemDTO("密云区", 660000);
-        dctfs.add(item);
-        return dctfs;
+        return dkDctfService.getDkDctfItemDTOs_exp();
     }
 
 
