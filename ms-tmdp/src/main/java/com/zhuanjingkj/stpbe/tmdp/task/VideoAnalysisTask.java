@@ -1,7 +1,9 @@
 package com.zhuanjingkj.stpbe.tmdp.task;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
+import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -25,10 +27,13 @@ public class VideoAnalysisTask {
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
             System.out.println("##### ^_^ tableName=" + AppRegistry.tvisJsonTblName + "! #################");
         }
+        TvisJsonVO tvisJsonVO = null;
         for (String streamId : streamIds) {
             System.out.println("##### 处理第" + (Long.parseLong(streamId) + 1) + "路视频...");
             // 找到当前原始信息表
             System.out.println("##### 表名：" + AppRegistry.tvisJsonTblName + "!");
+            tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, Long.parseLong(streamId));
+            System.out.println("##### Yantao: tvisJsonVO:" + JSONObject.toJSONString(tvisJsonVO) + "!");
         }
     }
 

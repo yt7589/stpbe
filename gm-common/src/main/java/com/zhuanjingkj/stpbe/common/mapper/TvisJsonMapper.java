@@ -25,4 +25,12 @@ public interface TvisJsonMapper {
      * @return
      */
     public int insertTvisJson(@Param("tvisJsonVO") TvisJsonVO tvisJsonVO);
+
+    /**
+     * 获取指定视频的最新帧
+     * @param tblName
+     * @param streamId
+     * @return
+     */
+    public TvisJsonVO getLatestStreamFrame(@Param("tblName") String tblName, @Param("streamId") long streamId);
 }
