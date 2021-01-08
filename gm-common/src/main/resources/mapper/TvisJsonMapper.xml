@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper">
+    <resultMap id="tvisJsonVOMap" type="com.zhuanjingkj.stpbe.data.vo.TvisJsonVO">
+        <!-- <id property="tvisJsonId" column="tvis_json_id" javaType="long" jdbcType=""/>
+        <result property="imageHash" column="image_has" javaType="string" jdbcType="string" />
+        -->
+        <id property="tvisJsonId" column="tvis_json_id" />
+        <result property="occurTime" column="occur_time" />
+        <result property="cameraId" column="camera_id" />
+        <result property="streamId" column="stream_id" />
+        <result property="pts" column="pts" />
+        <result property="imageHash" column="image_hash" />
+        <result property="jsonHash" column="json_hash" />
+    </resultMap>
 
     <select id="getLatesTvisJsonTblName" resultType="java.lang.String">
         select table_name from information_schema.tables
@@ -34,7 +46,7 @@
         );
     </update>
 
-    <select id="getLatestStreamFrame" resultType="com.zhuanjingkj.stpbe.data.vo.TvisJsonVO" resultMap="">
+    <select id="getLatestStreamFrame" resultMap="tvisJsonVOMap">
         select tvis_json_id, occur_time, camera_id, image_hash,
         json_hash, pts
         from ${tblName} where stream_id=#{streamId} and tvis_json_id=
