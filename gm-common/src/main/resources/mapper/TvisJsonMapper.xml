@@ -34,7 +34,7 @@
         );
     </update>
 
-    <select id="getLatestStreamFrame" resultType="com.zhuanjingkj.stpbe.data.vo.TvisJsonVO">
+    <select id="getLatestStreamFrame" resultType="com.zhuanjingkj.stpbe.data.vo.TvisJsonVO" resultMap="">
         select tvis_json_id, occur_time, camera_id, image_hash,
         json_hash, pts
         from ${tblName} where stream_id=#{streamId} and tvis_json_id=

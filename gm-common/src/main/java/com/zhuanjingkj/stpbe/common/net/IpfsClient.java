@@ -76,4 +76,8 @@ public class IpfsClient {
         }
         return true;
     }
+
+    public static String getIpfsUrl(String fileHash) {
+        return AppConst.IPFS_GW_URL + fileHash;
+    }
 }

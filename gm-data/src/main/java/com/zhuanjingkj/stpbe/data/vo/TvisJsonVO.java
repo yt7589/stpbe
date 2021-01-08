@@ -1,5 +1,8 @@
 package com.zhuanjingkj.stpbe.data.vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
