@@ -40,6 +40,8 @@ public class VideoAnalysisTask {
             // 找到当前原始信息表
             System.out.println("##### 表名：" + AppRegistry.tvisJsonTblName + "!");
             tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, Long.parseLong(streamId));
+            System.out.println("##### vo:" + tvisJsonVO + "!");
+            System.out.println("##### vo1:" + JSONObject.toJSONString(tvisJsonVO) + "!");
             // 获取图片
             BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
             // 获取JSON结果
