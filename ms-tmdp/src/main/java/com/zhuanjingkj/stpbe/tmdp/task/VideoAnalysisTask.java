@@ -3,6 +3,8 @@ package com.zhuanjingkj.stpbe.tmdp.task;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
+import com.zhuanjingkj.stpbe.common.net.IpfsClient;
+import com.zhuanjingkj.stpbe.common.tvis.TvisSodImage;
 import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,11 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +40,18 @@ public class VideoAnalysisTask {
             // 找到当前原始信息表
             System.out.println("##### 表名：" + AppRegistry.tvisJsonTblName + "!");
             tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, Long.parseLong(streamId));
+            // 获取图片
+            BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
+            // 获取JSON结果
+            IpfsClient.downloadFile(tvisJsonVO.getJsonHash(), "vj.json");
+            // 在图像上绘制一个矩形框并保存到当前目录下
+            TvisSodImage.drawRect(orgImg, Color.RED, 200, 200, 300, 500);
+            try {
+                ImageIO.write(orgImg, "jpg", new File("n001.jpg"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // 生成一个定制的URL，可以通过SpringBoot来查看图片内容
             System.out.println("##### Yantao: tvisJsonVO:" + JSONObject.toJSONString(tvisJsonVO) + "!");
         }
     }
