@@ -20,6 +20,7 @@ public class TvisSodImage {
         BufferedImage img = null;
         try {
             url = new URL(AppConst.IPFS_GW_URL + fileHash);
+            System.out.println("##### url:" + (AppConst.IPFS_GW_URL + fileHash) + "!");
             img = ImageIO.read(url);
         } catch (MalformedURLException e) {
             e.printStackTrace();
