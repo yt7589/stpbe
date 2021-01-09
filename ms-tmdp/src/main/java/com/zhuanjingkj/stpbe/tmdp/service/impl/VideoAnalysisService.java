@@ -13,12 +13,14 @@ import java.util.Map;
 
 @Service
 public class VideoAnalysisService implements IVideoAnalysisService {
+
     @Autowired
     private RedisTemplate redisTemplate;
 
     public final static String WSS_ID = "wssId";
 
     private static Map<String, List<String>> orgImages = new HashMap<>();
+
     private static Map<String, List<String>> cutImages = new HashMap<>();
 
     @Override

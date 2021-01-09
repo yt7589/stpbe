@@ -70,12 +70,16 @@ public class TvisUtil {
         JSONObject vehJson = null;
         JSONObject cxtzJson = null;
         JSONObject wztzJson = null;
+        JSONObject jsxwtzJson = null;
+        JSONObject gxhtzJson = null;
         List<VehicleVo> vos = new ArrayList<>();
         VehicleVo vo = null;
         VehicleWztzVo vehicleWztzVo = null;
         VehicleHptzVO hptzVO = null;
         VehicleCxtzVo vehicleCxtzVo = null;
         VehicleCltzxlVo vehicleCltzxlVo = null;
+        VehicleJsxwtzVO vehicleJsxwtzVO = null;
+        VehicleGxhtzVO vehicleGxhtzVO = null;
         for (Object veh : vehs) {
             vehJson = (JSONObject) veh;
             vo = new VehicleVo();
@@ -98,11 +102,39 @@ public class TvisUtil {
             vehicleCxtzVo.setPpcxCode(cxtzJson.getString("PPCX"));
             vehicleCxtzVo.setCxnkCode(cxtzJson.getString("CXNK"));
             vehicleCxtzVo.setPpxhmsCode(cxtzJson.getString("PPXHMS"));
+            vehicleCxtzVo.setCsysCode(cxtzJson.getString("CSYS"));
             vo.setVehicleCxtzVo(vehicleCxtzVo);
             // 车辆特征向量
             vehicleCltzxlVo = new VehicleCltzxlVo();
             vehicleCltzxlVo.setCltzxl(generateTzxl(vehJson.getString("CLTZXL")));
             vo.setVehicleCltzxlVo(vehicleCltzxlVo);
+            // 驾驶行为特征
+            vehicleJsxwtzVO = new VehicleJsxwtzVO();
+            jsxwtzJson = vehJson.getJSONObject("JSXWTZ");
+            vehicleJsxwtzVO.setFjsbjaqd(jsxwtzJson.getString("FJSBJAQD"));
+            vehicleJsxwtzVO.setFjszyb(jsxwtzJson.getString("FJSZYB"));
+            vehicleJsxwtzVO.setMtcbdtk(jsxwtzJson.getString("MTCBDTK"));
+            vehicleJsxwtzVO.setZjsbjaqd(jsxwtzJson.getString("ZJSBJAQD"));
+            vehicleJsxwtzVO.setZjscy(jsxwtzJson.getString("ZJSCY"));
+            vehicleJsxwtzVO.setZjsddh(jsxwtzJson.getString("ZJSDDH"));
+            vehicleJsxwtzVO.setZjsksj(jsxwtzJson.getString("ZJSKSJ"));
+            vehicleJsxwtzVO.setZjszyb(jsxwtzJson.getString("ZJSZYB"));
+            vo.setVehicleJsxwtzVO(vehicleJsxwtzVO);
+            // 个性化特征
+            vehicleGxhtzVO = new VehicleGxhtzVO();
+            gxhtzJson = vehJson.getJSONObject("GXHTZ");
+            vehicleGxhtzVO.setCcztw(gxhtzJson.getString("CCZTW"));
+            vehicleGxhtzVO.setBj(gxhtzJson.getString("BJ"));
+            vehicleGxhtzVO.setGj(gxhtzJson.getString("GJ"));
+            vehicleGxhtzVO.setTc(gxhtzJson.getString("TC"));
+            vehicleGxhtzVO.setXlj(gxhtzJson.getString("XLJ"));
+            vehicleGxhtzVO.setDcjqs(gxhtzJson.getString("DCJQS"));
+            vehicleGxhtzVO.setCszt(gxhtzJson.getString("CSZT"));
+            vehicleGxhtzVO.setCsps(gxhtzJson.getString("CSPS"));
+            vehicleGxhtzVO.setCsgh(gxhtzJson.getString("CSGH"));
+            vehicleGxhtzVO.setCsch(gxhtzJson.getString("CSCH"));
+            vo.setVehicleGxhtzVO(vehicleGxhtzVO);
+
             vos.add(vo);
         }
         return vos;

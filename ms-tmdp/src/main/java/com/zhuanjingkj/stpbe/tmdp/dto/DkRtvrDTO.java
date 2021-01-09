@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class DkRtvrDTO extends BaseDTO {
@@ -26,6 +27,12 @@ public class DkRtvrDTO extends BaseDTO {
     private String imgUrl;
     @JSONField(name = "imgId")
     private int imgId;
+    @JSONField(name = "imagehash")
+    private String imageHash;
+
+    public DkRtvrDTO() {
+        super();
+    }
 
     public DkRtvrDTO(int id, int siteId, String siteName, int violationTypeId, String violationTypeName,
                      String clpp, String ppcx, String hphm, String occurTime,
@@ -119,7 +126,7 @@ public class DkRtvrDTO extends BaseDTO {
     }
 
     public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+        this.imgUrl = IpfsClient.getIpfsUrl(this.imageHash);
     }
 
     public int getImgId() {
@@ -128,5 +135,13 @@ public class DkRtvrDTO extends BaseDTO {
 
     public void setImgId(int imgId) {
         this.imgId = imgId;
+    }
+
+    public String getImageHash() {
+        return imageHash;
+    }
+
+    public void setImageHash(String imageHash) {
+        this.imageHash = imageHash;
     }
 }

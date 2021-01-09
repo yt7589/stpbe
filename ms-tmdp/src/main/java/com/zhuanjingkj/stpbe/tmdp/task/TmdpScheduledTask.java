@@ -203,19 +203,29 @@ public class TmdpScheduledTask {
     private void resetHtfs() {
         /**
          * 1.把今日过车量统计到本周过车量
-         * 2.今日过车量重置为0
-         * 3.如果当前日期为1号，重置本月累计过车量为0
          */
         Integer vToday = (int)(redisTemplate.opsForValue().get("dk_htfs_today") == null ? 0 : redisTemplate.opsForValue().get("dk_htfs_today"));
         redisTemplate.opsForList().leftPush("dk_htfs_week", vToday);
         if(redisTemplate.opsForList().size("dk_htfs_week") > 6) {
             redisTemplate.opsForList().rightPop("dk_htfs_week");
         }
+        /**
+         * 2.今日过车量重置为0
+         */
         redisTemplate.opsForValue().set("dk_htfs_today",0); //重置今日过车数量
         Integer day = LocalDate.now().getDayOfMonth();
+        /**
+         * 3.如果当前日期为1号，重置本月累计过车量为0
+         */
         if(day == 1) {
             redisTemplate.opsForValue().set("dk_htfs_month",0); //重置本月过车数量
         }
-
+        /**
+         * 4.清空本日违章趋势图数据
+         */
+        if(redisTemplate.hasKey("dk_rtvr_violation")) {
+            redisTemplate.delete("dk_rtvr_violation");
+            redisTemplate.opsForList().rightPushAll("dk_rtvr_violation", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
     }
 }

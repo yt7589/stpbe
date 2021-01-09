@@ -9,6 +9,9 @@ public class DkMvtsDTO extends BaseDTO {
     @JSONField(name = "count")
     private int count;
 
+    public DkMvtsDTO() {
+        super();
+    }
     public DkMvtsDTO(String name, int count) {
         this.name = name;
         this.count = count;

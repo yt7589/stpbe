@@ -15,6 +15,9 @@ import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.TrafficViolationStatisticDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.TrafficViolationRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.TrafficViolationService;
 import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.DkMvtsService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.DkRtvrservice;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.DkTvtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +44,15 @@ public class TrafficViolationController {
     @Autowired
     private VehicleStatisticService vehicleStatisticService;
 
+    @Autowired
+    private DkRtvrservice dkRtvrservice;
+
+    @Autowired
+    private DkMvtsService dkMvtsService;
+
+    @Autowired
+    private DkTvtService dkTvtService;
+
     @GetMapping()
     public ResultDTO<DkViolationDTO> getTrafficViolationInfo() {
         ResultDTO<DkViolationDTO> dto = new ResultDTO<>();
@@ -53,69 +65,15 @@ public class TrafficViolationController {
     }
 
     private List<DkRtvrDTO> getDkRtvrDTOs_exp() {
-        List<DkRtvrDTO> rtvrs = new ArrayList<>();
-        DkRtvrDTO item = null;
-        item = new DkRtvrDTO(1, 11, "上地三街", 101, "不系安全带",
-                "奥迪", "A6L", "京A-TN518", "2020-08-30 12:01:39",
-                201, "http://192.168.2.68:8081/image/static/violation_001.jpg");
-        rtvrs.add(item);
-        item = new DkRtvrDTO(2, 21, "六里桥",2101, "不系安全带",
-                "奔驰", "E级", "苏B-TN123", "2020-09-08 12:01:39",
-                2202, "http://192.168.2.68:8081/image/static/violation_002.jpg");
-        rtvrs.add(item);
-        return rtvrs;
+        return dkRtvrservice.getDkRtvrDTOs_exp();
     }
 
     private List<DkMvtsDTO> getDkMvtsDTOs_exp() {
-        List<DkMvtsDTO> mvtss = new ArrayList<>();
-        DkMvtsDTO item = null;
-        item = new DkMvtsDTO("主驾驶不系安全带", 30000);
-        mvtss.add(item);
-        item = new DkMvtsDTO("主驾驶打电话", 50000);
-        mvtss.add(item);
-        item = new DkMvtsDTO("主驾驶看手机", 90000);
-        mvtss.add(item);
-        item = new DkMvtsDTO("副驾驶不系安全带", 10000);
-        mvtss.add(item);
-        item = new DkMvtsDTO("未悬挂号牌", 22000);
-        mvtss.add(item);
-        item = new DkMvtsDTO("遮挡号牌", 19000);
-        mvtss.add(item);
-        item = new DkMvtsDTO("污损号牌", 29000);
-        mvtss.add(item);
-        item = new DkMvtsDTO("摩托车不带头盔", 31000);
-        mvtss.add(item);
-        return mvtss;
+        return dkMvtsService.getDkMvtsDTOs_exp();
     }
 
     private List<DkTvtDTO> getDkTvtDTOs_exp() {
-        List<DkTvtDTO> tvts = new ArrayList<>();
-        DkTvtDTO item = null;
-        item = new DkTvtDTO("2", 10000);
-        tvts.add(item);
-        item = new DkTvtDTO("4", 8000);
-        tvts.add(item);
-        item = new DkTvtDTO("6", 90000);
-        tvts.add(item);
-        item = new DkTvtDTO("8", 120000);
-        tvts.add(item);
-        item = new DkTvtDTO("10", 200000);
-        tvts.add(item);
-        item = new DkTvtDTO("12", 80000);
-        tvts.add(item);
-        item = new DkTvtDTO("14", 85000);
-        tvts.add(item);
-        item = new DkTvtDTO("16", 96000);
-        tvts.add(item);
-        item = new DkTvtDTO("18", 120000);
-        tvts.add(item);
-        item = new DkTvtDTO("20", 320000);
-        tvts.add(item);
-        item = new DkTvtDTO("22", 180000);
-        tvts.add(item);
-        item = new DkTvtDTO("24", 95000);
-        tvts.add(item);
-        return tvts;
+        return dkTvtService.getDkTvtDTOs_exp();
     }
 
     private void t001() {

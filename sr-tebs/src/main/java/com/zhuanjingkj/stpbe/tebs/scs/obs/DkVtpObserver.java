@@ -7,6 +7,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * 首页饼图数据统计
+ */
 @Component
 public class DkVtpObserver implements ITvisStpObserver {
     @Autowired

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper">
+    <insert id ="insertViolation">
+        INSERT INTO t_violation (tvis_json_id, vehs_idx, camera_id, hphm, csys, clpp, ppcx, cxnk, psfx, clwz, wzlx, image_hash, create_time)
+                         VALUES (#{tvisJsonId}, #{vehsIdx}, #{CameraId}, #{hphm}, #{csysName}, #{clppName}, #{ppcxName},
+                                 #{cxnkName}, #{psfx}, #{clwz}, #{wzlx}, #{imageHash}, #{date})
+    </insert>
+
+    <select id ="getImageHash" resultType ="String">
+        SELECT image_hash
+          FROM ${tblName}
+         WHERE tvis_json_id =#{tvisJsonId}
+    </select>
+</mapper>
