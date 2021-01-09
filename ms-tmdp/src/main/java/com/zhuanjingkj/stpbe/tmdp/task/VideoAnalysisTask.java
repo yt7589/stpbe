@@ -39,6 +39,9 @@ public class VideoAnalysisTask {
         for (String streamId : streamIds) {
             // 找到当前原始信息表
             tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, Long.parseLong(streamId));
+            if (null == tvisJsonVO) {
+                continue;
+            }
             // 获取图片
             BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
             // 获取JSON结果
