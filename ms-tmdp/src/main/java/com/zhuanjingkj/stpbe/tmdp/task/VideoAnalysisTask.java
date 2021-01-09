@@ -72,6 +72,7 @@ public class VideoAnalysisTask {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                idx++;
             }
             try {
                 ImageIO.write(orgImg, "jpg", new File("images/n_" + tvisJsonId + ".jpg"));
