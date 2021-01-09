@@ -85,6 +85,7 @@ public class TvisUtil {
             vehicleWztzVo = new VehicleWztzVo();
             wztzJson = vehJson.getJSONObject("WZTZ");
             vehicleWztzVo.setPsfx(wztzJson.getString("PSFX"));
+            vehicleWztzVo.setClwz(wztzJson.getString("CLWZ"));
             vo.setVehicleWztzVo(vehicleWztzVo);
             // 解析号牌特征
             vo.setVehicleHptzVO(parseHptzJson(vehJson.getJSONObject(AppConst.TJ_HPTZ)));
