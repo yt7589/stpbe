@@ -64,7 +64,7 @@ public class VideoAnalysisTask {
                 String ppxhms = veh.getVehicleCxtzVo().getPpxhmsName();
                 String hphm = veh.getVehicleHptzVO().getHphm();
                 TvisSodImage.drawString(orgImg, Font.PLAIN, 25,
-                        Color.RED, x, y+ 5, ppxhms + "-" + hphm);
+                        Color.RED, x, y+ 10, "标题：" + ppxhms + "-" + hphm);
             }
             try {
                 ImageIO.write(orgImg, "jpg", new File("images/n_" + tvisJsonId + ".jpg"));
