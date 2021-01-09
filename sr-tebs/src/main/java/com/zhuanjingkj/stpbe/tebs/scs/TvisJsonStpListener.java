@@ -68,7 +68,6 @@ public class TvisJsonStpListener {
             observers.add(dkRtvrObserver);
             isFirstRun = false;
         }
-        System.out.println("TvisjsonStpListener.listen: " + json + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         JSONObject rawJo = JSONObject.parseObject(json);
         long tvisJsonId = rawJo.getLong("tvisJsonId");
         long cameraId = rawJo.getLong("cameraId");

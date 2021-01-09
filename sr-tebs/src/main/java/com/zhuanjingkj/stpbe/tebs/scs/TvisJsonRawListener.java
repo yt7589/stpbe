@@ -50,22 +50,26 @@ public class TvisJsonRawListener {
 
     @KafkaListener(id = "TvisJsonRawListener", topics = "tvis")
     public void listen(String json) {
+        System.out.println("step 1 ?????");
         if (!isInitialized) {
             synchronized (logger) {
                 initialize();
             }
         }
+        System.out.println("step 2");
         JSONObject jo = JSONObject.parseObject(json);
         String relativeImageFile = jo.getJSONObject("json").getString("ImageUrl");
         if (relativeImageFile==null || relativeImageFile.equals("") || relativeImageFile.length()<2) {
             return;
         }
+        System.out.println("step 3");
         String imageFile = AppConst.VIDEO_FRAME_IMG_BASE_DIR + relativeImageFile.substring(2);
         Optional<String> imgRst = IpfsClient.uploadFile(imageFile);
         final StringBuilder imageHash = new StringBuilder();
         imgRst.ifPresent((str) -> {
             imageHash.append(str);
         });
+        System.out.println("step 4");
         // 生成临时JSON文件，上传到IPFS得到jsonHash
         FileOutputStream fos = null;
         OutputStreamWriter osw = null;
@@ -90,20 +94,20 @@ public class TvisJsonRawListener {
                 }
             }
         }
+        System.out.println("step 5");
         final StringBuilder jsonHash = new StringBuilder();
         Optional<String> jsonRst = IpfsClient.uploadFile(jf);
         jsonRst.ifPresent((jsonStr)->{
             jsonHash.append(jsonStr);
         });
         // 获取imageHash、cameraId、streamId、pts，将其存入mysql数据库中
-        System.out.println("@@@@@ imageFile=" + imageFile + "; json=" + jf + "!");
-
         long tvisJsonId = 0;
         if (jo.containsKey("tvisJsonId")) {
             tvisJsonId = jo.getLong("tvisJsonId");
         } else {
             tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
         }
+        System.out.println("step 6");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String occurTime = df.format(new Date());
         String cameraIdStr = jo.getString("cameraId");
@@ -113,12 +117,15 @@ public class TvisJsonRawListener {
         long streamId = Long.parseLong(streamIdStr);
         String ptsStr = rstJo.getString("TimeStamp");
         long pts = Long.parseLong(ptsStr);
+        System.out.println("step 7");
         TvisJsonVO vo = new TvisJsonVO(AppRegistry.tvisJsonTblName, tvisJsonId, occurTime,
                 cameraId, streamId, pts, imageHash.toString(), jsonHash.toString());
         tvisJsonMapper.insertTvisJson(vo);
+        System.out.println("step 8");
         AppRegistry.tvisJsonTblRecs++;
         if (AppRegistry.tvisJsonTblRecs >= AppConst.TVIS_JSON_TBL_MAX_RECS) {
             rotateTvisJsonTbl();
         }
+        System.out.println("step 9");
     }
 }
