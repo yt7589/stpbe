@@ -49,7 +49,7 @@ public class VideoAnalysisTask {
             // 在图像上绘制一个矩形框并保存到当前目录下
             TvisSodImage.drawRect(orgImg, Color.RED, 200, 200, 300, 500);
             try {
-                ImageIO.write(orgImg, "jpg", new File("n001.jpg"));
+                ImageIO.write(orgImg, "jpg", new File("n00" + System.currentTimeMillis() + ".jpg"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
