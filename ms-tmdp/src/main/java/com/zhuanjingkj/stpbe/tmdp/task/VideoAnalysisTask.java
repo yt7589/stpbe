@@ -5,7 +5,9 @@ import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.common.tvis.TvisSodImage;
+import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -32,22 +34,29 @@ public class VideoAnalysisTask {
         if (StringUtils.isBlank(AppRegistry.tvisJsonTblName)) {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
-            System.out.println("##### ^_^ tableName=" + AppRegistry.tvisJsonTblName + "! #################");
         }
         TvisJsonVO tvisJsonVO = null;
         for (String streamId : streamIds) {
-            System.out.println("##### 处理第" + (Long.parseLong(streamId) + 1) + "路视频...");
             // 找到当前原始信息表
-            System.out.println("##### 表名：" + AppRegistry.tvisJsonTblName + "!");
             tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, Long.parseLong(streamId));
-            System.out.println("##### vo:" + tvisJsonVO + "!");
-            System.out.println("##### vo1:" + JSONObject.toJSONString(tvisJsonVO) + "!");
             // 获取图片
             BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
             // 获取JSON结果
-            IpfsClient.downloadFile(tvisJsonVO.getJsonHash(), "vj.json");
+            String jsonStr = IpfsClient.getTextFile(tvisJsonVO.getJsonHash());
+            JSONObject jo = JSONObject.parseObject(jsonStr);
+            JSONObject joRst = jo.getJSONObject("json");
+            List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
             // 在图像上绘制一个矩形框并保存到当前目录下
-            TvisSodImage.drawRect(orgImg, Color.RED, 200, 200, 300, 500);
+            int x, y, w, h;
+            for (VehicleVo veh : vehs) {
+                String clwz = veh.getVehicleWztzVo().getClwz();
+                String[] arrs = clwz.split(",");
+                x = Integer.parseInt(arrs[0]);
+                y = Integer.parseInt(arrs[1]);
+                w = Integer.parseInt(arrs[2]);
+                h = Integer.parseInt(arrs[3]);
+                TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
+            }
             try {
                 ImageIO.write(orgImg, "jpg", new File("n00" + System.currentTimeMillis() + ".jpg"));
             } catch (IOException e) {

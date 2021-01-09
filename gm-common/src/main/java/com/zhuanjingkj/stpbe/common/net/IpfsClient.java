@@ -4,10 +4,7 @@ import com.zhuanjingkj.stpbe.common.AppConst;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -45,6 +42,7 @@ public class IpfsClient {
         URL url = null;
         URLConnection conn = null;
         InputStream ins = null;
+        byte[] buf = new byte[1024];
         FileOutputStream fos = null;
         boolean rst = true;
         try {
@@ -52,7 +50,6 @@ public class IpfsClient {
             conn = url.openConnection();
             ins = conn.getInputStream();
             fos = new FileOutputStream(dstFn);
-            byte[] buf = new byte[1024];
             int readLen = 0;
             while ((readLen = ins.read(buf)) != -1) {
                 fos.write(buf, 0, readLen);
@@ -75,6 +72,52 @@ public class IpfsClient {
             }
         }
         return true;
+    }
+
+    private static byte[] getFileBytes(String fileHash) {
+        URL url = null;
+        URLConnection conn = null;
+        InputStream ins = null;
+        byte[] data = null;
+        int bytesRead = 0;
+        int offset = 0;
+        try {
+            url = new URL(AppConst.IPFS_GW_URL + fileHash);
+            conn = url.openConnection();
+            String contentType = conn.getContentType();
+            int contentLength = conn.getContentLength();
+            try (InputStream raw = conn.getInputStream()) {
+                InputStream in = new BufferedInputStream(raw);
+                data = new byte[contentLength];
+                while (offset < contentLength) {
+                    bytesRead = in.read(data, offset, data.length - offset);
+                    if (bytesRead == -1) {
+                        break;
+                    }
+                    offset += bytesRead;
+                }
+
+                if (offset != contentLength) {
+                    return null;
+                }
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return data;
+    }
+
+    public static String getTextFile(String fileHash) {
+        byte[] data = getFileBytes(fileHash);
+        if (data != null) {
+            return new String(data);
+        } else {
+            return "";
+        }
     }
 
     public static String getIpfsUrl(String fileHash) {
