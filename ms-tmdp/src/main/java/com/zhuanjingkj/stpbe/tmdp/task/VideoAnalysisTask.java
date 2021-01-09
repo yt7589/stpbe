@@ -61,10 +61,10 @@ public class VideoAnalysisTask {
                 h = Integer.parseInt(arrs[3]);
                 TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
                 // 车型特征
-                String ppxhms = veh.getVehicleCxtzVo().getPpxhmsName();
+                String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
                 String hphm = veh.getVehicleHptzVO().getHphm();
-                TvisSodImage.drawString(orgImg, Font.PLAIN, 25,
-                        Color.RED, x, y+ 10, "标题：" + ppxhms + "-" + hphm);
+                TvisSodImage.drawString(orgImg, Font.BOLD, 25,
+                        Color.RED, x, y+ 30, ppxhms + "-" + hphm);
             }
             try {
                 ImageIO.write(orgImg, "jpg", new File("images/n_" + tvisJsonId + ".jpg"));
