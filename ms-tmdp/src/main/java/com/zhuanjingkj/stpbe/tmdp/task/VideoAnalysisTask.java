@@ -52,6 +52,7 @@ public class VideoAnalysisTask {
             List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
             // 在图像上绘制一个矩形框并保存到当前目录下
             int x, y, w, h; // 检测框位置
+            int idx = 0;
             for (VehicleVo veh : vehs) {
                 String clwz = veh.getVehicleWztzVo().getClwz();
                 String[] arrs = clwz.split(",");
@@ -64,7 +65,13 @@ public class VideoAnalysisTask {
                 String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
                 String hphm = veh.getVehicleHptzVO().getHphm();
                 TvisSodImage.drawString(orgImg, Font.BOLD, 25,
-                        Color.RED, x, y, hphm + ":" + ppxhms);
+                        Color.RED, x, y+3, hphm + ":" + ppxhms);
+                BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
+                try {
+                    ImageIO.write(vehImg, "jpg", new File("images/c_" + tvisJsonId + "_" + idx + ".jpg"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             try {
                 ImageIO.write(orgImg, "jpg", new File("images/n_" + tvisJsonId + ".jpg"));
