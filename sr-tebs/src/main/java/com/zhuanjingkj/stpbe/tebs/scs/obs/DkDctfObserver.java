@@ -7,6 +7,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * 首页区县数据
+ */
 @Component
 public class DkDctfObserver implements ITvisStpObserver {
 

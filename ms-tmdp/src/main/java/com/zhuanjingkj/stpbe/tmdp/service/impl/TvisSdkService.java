@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TvisSdkService implements ITvisSdkService {
+
     private final static Logger logger = LoggerFactory.getLogger(TvisSdkService.class);
+
     @Override
     public ResultDTO<CreateRtspBindDTO> createRtspBind(String rtspUrl) {
         System.out.println("TvisSdkService.createRtspService 1");

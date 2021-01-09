@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 首页路段过车统计
+ */
 @Component
 public class DkTjrsObserver implements ITvisStpObserver {
 
@@ -33,7 +36,6 @@ public class DkTjrsObserver implements ITvisStpObserver {
         redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000013", 13);
         redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000014", 14);
         redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000015", 10);
-
     }
 
     @Override

@@ -11,6 +11,9 @@ import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+/**
+ * 首页车辆类型分类
+ */
 @Component
 public class DkVttfObserver implements ITvisStpObserver {
 
@@ -44,7 +47,17 @@ public class DkVttfObserver implements ITvisStpObserver {
 
     @Override
     public void initialize(Environment env) {
+        if(!redisTemplate.hasKey("dk_vttf_lcar")) {
+            redisTemplate.opsForList().rightPushAll("dk_vttf_lcar", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
 
+        if(!redisTemplate.hasKey("dk_vttf_car")) {
+            redisTemplate.opsForList().rightPushAll("dk_vttf_car", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
+
+        if(!redisTemplate.hasKey("dk_vttf_scar")) {
+            redisTemplate.opsForList().rightPushAll("dk_vttf_scar", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
     }
 
 }
