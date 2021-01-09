@@ -50,7 +50,7 @@ public class TvisJsonRawListener {
 
     @KafkaListener(id = "TvisJsonRawListener", topics = "tvis")
     public void listen(String json) {
-        System.out.println("step 1");
+        System.out.println("step 1 ?????");
         if (!isInitialized) {
             synchronized (logger) {
                 initialize();
