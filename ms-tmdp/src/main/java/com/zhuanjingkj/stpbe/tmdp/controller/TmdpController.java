@@ -14,12 +14,18 @@ import com.zhuanjingkj.stpbe.tmdp.service.impl.TvisSdkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/tmdp")
@@ -38,6 +44,26 @@ public class TmdpController {
     @Autowired
     private TvisJsonMapper tvisJsonMapper;
     private final static Logger logger = LoggerFactory.getLogger(TmdpController.class);
+
+    @GetMapping("/va/getVaImage")
+    public ResponseEntity<?> getVaImage(@RequestParam(name = "imgFn") String imgFn) {
+        String baseImgFolder = "/home/ps/yantao/stp/stpbe/ms-tmdp/target/images/";
+        String defaultImgFn = "";
+        File imgFile = new File(baseImgFolder + imgFn);
+        if (!imgFile.exists()) {
+            imgFile = new File(defaultImgFn);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Content-Disposition", "attachment; filename=" + imgFile.getName());
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        headers.add("Last-Modified", new Date().toString());
+        headers.add("ETag", String.valueOf(System.currentTimeMillis()));
+        return ResponseEntity.ok().headers(headers).contentLength(imgFile.length())
+                .contentType(MediaType.parseMediaType("application/octet-stream")).
+                        body(new FileSystemResource(imgFile));
+    }
 
     @GetMapping("/t001")
     public ResultDTO<BaseDTO> t001(
