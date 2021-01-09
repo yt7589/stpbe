@@ -14,6 +14,7 @@ import com.zhuanjingkj.stpbe.tmdp.service.impl.TvisSdkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -44,11 +45,14 @@ public class TmdpController {
     @Autowired
     private TvisJsonMapper tvisJsonMapper;
     private final static Logger logger = LoggerFactory.getLogger(TmdpController.class);
+    @Value("${base-image-folder}")
+    private String baseImgFolder;
+    @Value("${default-image-fn}")
+    private String defaultImgFn;
 
     @GetMapping("/va/getVaImage")
     public ResponseEntity<?> getVaImage(@RequestParam(name = "imgFn") String imgFn) {
-        String baseImgFolder = "/home/ps/yantao/stp/stpbe/ms-tmdp/target/images/";
-        String defaultImgFn = "";
+        System.out.println("##### baseImgFolder=" + baseImgFolder + "! #####");
         File imgFile = new File(baseImgFolder + imgFn);
         if (!imgFile.exists()) {
             imgFile = new File(defaultImgFn);
