@@ -41,12 +41,12 @@ public class TvisSodImage {
         g2d.dispose();
     }
 
-    public static void drawString(BufferedImage img, int fontName, int fontSize, Color color, int x, int y, String msg) {
+    public static void drawString(BufferedImage img, int fontStyle, int fontSize, Color color, int x, int y, String msg) {
         Graphics2D g2d = img.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(color);
         // 设置字体样式, null 表示使用默认字体, Font.PLAIN 为普通样式, 大小为 25px
-        g2d.setFont(new Font(null, fontName, fontSize));
+        g2d.setFont(new Font("宋体", fontStyle, fontSize));
         g2d.drawString(msg, x, y);
         g2d.dispose();
     }
