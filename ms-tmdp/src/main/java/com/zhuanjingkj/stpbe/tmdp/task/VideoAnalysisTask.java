@@ -42,6 +42,7 @@ public class VideoAnalysisTask {
             if (null == tvisJsonVO) {
                 continue;
             }
+            long tvisJsonId = tvisJsonVO.getTvisJsonId();
             // 获取图片
             BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
             // 获取JSON结果
@@ -50,7 +51,7 @@ public class VideoAnalysisTask {
             JSONObject joRst = jo.getJSONObject("json");
             List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
             // 在图像上绘制一个矩形框并保存到当前目录下
-            int x, y, w, h;
+            int x, y, w, h; // 检测框位置
             for (VehicleVo veh : vehs) {
                 String clwz = veh.getVehicleWztzVo().getClwz();
                 String[] arrs = clwz.split(",");
@@ -59,9 +60,14 @@ public class VideoAnalysisTask {
                 w = Integer.parseInt(arrs[2]);
                 h = Integer.parseInt(arrs[3]);
                 TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
+                // 车型特征
+                String ppxhms = veh.getVehicleCxtzVo().getPpxhmsName();
+                String hphm = veh.getVehicleHptzVO().getHphm();
+                TvisSodImage.drawString(orgImg, Font.PLAIN, 25,
+                        Color.RED, x, y+ 5, ppxhms + "-" + hphm);
             }
             try {
-                ImageIO.write(orgImg, "jpg", new File("n00" + System.currentTimeMillis() + ".jpg"));
+                ImageIO.write(orgImg, "jpg", new File("images/n_" + tvisJsonId + ".jpg"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
