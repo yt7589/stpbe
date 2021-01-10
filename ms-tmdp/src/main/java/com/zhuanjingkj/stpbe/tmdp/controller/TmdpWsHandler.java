@@ -60,7 +60,7 @@ public class TmdpWsHandler extends TextWebSocketHandler {
             if (StringUtils.isNotBlank(type) && type.equals(WMT_RR_SPFX)) {
                 long wssId = videoAnalysisService.registerWs(session);
                 long streamId = jsonObject.getLong("streamId");
-                VideoAnalysisTask.putStream(streamId);
+                VideoAnalysisTask.addStream(streamId, session);
                 System.out.println("### 建立视频分析WebSocket连接...wssId=" + wssId + "; streamId=" + streamId + "!");
             }
         }
