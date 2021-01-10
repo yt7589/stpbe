@@ -5,6 +5,7 @@ public class VehicleVo {
     private long vehsIdx; // VEH数组的序号
     private long cameraId;
     private long streamId;
+    private long trackId; // 用于进行物体跟踪
     private VehicleWztzVo vehicleWztzVo; // 位置特征
     private VehicleHptzVO vehicleHptzVO; // 号牌特征
     private VehicleCltzxlVo vehicleCltzxlVo; // 车辆特征向量
@@ -42,6 +43,14 @@ public class VehicleVo {
 
     public void setStreamId(long streamId) {
         this.streamId = streamId;
+    }
+
+    public long getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(long trackId) {
+        this.trackId = trackId;
     }
 
     public VehicleWztzVo getVehicleWztzVo() {

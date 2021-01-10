@@ -91,4 +91,8 @@ public class CameraVehicleRecordVO {
     public void setCutImgFn(String cutImgFn) {
         this.cutImgFn = cutImgFn;
     }
+
+    public int getArea() {
+        return w * h;
+    }
 }

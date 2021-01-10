@@ -85,6 +85,7 @@ public class TvisUtil {
             vo = new VehicleVo();
             vo.setCameraId(cameraId);
             vo.setStreamId(streamId);
+            vo.setTrackId(vehJson.getLong("TRACK_ID"));
             // 位置特征解析
             vehicleWztzVo = new VehicleWztzVo();
             wztzJson = vehJson.getJSONObject("WZTZ");

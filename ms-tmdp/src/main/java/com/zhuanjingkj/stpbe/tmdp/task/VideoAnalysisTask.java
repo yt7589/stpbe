@@ -32,7 +32,7 @@ public class VideoAnalysisTask {
     private TvisJsonMapper tvisJsonMapper;
     private static List<String> streamIds = new ArrayList<>();
     private static Map<String, List<WebSocketSession>> streamWsss = new HashMap<>();
-    private static Map<String, CameraVehicleRecordVO> vehicles = new HashMap<>();
+    private static Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
 
     @Async("tmdpPool")
     @Scheduled(cron = "*/1 * * * * ?")
@@ -57,8 +57,14 @@ public class VideoAnalysisTask {
             JSONObject joRst = jo.getJSONObject("json");
             List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
             // 在图像上绘制一个矩形框并保存到当前目录下
+            CameraVehicleRecordVO vo = null;
             int x, y, w, h; // 检测框位置
             int idx = 0;
+            int currentArea = 0;
+            int maxArea = 0;
+            String cutFileFn = null;
+            String imgBaseFolder = "images/";
+            String orgFileFn = "n_" + tvisJsonId + ".jpg";
             for (VehicleVo veh : vehs) {
                 String clwz = veh.getVehicleWztzVo().getClwz();
                 String[] arrs = clwz.split(",");
@@ -66,22 +72,45 @@ public class VideoAnalysisTask {
                 y = Integer.parseInt(arrs[1]);
                 w = Integer.parseInt(arrs[2]);
                 h = Integer.parseInt(arrs[3]);
+                currentArea = w * h;
+                if (!cutVehs.containsKey("" + veh.getTrackId())) {
+                    vo = new CameraVehicleRecordVO();
+                    vo.setTvisJsonId(veh.getTvisJsonId());
+                    vo.setVehsIdx((int)veh.getVehsIdx());
+                    vo.setSxh((int)veh.getVehsIdx());
+                    vo.setX(x);
+                    vo.setY(y);
+                    vo.setW(w);
+                    vo.setH(h);
+                    vo.setOrgImgFn(orgFileFn);
+                } else {
+                    vo = cutVehs.get("" + veh.getTrackId());
+                }
                 TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
                 // 车型特征
                 String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
                 String hphm = veh.getVehicleHptzVO().getHphm();
                 TvisSodImage.drawString(orgImg, Font.BOLD, 25,
-                        Color.RED, x, y+3, hphm + ":" + ppxhms);
-                BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
-                try {
-                    ImageIO.write(vehImg, "jpg", new File("images/c_" + tvisJsonId + "_" + idx + ".jpg"));
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        Color.RED, x, y + 3, hphm + ":" + ppxhms);
+                maxArea = vo.getArea();
+                if (currentArea > maxArea) {
+                    BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
+                    try {
+                        cutFileFn = "images/c_" + tvisJsonId + "_" + idx + ".jpg";
+                        ImageIO.write(vehImg, "jpg", new File(imgBaseFolder + cutFileFn));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    vo.setX(x);
+                    vo.setY(y);
+                    vo.setW(w);
+                    vo.setH(h);
+                    vo.setCutImgFn(cutFileFn);
                 }
                 idx++;
             }
             try {
-                ImageIO.write(orgImg, "jpg", new File("images/n_" + tvisJsonId + ".jpg"));
+                ImageIO.write(orgImg, "jpg", new File(imgBaseFolder + orgFileFn));
             } catch (IOException e) {
                 e.printStackTrace();
             }
