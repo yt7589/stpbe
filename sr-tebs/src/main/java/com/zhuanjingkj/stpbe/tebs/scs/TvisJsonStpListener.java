@@ -44,6 +44,8 @@ public class TvisJsonStpListener {
     private DkDctfObserver dkDctfObserver; //区县过车量
     @Autowired
     private DkRtvrObserver dkRtvrObserver; //实时违章记录
+    @Autowired
+    private KsSvsObserver ksSvsObserver;
 
     @KafkaListener(id = "TvisJsonStpListener", topics = "tvis")
     public void listen(String json) {
@@ -66,6 +68,8 @@ public class TvisJsonStpListener {
             observers.add(dkDctfObserver);
             dkRtvrObserver.initialize(environment);
             observers.add(dkRtvrObserver);
+            ksSvsObserver.initialize(environment);
+            observers.add(ksSvsObserver);
             isFirstRun = false;
         }
         JSONObject rawJo = JSONObject.parseObject(json);

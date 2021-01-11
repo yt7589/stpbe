@@ -1,8 +1,6 @@
-package com.zhuanjingkj.stpbe.tmdp.dto;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.zhuanjingkj.stpbe.common.net.IpfsClient;
-import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class DkRtvrDTO extends BaseDTO {
     @JSONField(name = "id")
@@ -121,12 +119,13 @@ public class DkRtvrDTO extends BaseDTO {
     public void setHphm(String hphm) {
         this.hphm = hphm;
     }
+
     public String getImgUrl() {
         return imgUrl;
     }
 
     public void setImgUrl(String imgUrl) {
-        this.imgUrl = IpfsClient.getIpfsUrl(this.imageHash);
+        this.imgUrl = imgUrl;
     }
 
     public int getImgId() {

@@ -1,7 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.zhuanjingkj.stpbe.tmdp.dto.DkTvtDTO;
-import com.zhuanjingkj.stpbe.tmdp.mapper.DkTvtMapper;
 import com.zhuanjingkj.stpbe.tmdp.service.IDkTvtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

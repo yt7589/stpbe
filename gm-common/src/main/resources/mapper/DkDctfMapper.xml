@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhuanjingkj.stpbe.tmdp.mapper.DkDctfMapper">
-    <select id ="getArea" resultType = "hashmap">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DkDctfMapper">
+    <select id ="getArea" resultType ="hashmap">
         SELECT tc.camera_code, tr.area_name
           FROM t_camera tc
      LEFT JOIN t_site ts

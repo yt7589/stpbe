@@ -32,6 +32,7 @@ public class DkVtpObserver implements ITvisStpObserver {
         } else { //其他
             redisTemplate.opsForValue().increment("DK_VT_OTHERS");
         }
+
     }
 
     @Override

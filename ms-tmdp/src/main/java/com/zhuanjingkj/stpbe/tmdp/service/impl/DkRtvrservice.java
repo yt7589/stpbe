@@ -1,21 +1,19 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
+import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
-import com.zhuanjingkj.stpbe.tmdp.dto.DkMvtsDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.DkRtvrDTO;
-import com.zhuanjingkj.stpbe.tmdp.mapper.DkRtvrVtMapper;
+import com.zhuanjingkj.stpbe.data.dto.DkRtvrDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IDkRtvrservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DkRtvrservice implements IDkRtvrservice {
 
     @Autowired
-    private DkRtvrVtMapper dkRtvrMapper;
+    private DkRtvrMapper dkRtvrMapper;
 
     @Override
     public List<DkRtvrDTO> getDkRtvrDTOs_exp() {

@@ -1,6 +1,5 @@
-package com.zhuanjingkj.stpbe.tmdp.mapper;
+package com.zhuanjingkj.stpbe.common.mapper;
 
-import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

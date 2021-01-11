@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.mapper;
+package com.zhuanjingkj.stpbe.common.mapper;
 
 import org.springframework.stereotype.Repository;
 

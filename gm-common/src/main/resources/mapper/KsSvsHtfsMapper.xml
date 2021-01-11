@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.KsSvsHtfsMapper">
+    <select id ="getVehicleType" resultType ="String">
+        SELECT vehicle_type_code
+          FROM t_special_vehicle_type
+         WHERE status = 1
+    </select>
+
+    <select id ="getDevice" resultType="Integer">
+        SELECT COUNT(camera_id)
+          FROM t_camera
+         WHERE `status` = 1
+    </select>
+
+    <select id ="getWarnNum" resultType="Integer">
+        SELECT COUNT(violation_id)
+          FROM t_violation
+         WHERE create_time LIKE CONCAT(#{localDate},'%')
+    </select>
+
+    <select id ="getKaCameraCode" resultType="String">
+        SELECT tc.camera_code
+          FROM t_area tr
+     LEFT JOIN t_site ts ON tr.area_id = ts.area_id
+     LEFT JOIN t_camera tc ON ts.site_id = tc.site_id
+         WHERE tc.camera_code IS NOT NULL;
+    </select>
+</mapper>

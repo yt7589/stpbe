@@ -2,6 +2,8 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.*;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.KsSvsHtfsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,10 @@ import java.util.List;
 @RequestMapping("/ks")
 @CrossOrigin(origins = "*")
 public class KsSvsController {
+
+    @Autowired
+    private KsSvsHtfsService ksSvsHtfsService;
+
     @GetMapping("getKsSvsMain")
     public ResultDTO<KsSvsDTO> getKsSvsMain() {
         ResultDTO<KsSvsDTO> dto = new ResultDTO<>();
@@ -36,12 +42,7 @@ public class KsSvsController {
     }
 
     private KsSvsHtfsDTO getKsSvsHtfsDTO_exp() {
-        KsSvsHtfsDTO htfs = new KsSvsHtfsDTO();
-        htfs.setTodaySvNum(198392);
-        htfs.setTodayDevNum(2008);
-        htfs.setTodayWarnNum(155);
-        htfs.setTodayKakvNum(8188);
-        return htfs;
+        return ksSvsHtfsService.getKsSvsHtfsDTO_exp();
     }
 
     private KsSvsLtviDTO getKsSvsLtviDTO_exp() {

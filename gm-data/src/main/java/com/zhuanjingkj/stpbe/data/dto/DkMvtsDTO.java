@@ -1,7 +1,6 @@
-package com.zhuanjingkj.stpbe.tmdp.dto;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class DkMvtsDTO extends BaseDTO {
     @JSONField(name = "name")

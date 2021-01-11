@@ -1,6 +1,6 @@
-package com.zhuanjingkj.stpbe.tmdp.mapper;
+package com.zhuanjingkj.stpbe.common.mapper;
 
-import com.zhuanjingkj.stpbe.tmdp.dto.DkMvtsDTO;
+import com.zhuanjingkj.stpbe.data.dto.DkMvtsDTO;
 
 import java.util.List;
 

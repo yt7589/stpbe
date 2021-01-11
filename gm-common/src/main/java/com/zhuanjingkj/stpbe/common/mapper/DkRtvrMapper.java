@@ -1,6 +1,9 @@
 package com.zhuanjingkj.stpbe.common.mapper;
 
+import com.zhuanjingkj.stpbe.data.dto.DkRtvrDTO;
 import io.lettuce.core.dynamic.annotation.Param;
+
+import java.util.List;
 
 public interface DkRtvrMapper {
 
@@ -9,4 +12,10 @@ public interface DkRtvrMapper {
                                @Param("wzlx") String wzlx, @Param("imageHash") String imageHash, @Param("date") String date);
 
     public String getImageHash(@Param("tvisJsonId") long tvisJsonId, @Param("tblName") String tblName);
+
+    /**
+     * 查询违章记录前2条
+     * @return
+     */
+    List<DkRtvrDTO> getTop2Violation();
 }
