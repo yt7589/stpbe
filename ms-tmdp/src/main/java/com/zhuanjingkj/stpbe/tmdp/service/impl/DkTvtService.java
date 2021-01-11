@@ -13,9 +13,6 @@ import java.util.List;
 public class DkTvtService implements IDkTvtService {
 
     @Autowired
-    private DkTvtMapper dkTvtMapper;
-
-    @Autowired
     private RedisTemplate redisTemplate;
 
     @Override
