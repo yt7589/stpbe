@@ -1,9 +1,7 @@
 package com.zhuanjingkj.stpbe.tebs.scs.obs;
 
-import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
-import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
 import org.apache.commons.lang.StringUtils;
@@ -61,7 +59,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if(StringUtils.isNotBlank(fjsbjaqd)) {
             String state = fjsbjaqd.split("_")[0];
             String rb = fjsbjaqd.split("_")[1];
-            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
+            if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
                 dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(), 4, hphm,
                         vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
                         vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "副驾驶不系安全带", imageHash, date);
@@ -72,7 +70,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if(StringUtils.isNotBlank(fjszyb)) {
             String state = fjszyb.split("_")[0];
             String rb = fjszyb.split("_")[1];
-            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
+            if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
                 dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(), 5, hphm,
                         vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
                         vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "副驾驶放下遮阳板", imageHash, date);
@@ -127,7 +125,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if(StringUtils.isNotBlank(mtcbdtk)) {
             String state = mtcbdtk.split("_")[0];
             String rb = mtcbdtk.split("_")[1];
-            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
+            if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
                 dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(),10, hphm,
                         vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
                         vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "摩托车不戴头盔", imageHash, date);
