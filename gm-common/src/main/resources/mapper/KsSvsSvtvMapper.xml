@@ -3,6 +3,7 @@
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.KsSvsSvtvMapper">
 
     <resultMap  type="com.zhuanjingkj.stpbe.data.dto.KsSvsSvtvDTO" id="svtvDTO">
+        <result column="violation_id" property="seq" jdbcType="VARCHAR"/>
         <result column="hphm" property="hphm" jdbcType="VARCHAR"/>
         <result column="ppcx" property="ppcx" jdbcType="VARCHAR"/>
         <result column="wzlx" property="trafficViolationTypeName" jdbcType="VARCHAR"/>
@@ -11,7 +12,7 @@
     </resultMap>
 
     <select id ="getKsSvsSvtv" resultMap="svtvDTO">
-        SELECT tv.hphm,tv.ppcx, tv.clpp, tv.wzlx, tj.occur_time, tsi.site_name, tsi.lng, tsi.lat
+        SELECT tv.violation_id, tv.hphm,tv.ppcx, tv.clpp, tv.wzlx, tj.occur_time, tsi.site_name, tsi.lng, tsi.lat
           FROM t_violation tv
      LEFT JOIN t_special_vehicle_type ts
             ON tv.cllxzfl = ts.vehicle_type_num
