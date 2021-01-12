@@ -8,6 +8,7 @@
         <result column="clpp" property="clpp" jdbcType="VARCHAR"/>
         <result column="occur_time" property="occurTime" jdbcType="VARCHAR"/>
         <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>
+        <result column="wzlx" property="violationTypeName" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id ="getKsSvsLtvi" resultMap="ltviDTO">
