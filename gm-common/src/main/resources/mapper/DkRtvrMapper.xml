@@ -12,9 +12,9 @@
     </resultMap>
 
     <insert id ="insertViolation">
-        INSERT INTO t_violation (tvis_json_id, vehs_idx, camera_id, hphm, csys, clpp, ppcx, cxnk, psfx, clwz, wzlx, image_hash, create_time)
+        INSERT INTO t_violation (tvis_json_id, vehs_idx, camera_id, hphm, csys, clpp, ppcx, cxnk, psfx, clwz, wzlx, cllxzfl, image_hash, create_time)
                          VALUES (#{tvisJsonId}, #{vehsIdx}, #{CameraId}, #{hphm}, #{csysName}, #{clppName}, #{ppcxName},
-                                 #{cxnkName}, #{psfx}, #{clwz}, #{wzlx}, #{imageHash}, #{date})
+                                 #{cxnkName}, #{psfx}, #{clwz}, #{wzlx}, #{vtype}, #{imageHash}, #{date})
     </insert>
 
     <select id ="getImageHash" resultType ="String">

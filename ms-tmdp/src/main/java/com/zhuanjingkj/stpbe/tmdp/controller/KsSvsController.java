@@ -1,8 +1,13 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
+import com.zhuanjingkj.stpbe.data.dto.KsSvsLtviDTO;
+import com.zhuanjingkj.stpbe.data.dto.KsSvsSvtvDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.*;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.KsSvsHtfsService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.KsSvsKsvmcService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.KsSvsLtviService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.KsSvsSvtvService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +28,15 @@ public class KsSvsController {
 
     @Autowired
     private KsSvsHtfsService ksSvsHtfsService;
+
+    @Autowired
+    private KsSvsKsvmcService ksSvsKsvmcService;
+
+    @Autowired
+    private KsSvsSvtvService ksSvsSvtvService;
+
+    @Autowired
+    private KsSvsLtviService ksSvsLtviService;
 
     @GetMapping("getKsSvsMain")
     public ResultDTO<KsSvsDTO> getKsSvsMain() {
@@ -46,23 +60,11 @@ public class KsSvsController {
     }
 
     private KsSvsLtviDTO getKsSvsLtviDTO_exp() {
-        return new KsSvsLtviDTO(101, "上地三街", "东南",
-                "车头", 201, "主驾驶不系安全带", "京A-SY270",
-                "东风",8, 301,
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg",
-                    116.31129731152342, 40.03570782927839,
-                "2020-12-19 08:32:59");
+        return ksSvsLtviService.getKsSvsLtviDTO_exp();
     }
 
     private List<KsSvsKsvmcDTO> getKsSvsKsvmcDTOs_exp() {
-        List<KsSvsKsvmcDTO> ksvmcs = new ArrayList<>();
-        ksvmcs.add(new KsSvsKsvmcDTO("平板式货车", 189035));
-        ksvmcs.add(new KsSvsKsvmcDTO("厢式货车", 109035));
-        ksvmcs.add(new KsSvsKsvmcDTO("罐式货车", 69035));
-        ksvmcs.add(new KsSvsKsvmcDTO("栏板式货车", 129035));
-        ksvmcs.add(new KsSvsKsvmcDTO("仓栅式货车", 239035));
-        ksvmcs.add(new KsSvsKsvmcDTO("普通货车", 289035));
-        return ksvmcs;
+        return ksSvsKsvmcService.getKsSvsKsvmcDTOs_exp();
     }
 
     private List<KsSvsKsvadDTO> getKsSvsKsvadDTOs_exp() {
@@ -85,29 +87,7 @@ public class KsSvsController {
     }
 
     private List<KsSvsSvtvDTO> getKsSvsSvtvDTOs_exp() {
-        List<KsSvsSvtvDTO> svtvs = new ArrayList<>();
-        KsSvsSvtvDTO svtv = null;
-        svtv = new KsSvsSvtvDTO(1, "京A-xy001", "奥迪-A6L",
-                1, "驾驶员不系安全带",
-                101, "上地三街路口", "2020-12-17 16:56:29");
-        svtvs.add(svtv);
-        svtv = new KsSvsSvtvDTO(2, "京N-xy998", "奔驰-E级",
-                2, "主驾驶打电话",
-                102, "西三旗环岛", "2020-12-17 16:56:29");
-        svtvs.add(svtv);
-        svtv = new KsSvsSvtvDTO(3, "京Q-xy001", "宝马-3系",
-                3, "主驾驶看电话",
-                103, "西小口", "2020-12-17 16:56:29");
-        svtvs.add(svtv);
-        svtv = new KsSvsSvtvDTO(4, "京B-xy001", "北汽-索纳塔",
-                4, "副驾驶不系安全带",
-                104, "西直门", "2020-12-17 16:56:29");
-        svtvs.add(svtv);
-        svtv = new KsSvsSvtvDTO(105, "京C-xy801", "沃尔沃-S90",
-                1, "驾驶员不系安全带",
-                105, "六里桥AO3", "2020-12-17 16:56:29");
-        svtvs.add(svtv);
-        return svtvs;
+        return ksSvsSvtvService.getKsSvsSvtvDTOs_exp();
     }
 
     private List<KsSvsKsvtitfsDTO> getKsSvsKsvtitfsDTOs_exp() {

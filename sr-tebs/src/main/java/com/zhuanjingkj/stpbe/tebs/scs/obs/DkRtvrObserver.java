@@ -33,7 +33,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
          *此cameraId 为测试id
          * cameraId = vo.getCameraId()
          */
-
+        String  vType = vo.getVehicleCxtzVo().getCllxzflCode();
         String tblName = AppRegistry.tvisJsonTblName;
         String imageHash = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
         String hphm = vo.getVehicleHptzVO().getHphm();
@@ -51,7 +51,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
                 dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(), 3, hphm,
                         vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
-                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "主驾驶打电话", imageHash, date);
+                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "主驾驶打电话", vType, imageHash, date);
                 flag = true;
             }
         }
@@ -62,7 +62,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
                 dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(), 4, hphm,
                         vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
-                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "副驾驶不系安全带", imageHash, date);
+                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "副驾驶不系安全带", vType, imageHash, date);
                 flag = true;
             }
         }
@@ -73,7 +73,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
                 dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(), 5, hphm,
                         vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
-                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "副驾驶放下遮阳板", imageHash, date);
+                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "副驾驶放下遮阳板", vType, imageHash, date);
                 flag = true;
             }
         }
@@ -84,7 +84,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
                 dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(), 6, hphm,
                         vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
-                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "主驾驶不系安全带", imageHash, date);
+                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "主驾驶不系安全带", vType, imageHash, date);
                 flag = true;
             }
         }
@@ -95,7 +95,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
                 dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(), 7, hphm,
                         vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
-                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "主驾驶抽烟", imageHash, date);
+                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "主驾驶抽烟", vType, imageHash, date);
                 flag = true;
             }
         }
@@ -106,7 +106,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
                 dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(), 8, hphm,
                         vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
-                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "主驾驶看手机", imageHash, date);
+                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "主驾驶看手机", vType, imageHash, date);
                 flag = true;
             }
         }
@@ -117,7 +117,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
                 dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(), 9, hphm,
                         vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
-                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "主驾驶放下遮阳板", imageHash, date);
+                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "主驾驶放下遮阳板", vType, imageHash, date);
                 flag = true;
             }
         }
@@ -128,7 +128,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
                 dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(),10, hphm,
                         vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
-                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "摩托车不戴头盔", imageHash, date);
+                        vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "摩托车不戴头盔", vType, imageHash, date);
                 flag = true;
             }
         }

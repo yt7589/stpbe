@@ -29,8 +29,10 @@ public class KsSvsHtfsService implements IKsSvsHtfsService {
         Integer total = 0;
         if(vt != null && vt.size() >0) {
             for(int i = 0; i < vt.size(); i++) {
-                Integer tl = (int)redisTemplate.opsForValue().get(vt.get(i));
-                total = total + tl;
+                if(redisTemplate.hasKey(vt.get(i))) {
+                    Integer tl = (int)redisTemplate.opsForValue().get(vt.get(i));
+                    total = total + tl;
+                }
             }
         }
         Integer kakvNum = 0;

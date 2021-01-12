@@ -227,5 +227,33 @@ public class TmdpScheduledTask {
             redisTemplate.delete("dk_rtvr_violation");
             redisTemplate.opsForList().rightPushAll("dk_rtvr_violation", 0,0,0,0,0,0,0,0,0,0,0,0);
         }
+        /**
+         * 5.特殊车辆监管页面四个值每天0点重置
+         */
+        {
+        //轿车
+        redisTemplate.opsForValue().set("ks_svs_car", 0);
+        //SUV
+        redisTemplate.opsForValue().set("ks_svs_suv", 0);
+        //MPV
+        redisTemplate.opsForValue().set("ks_svs_mpv", 0);
+        //面包车
+        redisTemplate.opsForValue().set("ks_svs_van", 0);
+        //罐式货车
+        redisTemplate.opsForValue().set("ks_svs_tank_truck", 0);
+        //普通货车
+        redisTemplate.opsForValue().set("ks_svs_normal_truck", 0);
+        //箱式货车
+        redisTemplate.opsForValue().set("ks_svs_van_truck", 0);
+        //栏板式货车
+        redisTemplate.opsForValue().set("ks_svs_slab_truck", 0);
+        //平板式货车
+        redisTemplate.opsForValue().set("ks_svs_flat_truck", 0);
+        //仓栅式货车
+        redisTemplate.opsForValue().set("ks_svs_grate_truck", 0);
+        //其他
+        redisTemplate.opsForValue().set("ks_svs_others", 0);
+        }
+
     }
 }
