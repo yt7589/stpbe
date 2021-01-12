@@ -32,6 +32,12 @@ public class KsSvsLtviDTO extends BaseDTO {
     private double lat; // 纬度
     @JSONField(name = "occurTime")
     private String occurTime;
+    @JSONField(name = "imageHash")
+    private String imageHash;
+
+    public KsSvsLtviDTO() {
+        super();
+    }
 
     public KsSvsLtviDTO(int siteId, String siteName, String direction,
                         String type, int violationTypeId, String violationTypeName,
@@ -163,5 +169,13 @@ public class KsSvsLtviDTO extends BaseDTO {
 
     public void setOccurTime(String occurTime) {
         this.occurTime = occurTime;
+    }
+
+    public String getImageHash() {
+        return imageHash;
+    }
+
+    public void setImageHash(String imageHash) {
+        this.imageHash = imageHash;
     }
 }

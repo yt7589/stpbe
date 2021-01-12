@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.KsSvsSvtvMapper">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.KsSvsLtviMapper">
 
     <resultMap  type="com.zhuanjingkj.stpbe.data.dto.KsSvsLtviDTO" id="ltviDTO">
-        <result column="hphm" property="hphm" jdbcType="VARCHAR"/>
-        <result column="ppcx" property="ppcx" jdbcType="VARCHAR"/>
-        <result column="wzlx" property="trafficViolationTypeName" jdbcType="VARCHAR"/>
         <result column="site_name" property="siteName" jdbcType="VARCHAR"/>
-        <result column="occur_time" property="shotTime" jdbcType="VARCHAR"/>
+        <result column="hphm" property="hphm" jdbcType="VARCHAR"/>
+        <result column="clpp" property="clpp" jdbcType="VARCHAR"/>
+        <result column="occur_time" property="occurTime" jdbcType="VARCHAR"/>
+        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id ="getKsSvsLtvi" resultMap="ltviDTO">
-        SELECT tv.hphm,tv.ppcx, tv.clpp, tv.wzlx, tj.occur_time, tsi.site_name, tsi.lng, tsi.lat
+        SELECT tv.hphm,tv.ppcx, tv.clpp, tv.wzlx, tj.occur_time, tsi.site_name, tsi.lng, tsi.lat, tv.image_hash
           FROM t_violation tv
      LEFT JOIN t_special_vehicle_type ts
             ON tv.cllxzfl = ts.vehicle_type_num
-     LEFT JOIN t_tvis_json_00000056 tj
+     LEFT JOIN ${tblName} tj
             ON tv.tvis_json_id = tj.tvis_json_id
      LEFT JOIN t_camera tc
             ON tv.camera_id = tc.camera_id

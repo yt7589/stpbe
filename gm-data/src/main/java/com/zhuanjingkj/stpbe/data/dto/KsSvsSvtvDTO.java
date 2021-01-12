@@ -21,6 +21,9 @@ public class KsSvsSvtvDTO extends BaseDTO {
     @JSONField(name = "shotTime")
     private String shotTime;
 
+    public KsSvsSvtvDTO() {
+        super();
+    }
     public KsSvsSvtvDTO(int seq, String hphm, String ppcx, int trafficViolationTypeId,
                         String trafficViolationTypeName, int siteId, String siteName,
                         String shotTime) {
