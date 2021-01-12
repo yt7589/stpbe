@@ -7,6 +7,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * 特殊车辆=》分类/区域统计
+ */
 @Component
 public class KsSvsObserver implements ITvisStpObserver {
 

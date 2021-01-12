@@ -4,10 +4,7 @@ import com.zhuanjingkj.stpbe.data.dto.KsSvsLtviDTO;
 import com.zhuanjingkj.stpbe.data.dto.KsSvsSvtvDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.*;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.KsSvsHtfsService;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.KsSvsKsvmcService;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.KsSvsLtviService;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.KsSvsSvtvService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +35,12 @@ public class KsSvsController {
     @Autowired
     private KsSvsLtviService ksSvsLtviService;
 
+    @Autowired
+    private KsSvsKsvadsService ksSvsKsvadsService;
+
+    @Autowired
+    private KsSvsKsvrpService ksSvsKsvrpService;
+
     @GetMapping("getKsSvsMain")
     public ResultDTO<KsSvsDTO> getKsSvsMain() {
         ResultDTO<KsSvsDTO> dto = new ResultDTO<>();
@@ -55,37 +58,53 @@ public class KsSvsController {
         return dto;
     }
 
+    /**
+     * 地图页面4个重点数据
+     * @return
+     */
     private KsSvsHtfsDTO getKsSvsHtfsDTO_exp() {
         return ksSvsHtfsService.getKsSvsHtfsDTO_exp();
     }
 
+    /**
+     * 地图信息对象
+     * @return
+     */
     private KsSvsLtviDTO getKsSvsLtviDTO_exp() {
         return ksSvsLtviService.getKsSvsLtviDTO_exp();
     }
 
+    /**
+     *本日重点监控车辆车型构成
+     * @return
+     */
     private List<KsSvsKsvmcDTO> getKsSvsKsvmcDTOs_exp() {
         return ksSvsKsvmcService.getKsSvsKsvmcDTOs_exp();
     }
 
+    /**
+     * 本日重点监控车辆区域分布图
+     * @return
+     */
     private List<KsSvsKsvadDTO> getKsSvsKsvadDTOs_exp() {
-        List<KsSvsKsvadDTO> ksvads = new ArrayList<>();
-        ksvads.add(new KsSvsKsvadDTO("东直门地区", 182910));
-        ksvads.add(new KsSvsKsvadDTO("西直门地区", 223989));
-        ksvads.add(new KsSvsKsvadDTO("天安门地区", 313956));
-        ksvads.add(new KsSvsKsvadDTO("上地地区", 109876));
-        ksvads.add(new KsSvsKsvadDTO("六里桥地区", 91234));
-        ksvads.add(new KsSvsKsvadDTO("清河地区", 82468));
-        ksvads.add(new KsSvsKsvadDTO("西三旗地区", 65432));
-        return ksvads;
+        return ksSvsKsvadsService.getKsSvsKsvadDTOs_exp();
     }
 
+    /**
+     * 本日重点监控车辆实时图片
+     * @return
+     */
     private List<KsSvsKsvrpDTO> getKsSvsKsvrpDTOs_exp() {
-        List<KsSvsKsvrpDTO> ksvrps = new ArrayList<>();
-        ksvrps.add(new KsSvsKsvrpDTO(101, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-        ksvrps.add(new KsSvsKsvrpDTO(102, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-        return ksvrps;
+//        List<KsSvsKsvrpDTO> ksvrps = new ArrayList<>();
+//        ksvrps.add(new KsSvsKsvrpDTO(101, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
+//        ksvrps.add(new KsSvsKsvrpDTO(102, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
+        return ksSvsKsvrpService.getKsSvsKsvrpDTOs_exp();
     }
 
+    /**
+     * 重点监控车辆列表
+     * @return
+     */
     private List<KsSvsSvtvDTO> getKsSvsSvtvDTOs_exp() {
         return ksSvsSvtvService.getKsSvsSvtvDTOs_exp();
     }
@@ -138,6 +157,10 @@ public class KsSvsController {
         return ksvsss;
     }
 
+    /**
+     * 本日重点监控车辆违法实时图片
+     * @return
+     */
     private List<KsSvsKsvtvrpDTO> getKsSvsKsvtvrpDTOs_exp() {
         List<KsSvsKsvtvrpDTO> ksvtvrps = new ArrayList<>();
         ksvtvrps.add(new KsSvsKsvtvrpDTO(102, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
