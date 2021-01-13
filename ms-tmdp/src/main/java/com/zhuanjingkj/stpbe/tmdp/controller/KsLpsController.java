@@ -89,7 +89,7 @@ public class KsLpsController {
     private List<KsLpsLalpDTO> getKsLpsLalp() {
         List<KsLpsLalpDTO> lpsSite = new ArrayList<>();
         for (int i = 1; i < 10; i++ ) {
-            lpsSite.add(new KsLpsLalpDTO((28 + i),(56 + i),(100 + i), ("上地" + i +"街"),"2020-12-25 14:40:13",("豫E" + (2222 + i)),(30 + i),(25 + i),"http://192.168.2.68:9003/imgs/pzyc.png"));
+            lpsSite.add(new KsLpsLalpDTO((28 + i),(56 + i),(100 + i), ("上地" + i +"街"),"2020-12-25 14:40:13",("豫E" + (2222 + i)),(30 + i),(25 + i),"http://222.128.117.234:9003/imgs/pzyc.png"));
         }
         return lpsSite;
     }
