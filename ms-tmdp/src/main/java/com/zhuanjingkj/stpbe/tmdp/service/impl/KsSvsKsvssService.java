@@ -60,6 +60,6 @@ public class KsSvsKsvssService implements IKsSvsKsvssService {
                 (id, transfer) -> {
                     transfer.stream().reduce((a,b) -> new KsSvsKsvssDTO(a.getSiteId(), a.getSiteName(), a.getCount() + b.getCount())).ifPresent(dklist :: add);
                 });
-        return ksvsss;
+        return dklist;
     }
 }
