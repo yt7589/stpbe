@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.KsSvsKsvssMapper">
+    <select id ="getKsvss" resultType="hashmap">
+        SELECT ts.site_id, tc.camera_code, ts.site_name
+          FROM (
+        SELECT '' AS code UNION ALL
+        <foreach collection="list" item="item" separator=" UNION ALL">
+            SELECT #{item}
+        </foreach>
+        ) AS tmp, t_camera tc
+        LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+        WHERE tc.camera_code = tmp.code
+    </select>
+</mapper>

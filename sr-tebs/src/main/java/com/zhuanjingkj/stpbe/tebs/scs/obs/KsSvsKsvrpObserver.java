@@ -28,7 +28,8 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
     @Override
     public void notifyObserver(VehicleVo vo) {
         List<String> vNum = ksvssKsvrpMapper.getVTypeNum();
-        String vtype = vo.getVehicleCxtzVo().getCllxzflCode();
+        String vZtype = vo.getVehicleCxtzVo().getCllxzflCode(); //车辆类型子分类
+        String vType = vo.getVehicleCxtzVo().getCllxflCode(); //车辆类型分类
 
         String tblName = AppRegistry.tvisJsonTblName;
         String imageHash = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
@@ -44,10 +45,11 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
         } else {
             index = (hour + 1)/2 - 1;
         }
-        if(vNum.contains(vtype)) {
+        if(vNum.contains(vZtype)) {
             Integer count = (int)(redisTemplate.opsForList().index("ks_ksvrp_vehicle",index));
-            redisTemplate.opsForList().rightPush("ks_ksvrp_images", imageHash);
-            redisTemplate.opsForList().set("ks_ksvrp_vehicle", index, count + 1);
+            redisTemplate.opsForList().rightPush("ks_ksvrp_images", imageHash); //重点监控车辆实时图片
+            redisTemplate.opsForList().set("ks_ksvrp_vehicle", index, count + 1);  //重点监控车辆小时分布图
+            //重点监控车辆点位分布图
 //          redisTemplate.opsForHash().increment("ks_ksvrp_site", vo.getCameraId(),1);
             redisTemplate.opsForHash().increment("ks_ksvrp_site", "C0000001", 1);
             redisTemplate.opsForHash().increment("ks_ksvrp_site", "C0000002", 2);
@@ -65,6 +67,11 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
             redisTemplate.opsForHash().increment("ks_ksvrp_site", "C0000014", 14);
             redisTemplate.opsForHash().increment("ks_ksvrp_site", "C0000015", 10);
         }
+        //大货车小时分布图
+        if("21".equals(vType)) {
+            Integer count = (int)(redisTemplate.opsForList().index("ks_ksvrp_truck",index));
+            redisTemplate.opsForList().set("ks_ksvrp_vehicle", index, count + 1);  //重点监控车辆小时分布图
+        }
     }
 
     @Override
@@ -73,8 +80,16 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
             redisTemplate.opsForList().rightPushAll("ks_ksvrp_images", "","");
         }
 
+        if(!redisTemplate.hasKey("ks_ksvrp_images")) {
+            redisTemplate.opsForList().rightPushAll("ks_ksvrp_images", "","");
+        }
+
         if(!redisTemplate.hasKey("ks_ksvrp_vehicle")) {
             redisTemplate.opsForList().rightPushAll("ks_ksvrp_vehicle", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
+
+        if(!redisTemplate.hasKey("ks_ksvrp_truck")) {
+            redisTemplate.opsForList().rightPushAll("ks_ksvrp_truck", 0,0,0,0,0,0,0,0,0,0,0,0);
         }
     }
 }

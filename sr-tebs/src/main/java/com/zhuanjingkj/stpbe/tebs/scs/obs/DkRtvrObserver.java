@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tebs.scs.obs;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
+import com.zhuanjingkj.stpbe.common.mapper.KsvssKsvrpMapper;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
 import org.apache.commons.lang.StringUtils;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * 首页违章数据统计
@@ -25,6 +27,9 @@ public class DkRtvrObserver implements ITvisStpObserver {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private KsvssKsvrpMapper ksvssKsvrpMapper;
+
     @Override
     public void notifyObserver(VehicleVo vo) {
         boolean flag = false;
@@ -33,6 +38,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
          *此cameraId 为测试id
          * cameraId = vo.getCameraId()
          */
+        List<String> vNum = ksvssKsvrpMapper.getVTypeNum();
         String  vType = vo.getVehicleCxtzVo().getCllxzflCode();
         String tblName = AppRegistry.tvisJsonTblName;
         String imageHash = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
@@ -172,6 +178,10 @@ public class DkRtvrObserver implements ITvisStpObserver {
                 Integer count = (int)(redisTemplate.opsForList().index("dk_rtvr_violation",11));
                 redisTemplate.opsForList().set("dk_rtvr_violation", 11, count + 1);
             }
+
+            if(vNum.contains(vo.getVehicleCxtzVo().getCllxzflCode())) {
+                redisTemplate.opsForList().rightPush("ks_ksvtvrps_images", imageHash); //重点监控车辆实时图片
+            }
         }
     }
 
@@ -179,6 +189,10 @@ public class DkRtvrObserver implements ITvisStpObserver {
     public void initialize(Environment env) {
         if(!redisTemplate.hasKey("dk_rtvr_violation")) {
             redisTemplate.opsForList().rightPushAll("dk_rtvr_violation", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
+
+        if(!redisTemplate.hasKey("ks_ksvtvrps_images")) {
+            redisTemplate.opsForList().rightPushAll("ks_ksvtvrps_images", "","");
         }
     }
 

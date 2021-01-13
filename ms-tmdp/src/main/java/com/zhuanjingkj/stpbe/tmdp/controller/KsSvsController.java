@@ -41,6 +41,15 @@ public class KsSvsController {
     @Autowired
     private KsSvsKsvrpService ksSvsKsvrpService;
 
+    @Autowired
+    private KsSvsKsvtitfsService ksSvsKsvtitfsService;
+
+    @Autowired
+    private KsSvsKsvssService ksSvsKsvssService;
+
+    @Autowired
+    private KsSvsKsvtvrpsService ksSvsKsvtvrpsService;
+
     @GetMapping("getKsSvsMain")
     public ResultDTO<KsSvsDTO> getKsSvsMain() {
         ResultDTO<KsSvsDTO> dto = new ResultDTO<>();
@@ -109,52 +118,20 @@ public class KsSvsController {
         return ksSvsSvtvService.getKsSvsSvtvDTOs_exp();
     }
 
+    /**
+     * 本日重点监控车辆小时分布图
+     * @return
+     */
     private List<KsSvsKsvtitfsDTO> getKsSvsKsvtitfsDTOs_exp() {
-        List<KsSvsKsvtitfsDTO> rst = new ArrayList<>();
-        List<KsSvsKsvtitfDTO> ksvtitfs = null;
-        // 重点车
-        ksvtitfs = new ArrayList<>();
-        ksvtitfs.add(new KsSvsKsvtitfDTO("2", 38976));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("4", 28989));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("6", 32345));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("8", 153567));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("10", 167891));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("12", 89765));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("14", 81234));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("16", 99321));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("18", 118909));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("20", 189883));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("22", 138976));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("24", 76543));
-        rst.add(new KsSvsKsvtitfsDTO("重点车", ksvtitfs));
-        // 大货车
-        ksvtitfs = new ArrayList<>();
-        ksvtitfs.add(new KsSvsKsvtitfDTO("2", 18976));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("4", 38989));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("6", 22345));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("8", 253567));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("10", 367891));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("12", 79765));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("14", 61234));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("16", 79321));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("18", 128909));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("20", 159883));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("22", 138976));
-        ksvtitfs.add(new KsSvsKsvtitfDTO("24", 86543));
-        rst.add(new KsSvsKsvtitfsDTO("大货车", ksvtitfs));
-        return rst;
+        return ksSvsKsvtitfsService.getKsSvsKsvtitfsDTOs_exp();
     }
 
+    /**
+     * 本日重点监控车辆点位分布图
+     * @return
+     */
     private List<KsSvsKsvssDTO> getKsSvsKsvssDTOs_exp() {
-        List<KsSvsKsvssDTO> ksvsss = new ArrayList<>();
-        ksvsss.add(new KsSvsKsvssDTO(101, "上地三街", 1231));
-        ksvsss.add(new KsSvsKsvssDTO(102, "西三旗", 2345));
-        ksvsss.add(new KsSvsKsvssDTO(103,"西二旗", 1102));
-        ksvsss.add(new KsSvsKsvssDTO(104, "王道口", 12345));
-        ksvsss.add(new KsSvsKsvssDTO(105, "西直门", 19321));
-        ksvsss.add(new KsSvsKsvssDTO(106, "六里桥", 15335));
-        ksvsss.add(new KsSvsKsvssDTO(107, "王府井", 18221));
-        return ksvsss;
+        return ksSvsKsvssService.getKsSvsKsvssDTOs_exp();
     }
 
     /**
@@ -162,9 +139,6 @@ public class KsSvsController {
      * @return
      */
     private List<KsSvsKsvtvrpDTO> getKsSvsKsvtvrpDTOs_exp() {
-        List<KsSvsKsvtvrpDTO> ksvtvrps = new ArrayList<>();
-        ksvtvrps.add(new KsSvsKsvtvrpDTO(102, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-        ksvtvrps.add(new KsSvsKsvtvrpDTO(101, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-        return ksvtvrps;
+        return ksSvsKsvtvrpsService.getKsSvsKsvtvrpDTOs_exp();
     }
 }
