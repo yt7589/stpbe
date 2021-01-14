@@ -33,10 +33,10 @@ public class KsLpsController {
         List<KsLpsAreaDTO> areaDTO = getAreaAbnormalLicensePlate();
         List<KsLpsSiteDTO> siteDTO = getSiteAbnormalLicensePlate();
         List<KsLpsLalpDTO> lalpDTO = getKsLpsLalp();
-        data.setWpCount(1234567);
-        data.setTpCount(123456);
-        data.setJpCount(789456);
-        data.setHpzdCount(123456);
+        data.setWpCount(48210);
+        data.setTpCount(79450);
+        data.setJpCount(42300);
+        data.setHpzdCount(10300);
         data.setLalp(lalpDTO);
         data.setArea(areaDTO);
         data.setTime(timeDTO);

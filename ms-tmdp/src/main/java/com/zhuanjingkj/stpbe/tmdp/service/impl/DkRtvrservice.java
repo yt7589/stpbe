@@ -27,9 +27,9 @@ public class DkRtvrservice implements IDkRtvrservice {
 //        }
         List<DkRtvrDTO> rtvrs = new ArrayList<>();
         rtvrs.add(new DkRtvrDTO(101,101,"海淀区上地街道",101,"副驾驶未系安全带","大众牌-途观","2010","浙B·4184F",
-                "2020-02-13 03:15:46",1,"http://222.128.117.234:9003/imgs/fjswjaqd.png"));
+                "2021-01-13 20:15:46",1,"http://222.128.117.234:9003/imgs/fjswjaqd.png"));
         rtvrs.add(new DkRtvrDTO(102,102,"朝阳区东湖渠街道",102,"主驾驶打电话","大众牌-朗逸","2008_2010_2011","浙A·2537M",
-                "2020-04-23 16:15:46",2,"http://222.128.117.234:9003/imgs/zjsddh.png"));
+                "2021-01-13 20:20:46",2,"http://222.128.117.234:9003/imgs/zjsddh.png"));
         return rtvrs;
     }
 }

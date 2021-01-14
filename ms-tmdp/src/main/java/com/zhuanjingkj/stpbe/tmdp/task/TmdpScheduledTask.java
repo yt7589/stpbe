@@ -76,44 +76,44 @@ public class TmdpScheduledTask {
         JSONArray data = new JSONArray();
         KsAsLsvDTO lsv = null;
         //
-        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
+        lsv = new KsAsLsvDTO(1, 1, 101, "西直门",
+                "2021-01-14 12:50:39", "京KZ8601", 1);
         data.put(lsv.toJsonObject());
         //
-        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
+        lsv = new KsAsLsvDTO(1, 1, 101, "大钟寺",
+                "2021-01-13 13:50:39", "京KZ8601", 3);
         data.put(lsv.toJsonObject());
         //
-        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
+        lsv = new KsAsLsvDTO(1, 1, 101, "知春路",
+                "2021-01-12 16:50:39", "豫AF52301X", 5);
         data.put(lsv.toJsonObject());
         //
-        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
+        lsv = new KsAsLsvDTO(1, 1, 101, "五道口",
+                "2021-01-11 11:50:39", "苏FTET721", 6);
         data.put(lsv.toJsonObject());
         //
-        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
+        lsv = new KsAsLsvDTO(1, 1, 101, "上地",
+                "2020-01-10 10:50:39", "鲁P7ET79", 1);
         data.put(lsv.toJsonObject());
         //
-        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
+        lsv = new KsAsLsvDTO(1, 1, 101, "清河",
+                "2020-12-29 12:50:39", "鲁P7ET15", 2);
         data.put(lsv.toJsonObject());
         //
-        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
+        lsv = new KsAsLsvDTO(1, 1, 101, "西二旗",
+                "2020-12-19 13:50:39", "京P7ET75", 5);
         data.put(lsv.toJsonObject());
         //
-        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
+        lsv = new KsAsLsvDTO(1, 1, 101, "龙泽",
+                "2020-12-18 14:50:39", "赣P7ET75", 7);
         data.put(lsv.toJsonObject());
         //
-        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
+        lsv = new KsAsLsvDTO(1, 1, 101, "回龙观",
+                "2020-12-17 15:50:39", "贵P7ET75", 1);
         data.put(lsv.toJsonObject());
         //
-        lsv = new KsAsLsvDTO(1, 1, 101, "六里桥",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
+        lsv = new KsAsLsvDTO(1, 1, 101, "立水桥",
+                "2020-12-16 16:50:39", "豫A52301X", 9);
         data.put(lsv.toJsonObject());
         seq++;
         tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_AS_LSVS, data.toString());
