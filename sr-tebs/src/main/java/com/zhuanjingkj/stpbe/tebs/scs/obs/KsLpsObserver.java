@@ -79,7 +79,7 @@ public class KsLpsObserver implements ITvisStpObserver {
     @Override
     public void initialize(Environment env) {
         if(!redisTemplate.hasKey("ks_lps_time")) {
-            redisTemplate.opsForList().rightPushAll("ks_lps", 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+            redisTemplate.opsForList().rightPushAll("ks_lps_time", 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         }
 
         if(!redisTemplate.hasKey("ks_lps")) {
