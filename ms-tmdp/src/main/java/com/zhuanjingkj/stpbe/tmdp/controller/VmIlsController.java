@@ -35,9 +35,9 @@ public class VmIlsController {
     public ResultDTO<DbQrsDTO> queryIllegalVehicle(
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
-            @RequestParam(name = "startIndex", required = false) Integer startIndex,
-            @RequestParam(name = "amount", required = false) Integer amount,
-            @RequestParam(name = "driection", required = false) Integer direction
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "driection", required = false, defaultValue = "0") Integer direction
     ) {
         return queryIllegalVehicle_epx();
     }
@@ -97,9 +97,9 @@ public class VmIlsController {
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
             @RequestParam(name = "hphm", required = false) String hphm,
-            @RequestParam(name = "startIndex", required = false) Integer startIndex,
-            @RequestParam(name = "amount", required = false) Integer amount,
-            @RequestParam(name = "driection", required = false) Integer direction
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "driection", required = false, defaultValue = "0") Integer direction
     ) {
         return queryIlsVehicleHistoric_exp();
     }
@@ -121,9 +121,9 @@ public class VmIlsController {
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
             @RequestParam(name = "hphm", required = false) String hphm,
-            @RequestParam(name = "startIndex", required = false) Integer startIndex,
-            @RequestParam(name = "amount", required = false) Integer amount,
-            @RequestParam(name = "driection", required = false) Integer direction
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "driection", required = false, defaultValue = "0") Integer direction
     ) {
         return queryIlsVsInfo_exp();
     }
@@ -241,9 +241,9 @@ public class VmIlsController {
     public ResultDTO<DbQrsDTO> queryIllegal(
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
-            @RequestParam(name = "startIndex", required = false) Integer startIndex,
-            @RequestParam(name = "amount", required = false) Integer amount,
-            @RequestParam(name = "driection", required = false) Integer direction
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "driection", required = false, defaultValue = "0") Integer direction
     ) {
         return queryIllegal_exp();
     }

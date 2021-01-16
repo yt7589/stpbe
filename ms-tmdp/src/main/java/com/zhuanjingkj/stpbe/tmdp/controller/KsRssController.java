@@ -40,7 +40,7 @@ public class KsRssController {
         @RequestParam(name = "v", required = false) String version,
         @RequestParam(name = "rssName", required = false) String rssName,
         @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "0") Integer amount,
+        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
         @RequestParam(name = "direction", required = false, defaultValue = "0") Integer direction
     ) {
         return queryRsSupervision_exp(rssName, startIndex, amount, direction, 0);
@@ -94,7 +94,7 @@ public class KsRssController {
         @RequestParam(name = "v", required = false) String version,
         @RequestParam(name = "rssName", required = false) String rssName,
         @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "0") Integer amount,
+        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
         @RequestParam(name = "direction", required = false, defaultValue = "0") Integer direction
     ) {
         return queryRsSupervision_exp(rssName, startIndex, amount, direction, 1);

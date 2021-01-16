@@ -31,9 +31,9 @@ public class DcHpController {
     public ResultDTO<DbQrsDTO> queryAllData(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false) Integer startIndex,
-        @RequestParam(name = "amount", required = false) Integer amount,
-        @RequestParam(name = "direction", required = false) Integer direction,
+        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+        @RequestParam(name = "direction", required = false, defaultValue = "0") Integer direction,
         @RequestParam(name = "startTime", required = false) String startTime,
         @RequestParam(name = "endTime", required = false) String endTime,
         @RequestParam(name = "category", required = false) String category,
