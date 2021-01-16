@@ -32,7 +32,7 @@ public class KsAsController {
             @RequestParam(name = "areaName", required = false) String areaName,
             @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
             @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-            @RequestParam(name = "direction", required = false, defaultValue = "0") Integer direction
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
     ) {
         log.info("areaName:" + areaName + "; startIndex:" + startIndex + "; amount:" + amount + "; direction:" + direction);
         return queryKeyAreas_exp(areaName, startIndex, amount, direction, 1);
@@ -45,7 +45,7 @@ public class KsAsController {
             @RequestParam(name = "areaName", required = false) String areaName,
             @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
             @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-            @RequestParam(name = "direction", required = false, defaultValue = "0") Integer direction
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
     ) {
         log.info("areaName:" + areaName + "; startIndex:" + startIndex + "; amount:" + amount + "; driection" + direction);
         return queryKeyAreas_exp(areaName, startIndex, amount, direction, 0);

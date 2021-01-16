@@ -33,7 +33,7 @@ public class DmNodeController {
         @RequestParam(name = "v") String version,
         @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
         @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "0") Integer direction,
+        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
         @RequestParam(name = "nodeName", required = false) String nodeName,
         @RequestParam(name = "nodeAddr", required = false) String nodeAddr
     ) {

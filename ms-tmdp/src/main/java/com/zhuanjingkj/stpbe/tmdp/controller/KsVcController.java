@@ -44,7 +44,7 @@ public class KsVcController {
         @RequestParam(name = "hphm", required = false) String hphm,
         @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
         @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "0") Integer direction
+        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
     ) {
         return queryVehicle_exp(hphm, startIndex, amount, direction);
     }
