@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.ks;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
@@ -22,8 +22,14 @@ public class KsLpsLalpDTO extends BaseDTO {
     private int imageId;
     @JSONField(name = "imageUrl")
     private String imageUrl;
+    @JSONField(name = "imageHash")
+    private String imageHash;
 
-    public KsLpsLalpDTO(long gcxh, long sxh, long siteId, String siteName, String occurTime, String hphm, int totalTimes, int imageId, String imageUrl) {
+    public KsLpsLalpDTO() {
+        super();
+    }
+
+    public KsLpsLalpDTO(long gcxh, long sxh, long siteId, String siteName, String occurTime, String hphm, int totalTimes, int imageId, String imageUrl, String imageHash) {
         this.gcxh = gcxh;
         this.sxh = sxh;
         this.siteId = siteId;
@@ -33,6 +39,7 @@ public class KsLpsLalpDTO extends BaseDTO {
         this.totalTimes = totalTimes;
         this.imageId = imageId;
         this.imageUrl = imageUrl;
+        this.imageHash = imageHash;
     }
 
     public long getGcxh() {
@@ -105,5 +112,13 @@ public class KsLpsLalpDTO extends BaseDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getImageHash() {
+        return imageHash;
+    }
+
+    public void setImageHash(String imageHash) {
+        this.imageHash = imageHash;
     }
 }

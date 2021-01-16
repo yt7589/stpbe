@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.KsVcMapper">
+
+    <resultMap  type="com.zhuanjingkj.stpbe.data.dto.KsVcDTO" id="ksvcDTO">
+        <result column="vehicle_control_id" property="vcId" jdbcType="INTEGER"/>
+        <result column="hphm" property="hphm" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id ="getKsvcCount" resultType="Integer">
+        SELECT COUNT(vehicle_control_id)
+          FROM t_vehicle_control
+        WHERE hphm LIKE CONCAT(#{hphm}, '%')
+    </select>
+
+    <select id ="getKsvc" resultMap="ksvcDTO">
+        SELECT vehicle_control_id, hphm
+          FROM t_vehicle_control
+         WHERE hphm LIKE CONCAT(#{hphm}, '%')
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <insert id ="addVehicle" useGeneratedKeys="true" keyProperty="rto.vcId">
+        INSERT INTO t_vehicle_control(hphm) VALUES(#{rto.hphm})
+    </insert>
+
+    <delete id ="deleteVehicle">
+        DELETE
+          FROM t_vehicle_control
+         WHERE vehicle_control_id =#{rto.vcId}
+    </delete>
+</mapper>

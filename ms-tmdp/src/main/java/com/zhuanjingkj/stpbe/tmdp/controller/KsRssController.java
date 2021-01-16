@@ -4,12 +4,12 @@ import com.zhuanjingkj.stpbe.data.dto.DbDeleteResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.DbInsertResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsRssDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.ks.AddRsToRssRTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.ks.DeleteRsFromRssRTO;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.KsRssService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +20,9 @@ import java.util.List;
 @RequestMapping(value ="/ks")
 @CrossOrigin(origins = "*")
 public class KsRssController {
+
+    @Autowired
+    private KsRssService ksRssService;
 
     /**
      * 查询路段列表
@@ -38,9 +41,9 @@ public class KsRssController {
         @RequestParam(name = "rssName", required = false) String rssName,
         @RequestParam(name = "startIndex", required = false) Integer startIndex,
         @RequestParam(name = "amount", required = false) Integer amount,
-        @RequestParam(name = "driection", required = false) Integer direction
+        @RequestParam(name = "direction", required = false) Integer direction
     ) {
-        return queryRsSupervision_exp();
+        return queryRsSupervision_exp(rssName, startIndex, amount, direction, 0);
     }
 
     /**
@@ -92,45 +95,21 @@ public class KsRssController {
         @RequestParam(name = "rssName", required = false) String rssName,
         @RequestParam(name = "startIndex", required = false) Integer startIndex,
         @RequestParam(name = "amount", required = false) Integer amount,
-        @RequestParam(name = "driection", required = false) Integer direction
+        @RequestParam(name = "direction", required = false) Integer direction
     ) {
-        return queryRsSupervision_exp();
+        return queryRsSupervision_exp(rssName, startIndex, amount, direction, 1);
     }
 
-    private ResultDTO<DbQrsDTO> queryRsSupervision_exp() {
-        ResultDTO<DbQrsDTO> dto = new ResultDTO<DbQrsDTO>();
-        DbQrsDTO data = new DbQrsDTO(100,5,0,10,5,null);
-        List<KsRssDTO> recs = new ArrayList<>();
-        recs.add(new KsRssDTO(101, "北京市海淀区上龙泽23号", 0,  "10001"));
-        recs.add(new KsRssDTO(102, "北京市海淀区回龙观39号", 1,  "100021"));
-        recs.add(new KsRssDTO(103, "北京市望京街道59号", 1,  "100022"));
-        recs.add(new KsRssDTO(104, "北京市昌平区北七家街道21号", 1,  "100023"));
-        recs.add(new KsRssDTO(105, "北京市海淀区知春路街道109号", 1,  "100024"));
-        recs.add(new KsRssDTO(106, "北京市朝阳区东湖区99号", 1,  "100025"));
-        recs.add(new KsRssDTO(107, "北京市海淀区上地街道39号", 1,  "100026"));
-        recs.add(new KsRssDTO(108, "北京市海淀区西二旗街道19号", 1,  "100027"));
-        data.setRecs(recs);
-        dto.setData(data);
-        return dto;
+    private ResultDTO<DbQrsDTO> queryRsSupervision_exp(String rssName, Integer startIndex, Integer amount, Integer direction, Integer type) {
+        return ksRssService.queryRsSupervision_exp(rssName, startIndex, amount, direction, type);
     }
 
     private ResultDTO<DbDeleteResultDTO> deleteKsRsSupervision_exp(DeleteRsFromRssRTO rto) {
-        System.out.println("delete rss: " + rto.getRssId() + "!");
-        ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
-        DbDeleteResultDTO data = new DbDeleteResultDTO(1);
-        dto.setData(data);
-        return dto;
+        return ksRssService.deleteKsRsSupervision_exp(rto);
     }
 
     private ResultDTO<DbInsertResultDTO> addRsToRsSupervision_exp(AddRsToRssRTO rto) {
-        List<Integer> rssIds = rto.getRssIds();
-        for (int i = 0 ; i < rssIds.size() ; i ++) {
-            System.out.println("rssId:" + rssIds.get(i));
-        }
-        ResultDTO<DbInsertResultDTO> dto = new ResultDTO<>();
-        DbInsertResultDTO data = new DbInsertResultDTO(108, 1);
-        dto.setData(data);
-        return dto;
+        return ksRssService.addRsToRsSupervision_exp(rto);
     }
 
 }

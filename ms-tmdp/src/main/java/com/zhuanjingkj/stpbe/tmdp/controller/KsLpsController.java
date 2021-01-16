@@ -1,17 +1,15 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
+import com.zhuanjingkj.stpbe.data.dto.KsLpsLalpDTO;
+import com.zhuanjingkj.stpbe.data.dto.KsLpsSiteDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.*;
-import com.zhuanjingkj.stpbe.tmdp.dto.licencePlate.*;
-import org.springframework.validation.annotation.Validated;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.KsLpsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Key Supervision => License plate supervision
@@ -21,6 +19,12 @@ import java.util.Random;
 @RequestMapping("/ks")
 @CrossOrigin(origins = "*")
 public class KsLpsController {
+
+    @Autowired
+    private KsLpsService ksLpsService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @GetMapping(value = "/lps/queryAbnormalLicensePlate")
     public ResultDTO<KsLpsDTO> queryAbnormalLicensePlate(
@@ -33,10 +37,10 @@ public class KsLpsController {
         List<KsLpsAreaDTO> areaDTO = getAreaAbnormalLicensePlate();
         List<KsLpsSiteDTO> siteDTO = getSiteAbnormalLicensePlate();
         List<KsLpsLalpDTO> lalpDTO = getKsLpsLalp();
-        data.setWpCount(48210);
-        data.setTpCount(79450);
-        data.setJpCount(42300);
-        data.setHpzdCount(10300);
+        data.setWpCount(Integer.parseInt(""+ redisTemplate.opsForValue().get("ks_lps_wp")));
+        data.setTpCount(Integer.parseInt(""+ redisTemplate.opsForValue().get("ks_lps_tp")));
+        data.setJpCount(Integer.parseInt(""+ redisTemplate.opsForValue().get("ks_lps_jp")));
+        data.setHpzdCount(Integer.parseInt(""+ redisTemplate.opsForValue().get("ks_lps_hpzd")));
         data.setLalp(lalpDTO);
         data.setArea(areaDTO);
         data.setTime(timeDTO);
@@ -50,11 +54,7 @@ public class KsLpsController {
      * @return
      */
     private List<KsLpsTimeDTO> getTimeAbnormalLicensePlate() {
-        List<KsLpsTimeDTO> spsTimes = new ArrayList<>();
-        for (int i = 1; i < 25; i++ ) {
-            spsTimes.add(new KsLpsTimeDTO( "" + (i < 10 ? ("0" + i) : i) +":00", i * 10000));
-        }
-        return spsTimes;
+        return ksLpsService.getTimeAbnormalLicensePlate();
     }
 
     /**
@@ -62,12 +62,7 @@ public class KsLpsController {
      * @return
      */
     private List<KsLpsAreaDTO> getAreaAbnormalLicensePlate() {
-        String[] areas = {"东城区","西城区","朝阳区","丰台区","石景山区","海淀区","顺义区","通州区","大兴区","房山区","门头沟区","昌平区","平谷区","密云区","怀柔区","延庆区"};
-        List<KsLpsAreaDTO> lpsAreas = new ArrayList<>();
-        for (int i = 0; i < areas.length; i++ ) {
-            lpsAreas.add(new KsLpsAreaDTO(areas[i], i * 10000));
-        }
-        return lpsAreas;
+        return ksLpsService.getAreaAbnormalLicensePlate();
     }
 
     /**
@@ -75,11 +70,7 @@ public class KsLpsController {
      * @return
      */
     private List<KsLpsSiteDTO> getSiteAbnormalLicensePlate() {
-        List<KsLpsSiteDTO> lpsSite = new ArrayList<>();
-        for (int i = 1; i < 11; i++ ) {
-            lpsSite.add(new KsLpsSiteDTO(i + 1, "上地" + i + "街",("豫E" + (2222 + i)),(30 + i),(116.3954 + i * 001),(40.082 + i * 0.02)));
-        }
-        return lpsSite;
+        return ksLpsService.getSiteAbnormalLicensePlate();
     }
 
     /**
@@ -87,11 +78,7 @@ public class KsLpsController {
      * @return
      */
     private List<KsLpsLalpDTO> getKsLpsLalp() {
-        List<KsLpsLalpDTO> lpsSite = new ArrayList<>();
-        for (int i = 1; i < 10; i++ ) {
-            lpsSite.add(new KsLpsLalpDTO((28 + i),(56 + i),(100 + i), ("上地" + i +"街"),"2020-12-25 14:40:13",("豫E" + (2222 + i)),(30 + i),(25 + i),"http://222.128.117.234:9003/imgs/pzyc.png"));
-        }
-        return lpsSite;
+        return ksLpsService.getKsLpsLalp();
     }
 
 }

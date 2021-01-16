@@ -4,11 +4,12 @@ import com.zhuanjingkj.stpbe.data.dto.DbDeleteResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.DbInsertResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsVcDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsVcLsvsDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsVcSfvsDTO;
-import com.zhuanjingkj.stpbe.tmdp.rto.ks.AddVehicleToVcRTO;
-import com.zhuanjingkj.stpbe.tmdp.rto.ks.DeleteVehicleFromVcRTO;
+import com.zhuanjingkj.stpbe.data.rto.ks.AddVehicleToVcRTO;
+import com.zhuanjingkj.stpbe.data.rto.ks.DeleteVehicleFromVcRTO;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.KsVcService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ import java.util.List;
 @RequestMapping(value = "/ks")
 @CrossOrigin(origins = "*")
 public class KsVcController {
+
+    @Autowired
+    private KsVcService ksVcService;
 
     /**
      * 布控车辆列表
@@ -40,9 +44,9 @@ public class KsVcController {
         @RequestParam(name = "hphm", required = false) String hphm,
         @RequestParam(name = "startIndex", required = false) Integer startIndex,
         @RequestParam(name = "amount", required = false) Integer amount,
-        @RequestParam(name = "driection", required = false) Integer direction
+        @RequestParam(name = "direction", required = false) Integer direction
     ) {
-        return queryVehicle_exp();
+        return queryVehicle_exp(hphm, startIndex, amount, direction);
     }
 
     /**
@@ -119,37 +123,16 @@ public class KsVcController {
         return queryVcLsvs_exp();
     }
 
-    private ResultDTO<DbQrsDTO> queryVehicle_exp() {
-        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        DbQrsDTO data = new DbQrsDTO(100,5,1,100,0,null);
-        List<KsVcDTO> recs = new ArrayList<>();
-        recs.add(new KsVcDTO(102, "苏AL6H87"));
-        recs.add(new KsVcDTO(102, "豫A52301X"));
-        recs.add(new KsVcDTO(102, "苏GW81752"));
-        recs.add(new KsVcDTO(102, "苏AL9687"));
-        recs.add(new KsVcDTO(102, "鲁C817S2"));
-        recs.add(new KsVcDTO(102, "津KL9687"));
-        recs.add(new KsVcDTO(102, "蒙Q81752"));
-        recs.add(new KsVcDTO(102, "鲁KL9687"));
-        data.setRecs(recs);
-        dto.setData(data);
-        return dto;
+    private ResultDTO<DbQrsDTO> queryVehicle_exp(String hphm, Integer startIndex, Integer amount, Integer direction) {
+        return ksVcService.queryVehicle_exp(hphm, startIndex, amount, direction);
     }
 
     private ResultDTO<DbInsertResultDTO> addVehicle_exp(AddVehicleToVcRTO rto) {
-        System.out.println("添加车牌号：" + rto.getHphm());
-        ResultDTO<DbInsertResultDTO> dto = new ResultDTO<DbInsertResultDTO>();
-        DbInsertResultDTO data = new DbInsertResultDTO(101,1);
-        dto.setData(data);
-        return  dto;
+        return  ksVcService.addVehicle_exp(rto);
     }
 
     private ResultDTO<DbDeleteResultDTO> deleteVehicle_exp(DeleteVehicleFromVcRTO rto) {
-        System.out.println("删除布控车牌id：" + rto.getVcId());
-        ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
-        DbDeleteResultDTO data = new DbDeleteResultDTO(0);
-        dto.setData(data);
-        return dto;
+        return ksVcService.deleteVehicle_exp(rto);
     }
 
     private ResultDTO<DbQrsDTO> queryVcSfvs_exp() {

@@ -1,8 +1,7 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.ks;
+package com.zhuanjingkj.stpbe.data.dto;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
-import org.json.JSONObject;
 
 public class KsRssDTO extends BaseDTO {
     @JSONField(name = "rssId")
@@ -13,6 +12,10 @@ public class KsRssDTO extends BaseDTO {
     private int level;
     @JSONField(name = "groupCode")
     private String groupCode;
+
+    public KsRssDTO() {
+        super();
+    }
 
     public KsRssDTO(long rssId, String rssName, int level, String groupCode) {
         this.rssId = rssId;

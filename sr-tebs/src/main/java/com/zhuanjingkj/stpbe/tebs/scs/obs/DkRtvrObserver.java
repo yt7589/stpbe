@@ -138,6 +138,12 @@ public class DkRtvrObserver implements ITvisStpObserver {
                 flag = true;
             }
         }
+        String hType = vo.getVehicleHptzVO().getHpzt(); //牌照异常
+        if(!"1".equals(hType)) {
+            dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(),11, hphm,
+                    vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
+                    vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "号牌异常", vType, imageHash, date);
+        }
         //统计时段违章到redis
         if(flag) {
             Integer hour = LocalDateTime.now().getHour();
