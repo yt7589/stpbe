@@ -17,6 +17,10 @@ public class KsLpsSiteDTO extends BaseDTO {
     @JSONField(name = "lat")
     private double lat;
 
+    public KsLpsSiteDTO() {
+        super();
+    }
+
     public KsLpsSiteDTO(long siteId, String siteName, String hphm, int totalTimes, double lng, double lat) {
         this.siteId = siteId;
         this.siteName = siteName;
