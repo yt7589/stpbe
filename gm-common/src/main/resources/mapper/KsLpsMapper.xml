@@ -24,6 +24,8 @@
      LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
      LEFT JOIN t_site ts ON tc.site_id = ts.site_id
          WHERE wzlx ='号牌异常'
+      ORDER BY tv.create_time DESC
+         LIMIT 1
     </select>
 
     <select id ="getLpsSiteCount" resultType="Integer">
@@ -42,6 +44,8 @@
      LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
      LEFT JOIN t_site ts ON tc.site_id = ts.site_id
      LEFT JOIN ${tblName} js ON js.tvis_json_id = tv.tvis_json_id
-        WHERE tv.wzlx ='号牌异常'
+         WHERE tv.wzlx ='号牌异常'
+      ORDER BY tv.create_time DESC
+         LIMIT 4
     </select>
 </mapper>
