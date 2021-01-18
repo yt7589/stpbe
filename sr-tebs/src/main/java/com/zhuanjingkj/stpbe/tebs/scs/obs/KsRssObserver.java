@@ -30,9 +30,7 @@ public class KsRssObserver implements ITvisStpObserver {
         } else {
             code = "C00000" + random;
         }
-        if(redisTemplate.hasKey("ks_rss_lsvs_total")) {
-            redisTemplate.opsForHash().increment("ks_rss_lsvs_total",  hphm + "|" + code, 1);
-        }
+        redisTemplate.opsForHash().increment("ks_rss_lsvs_total",  hphm + "|" + code, 1);
         redisTemplate.opsForHash().put("ks_rss_lsvs_time", hphm + "|" + code, date);
         redisTemplate.opsForList().leftPush("ks_rss_lsvs_list", hphm + "|" + code);
     }

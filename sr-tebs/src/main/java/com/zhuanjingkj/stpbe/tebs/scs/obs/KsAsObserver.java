@@ -30,9 +30,7 @@ public class KsAsObserver implements ITvisStpObserver {
         } else {
             code = "C00000" + random;
         }
-        if(redisTemplate.hasKey("ks_as_lsvs_count")) {
-            redisTemplate.opsForHash().increment("ks_as_lsvs_total",  hphm + "|" + code, 1);
-        }
+        redisTemplate.opsForHash().increment("ks_as_lsvs_total",  hphm + "|" + code, 1);
         redisTemplate.opsForHash().put("ks_as_lsvs_time", hphm + "|" + code, date);
         redisTemplate.opsForList().leftPush("ks_as_lsvs_list", hphm + "|" + code);
     }
@@ -42,9 +40,5 @@ public class KsAsObserver implements ITvisStpObserver {
         if(!redisTemplate.hasKey("ks_as_lsvs_list")) {
             redisTemplate.opsForList().rightPushAll("ks_as_lsvs_list",0);
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println();
     }
 }

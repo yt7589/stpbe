@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 首页违章数据统计
@@ -149,6 +150,8 @@ public class DkRtvrObserver implements ITvisStpObserver {
                     vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "号牌异常", vType, imageHash, date);
         }
         //统计时段违章到redis
+        Integer random = new Random().nextInt(15);
+        String code ="";
         if(flag) {
             Integer hour = LocalDateTime.now().getHour();
             if(hour >= 0 && hour < 2) {
@@ -195,23 +198,24 @@ public class DkRtvrObserver implements ITvisStpObserver {
 
             long cameraId = vo.getCameraId();
             List<String> ksvcHphm = ksVcMapper.getKsvcHphm();
+            if(random < 10) {
+                code = "C000000" + random;
+            } else {
+                code = "C00000" + random;
+            }
             if(ksvcHphm.contains(hphm)) {
                 //布控违章记录统计同一辆车在同一个设备下通过的次数
-                if(flag) {
-                    if(redisTemplate.hasKey("ks_vs_ill_total")) {
-                        redisTemplate.opsForHash().increment("ks_vs_ill_total",  hphm + "|" + cameraId, 1);
-                    }
-                    redisTemplate.opsForHash().put("ks_vs_ill_time", hphm + "|" + cameraId, date);
-                    redisTemplate.opsForList().leftPush("ks_vs_ill_list", hphm + "|" + cameraId);
-                }
-                //车辆布控动态
-                if(redisTemplate.hasKey("ks_vs_dyn_total")) {
-                    redisTemplate.opsForHash().increment("ks_vs_dyn_total",  hphm + "|" + cameraId, 1);
-                }
-                redisTemplate.opsForHash().put("ks_vs_dyn_time", hphm + "|" + cameraId, date);
-                redisTemplate.opsForList().leftPush("ks_vs_dyn_list", hphm + "|" + cameraId);
+                redisTemplate.opsForHash().increment("ks_vs_ill_total",  hphm + "|" + code, 1);
+                redisTemplate.opsForHash().put("ks_vs_ill_time", hphm + "|" + code, date);
+                redisTemplate.opsForList().leftPush("ks_vs_ill_list", hphm + "|" + code);
             }
         }
+        //车辆布控动态
+        if(redisTemplate.hasKey("ks_vs_dyn_total")) {
+            redisTemplate.opsForHash().increment("ks_vs_dyn_total",  hphm + "|" + code, 1);
+        }
+        redisTemplate.opsForHash().put("ks_vs_dyn_time", hphm + "|" + code, date);
+        redisTemplate.opsForList().leftPush("ks_vs_dyn_list", hphm + "|" + code);
     }
 
     @Override
@@ -229,7 +233,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         }
         //布控动态
         if(!redisTemplate.hasKey("ks_vs_dny_list")) {
-            redisTemplate.opsForList().rightPushAll("ks_vs_dny_list",0);
+            redisTemplate.opsForList().rightPushAll("ks_vs_dyn_list",0);
         }
     }
 
