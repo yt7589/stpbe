@@ -150,7 +150,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
                     vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), "号牌异常", vType, imageHash, date);
         }
         //统计时段违章到redis
-        Integer random = new Random().nextInt(15);
+        int random = (int)(Math.random()*15) + 1;
         String code ="";
         if(flag) {
             Integer hour = LocalDateTime.now().getHour();
