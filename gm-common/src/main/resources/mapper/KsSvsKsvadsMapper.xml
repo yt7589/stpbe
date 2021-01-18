@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.KsSvsKsvadsMapper">
+    <select id ="getKaCameraCode" resultType="hashmap">
+        SELECT tc.camera_code, tr.area_name
+          FROM t_area tr
+     LEFT JOIN t_site ts ON tr.area_id = ts.area_id
+     LEFT JOIN t_camera tc ON ts.site_id = tc.site_id
+         WHERE tc.camera_code IS NOT NULL
+           AND tr.`status` = 1
+    </select>
+</mapper>

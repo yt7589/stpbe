@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.KsLpsMapper">
+
+    <resultMap  type="com.zhuanjingkj.stpbe.data.dto.KsLpsSiteDTO" id="lpsSiteDTO">
+        <result column="site_id" property="siteId" jdbcType="INTEGER"/>
+        <result column="site_name" property="siteName" jdbcType="VARCHAR"/>
+        <result column="hphm" property="hphm" jdbcType="INTEGER"/>
+        <result column="lng" property="lng" jdbcType="VARCHAR"/>
+        <result column="lat" property="lat" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap  type="com.zhuanjingkj.stpbe.data.dto.KsLpsLalpDTO" id="lpsLalpDTO">
+        <result column="site_id" property="siteId" jdbcType="INTEGER"/>
+        <result column="site_name" property="siteName" jdbcType="VARCHAR"/>
+        <result column="occur_time" property="cccurTime" jdbcType="INTEGER"/>
+        <result column="hphm" property="hphm" jdbcType="VARCHAR"/>
+        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id ="getLpsSite" resultMap="lpsSiteDTO">
+        SELECT ts.site_id, ts.site_name, ts.lng, ts.lat, tv.hphm
+          FROM t_violation tv
+     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+         WHERE wzlx ='号牌异常'
+      ORDER BY tv.create_time DESC
+         LIMIT 1
+    </select>
+
+    <select id ="getLpsSiteCount" resultType="Integer">
+        SELECT count(tv.violation_id)
+          FROM t_violation tv
+     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+         WHERE tv.hphm =#{hphm}
+           AND ts.site_id =#{siteId}
+           AND tv.wzlx ='号牌异常'
+    </select>
+
+    <select id ="getLpsLalp" resultMap="lpsLalpDTO">
+        SELECT ts.site_id, ts.site_name, tv.hphm, tv.image_hash, js.occur_time
+          FROM t_violation tv
+     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+     LEFT JOIN ${tblName} js ON js.tvis_json_id = tv.tvis_json_id
+         WHERE tv.wzlx ='号牌异常'
+      ORDER BY tv.create_time DESC
+         LIMIT 4
+    </select>
+</mapper>

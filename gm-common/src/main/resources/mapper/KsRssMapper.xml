@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.KsRssMapper">
+
+    <resultMap  type="com.zhuanjingkj.stpbe.data.dto.KsRssDTO" id="rssDTO">
+        <result column="road_id" property="rssId" jdbcType="INTEGER"/>
+        <result column="road_name" property="rssName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id ="getKsRoadCount" resultType="Integer">
+        SELECT COUNT(road_id)
+          FROM t_road
+         WHERE road_name LIKE CONCAT(#{rssName}, '%')
+           AND `status` =#{type}
+    </select>
+
+    <select id ="getKsRoad" resultMap="rssDTO">
+        SELECT road_id, road_name
+          FROM t_road
+         WHERE road_name like CONCAT(#{rssName}, "%")
+           AND `status` =#{type}
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <delete id ="deleteKsRoad">
+        UPDATE t_road tr SET tr.`status` = 0
+         WHERE road_id =#{rssId}
+    </delete>
+
+    <update id ="addRoads">
+        UPDATE t_road tr SET tr.`status` = 1
+         WHERE tr.road_id IN
+        (
+        <foreach collection="rssIds" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </update>
+
+    <select id ="getKsRoadCode" resultType="hashmap">
+        SELECT tc.camera_code, tr.road_name, CONCAT(ts.lng, '|',ts.lat) AS coordinate
+          FROM t_camera tc
+     LEFT JOIN t_road_seg sr ON tc.site_id = sr.src_site_id
+     LEFT JOIN t_site ts ON ts.site_id = sr.src_site_id
+     LEFT JOIN t_road tr ON sr.road_id = tr.road_id
+         WHERE tr.road_name IS NOT NULL UNION ALL
+        SELECT tc.camera_code, tr.road_name, CONCAT(ts.lng, '|',ts.lat) AS coordinate
+          FROM t_camera tc
+     LEFT JOIN t_road_seg sr ON tc.site_id = sr.dst_site_id
+     LEFT JOIN t_site ts ON ts.site_id = sr.dst_site_id
+     LEFT JOIN t_road tr ON sr.road_id = tr.road_id
+         WHERE tr.road_name IS NOT NULL
+    </select>
+</mapper>

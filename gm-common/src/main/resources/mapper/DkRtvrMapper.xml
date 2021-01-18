@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper">
+    <resultMap type ="com.zhuanjingkj.stpbe.data.dto.DkRtvrDTO" id ="rtvrDTO">
+        <result column="site_name" property="siteName" jdbcType="VARCHAR"/>
+        <result column="clpp" property="clpp" jdbcType="VARCHAR"/>
+        <result column="ppcx" property="ppcx" jdbcType="VARCHAR"/>
+        <result column="hphm" property="hphm" jdbcType="VARCHAR"/>
+        <result column="wzlx" property="violationTypeName" jdbcType="VARCHAR"/>
+        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>
+        <result column="create_time" property="occurTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <insert id ="insertViolation">
-        INSERT INTO t_violation (tvis_json_id, vehs_idx, camera_id, hphm, csys, clpp, ppcx, cxnk, psfx, clwz, wzlx, image_hash, create_time)
+        INSERT INTO t_violation (tvis_json_id, vehs_idx, camera_id, hphm, csys, clpp, ppcx, cxnk, psfx, clwz, wzlx, cllxzfl, image_hash, create_time)
                          VALUES (#{tvisJsonId}, #{vehsIdx}, #{CameraId}, #{hphm}, #{csysName}, #{clppName}, #{ppcxName},
-                                 #{cxnkName}, #{psfx}, #{clwz}, #{wzlx}, #{imageHash}, #{date})
+                                 #{cxnkName}, #{psfx}, #{clwz}, #{wzlx}, #{vtype}, #{imageHash}, #{date})
     </insert>
 
     <select id ="getImageHash" resultType ="String">
         SELECT image_hash
           FROM ${tblName}
          WHERE tvis_json_id =#{tvisJsonId}
+    </select>
+
+    <select id ="getTop2Violation" resultMap ="rtvrDTO">
+        SELECT ts.site_name, tv.clpp, tv.ppcx, tv.hphm, tv.wzlx, tv.image_hash, tv.create_time
+        FROM t_violation tv
+        LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
+        LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+        ORDER BY tv.create_time DESC
+        LIMIT 2
     </select>
 </mapper>

@@ -1,13 +1,23 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.zhuanjingkj.stpbe.data.dto.*;
-import com.zhuanjingkj.stpbe.tmdp.dto.ks.AreaDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.ks.AddAreasToKeyAreasRTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.ks.DeleteAreaFromKeyAreasRTO;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.KsAsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
 
 /**
  * Key Supervision => Area Supervision 重点监管=》区域监管
@@ -16,16 +26,26 @@ import java.util.List;
 @RequestMapping("/ks")
 @CrossOrigin(origins = "*")
 public class KsAsController {
+
+    private static final Logger log = LoggerFactory.getLogger(KsAsController.class);
+
+    @Autowired
+    private KsAsService ksAsService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @GetMapping("as/queryKeyAreas")
     public ResultDTO<DbQrsDTO> queryKeyAreas(
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
             @RequestParam(name = "areaName", required = false) String areaName,
-            @RequestParam(name = "startIndex", required = false) Integer startIndex,
-            @RequestParam(name = "amount", required = false) Integer amount,
-            @RequestParam(name = "driection", required = false) Integer direction
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
     ) {
-        return queryKeyAreas_exp();
+        log.info("areaName:" + areaName + "; startIndex:" + startIndex + "; amount:" + amount + "; direction:" + direction);
+        return queryKeyAreas_exp(areaName, startIndex, amount, direction, 1);
     }
 
     @GetMapping("as/queryAreas")
@@ -33,11 +53,12 @@ public class KsAsController {
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
             @RequestParam(name = "areaName", required = false) String areaName,
-            @RequestParam(name = "startIndex", required = false) Integer startIndex,
-            @RequestParam(name = "amount", required = false) Integer amount,
-            @RequestParam(name = "driection", required = false) Integer direction
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
     ) {
-        return queryKeyAreas_exp();
+        log.info("areaName:" + areaName + "; startIndex:" + startIndex + "; amount:" + amount + "; driection" + direction);
+        return queryKeyAreas_exp(areaName, startIndex, amount, direction, 0);
     }
 
     @PostMapping("as/addAreasToKeyAreas")
@@ -53,45 +74,20 @@ public class KsAsController {
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
             @RequestBody DeleteAreaFromKeyAreasRTO rto) {
+        log.info("delete area:" + rto.getAreaId());
         return deleteAreaFromKeyAreas_exp(rto);
     }
 
-    private ResultDTO<DbQrsDTO> queryKeyAreas_exp() {
-        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        DbQrsDTO data = new DbQrsDTO(100, 5, 0, 10, 0,null);
-        List<AreaDTO> recs = new ArrayList<>();
-        recs.add(new AreaDTO(101, "上地", 0, 3, "1_1_1"));
-        recs.add(new AreaDTO(102, "五道口", 1, 3, "1_1_2"));
-        recs.add(new AreaDTO(103, "东直门", 1, 3, "1_1_2"));
-        recs.add(new AreaDTO(104, "动物园", 1, 3, "1_1_2"));
-        recs.add(new AreaDTO(105, "新街口", 1, 3, "1_1_2"));
-        recs.add(new AreaDTO(106, "六里桥", 1, 3, "1_1_2"));
-        recs.add(new AreaDTO(107, "车道沟", 1, 3, "1_1_2"));
-        recs.add(new AreaDTO(108, "朝阳门", 1, 3, "1_1_2"));
-        recs.add(new AreaDTO(109, "人大双安", 1, 3, "1_1_2"));
-        recs.add(new AreaDTO(110, "联想桥", 1, 3, "1_1_2"));
-        data.setRecs(recs);
-        dto.setData(data);
-        return dto;
+    private ResultDTO<DbQrsDTO> queryKeyAreas_exp(String areaName, Integer startIndex, Integer amount, Integer direction, Integer type) {
+        return ksAsService.queryKeyAreas_exp(areaName, startIndex, amount, direction, type);
     }
 
     private ResultDTO<DbInsertResultDTO> addAreasToKeyAreas_exp(AddAreasToKeyAreasRTO rto) {
-        List<Integer> areas = rto.getAreas();
-        for (int area : areas) {
-            System.out.println("add area: " + area + "!");
-        }
-        ResultDTO<DbInsertResultDTO> dto = new ResultDTO<>();
-        DbInsertResultDTO data = new DbInsertResultDTO(108, 1);
-        dto.setData(data);
-        return dto;
+        return ksAsService.addAreasToKeyAreas_exp(rto);
     }
 
     private ResultDTO<DbDeleteResultDTO> deleteAreaFromKeyAreas_exp(DeleteAreaFromKeyAreasRTO rto) {
-        System.out.println("delete area: " + rto.getAreaId() + "!");
-        ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
-        DbDeleteResultDTO data = new DbDeleteResultDTO(1);
-        dto.setData(data);
-        return dto;
+        return ksAsService.deleteAreaFromKeyAreas_exp(rto);
     }
 }
 

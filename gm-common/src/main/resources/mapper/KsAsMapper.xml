@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.KsAsMapper">
+
+    <resultMap  type="com.zhuanjingkj.stpbe.data.dto.AreaDTO" id="areaDTO">
+        <result column="area_id" property="areaId" jdbcType="INTEGER"/>
+        <result column="area_name" property="areaName" jdbcType="VARCHAR"/>
+        <result column="parent_area_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="group_code" property="groupCode" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id ="getAreaCount" resultType="Integer">
+        SELECT COUNT(area_id)
+          FROM t_area
+         WHERE `status` =#{type}
+           AND area_name like CONCAT(#{areaName}, "%")
+    </select>
+
+    <select id ="getKsArea" resultMap="areaDTO">
+        SELECT area_id, area_name, parent_area_id, `level`, group_code
+          FROM t_area
+         WHERE `status` =#{type}
+           AND area_name like CONCAT(#{areaName}, "%")
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <update id ="deleteArea">
+        UPDATE t_area ta SET ta.`status` = 0
+         WHERE ta.area_id =#{areaId}
+    </update>
+
+    <update id ="addAreas">
+        UPDATE t_area ta SET ta.`status` = 1
+         WHERE ta.area_id IN
+        (
+            <foreach collection="areas" item="item" separator=",">
+                #{item}
+            </foreach>
+        )
+    </update>
+
+    <select id ="getKsAreaCode" resultType="hashmap">
+        SELECT tc.camera_code, ta.area_name,  CONCAT(ts.lng, '|', ts.lat) AS coordinate
+          FROM t_camera tc
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta ON ts.area_id = ta.area_id
+    </select>
+
+</mapper>

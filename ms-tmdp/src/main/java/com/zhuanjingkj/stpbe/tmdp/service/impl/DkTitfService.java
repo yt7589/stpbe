@@ -1,22 +1,12 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
-import com.zhuanjingkj.stpbe.common.AppRegistry;
-import com.zhuanjingkj.stpbe.data.dto.LoginDTO;
-import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.rto.LoginRTO;
-import com.zhuanjingkj.stpbe.db.DaoEngine;
-import com.zhuanjingkj.stpbe.db.DataSourceRegistry;
-import com.zhuanjingkj.stpbe.tmdp.dto.DkMainDTO;
+import com.zhuanjingkj.stpbe.common.mapper.DkTitfMapper;
 import com.zhuanjingkj.stpbe.tmdp.dto.DkTitfDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.DkTitfItemDTO;
-import com.zhuanjingkj.stpbe.tmdp.mapper.DkTitfMapper;
 import com.zhuanjingkj.stpbe.tmdp.service.IDkTitfService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;

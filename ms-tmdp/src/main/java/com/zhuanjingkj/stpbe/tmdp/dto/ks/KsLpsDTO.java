@@ -2,6 +2,8 @@ package com.zhuanjingkj.stpbe.tmdp.dto.ks;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
+import com.zhuanjingkj.stpbe.data.dto.KsLpsLalpDTO;
+import com.zhuanjingkj.stpbe.data.dto.KsLpsSiteDTO;
 
 import java.util.List;
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.KsvssKsvrpMapper">
+    <select id ="getVTypeNum" resultType="String">
+        SELECT vt.vehicle_type_num
+          FROM t_special_vehicle_type vt
+         WHERE vt.`status` = 1
+    </select>
+</mapper>
