@@ -65,12 +65,12 @@ public class TmdpScheduledTask {
             for(int i = 0; i < sfvs.size(); i++) {
                 String val = sfvs.get(i);
                 if(StringUtils.isNotBlank(val)) {
-                    String hphm = val.split("|")[0];
-                    String cameraId = val.split("|")[1];
+                    String hphm = val.split("\\|")[0];
+                    String cameraId = val.split("\\|")[1];
                     String coordinate = "" + KsAsService.areaSiteMap.get(cameraId);
                     if(StringUtils.isNotBlank(coordinate)) {
                         KsRssSfvsDTO lsv = new KsRssSfvsDTO(101, "" + KsAsService.areaMap.get(cameraId),
-                                hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_as_lsvs_total", val)), Integer.parseInt(coordinate.split("")[0]),Integer.parseInt(coordinate.split("")[1]));
+                                hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_as_lsvs_total", val)), Double.parseDouble(coordinate.split("\\|")[0]),Double.parseDouble(coordinate.split("\\|")[1]));
                         data.put(lsv.toJsonObject());
                     }
                 }
@@ -97,8 +97,8 @@ public class TmdpScheduledTask {
             for(int i = 0; i < lsvs.size(); i++) {
                 String val = lsvs.get(i);
                 if(StringUtils.isNotBlank(val)) {
-                    String hphm = val.split("|")[0];
-                    String cameraId = val.split("|")[1];
+                    String hphm = val.split("\\|")[0];
+                    String cameraId = val.split("\\|")[1];
                     KsAsLsvDTO lsv = new KsAsLsvDTO(0,0,0, "" + KsAsService.areaMap.get(cameraId),
                             "" + redisTemplate.opsForHash().get("ks_as_lsvs_time", val),hphm,
                             Integer.parseInt("" + redisTemplate.opsForHash().get("ks_as_lsvs_total", val)));
@@ -157,13 +157,13 @@ public class TmdpScheduledTask {
             for(int i = 0; i < sfvs.size(); i++) {
                 String val = sfvs.get(i);
                 if(StringUtils.isNotBlank(val)) {
-                    String hphm = val.split("|")[0];
-                    String cameraId = val.split("|")[1];
+                    String hphm = val.split("\\|")[0];
+                    String cameraId = val.split("\\|")[1];
                     String coordinate = "" + KsRssService.rssSiteMap.get(cameraId);
                     if(StringUtils.isNotBlank(coordinate)) {
                         KsRssSfvsDTO lsv = new KsRssSfvsDTO(101, "" + KsRssService.rssMap.get(cameraId),
                                 hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_rss_lsvs_total", val)),
-                                Integer.parseInt(coordinate.split("")[0]),Integer.parseInt(coordinate.split("")[1]));
+                                Double.parseDouble(coordinate.split("\\|")[0]),Double.parseDouble(coordinate.split("\\|")[1]));
                         data.put(lsv.toJsonObject());
                     }
                 }
@@ -215,8 +215,8 @@ public class TmdpScheduledTask {
             for(int i = 0; i < sfvs.size(); i++) {
                 String val = sfvs.get(i);
                 if(StringUtils.isNotBlank(val)) {
-                    String hphm = val.split("|")[0];
-                    String cameraId = val.split("|")[1];
+                    String hphm = val.split("\\|")[0];
+                    String cameraId = val.split("\\|")[1];
                     String coordinate = "" + KsAsService.areaSiteMap.get(cameraId);
                     if(StringUtils.isNotBlank(coordinate)) {
                         KsRssLsvsDTO lsv = new KsRssLsvsDTO(101, 0,0, "" + KsRssService.rssMap.get(cameraId), "" +redisTemplate.opsForHash().get("ks_rss_lsvs_time", val),
@@ -312,6 +312,5 @@ public class TmdpScheduledTask {
         //其他
         redisTemplate.opsForValue().set("ks_svs_others", 0);
         }
-
     }
 }

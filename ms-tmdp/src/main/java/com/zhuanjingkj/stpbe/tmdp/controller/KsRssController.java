@@ -8,6 +8,7 @@ import com.zhuanjingkj.stpbe.tmdp.rto.ks.AddRsToRssRTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.ks.DeleteRsFromRssRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.KsRssService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public class KsRssController {
 
     @Autowired
     private KsRssService ksRssService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 查询路段列表
@@ -110,6 +114,11 @@ public class KsRssController {
 
     private ResultDTO<DbInsertResultDTO> addRsToRsSupervision_exp(AddRsToRssRTO rto) {
         return ksRssService.addRsToRsSupervision_exp(rto);
+    }
+
+    @GetMapping(value ="/rss/test")
+    public void test(){
+        redisTemplate.opsForHash().increment("ks_vs_lsvs_total",  "hphm" + "|" + "code", 1);
     }
 
 }
