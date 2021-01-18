@@ -52,7 +52,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             imageHash = "QmR89Qr8aA4wjBh64TpL1z7Y59G7s4RexTWjkQzD5LehbV";
         }
         if(StringUtils.isBlank(hphm)) {
-            hphm = "豫AF52301X";
+            hphm = "豫A888888";
         }
         String zjsddh = vo.getVehicleJsxwtzVO().getZjsddh();
         String date = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
@@ -211,9 +211,8 @@ public class DkRtvrObserver implements ITvisStpObserver {
             }
         }
         //车辆布控动态
-        if(redisTemplate.hasKey("ks_vs_dyn_total")) {
-            redisTemplate.opsForHash().increment("ks_vs_dyn_total",  hphm + "|" + code, 1);
-        }
+
+        redisTemplate.opsForHash().increment("ks_vs_dyn_total",  hphm + "|" + code, 1);
         redisTemplate.opsForHash().put("ks_vs_dyn_time", hphm + "|" + code, date);
         redisTemplate.opsForList().leftPush("ks_vs_dyn_list", hphm + "|" + code);
     }

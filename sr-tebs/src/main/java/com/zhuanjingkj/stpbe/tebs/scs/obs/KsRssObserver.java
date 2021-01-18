@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tebs.scs.obs;
 
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,6 +30,9 @@ public class KsRssObserver implements ITvisStpObserver {
             code = "C000000" + random;
         } else {
             code = "C00000" + random;
+        }
+        if(StringUtils.isBlank(hphm)) {
+            hphm = "豫A888888";
         }
         redisTemplate.opsForHash().increment("ks_rss_lsvs_total",  hphm + "|" + code, 1);
         redisTemplate.opsForHash().put("ks_rss_lsvs_time", hphm + "|" + code, date);
