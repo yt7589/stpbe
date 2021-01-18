@@ -63,6 +63,7 @@ public class VideoAnalysisTask {
             int currentArea = 0;
             int maxArea = 0;
             String cutFileFn = null;
+            File cutFileObj = null;
             String imgBaseFolder = "images/";
             String orgFileFn = "n_" + tvisJsonId + ".jpg";
             for (VehicleVo veh : vehs) {
@@ -83,20 +84,24 @@ public class VideoAnalysisTask {
                     vo.setW(w);
                     vo.setH(h);
                     vo.setOrgImgFn(orgFileFn);
+                    TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
+                    // 车型特征
+                    String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
+                    String hphm = veh.getVehicleHptzVO().getHphm();
+                    TvisSodImage.drawString(orgImg, Font.BOLD, 25,
+                            Color.RED, x, y + 3, hphm + ":" + ppxhms);
                 } else {
                     vo = cutVehs.get("" + veh.getTrackId());
                 }
-                TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
-                // 车型特征
-                String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
-                String hphm = veh.getVehicleHptzVO().getHphm();
-                TvisSodImage.drawString(orgImg, Font.BOLD, 25,
-                        Color.RED, x, y + 3, hphm + ":" + ppxhms);
                 maxArea = vo.getArea();
                 if (currentArea > maxArea) {
                     BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
                     try {
                         cutFileFn = "images/c_" + tvisJsonId + "_" + idx + ".jpg";
+                        cutFileObj = new File(imgBaseFolder + cutFileFn);
+                        if (cutFileObj.exists()) {
+                            cutFileObj.delete();
+                        }
                         ImageIO.write(vehImg, "jpg", new File(imgBaseFolder + cutFileFn));
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -115,6 +120,7 @@ public class VideoAnalysisTask {
                 e.printStackTrace();
             }
             // 生成一个定制的URL，可以通过SpringBoot来查看图片内容
+            String vaImgUrlBase = "/tmdp/va/getVaImage?imgFn=";
             System.out.println("##### Yantao: tvisJsonVO:" + JSONObject.toJSONString(tvisJsonVO) + "!");
         }
     }
