@@ -203,12 +203,15 @@ public class DkRtvrObserver implements ITvisStpObserver {
             } else {
                 code = "C00000" + random;
             }
-            if(ksvcHphm.contains(hphm)) {
+            if(StringUtils.isNotBlank(code)) {
+                code ="C0000004";
+            }
+//            if(ksvcHphm.contains(hphm)) {
                 //布控违章记录统计同一辆车在同一个设备下通过的次数
                 redisTemplate.opsForHash().increment("ks_vs_ill_total",  hphm + "|" + code, 1);
                 redisTemplate.opsForHash().put("ks_vs_ill_time", hphm + "|" + code, date);
                 redisTemplate.opsForList().leftPush("ks_vs_ill_list", hphm + "|" + code);
-            }
+//            }
         }
         //车辆布控动态
 
