@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 @Component
 public class KsRssObserver implements ITvisStpObserver {
@@ -22,11 +23,18 @@ public class KsRssObserver implements ITvisStpObserver {
         String hphm = vo.getVehicleHptzVO().getHphm();
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         //统计同一辆车在同一个设备下通过的次数
-        if(redisTemplate.hasKey("ks_rss_lsvs_total")) {
-            redisTemplate.opsForHash().increment("ks_rss_lsvs_total",  hphm + "|" + cameraId, 1);
+        Integer random = new Random().nextInt(15);
+        String code ="";
+        if(random < 10) {
+            code = "C000000" + random;
+        } else {
+            code = "C00000" + random;
         }
-        redisTemplate.opsForHash().put("ks_rss_lsvs_time", hphm + "|" + cameraId, date);
-        redisTemplate.opsForList().leftPush("ks_rss_lsvs_list", hphm + "|" + cameraId);
+        if(redisTemplate.hasKey("ks_rss_lsvs_total")) {
+            redisTemplate.opsForHash().increment("ks_rss_lsvs_total",  hphm + "|" + code, 1);
+        }
+        redisTemplate.opsForHash().put("ks_rss_lsvs_time", hphm + "|" + code, date);
+        redisTemplate.opsForList().leftPush("ks_rss_lsvs_list", hphm + "|" + code);
     }
 
     @Override
