@@ -203,7 +203,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             } else {
                 code = "C00000" + random;
             }
-            if(StringUtils.isNotBlank(code)) {
+            if(StringUtils.isBlank(code)) {
                 code ="C0000004";
             }
 //            if(ksvcHphm.contains(hphm)) {
