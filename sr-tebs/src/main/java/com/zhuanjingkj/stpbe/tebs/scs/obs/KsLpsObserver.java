@@ -39,7 +39,7 @@ public class KsLpsObserver implements ITvisStpObserver {
             String imageHash = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
             //分时间段统计
             Integer count = (int)(redisTemplate.opsForList().index("ks_lps_time",index));
-            redisTemplate.opsForList().set("ks_lps",index,count + 1);
+            redisTemplate.opsForList().set("ks_lps_time",index,count + 1);
             //过车牌照异常记录
 //            Map<String, Object> map = new HashMap<>();
 //            map.put("cameraId", vo.getCameraId());
@@ -86,20 +86,20 @@ public class KsLpsObserver implements ITvisStpObserver {
             redisTemplate.opsForList().rightPushAll("ks_lps", 0);
         }
 
-        if(!redisTemplate.hasKey("ks_lps_wp")) {
-            redisTemplate.opsForValue().increment("ks_lps_wp", 0);
-        }
-
-        if(!redisTemplate.hasKey("ks_lps_tp")) {
-            redisTemplate.opsForValue().increment("ks_lps_tp", 0);
-        }
-
-        if(!redisTemplate.hasKey("ks_lps_jp")) {
-            redisTemplate.opsForValue().increment("ks_lps_jp", 0);
-        }
-
-        if(!redisTemplate.hasKey("ks_lps_hpzd")) {
-            redisTemplate.opsForValue().increment("ks_lps_hpzd", 0);
-        }
+//        if(!redisTemplate.hasKey("ks_lps_wp")) {
+//            redisTemplate.opsForValue().increment("ks_lps_wp", 0);
+//        }
+//
+//        if(!redisTemplate.hasKey("ks_lps_tp")) {
+//            redisTemplate.opsForValue().increment("ks_lps_tp", 0);
+//        }
+//
+//        if(!redisTemplate.hasKey("ks_lps_jp")) {
+//            redisTemplate.opsForValue().increment("ks_lps_jp", 0);
+//        }
+//
+//        if(!redisTemplate.hasKey("ks_lps_hpzd")) {
+//            redisTemplate.opsForValue().increment("ks_lps_hpzd", 0);
+//        }
     }
 }
