@@ -198,14 +198,15 @@ public class DkRtvrObserver implements ITvisStpObserver {
 
             long cameraId = vo.getCameraId();
             List<String> ksvcHphm = ksVcMapper.getKsvcHphm();
+            if(random == 0) {
+                random = 4;
+            }
             if(random < 10) {
                 code = "C000000" + random;
             } else {
                 code = "C00000" + random;
             }
-            if(StringUtils.isBlank(code)) {
-                code ="C0000004";
-            }
+
 //            if(ksvcHphm.contains(hphm)) {
                 //布控违章记录统计同一辆车在同一个设备下通过的次数
                 redisTemplate.opsForHash().increment("ks_vs_ill_total",  hphm + "|" + code, 1);
