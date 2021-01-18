@@ -81,8 +81,8 @@ public class KsVcService implements IKsVcService {
         if(ill != null && ill.size() > 0) {
             for(int i = 0; i < ill.size(); i++) {
                 String val = ill.get(i);
-                String hphm = val.split("|")[0];
-                String cameraId = val.split("|")[1];
+                String hphm = val.split("\\|")[0];
+                String cameraId = val.split("\\|")[1];
                 KsVcLsvsDTO illLsvs = new KsVcLsvsDTO(0,0,101,"" + KsAsService.areaMap.get(cameraId),
                         "" + redisTemplate.opsForHash().get("ks_vs_ill_time", val),hphm,Integer.parseInt("" + redisTemplate.opsForHash().get("ks_vs_ill_total", val)));
                 recs.add(illLsvs);
@@ -105,8 +105,8 @@ public class KsVcService implements IKsVcService {
         if(ill != null && ill.size() > 0) {
             for(int i = 0; i < ill.size(); i++) {
                 String val = ill.get(i);
-                String hphm = val.split("|")[0];
-                String cameraId = val.split("|")[1];
+                String hphm = val.split("\\|")[0];
+                String cameraId = val.split("\\|")[1];
                 KsVcLsvsDTO illLsvs = new KsVcLsvsDTO(0,0,101,"" + KsAsService.areaMap.get(cameraId),
                         "" + redisTemplate.opsForHash().get("ks_vs_dyn_time", val),hphm,Integer.parseInt("" + redisTemplate.opsForHash().get("ks_vs_dyn_total", val)));
                 recs.add(illLsvs);
@@ -129,10 +129,10 @@ public class KsVcService implements IKsVcService {
         if(ill != null && ill.size() > 0) {
             for(int i = 0; i < ill.size(); i++) {
                 String val = ill.get(i);
-                String hphm = val.split("|")[0];
-                String cameraId = val.split("|")[1];
+                String hphm = val.split("\\|")[0];
+                String cameraId = val.split("\\|")[1];
                 String coordinate = "" + KsAsService.areaSiteMap.get(cameraId);
-                KsVcSfvsDTO illLsvs = new KsVcSfvsDTO(0,"" + KsAsService.areaMap.get(cameraId),Double.parseDouble("" + coordinate.split("")[0]), Double.parseDouble("" + coordinate.split("")[1]),
+                KsVcSfvsDTO illLsvs = new KsVcSfvsDTO(0,"" + KsAsService.areaMap.get(cameraId),Double.parseDouble("" + coordinate.split("\\|")[0]), Double.parseDouble("" + coordinate.split("\\|")[1]),
                         Integer.parseInt("" + redisTemplate.opsForHash().get("ks_vs_ill_total", val)), hphm);
                 recs.add(illLsvs);
             }
