@@ -148,7 +148,7 @@ public class KsVcService implements IKsVcService {
 //        recs.add(new KsVcSfvsDTO(101, "北京市海淀区回龙观39号",116.0885,40.7495, 6,"赣Q817S2"));
 //        data.setRecs(recs);
         dto.setData(data);
-        return null;
+        return dto;
     }
 
 
