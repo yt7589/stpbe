@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tebs.scs.obs;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
+import com.zhuanjingkj.stpbe.common.mapper.KsVcMapper;
 import com.zhuanjingkj.stpbe.common.mapper.KsvssKsvrpMapper;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
@@ -29,6 +30,9 @@ public class DkRtvrObserver implements ITvisStpObserver {
 
     @Autowired
     private KsvssKsvrpMapper ksvssKsvrpMapper;
+
+    @Autowired
+    private KsVcMapper ksVcMapper;
 
     @Override
     public void notifyObserver(VehicleVo vo) {
@@ -188,6 +192,25 @@ public class DkRtvrObserver implements ITvisStpObserver {
             if(vNum.contains(vo.getVehicleCxtzVo().getCllxzflCode())) {
                 redisTemplate.opsForList().rightPush("ks_ksvtvrps_images", imageHash); //重点监控车辆实时图片
             }
+
+            long cameraId = vo.getCameraId();
+            List<String> ksvcHphm = ksVcMapper.getKsvcHphm();
+            if(ksvcHphm.contains(hphm)) {
+                //布控违章记录统计同一辆车在同一个设备下通过的次数
+                if(flag) {
+                    if(redisTemplate.hasKey("ks_vs_ill_total")) {
+                        redisTemplate.opsForHash().increment("ks_vs_ill_total",  hphm + "|" + cameraId, 1);
+                    }
+                    redisTemplate.opsForHash().put("ks_vs_ill_time", hphm + "|" + cameraId, date);
+                    redisTemplate.opsForList().leftPush("ks_vs_ill_list", hphm + "|" + cameraId);
+                }
+                //车辆布控动态
+                if(redisTemplate.hasKey("ks_vs_dyn_total")) {
+                    redisTemplate.opsForHash().increment("ks_vs_dyn_total",  hphm + "|" + cameraId, 1);
+                }
+                redisTemplate.opsForHash().put("ks_vs_dyn_time", hphm + "|" + cameraId, date);
+                redisTemplate.opsForList().leftPush("ks_vs_dyn_list", hphm + "|" + cameraId);
+            }
         }
     }
 
@@ -199,6 +222,14 @@ public class DkRtvrObserver implements ITvisStpObserver {
 
         if(!redisTemplate.hasKey("ks_ksvtvrps_images")) {
             redisTemplate.opsForList().rightPushAll("ks_ksvtvrps_images", "","");
+        }
+        //布控报告
+        if(!redisTemplate.hasKey("ks_vs_ill_list")) {
+            redisTemplate.opsForList().rightPushAll("ks_vs_ill_list",0);
+        }
+        //布控动态
+        if(!redisTemplate.hasKey("ks_vs_dny_list")) {
+            redisTemplate.opsForList().rightPushAll("ks_vs_dny_list",0);
         }
     }
 

@@ -106,7 +106,7 @@ public class KsVcController {
         @RequestParam(name = "p", required = false) String platform,
         @RequestParam(name = "v", required = false) String version
     ) {
-        return queryVcLsvs_exp();
+        return queryVcDynLsvs_exp();
     }
 
     /**
@@ -120,7 +120,7 @@ public class KsVcController {
         @RequestParam(name = "p", required = false) String platform,
         @RequestParam(name = "v", required = false) String version
     ) {
-        return queryVcLsvs_exp();
+        return queryVcIllLsvs_exp();
     }
 
     private ResultDTO<DbQrsDTO> queryVehicle_exp(String hphm, Integer startIndex, Integer amount, Integer direction) {
@@ -136,39 +136,15 @@ public class KsVcController {
     }
 
     private ResultDTO<DbQrsDTO> queryVcSfvs_exp() {
-        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        DbQrsDTO data = new DbQrsDTO(10,1,10,10,1,null);
-        List<KsVcSfvsDTO> recs = new ArrayList<>();
-        recs.add(new KsVcSfvsDTO(101, "北京市海淀区西二旗街道19号",116.0185,40.0495, 1,"鲁KL9687"));
-        recs.add(new KsVcSfvsDTO(101, "北京市海淀区上地街道39号",116.0285,40.1495, 2,"贵Q817S2"));
-        recs.add(new KsVcSfvsDTO(101, "北京市海淀区西直门街道29号",116.0385,40.24295, 4,"赣Q817S2"));
-        recs.add(new KsVcSfvsDTO(101, "北京市海淀区知春路街道109号",116.0485,40.3495, 5,"赣Q817S2"));
-        recs.add(new KsVcSfvsDTO(101, "北京市朝阳区东湖区99号",116.0585,40.4495, 6,"沪KL9687"));
-        recs.add(new KsVcSfvsDTO(101, "北京市昌平区北七家街道21号",116.0685,40.5495, 9,"蒙Q817S2"));
-        recs.add(new KsVcSfvsDTO(101, "北京市望京街道59号",116.0785,40.6495, 3,"蒙Q817S2"));
-        recs.add(new KsVcSfvsDTO(101, "北京市海淀区回龙观39号",116.0885,40.7495, 6,"赣Q817S2"));
-        data.setRecs(recs);
-        dto.setData(data);
-        return dto;
+        return ksVcService.queryVcSfvs_exp();
     }
 
-    private ResultDTO<DbQrsDTO> queryVcLsvs_exp() {
-        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        DbQrsDTO data = new DbQrsDTO(10,10,1,10,1,null);
-        List<KsVcLsvsDTO> recs = new ArrayList<>();
-        recs.add(new KsVcLsvsDTO(10,10,101,"北京市海淀区西二旗街道19号","2020-12-21 18:02:57","赣Q817S2",1));
-        recs.add(new KsVcLsvsDTO(10,10,101,"北京市海淀区上地街道39号","2020-12-22 18:02:57","豫KL9687",2));
-        recs.add(new KsVcLsvsDTO(10,10,101,"北京市海淀区西直门街道29号","2020-12-23 18:02:57","豫Q817S2",3));
-        recs.add(new KsVcLsvsDTO(10,10,101,"北京市海淀区知春路街道109号","2020-12-29 18:02:57","赣KL9687",4));
-        recs.add(new KsVcLsvsDTO(10,10,101,"北京市朝阳区东湖区99号","2020-12-28 18:02:57","苏FTET72",5));
-        recs.add(new KsVcLsvsDTO(10,10,101,"北京市昌平区北七家街道21号","2020-12-27 18:02:57","鲁P7ET79",6));
-        recs.add(new KsVcLsvsDTO(10,10,101,"北京市海淀区回龙观39号","2020-12-26 18:02:57","鲁P7ET15",7));
-        recs.add(new KsVcLsvsDTO(10,10,101,"北京市望京街道59号","2020-12-25 18:02:57","京P7ET75",8));
-        recs.add(new KsVcLsvsDTO(10,10,101,"北京市海淀区回龙观39号","2020-12-24 18:02:57","蒙P7ET75",9));
-        recs.add(new KsVcLsvsDTO(10,10,101,"北京市海淀区回龙观39号","2020-12-22 18:02:57","贵P7ET75",10));
-        data.setRecs(recs);
-        dto.setData(data);
-        return dto;
+    private ResultDTO<DbQrsDTO> queryVcDynLsvs_exp() {
+        return ksVcService.queryVcDynLsvs_exp();
+    }
+
+    private ResultDTO<DbQrsDTO> queryVcIllLsvs_exp() {
+        return ksVcService.queryVcIllLsvs_exp();
     }
 }
 

@@ -41,7 +41,7 @@
     </update>
 
     <select id ="getKsAreaCode" resultType="hashmap">
-        SELECT tc.camera_code, ta.area_name
+        SELECT tc.camera_code, ta.area_name,  CONCAT(ts.lng, '|', ts.lat) AS coordinate
           FROM t_camera tc
      LEFT JOIN t_site ts ON tc.site_id = ts.site_id
      LEFT JOIN t_area ta ON ts.area_id = ta.area_id

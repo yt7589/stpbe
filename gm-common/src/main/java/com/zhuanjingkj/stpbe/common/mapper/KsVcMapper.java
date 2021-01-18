@@ -16,4 +16,6 @@ public interface KsVcMapper {
     Integer addVehicle(@Param("rto") AddVehicleToVcRTO rto);
 
     Integer deleteVehicle(@Param("rto") DeleteVehicleFromVcRTO rto);
+
+    List<String> getKsvcHphm();
 }

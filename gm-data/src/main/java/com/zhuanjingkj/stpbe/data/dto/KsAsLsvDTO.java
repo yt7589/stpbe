@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.ks;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;

@@ -21,6 +21,8 @@ public class KsAsService implements IKsAsService {
 
     public static Map<String, Object> areaMap = new HashMap<>();
 
+    public static Map<String, Object> areaSiteMap = new HashMap<>();
+
     @Override
     public ResultDTO<DbQrsDTO> queryKeyAreas_exp(String areaName, Integer startIndex, Integer amount, Integer direction, Integer type) {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
@@ -73,6 +75,7 @@ public class KsAsService implements IKsAsService {
         List<Map<String, Object>> areas = ksAsMapper.getKsAreaCode();
         for (int i = 0; i < areas.size(); i++) {
             areaMap.put("" + areas.get(i).get("camera_code"), areas.get(i).get("area_name"));
+            areaSiteMap.put("" + areas.get(i).get("camera_code"), areas.get(i).get("coordinate"));
         }
     }
 }

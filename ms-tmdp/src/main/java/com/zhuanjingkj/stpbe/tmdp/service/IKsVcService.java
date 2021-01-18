@@ -14,4 +14,10 @@ public interface IKsVcService {
     ResultDTO<DbInsertResultDTO> addVehicle_exp(AddVehicleToVcRTO rto);
 
     ResultDTO<DbDeleteResultDTO> deleteVehicle_exp(DeleteVehicleFromVcRTO rto);
+
+    ResultDTO<DbQrsDTO> queryVcIllLsvs_exp();
+
+    ResultDTO<DbQrsDTO> queryVcDynLsvs_exp();
+
+    ResultDTO<DbQrsDTO> queryVcSfvs_exp();
 }

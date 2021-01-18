@@ -29,4 +29,9 @@
           FROM t_vehicle_control
          WHERE vehicle_control_id =#{rto.vcId}
     </delete>
+
+    <select id ="getKsvcHphm" resultType="String">
+        SELECT hphm
+          FROM t_vehicle_control
+    </select>
 </mapper>

@@ -1,9 +1,12 @@
 package com.zhuanjingkj.stpbe.tmdp.task;
 
+import com.zhuanjingkj.stpbe.data.dto.KsAsLsvDTO;
 import com.zhuanjingkj.stpbe.tmdp.controller.TmdpWsHandler;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.*;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.KsAsService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.KsRssService;
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
@@ -12,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -58,145 +60,201 @@ public class TmdpScheduledTask {
     private static int seq = 0;
     private void pushKsAsSfvsMsg() {
         JSONArray data = new JSONArray();
-        KsAsSfvDTO sfv = null;
-        //
-        sfv = new KsAsSfvDTO(101, "上地三街_" + seq,
-                "京A-YB023", 12,
-                116.31129731152342, 40.03570782927839);
-        data.put(sfv.toJsonObject());
-        sfv = new KsAsSfvDTO(101, "西直门_" + seq,
-                "京B-AB987", 12,
-                116.38129731152342, 40.13570782927839);
-        data.put(sfv.toJsonObject());
+        List<String> sfvs = redisTemplate.opsForList().range("ks_as_lsvs_list", 0, 9);
+        if(sfvs != null && sfvs.size() > 0) {
+            for(int i = 0; i < sfvs.size(); i++) {
+                String val = sfvs.get(i);
+                if(StringUtils.isNotBlank(val)) {
+                    String hphm = val.split("|")[0];
+                    String cameraId = val.split("|")[1];
+                    String coordinate = "" + KsAsService.areaSiteMap.get(cameraId);
+                    if(StringUtils.isNotBlank(coordinate)) {
+                        KsRssSfvsDTO lsv = new KsRssSfvsDTO(101, "" + KsAsService.areaMap.get(cameraId),
+                                hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_as_lsvs_total", val)), Integer.parseInt(coordinate.split("")[0]),Integer.parseInt(coordinate.split("")[1]));
+                        data.put(lsv.toJsonObject());
+                    }
+                }
+            }
+        }
+//        KsAsSfvDTO sfv = null;
+//        //
+//        sfv = new KsAsSfvDTO(101, "上地三街_" + seq,
+//                "京A-YB023", 12,
+//                116.31129731152342, 40.03570782927839);
+//        data.put(sfv.toJsonObject());
+//        sfv = new KsAsSfvDTO(101, "西直门_" + seq,
+//                "京B-AB987", 12,
+//                116.38129731152342, 40.13570782927839);
+//        data.put(sfv.toJsonObject());
         seq++;
         tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_AS_SFVS, data.toString());
     }
 
     private void pushKsAsLsvsMsg() {
         JSONArray data = new JSONArray();
-        KsAsLsvDTO lsv = null;
-        //
-        lsv = new KsAsLsvDTO(1, 1, 101, "西直门",
-                "2021-01-14 12:50:39", "京KZ8601", 1);
-        data.put(lsv.toJsonObject());
-        //
-        lsv = new KsAsLsvDTO(1, 1, 101, "大钟寺",
-                "2021-01-13 13:50:39", "京KZ8601", 3);
-        data.put(lsv.toJsonObject());
-        //
-        lsv = new KsAsLsvDTO(1, 1, 101, "知春路",
-                "2021-01-12 16:50:39", "豫AF52301X", 5);
-        data.put(lsv.toJsonObject());
-        //
-        lsv = new KsAsLsvDTO(1, 1, 101, "五道口",
-                "2021-01-11 11:50:39", "苏FTET721", 6);
-        data.put(lsv.toJsonObject());
-        //
-        lsv = new KsAsLsvDTO(1, 1, 101, "上地",
-                "2020-01-10 10:50:39", "鲁P7ET79", 1);
-        data.put(lsv.toJsonObject());
-        //
-        lsv = new KsAsLsvDTO(1, 1, 101, "清河",
-                "2020-12-29 12:50:39", "鲁P7ET15", 2);
-        data.put(lsv.toJsonObject());
-        //
-        lsv = new KsAsLsvDTO(1, 1, 101, "西二旗",
-                "2020-12-19 13:50:39", "京P7ET75", 5);
-        data.put(lsv.toJsonObject());
-        //
-        lsv = new KsAsLsvDTO(1, 1, 101, "龙泽",
-                "2020-12-18 14:50:39", "赣P7ET75", 7);
-        data.put(lsv.toJsonObject());
-        //
-        lsv = new KsAsLsvDTO(1, 1, 101, "回龙观",
-                "2020-12-17 15:50:39", "贵P7ET75", 1);
-        data.put(lsv.toJsonObject());
-        //
-        lsv = new KsAsLsvDTO(1, 1, 101, "立水桥",
-                "2020-12-16 16:50:39", "豫A52301X", 9);
-        data.put(lsv.toJsonObject());
+        List<String> lsvs = redisTemplate.opsForList().range("ks_as_lsvs_list", 0, 9);
+        if(lsvs != null && lsvs.size() > 0) {
+            for(int i = 0; i < lsvs.size(); i++) {
+                String val = lsvs.get(i);
+                if(StringUtils.isNotBlank(val)) {
+                    String hphm = val.split("|")[0];
+                    String cameraId = val.split("|")[1];
+                    KsAsLsvDTO lsv = new KsAsLsvDTO(0,0,0, "" + KsAsService.areaMap.get(cameraId),
+                            "" + redisTemplate.opsForHash().get("ks_as_lsvs_time", val),hphm,
+                            Integer.parseInt("" + redisTemplate.opsForHash().get("ks_as_lsvs_total", val)));
+                    data.put(lsv.toJsonObject());
+                }
+            }
+        }
+//        KsAsLsvDTO lsv = null;
+//        //
+//        lsv = new KsAsLsvDTO(1, 1, 101, "西直门",
+//                "2021-01-14 12:50:39", "京KZ8601", 1);
+//        data.put(lsv.toJsonObject());
+//        //
+//        lsv = new KsAsLsvDTO(1, 1, 101, "大钟寺",
+//                "2021-01-13 13:50:39", "京KZ8601", 3);
+//        data.put(lsv.toJsonObject());
+//        //
+//        lsv = new KsAsLsvDTO(1, 1, 101, "知春路",
+//                "2021-01-12 16:50:39", "豫AF52301X", 5);
+//        data.put(lsv.toJsonObject());
+//        //
+//        lsv = new KsAsLsvDTO(1, 1, 101, "五道口",
+//                "2021-01-11 11:50:39", "苏FTET721", 6);
+//        data.put(lsv.toJsonObject());
+//        //
+//        lsv = new KsAsLsvDTO(1, 1, 101, "上地",
+//                "2020-01-10 10:50:39", "鲁P7ET79", 1);
+//        data.put(lsv.toJsonObject());
+//        //
+//        lsv = new KsAsLsvDTO(1, 1, 101, "清河",
+//                "2020-12-29 12:50:39", "鲁P7ET15", 2);
+//        data.put(lsv.toJsonObject());
+//        //
+//        lsv = new KsAsLsvDTO(1, 1, 101, "西二旗",
+//                "2020-12-19 13:50:39", "京P7ET75", 5);
+//        data.put(lsv.toJsonObject());
+//        //
+//        lsv = new KsAsLsvDTO(1, 1, 101, "龙泽",
+//                "2020-12-18 14:50:39", "赣P7ET75", 7);
+//        data.put(lsv.toJsonObject());
+//        //
+//        lsv = new KsAsLsvDTO(1, 1, 101, "回龙观",
+//                "2020-12-17 15:50:39", "贵P7ET75", 1);
+//        data.put(lsv.toJsonObject());
+//        //
+//        lsv = new KsAsLsvDTO(1, 1, 101, "立水桥",
+//                "2020-12-16 16:50:39", "豫A52301X", 9);
         seq++;
         tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_AS_LSVS, data.toString());
     }
 
     private void pushKsRssSfvs() {
         JSONArray data = new JSONArray();
+        List<String> sfvs = redisTemplate.opsForList().range("ks_rss_lsvs_list", 0, 9);
+        if(sfvs != null && sfvs.size() > 0) {
+            for(int i = 0; i < sfvs.size(); i++) {
+                String val = sfvs.get(i);
+                if(StringUtils.isNotBlank(val)) {
+                    String hphm = val.split("|")[0];
+                    String cameraId = val.split("|")[1];
+                    String coordinate = "" + KsRssService.rssSiteMap.get(cameraId);
+                    if(StringUtils.isNotBlank(coordinate)) {
+                        KsRssSfvsDTO lsv = new KsRssSfvsDTO(101, "" + KsRssService.rssMap.get(cameraId),
+                                hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_rss_lsvs_total", val)),
+                                Integer.parseInt(coordinate.split("")[0]),Integer.parseInt(coordinate.split("")[1]));
+                        data.put(lsv.toJsonObject());
+                    }
+                }
+            }
+        }
+//        KsRssSfvsDTO ksRssSfvsDTO = null;
+//
+//        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+//                "京A-YB023", 12,
+//                116.31129731152342, 40.03570782927839);
+//
+//        data.put(ksRssSfvsDTO.toJsonObject());
+//
+//        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+//                "京A-YB023", 12,
+//                116.31129731152342, 40.03570782927839);
+//
+//        data.put(ksRssSfvsDTO.toJsonObject());
+//
+//        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+//                "京A-YB023", 12,
+//                116.31129731152342, 40.03570782927839);
+//
+//        data.put(ksRssSfvsDTO.toJsonObject());
+//
+//        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+//                "京A-YB023", 12,
+//                116.31129731152342, 40.03570782927839);
+//
+//        data.put(ksRssSfvsDTO.toJsonObject());
+//
+//        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+//                "京A-YB023", 12,
+//                116.31129731152342, 40.03570782927839);
+//
+//        data.put(ksRssSfvsDTO.toJsonObject());
+//
+//        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
+//                "京A-YB023", 12,
+//                116.31129731152342, 40.03570782927839);
 
-        KsRssSfvsDTO ksRssSfvsDTO = null;
-
-        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
-                "京A-YB023", 12,
-                116.31129731152342, 40.03570782927839);
-
-        data.put(ksRssSfvsDTO.toJsonObject());
-
-        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
-                "京A-YB023", 12,
-                116.31129731152342, 40.03570782927839);
-
-        data.put(ksRssSfvsDTO.toJsonObject());
-
-        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
-                "京A-YB023", 12,
-                116.31129731152342, 40.03570782927839);
-
-        data.put(ksRssSfvsDTO.toJsonObject());
-
-        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
-                "京A-YB023", 12,
-                116.31129731152342, 40.03570782927839);
-
-        data.put(ksRssSfvsDTO.toJsonObject());
-
-        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
-                "京A-YB023", 12,
-                116.31129731152342, 40.03570782927839);
-
-        data.put(ksRssSfvsDTO.toJsonObject());
-
-        ksRssSfvsDTO = new KsRssSfvsDTO(101, "上地三街_" + seq,
-                "京A-YB023", 12,
-                116.31129731152342, 40.03570782927839);
-
-        data.put(ksRssSfvsDTO.toJsonObject());
         tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_RSS_SFVS, data.toString());
     }
 
     public void pushKsRssLsvs() {
         JSONArray data = new JSONArray();
-
-        KsRssLsvsDTO ksRssLsvsDTO = null;
-
-        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 101, "B上地5街",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
-
-        data.put(ksRssLsvsDTO.toJsonObject());
-
-        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 102, "B上地6街",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
-
-        data.put(ksRssLsvsDTO.toJsonObject());
-
-        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 103, "B上地7街",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
-
-        data.put(ksRssLsvsDTO.toJsonObject());
-
-        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 104, "B上地8街",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
-
-        data.put(ksRssLsvsDTO.toJsonObject());
-
-        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 105, "上地9街",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
-
-        data.put(ksRssLsvsDTO.toJsonObject());
-
-        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 106, "B上地10街",
-                "2020-12-19 16:50:39", "京A-XA001", 11);
-
-        data.put(ksRssLsvsDTO.toJsonObject());
-
+        List<String> sfvs = redisTemplate.opsForList().range("ks_rss_lsvs_list", 0, 9);
+        if(sfvs != null && sfvs.size() > 0) {
+            for(int i = 0; i < sfvs.size(); i++) {
+                String val = sfvs.get(i);
+                if(StringUtils.isNotBlank(val)) {
+                    String hphm = val.split("|")[0];
+                    String cameraId = val.split("|")[1];
+                    String coordinate = "" + KsAsService.areaSiteMap.get(cameraId);
+                    if(StringUtils.isNotBlank(coordinate)) {
+                        KsRssLsvsDTO lsv = new KsRssLsvsDTO(101, 0,0, "" + KsRssService.rssMap.get(cameraId), "" +redisTemplate.opsForHash().get("ks_rss_lsvs_time", val),
+                        hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_rss_lsvs_total", val)));
+                        data.put(lsv.toJsonObject());
+                    }
+                }
+            }
+        }
+//        KsRssLsvsDTO ksRssLsvsDTO = null;
+//
+//        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 101, "B上地5街",
+//                "2020-12-19 16:50:39", "京A-XA001", 11);
+//
+//        data.put(ksRssLsvsDTO.toJsonObject());
+//
+//        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 102, "B上地6街",
+//                "2020-12-19 16:50:39", "京A-XA001", 11);
+//
+//        data.put(ksRssLsvsDTO.toJsonObject());
+//
+//        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 103, "B上地7街",
+//                "2020-12-19 16:50:39", "京A-XA001", 11);
+//
+//        data.put(ksRssLsvsDTO.toJsonObject());
+//
+//        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 104, "B上地8街",
+//                "2020-12-19 16:50:39", "京A-XA001", 11);
+//
+//        data.put(ksRssLsvsDTO.toJsonObject());
+//
+//        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 105, "上地9街",
+//                "2020-12-19 16:50:39", "京A-XA001", 11);
+//
+//        data.put(ksRssLsvsDTO.toJsonObject());
+//
+//        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 106, "B上地10街",
+//                "2020-12-19 16:50:39", "京A-XA001", 11);
         tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_RSS_SFVS, data.toString());
     }
 

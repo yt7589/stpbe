@@ -36,4 +36,13 @@
         </foreach>
         )
     </update>
+
+    <select id ="getKsRoadCode" resultMap="hashmap">
+        SELECT tc.camera_code, tr.road_name, CONCAT(ts.lng, '|',ts.lat) AS coordinate
+          FROM t_camera tc
+     LEFT JOIN t_road_seg sr ON tc.site_id = sr.src_site_id
+     LEFT JOIN t_site ts ON ts.site_id = sr.src_site_id
+     LEFT JOIN t_road tr ON sr.road_id = tr.road_id
+         WHERE tr.road_name IS NOT NULL
+    </select>
 </mapper>

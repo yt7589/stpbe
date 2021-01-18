@@ -8,13 +8,20 @@ import com.zhuanjingkj.stpbe.tmdp.service.IKsRssService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class KsRssService implements IKsRssService {
 
     @Autowired
     private KsRssMapper ksRssMapper;
+
+    public static Map<String, Object> rssSiteMap = new HashMap<>();
+
+    public static Map<String, Object> rssMap = new HashMap<>();
 
     @Override
     public ResultDTO<DbQrsDTO> queryRsSupervision_exp(String rssName, Integer startIndex, Integer amount, Integer direction, Integer type) {
@@ -60,5 +67,16 @@ public class KsRssService implements IKsRssService {
         DbInsertResultDTO data = new DbInsertResultDTO(0, affectedRows);
         dto.setData(data);
         return dto;
+    }
+
+    @PostConstruct
+    public void init() {
+        List<Map<String, Object>> rss =  ksRssMapper.getKsRoadCode();
+        if(rss != null && rss.size() > 0) {
+            for (int i = 0; i < rss.size(); i++) {
+                rssMap.put("" + rss.get(i).get("camera_code"), rss.get(i).get("road_name"));
+                rssSiteMap.put("" + rss.get(i).get("camera_code"), rss.get(i).get("coordinate"));
+            }
+        }
     }
 }
