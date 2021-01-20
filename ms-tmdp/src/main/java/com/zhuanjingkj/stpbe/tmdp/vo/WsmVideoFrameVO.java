@@ -3,6 +3,9 @@ package com.zhuanjingkj.stpbe.tmdp.vo;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 返回给客户端的WebSocket消息内容
+ */
 public class WsmVideoFrameVO {
     private long tvisJsonId;
     private long pts;

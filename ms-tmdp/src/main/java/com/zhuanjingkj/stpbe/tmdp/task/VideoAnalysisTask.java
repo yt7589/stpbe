@@ -9,6 +9,8 @@ import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tmdp.vo.CameraVehicleRecordVO;
+import com.zhuanjingkj.stpbe.tmdp.vo.WsmVideoFrameVO;
+import com.zhuanjingkj.stpbe.tmdp.vo.WsmVideoFrameVehicleVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -42,6 +44,9 @@ public class VideoAnalysisTask {
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
         TvisJsonVO tvisJsonVO = null;
+        WsmVideoFrameVO vfv = null;
+        List<WsmVideoFrameVehicleVO> wvfvvs = null;
+        WsmVideoFrameVehicleVO vfvv = null;
         for (String streamId : streamIds) {
             // 找到当前原始信息表
             tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, Long.parseLong(streamId));
@@ -66,6 +71,8 @@ public class VideoAnalysisTask {
             File cutFileObj = null;
             String imgBaseFolder = "images/";
             String orgFileFn = "n_" + tvisJsonId + ".jpg";
+            vfv = new WsmVideoFrameVO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), orgFileFn);
+            wvfvvs = vfv.getData();
             for (VehicleVo veh : vehs) {
                 String clwz = veh.getVehicleWztzVo().getClwz();
                 String[] arrs = clwz.split(",");
@@ -112,6 +119,10 @@ public class VideoAnalysisTask {
                     vo.setH(h);
                     vo.setCutImgFn(cutFileFn);
                 }
+                vfvv = new WsmVideoFrameVehicleVO(veh.getTrackId(), idx,
+                        veh.getVehicleCxtzVo().getPpcxCode(),
+                        veh.getVehicleHptzVO().getHphm(), cutFileFn);
+                wvfvvs.add(vfvv);
                 idx++;
             }
             try {
@@ -121,7 +132,7 @@ public class VideoAnalysisTask {
             }
             // 生成一个定制的URL，可以通过SpringBoot来查看图片内容
             String vaImgUrlBase = "/tmdp/va/getVaImage?imgFn=";
-            System.out.println("##### Yantao: tvisJsonVO:" + JSONObject.toJSONString(tvisJsonVO) + "!");
+            System.out.println("##### Yantao: WebSocket vfv:" + JSONObject.toJSONString(vfv) + "!");
         }
     }
 

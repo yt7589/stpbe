@@ -1,5 +1,8 @@
 package com.zhuanjingkj.stpbe.tmdp.vo;
 
+/**
+ * 返回给客户端的WebSocket消息内容中的每一辆车
+ */
 public class WsmVideoFrameVehicleVO {
     private long trackId;
     private int vehIdx;
