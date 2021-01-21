@@ -12,6 +12,8 @@ import com.zhuanjingkj.stpbe.tmdp.vo.CameraVehicleRecordVO;
 import com.zhuanjingkj.stpbe.tmdp.vo.WsmVideoFrameVO;
 import com.zhuanjingkj.stpbe.tmdp.vo.WsmVideoFrameVehicleVO;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,10 +37,12 @@ public class VideoAnalysisTask {
     private static List<String> streamIds = new ArrayList<>();
     private static Map<String, List<WebSocketSession>> streamWsss = new HashMap<>();
     private static Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
+    private final static Logger logger = LoggerFactory.getLogger(VideoAnalysisTask.class);
 
     @Async("tmdpPool")
     @Scheduled(cron = "*/1 * * * * ?")
     public void runVideoAnalysisTask() {
+        logger.info("### 视频分析定时任务1");
         if (StringUtils.isBlank(AppRegistry.tvisJsonTblName)) {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
@@ -142,7 +146,7 @@ public class VideoAnalysisTask {
      * @param wss
      */
     public static void addStream(long streamId, WebSocketSession wss) {
-        System.out.println("加入到视频列表中...");
+        System.out.println("加入到视频列表中...streamId=" + streamId + "!");
         String streamIdKey = "" + streamId;
         if (!streamIds.contains(streamIdKey)) {
             streamIds.add(streamIdKey);

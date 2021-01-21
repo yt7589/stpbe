@@ -30,7 +30,6 @@ public class TmdpScheduledTask {
     @Async("tmdpPool")
     @Scheduled(cron = "*/1 * * * * ?")
     public void runTmdpScheduledTask() {
-        System.out.println("发送WebSocket推送信息......");
         // 处理重点监管区域监管点位频繁经过车辆列表
         pushKsAsSfvsMsg();
         // 处理重点监管=》区域监管=》右侧监管动态列表
