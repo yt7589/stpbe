@@ -56,7 +56,7 @@ public class TvisJsonRawListener {
                 initialize();
             }
         }
-        System.out.println("step 2");
+        System.out.println("step 2:" + json + "!");
         JSONObject jo = JSONObject.parseObject(json);
         String relativeImageFile = jo.getJSONObject("json").getString("ImageUrl");
         if (relativeImageFile==null || relativeImageFile.equals("") || relativeImageFile.length()<2) {
