@@ -73,7 +73,7 @@ public class VideoAnalysisTask {
             String jsonStr = IpfsClient.getTextFile(tvisJsonVO.getJsonHash());
             JSONObject jo = JSONObject.parseObject(jsonStr);
             JSONObject joRst = jo.getJSONObject("json");
-            logger.info("step 5");
+            logger.info("step 5: " + joRst.toJSONString() + "!!!!!!!!!!");
             List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
             // 在图像上绘制一个矩形框并保存到当前目录下
             CameraVehicleRecordVO vo = null;
