@@ -74,7 +74,7 @@ public class VideoAnalysisTask {
             JSONObject jo = JSONObject.parseObject(jsonStr);
             JSONObject joRst = jo.getJSONObject("json");
             logger.info("step 5");
-            List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), vaImgUrlBase + joRst.toJSONString());
+            List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
             // 在图像上绘制一个矩形框并保存到当前目录下
             CameraVehicleRecordVO vo = null;
             int x, y, w, h; // 检测框位置
@@ -86,7 +86,7 @@ public class VideoAnalysisTask {
             String imgBaseFolder = "images/";
             String orgFileFn = "n_" + tvisJsonId + ".jpg";
             logger.info("step 6");
-            vfv = new WsmVideoFrameVO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), orgFileFn);
+            vfv = new WsmVideoFrameVO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
             wvfvvs = vfv.getData();
             logger.info("step 7");
             for (VehicleVo veh : vehs) {
