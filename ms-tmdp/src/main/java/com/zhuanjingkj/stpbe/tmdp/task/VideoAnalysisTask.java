@@ -47,23 +47,29 @@ public class VideoAnalysisTask {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
+        logger.info("step 1");
         TvisJsonVO tvisJsonVO = null;
         WsmVideoFrameVO vfv = null;
         List<WsmVideoFrameVehicleVO> wvfvvs = null;
         WsmVideoFrameVehicleVO vfvv = null;
+        logger.info("step 2");
         for (String streamId : streamIds) {
+            logger.info("streamId: " + streamId + "!");
             // 找到当前原始信息表
             tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, Long.parseLong(streamId));
             if (null == tvisJsonVO) {
                 continue;
             }
+            logger.info("step 3");
             long tvisJsonId = tvisJsonVO.getTvisJsonId();
             // 获取图片
             BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
+            logger.info("step 4");
             // 获取JSON结果
             String jsonStr = IpfsClient.getTextFile(tvisJsonVO.getJsonHash());
             JSONObject jo = JSONObject.parseObject(jsonStr);
             JSONObject joRst = jo.getJSONObject("json");
+            logger.info("step 5");
             List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
             // 在图像上绘制一个矩形框并保存到当前目录下
             CameraVehicleRecordVO vo = null;
@@ -75,9 +81,12 @@ public class VideoAnalysisTask {
             File cutFileObj = null;
             String imgBaseFolder = "images/";
             String orgFileFn = "n_" + tvisJsonId + ".jpg";
+            logger.info("step 6");
             vfv = new WsmVideoFrameVO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), orgFileFn);
             wvfvvs = vfv.getData();
+            logger.info("step 7");
             for (VehicleVo veh : vehs) {
+                logger.info("step 8 idx=" + veh.getVehsIdx() + "!");
                 String clwz = veh.getVehicleWztzVo().getClwz();
                 String[] arrs = clwz.split(",");
                 x = Integer.parseInt(arrs[0]);
