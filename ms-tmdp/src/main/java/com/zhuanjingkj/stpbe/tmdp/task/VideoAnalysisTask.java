@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.task;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
@@ -45,6 +46,7 @@ public class VideoAnalysisTask {
     @Scheduled(cron = "*/1 * * * * ?")
     public void runVideoAnalysisTask() {
         logger.info("### 视频分析定时任务1");
+        String vaImgUrlBase = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=";
         if (StringUtils.isBlank(AppRegistry.tvisJsonTblName)) {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
@@ -72,7 +74,7 @@ public class VideoAnalysisTask {
             JSONObject jo = JSONObject.parseObject(jsonStr);
             JSONObject joRst = jo.getJSONObject("json");
             logger.info("step 5");
-            List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
+            List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), vaImgUrlBase + joRst.toJSONString());
             // 在图像上绘制一个矩形框并保存到当前目录下
             CameraVehicleRecordVO vo = null;
             int x, y, w, h; // 检测框位置
@@ -119,7 +121,7 @@ public class VideoAnalysisTask {
                 if (currentArea > maxArea) {
                     BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
                     try {
-                        cutFileFn = "images/c_" + tvisJsonId + "_" + idx + ".jpg";
+                        cutFileFn = "c_" + tvisJsonId + "_" + idx + ".jpg";
                         cutFileObj = new File(imgBaseFolder + cutFileFn);
                         if (cutFileObj.exists()) {
                             cutFileObj.delete();
@@ -136,7 +138,7 @@ public class VideoAnalysisTask {
                 }
                 vfvv = new WsmVideoFrameVehicleVO(veh.getTrackId(), idx,
                         veh.getVehicleCxtzVo().getPpcxCode(),
-                        veh.getVehicleHptzVO().getHphm(), cutFileFn);
+                        veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + cutFileFn);
                 wvfvvs.add(vfvv);
                 idx++;
             }
@@ -146,7 +148,7 @@ public class VideoAnalysisTask {
                 e.printStackTrace();
             }
             // 生成一个定制的URL，可以通过SpringBoot来查看图片内容
-            String vaImgUrlBase = "/tmdp/va/getVaImage?imgFn=";
+            vfv.setData(wvfvvs);
             System.out.println("##### Yantao: WebSocket vfv:" + JSONObject.toJSONString(vfv) + "!");
             List<WebSocketSession> wsss = streamWsss.get("" + streamId);
             for (WebSocketSession wss : wsss) {
