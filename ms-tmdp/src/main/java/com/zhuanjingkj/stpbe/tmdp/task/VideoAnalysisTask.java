@@ -15,9 +15,11 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import javax.imageio.ImageIO;
@@ -146,6 +148,14 @@ public class VideoAnalysisTask {
             // 生成一个定制的URL，可以通过SpringBoot来查看图片内容
             String vaImgUrlBase = "/tmdp/va/getVaImage?imgFn=";
             System.out.println("##### Yantao: WebSocket vfv:" + JSONObject.toJSONString(vfv) + "!");
+            List<WebSocketSession> wsss = streamWsss.get("" + streamId);
+            for (WebSocketSession wss : wsss) {
+                try {
+                    wss.sendMessage(new TextMessage(JSONObject.toJSONString(vfv)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
