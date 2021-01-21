@@ -152,12 +152,21 @@ public class VideoAnalysisTask {
             System.out.println("##### Yantao: WebSocket vfv:" + JSONObject.toJSONString(vfv) + "!");
             List<WebSocketSession> wsss = streamWsss.get("" + streamId);
             for (WebSocketSession wss : wsss) {
-                try {
-                    wss.sendMessage(new TextMessage(JSONObject.toJSONString(vfv)));
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (wss.isOpen()) {
+                    try {
+                        wss.sendMessage(new TextMessage(JSONObject.toJSONString(vfv)));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        wss.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+            wsss.removeIf(wi->{return !wi.isOpen();}); // 移除所有关闭的WebSocket
         }
     }
 
