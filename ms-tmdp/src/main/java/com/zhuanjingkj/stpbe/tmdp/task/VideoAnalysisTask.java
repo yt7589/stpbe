@@ -147,7 +147,7 @@ public class VideoAnalysisTask {
         if (!streamIds.contains(streamIdKey)) {
             streamIds.add(streamIdKey);
         }
-        if (streamWsss.get("" + streamId) == null) {
+        if (streamWsss.get("" + streamId) != null) {
             streamWsss.get(""+streamId).add(wss);
         } else {
             List<WebSocketSession> wsss = new ArrayList<>();
