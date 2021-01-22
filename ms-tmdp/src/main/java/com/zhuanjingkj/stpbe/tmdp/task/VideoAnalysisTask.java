@@ -115,15 +115,16 @@ public class VideoAnalysisTask {
                     String hphm = veh.getVehicleHptzVO().getHphm();
                     TvisSodImage.drawString(orgImg, Font.BOLD, 25,
                             Color.RED, x, y + 3, hphm + ":" + ppxhms);
+                    cutVehs.put("" + veh.getTrackId(), vo);
                 } else {
                     vo = cutVehs.get("" + veh.getTrackId());
                 }
                 logger.info("##### step 1: idx=" + idx + "; cutImgFn=" + vo.getCutImgFn() +
                         "! currentArea=" + currentArea + "=" + w + "*" + h + "; maxArea=" + maxArea + "!");
-                //maxArea = vo.getArea();
+                maxArea = vo.getArea();
                 logger.info("##### step 1.1: idx=" + idx + "; cutImgFn=" + vo.getCutImgFn() +
                         "! currentArea=" + currentArea + "=" + w + "*" + h + "; maxArea=" + maxArea + "!");
-                if (currentArea > maxArea) {
+                if (currentArea >= maxArea) {
                     maxArea = currentArea;
                     BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
                     try {
