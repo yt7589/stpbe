@@ -117,7 +117,8 @@ public class VideoAnalysisTask {
                 } else {
                     vo = cutVehs.get("" + veh.getTrackId());
                 }
-                logger.info("##### step 1: idx=" + idx + "; cutImgFn=" + vo.getCutImgFn() + "!");
+                logger.info("##### step 1: idx=" + idx + "; cutImgFn=" + vo.getCutImgFn() +
+                        "! currentArea=" + currentArea + "=" + w + "*" + h + "; maxArea=" + maxArea + "!");
                 maxArea = vo.getArea();
                 if (currentArea > maxArea) {
                     BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
@@ -131,11 +132,13 @@ public class VideoAnalysisTask {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    logger.info("##### step 1.5 cutFileFn=" + cutFileFn + "!");
                     vo.setX(x);
                     vo.setY(y);
                     vo.setW(w);
                     vo.setH(h);
                     vo.setCutImgFn(cutFileFn);
+                    logger.info("##### step 1.6 cutFileFn=" + vo.getCutImgFn() + "!");
                 }
                 logger.info("##### step 2: idx=" + idx + "; cutImgFn=" + vo.getCutImgFn() + "!");
                 vfvv = new WsmVideoFrameVehicleVO(veh.getTrackId(), idx,
