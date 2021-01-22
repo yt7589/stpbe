@@ -125,6 +125,8 @@ public class VideoAnalysisTask {
                         cutFileObj = new File(imgBaseFolder + cutFileFn);
                         if (cutFileObj.exists()) {
                             cutFileObj.delete();
+                        } else {
+                            cutFileObj.createNewFile();
                         }
                         ImageIO.write(vehImg, "jpg", new File(imgBaseFolder + cutFileFn));
                     } catch (IOException e) {
@@ -143,8 +145,16 @@ public class VideoAnalysisTask {
                 wvfvvs.add(vfvv);
                 idx++;
             }
+            File orgFileObj = new File(imgBaseFolder + orgFileFn);
+            if (!orgFileObj.exists()) {
+                try {
+                    orgFileObj.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             try {
-                ImageIO.write(orgImg, "jpg", new File(imgBaseFolder + orgFileFn));
+                ImageIO.write(orgImg, "jpg", orgFileObj);
             } catch (IOException e) {
                 e.printStackTrace();
             }
