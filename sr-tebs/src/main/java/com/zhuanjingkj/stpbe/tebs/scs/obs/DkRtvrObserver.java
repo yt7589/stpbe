@@ -42,6 +42,10 @@ public class DkRtvrObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        int iDebug = 1;
+        if (1 == iDebug) {
+            return ;
+        }
         boolean flag = false;
         /**
          * TODO
@@ -55,7 +59,6 @@ public class DkRtvrObserver implements ITvisStpObserver {
             return ;
         }
         Map<String, Object> dtMap = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
-        logger.info("###### tblName=" + tblName + "; tvisJsonId=" + vo.getTvisJsonId() + "!");
         String hphm = vo.getVehicleHptzVO().getHphm();
         long vehsIdx = vo.getVehsIdx();
         String imageHash = "";

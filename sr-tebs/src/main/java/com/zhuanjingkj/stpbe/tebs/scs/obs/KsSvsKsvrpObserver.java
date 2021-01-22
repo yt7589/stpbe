@@ -28,10 +28,13 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        int iDebug = 1;
+        if (1 == iDebug) {
+            return ;
+        }
         List<String> vNum = ksvssKsvrpMapper.getVTypeNum();
         String vZtype = vo.getVehicleCxtzVo().getCllxzflCode(); //车辆类型子分类
         String vType = vo.getVehicleCxtzVo().getCllxflCode(); //车辆类型分类
-
         String tblName = AppRegistry.tvisJsonTblName;
         if (tblName == null) {
             return ;
