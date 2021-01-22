@@ -11,6 +11,7 @@ public class WsmVideoFrameVO {
     private long pts;
     private String originImage;
     private List<WsmVideoFrameVehicleVO> data;
+    private int trafficViolationIdx = -1;
 
     public WsmVideoFrameVO(long tvisJsonId, long pts, String originImage) {
         this.tvisJsonId = tvisJsonId;
@@ -49,5 +50,13 @@ public class WsmVideoFrameVO {
 
     public void setData(List<WsmVideoFrameVehicleVO> data) {
         this.data = data;
+    }
+
+    public int getTrafficViolationIdx() {
+        return trafficViolationIdx;
+    }
+
+    public void setTrafficViolationIdx(int trafficViolationIdx) {
+        this.trafficViolationIdx = trafficViolationIdx;
     }
 }

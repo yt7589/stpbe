@@ -9,13 +9,18 @@ public class WsmVideoFrameVehicleVO {
     private String ppcxnk;
     private String hphm;
     private String cutImgUrl;
+    private String crossTime;
+    private String trafficViolationName;
 
-    public WsmVideoFrameVehicleVO(long trackId, int vehIdx, String ppcxnk, String hphm, String cutImgUrl) {
+    public WsmVideoFrameVehicleVO(long trackId, int vehIdx, String ppcxnk, String hphm,
+                                  String cutImgUrl, String crossTime, String trafficViolationName) {
         this.trackId = trackId;
         this.vehIdx = vehIdx;
         this.ppcxnk = ppcxnk;
         this.hphm = hphm;
         this.cutImgUrl = cutImgUrl;
+        this.crossTime = crossTime;
+        this.trafficViolationName = trafficViolationName;
     }
 
     public long getTrackId() {
@@ -56,5 +61,21 @@ public class WsmVideoFrameVehicleVO {
 
     public void setCutImgUrl(String cutImgUrl) {
         this.cutImgUrl = cutImgUrl;
+    }
+
+    public String getCrossTime() {
+        return crossTime;
+    }
+
+    public void setCrossTime(String crossTime) {
+        this.crossTime = crossTime;
+    }
+
+    public String getTrafficViolationName() {
+        return trafficViolationName;
+    }
+
+    public void setTrafficViolationName(String trafficViolationName) {
+        this.trafficViolationName = trafficViolationName;
     }
 }

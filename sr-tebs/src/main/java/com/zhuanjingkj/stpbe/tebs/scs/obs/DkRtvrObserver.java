@@ -7,6 +7,8 @@ import com.zhuanjingkj.stpbe.common.mapper.KsvssKsvrpMapper;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -36,6 +38,8 @@ public class DkRtvrObserver implements ITvisStpObserver {
     @Autowired
     private KsVcMapper ksVcMapper;
 
+    private final static Logger logger = LoggerFactory.getLogger(DkRtvrObserver.class);
+
     @Override
     public void notifyObserver(VehicleVo vo) {
         boolean flag = false;
@@ -47,6 +51,10 @@ public class DkRtvrObserver implements ITvisStpObserver {
         List<String> vNum = ksvssKsvrpMapper.getVTypeNum();
         String  vType = vo.getVehicleCxtzVo().getCllxzflCode();
         String tblName = AppRegistry.tvisJsonTblName;
+        logger.info("tableName=" + tblName + "!");
+        if (tblName == null) {
+            return ;
+        }
         Map<String, Object> dtMap = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
         String hphm = vo.getVehicleHptzVO().getHphm();
         long vehsIdx = vo.getVehsIdx();

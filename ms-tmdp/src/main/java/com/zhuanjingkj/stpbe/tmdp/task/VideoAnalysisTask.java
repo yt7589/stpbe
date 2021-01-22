@@ -138,7 +138,8 @@ public class VideoAnalysisTask {
                 }
                 vfvv = new WsmVideoFrameVehicleVO(veh.getTrackId(), idx,
                         veh.getVehicleCxtzVo().getPpcxCode(),
-                        veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + cutFileFn);
+                        veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + cutFileFn,
+                        "50秒前", "无");
                 wvfvvs.add(vfvv);
                 idx++;
             }
