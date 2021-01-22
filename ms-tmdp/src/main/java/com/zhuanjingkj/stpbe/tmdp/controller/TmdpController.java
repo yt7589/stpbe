@@ -65,7 +65,7 @@ public class TmdpController {
         headers.add("Last-Modified", new Date().toString());
         headers.add("ETag", String.valueOf(System.currentTimeMillis()));
         return ResponseEntity.ok().headers(headers).contentLength(imgFile.length())
-                .contentType(MediaType.parseMediaType("application/octet-stream")).
+                .contentType(MediaType.parseMediaType("image/jpeg")).
                         body(new FileSystemResource(imgFile));
     }
 

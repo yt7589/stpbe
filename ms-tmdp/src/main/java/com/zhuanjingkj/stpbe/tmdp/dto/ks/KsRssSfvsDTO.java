@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp.dto.ks;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class KsRssSfvsDTO extends BaseDTO {
@@ -29,12 +30,15 @@ public class KsRssSfvsDTO extends BaseDTO {
 
     public JSONObject toJsonObject(){
         JSONObject obj = new JSONObject();
-        obj.put("siteId", this.siteId);
-        obj.put("siteName", this.siteName);
-        obj.put("hphm", this.hphm);
-        obj.put("totalTimes", this.totalTimes);
-        obj.put("lng", this.lng);
-        obj.put("lat", this.lat);
+        try {
+            obj.put("siteId", this.siteId);
+            obj.put("siteName", this.siteName);
+            obj.put("hphm", this.hphm);
+            obj.put("totalTimes", this.totalTimes);
+            obj.put("lng", this.lng);
+            obj.put("lat", this.lat);
+        } catch (JSONException ex) {
+        }
         return obj;
     }
 

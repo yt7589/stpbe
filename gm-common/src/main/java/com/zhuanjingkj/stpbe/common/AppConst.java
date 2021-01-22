@@ -7,6 +7,8 @@ public class AppConst {
     public final static long REDIS_USER_DURATION = 60 * 1000;
     public final static String AUTH_USER_HEADER = "User-Id";
     public final static String APP_CTX = "appCtx";
+    // TMDP相关
+    public final static String TMDP_BASE_URL = "http://192.168.2.68:9003/tmdp/";
     // 视频识别
     public final static String VIDEO_RECOG_RST_REDIS_KEY = "rtsp_result";
     // Kafka相关
