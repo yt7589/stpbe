@@ -33,6 +33,9 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
         String vType = vo.getVehicleCxtzVo().getCllxflCode(); //车辆类型分类
 
         String tblName = AppRegistry.tvisJsonTblName;
+        if (tblName == null) {
+            return ;
+        }
         Map<String, Object> dtMap = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
         String imageHash = "" + dtMap.get("image_hash");
         /**
