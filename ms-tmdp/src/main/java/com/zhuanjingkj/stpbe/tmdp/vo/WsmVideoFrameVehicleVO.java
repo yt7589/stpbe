@@ -4,6 +4,7 @@ package com.zhuanjingkj.stpbe.tmdp.vo;
  * 返回给客户端的WebSocket消息内容中的每一辆车
  */
 public class WsmVideoFrameVehicleVO {
+    private long wvfvvId;
     private long trackId;
     private int vehIdx;
     private String ppcxnk;
@@ -12,8 +13,9 @@ public class WsmVideoFrameVehicleVO {
     private String crossTime;
     private String trafficViolationName;
 
-    public WsmVideoFrameVehicleVO(long trackId, int vehIdx, String ppcxnk, String hphm,
+    public WsmVideoFrameVehicleVO(long wvfvvId, long trackId, int vehIdx, String ppcxnk, String hphm,
                                   String cutImgUrl, String crossTime, String trafficViolationName) {
+        this.wvfvvId = wvfvvId;
         this.trackId = trackId;
         this.vehIdx = vehIdx;
         this.ppcxnk = ppcxnk;
@@ -21,6 +23,14 @@ public class WsmVideoFrameVehicleVO {
         this.cutImgUrl = cutImgUrl;
         this.crossTime = crossTime;
         this.trafficViolationName = trafficViolationName;
+    }
+
+    public long getWvfvvId() {
+        return wvfvvId;
+    }
+
+    public void setWvfvvId(long wvfvvId) {
+        this.wvfvvId = wvfvvId;
     }
 
     public long getTrackId() {

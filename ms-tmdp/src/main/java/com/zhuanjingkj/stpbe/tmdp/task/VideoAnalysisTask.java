@@ -41,6 +41,7 @@ public class VideoAnalysisTask {
     private static Map<String, List<WebSocketSession>> streamWsss = new HashMap<>();
     private static Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
     private final static Logger logger = LoggerFactory.getLogger(VideoAnalysisTask.class);
+    private static long wsmVfvvIdx = 0;
 
     @Async("tmdpPool")
     @Scheduled(cron = "*/1 * * * * ?")
@@ -144,7 +145,7 @@ public class VideoAnalysisTask {
                     logger.info("##### step 1.6 cutFileFn=" + vo.getCutImgFn() + "!");
                 }
                 logger.info("##### step 2: idx=" + idx + "; cutImgFn=" + vo.getCutImgFn() + "!");
-                vfvv = new WsmVideoFrameVehicleVO(veh.getTrackId(), idx,
+                vfvv = new WsmVideoFrameVehicleVO(wsmVfvvIdx++, veh.getTrackId(), idx,
                         veh.getVehicleCxtzVo().getPpcxCode(),
                         veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + vo.getCutImgFn(),
                         "50秒前", "无");
