@@ -109,16 +109,16 @@ public class VideoAnalysisTask {
                     vo.setW(w);
                     vo.setH(h);
                     vo.setOrgImgFn(orgFileFn);
-                    TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
-                    // 车型特征
-                    String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
-                    String hphm = veh.getVehicleHptzVO().getHphm();
-                    TvisSodImage.drawString(orgImg, Font.BOLD, 25,
-                            Color.RED, x, y + 3, hphm + ":" + ppxhms);
                     cutVehs.put("" + veh.getTrackId(), vo);
                 } else {
                     vo = cutVehs.get("" + veh.getTrackId());
                 }
+                TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
+                // 车型特征
+                String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
+                String hphm = veh.getVehicleHptzVO().getHphm();
+                TvisSodImage.drawString(orgImg, Font.BOLD, 25,
+                        Color.RED, x, y + 3, hphm + ":" + ppxhms);
                 logger.info("##### step 1: idx=" + idx + "; cutImgFn=" + vo.getCutImgFn() +
                         "! currentArea=" + currentArea + "=" + w + "*" + h + "; maxArea=" + maxArea + "!");
                 maxArea = vo.getArea();
