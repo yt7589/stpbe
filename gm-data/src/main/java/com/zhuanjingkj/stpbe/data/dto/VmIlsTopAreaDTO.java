@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.vm;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
@@ -13,6 +13,10 @@ public class VmIlsTopAreaDTO extends BaseDTO {
     private String areaName;
     @JSONField(name = "count")
     private Integer count;
+
+    public VmIlsTopAreaDTO() {
+        super();
+    }
 
     public VmIlsTopAreaDTO(long areaId, String areaName, Integer count) {
         this.areaId = areaId;

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class KsSvsKsvrpObserver implements ITvisStpObserver {
@@ -32,7 +33,8 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
         String vType = vo.getVehicleCxtzVo().getCllxflCode(); //车辆类型分类
 
         String tblName = AppRegistry.tvisJsonTblName;
-        String imageHash = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
+        Map<String, Object> dtMap = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
+        String imageHash = "" + dtMap.get("image_hash");
         /**
          * 如果是重点监管车辆类型保存到redis两张实时图片 ks_ksvrp_images
          * 在本日重点监控车辆小时分布图对应时间点 ks_ksvrp_vehicle +1

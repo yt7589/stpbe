@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.vm;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONCreator;
 import com.alibaba.fastjson.annotation.JSONField;
@@ -12,6 +12,10 @@ public class VmIlsVsTrendDTO extends BaseDTO {
     private String year;
     @JSONField(name = "count")
     private Integer count;
+
+    public VmIlsVsTrendDTO() {
+        super();
+    }
 
     public VmIlsVsTrendDTO(String year, Integer count) {
         this.year = "Y_" + year;

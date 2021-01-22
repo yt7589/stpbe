@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.VmIlsMapper">
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsDTO"  id ="illDTO" >
+        <result column="violation_id" property="ilId" jdbcType="INTEGER"/>
+        <result column="create_time" property="ilTime" jdbcType="VARCHAR"/>
+        <result column="site_name" property="ilAddr" jdbcType="VARCHAR"/>
+        <result column="hphm" property="hmhp" jdbcType="VARCHAR"/>
+        <result column="vehicle_type_name" property="types" jdbcType="VARCHAR"/>
+        <result column="wzlx" property="ilTypes" jdbcType="VARCHAR"/>
+        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsVehicleTypesDTO"  id ="vTypeDTO" >
+        <result column="vehicle_type_num" property="typeId" jdbcType="INTEGER"/>
+        <result column="vehicle_type_name" property="typeName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsTypeDTO"  id ="ilsTypeDTO" >
+        <result column="violation_type_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="violation_type_name" property="typeName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsVhsDTO"  id ="vilrDTO" >
+        <result column="violation_id" property="ilId" jdbcType="INTEGER"/>
+        <result column="create_time" property="ilTime" jdbcType="VARCHAR"/>
+        <result column="road_name" property="ilAddr" jdbcType="VARCHAR"/>
+        <result column="wzlx" property="ilType" jdbcType="VARCHAR"/>
+        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsTopAreaDTO" id ="ilAreaDTO">
+        <result column="area_name" property="areaName" jdbcType="VARCHAR"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsTopSiteDTO" id ="ilSiteTopDTO">
+        <result column="site_name" property="siteName" jdbcType="VARCHAR"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlssDTO" id ="ilSiteDTO">
+        <result column="site_name" property="siteName" jdbcType="VARCHAR"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsSiteDTO" id ="ilsMapSite">
+        <result column="site_name" property="siteName" jdbcType="VARCHAR"/>
+        <result column="lng" property="lng" jdbcType="DOUBLE"/>
+        <result column="lat" property="lat" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsVhsDTO" id ="ilsVhsDTO">
+        <result column="site_name" property="siteName" jdbcType="VARCHAR"/>
+        <result column="lng" property="lng" jdbcType="DOUBLE"/>
+        <result column="lat" property="lat" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <select id ="getIllegalVehicle" resultMap="illDTO">
+        SELECT tv.violation_id, tv.create_time, ts.site_name, tv.hphm, tv.wzlx, sv.vehicle_type_name, tv.image_hash
+          FROM t_violation tv
+     LEFT JOIN t_camera tc
+            ON tc.camera_id = tv.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta
+            ON ta.area_id = ts.area_id
+     LEFT JOIN t_special_vehicle_type sv
+            ON sv.vehicle_type_num = tv.cllxzfl
+         WHERE 1 = 1
+            <if test="hphm != null and hphm != ''">
+                AND tv.hphm like CONCAT(#{hphm}, '%')
+            </if>
+            <if test="addr != null and addr != ''">
+                AND ts.site_name =#{addr}
+            </if>
+            <if test="illType != null and illType != ''">
+                AND tv.wzlx =#{illType}
+            </if>
+            <if test="vType != null and vType != ''">
+                AND tv.cllxzfl =#{vType}
+            </if>
+            <if test="category == 0 ">
+                AND #{cg} = substring(tv.hphm, 1, 1)
+            </if>
+            <if test="category == 1">
+                AND (substring(tv.hphm, 1, 1) > #{cg}
+                 OR #{cg} > substring(tv.hphm, 1, 1))
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND tv.create_time >= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND #{endTime} >= tv.create_time
+            </if>
+        LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getIllegalVehicleCount" resultType="Integer">
+        SELECT count(tv.violation_id)
+          FROM t_violation tv
+     LEFT JOIN t_camera tc
+            ON tc.camera_id = tv.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta
+            ON ta.area_id = ts.area_id
+     LEFT JOIN t_special_vehicle_type sv
+            ON sv.vehicle_type_num = tv.cllxzfl
+         WHERE 1 = 1
+            <if test="hphm != null and hphm != ''">
+                AND tv.hphm like CONCAT(#{hphm}, '%')
+            </if>
+            <if test="addr != null and addr != ''">
+                AND ts.site_name =#{addr}
+            </if>
+            <if test="illType != null and illType != ''">
+                AND tv.wzlx =#{illType}
+            </if>
+            <if test="vType != null and vType != ''">
+                AND tv.cllxzfl =#{vType}
+            </if>
+            <if test="category == 0 ">
+                AND #{cg} = substring(tv.hphm, 1, 1)
+            </if>
+            <if test="category == 1">
+                AND (substring(tv.hphm, 1, 1) > #{cg}
+                 OR #{cg} > substring(tv.hphm, 1, 1))
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND tv.create_time >= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND #{endTime} >= tv.create_time
+            </if>
+    </select>
+
+    <select id ="getVType" resultMap="vTypeDTO">
+        SELECT tsv.vehicle_type_num, tsv.vehicle_type_name
+          FROM t_special_vehicle_type tsv
+          <if test="level > 0">
+              WHERE `level` =#{level}
+          </if>
+
+    </select>
+
+    <select id ="getIlsType" resultMap="ilsTypeDTO">
+        SELECT tv.violation_type_id, tv.violation_type_name
+          FROM t_violation_type tv
+    </select>
+
+    <select id ="getFileHash" resultType="hashmap">
+        SELECT tv.vehs_idx, tv.image_hash, tv.json_hash, tv.wzlx
+          FROM t_violation tv
+         WHERE tv.violation_id =#{tvId}
+    </select>
+
+    <select id ="getVColor" resultType="hashmap">
+        SELECT tvs.violation_csys_code, tvs.violation_csys_name
+          FROM t_violation_csys tvs
+    </select>
+
+    <select id ="getHColor" resultType="hashmap">
+        SELECT tvh.violation_hpys_code, tvh.violation_hpys_name
+          FROM t_violation_hpys tvh
+    </select>
+
+    <select id ="getHpzl" resultType="hashmap">
+        SELECT tvh.violation_hpzl_code, tvh.violation_hpzl_name, tvh.violation_hpzl_desc
+          FROM t_violation_hpzl tvh
+    </select>
+
+    <select id="getVIlRecord" resultMap="vilrDTO">
+        SELECT tv.violation_id, tv.hphm, tv.create_time, tr.road_name, tv.wzlx, tv.image_hash
+          FROM t_violation tv
+     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id =ts.site_id
+     LEFT JOIN t_road_seg trs ON trs.src_site_id = ts.site_id
+     LEFT JOIN t_road tr ON tr.road_id = trs.road_id
+         WHERE tv.hphm =#{hphm}
+           AND road_name IS NOT NULL
+     UNION ALL
+        SELECT tv.violation_id, tv.hphm, tv.create_time,tr.road_name, tv.wzlx,tv.image_hash
+          FROM t_violation tv
+     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id =ts.site_id
+     LEFT JOIN t_road_seg trs ON trs.dst_site_id = ts.site_id
+     LEFT JOIN t_road tr ON tr.road_id = trs.road_id
+         WHERE tv.hphm =#{hphm}
+           AND road_name IS NOT NULL
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getVIlCount" resultType="Integer">
+        SELECT SUM(tmp.`count`)
+          FROM (
+        SELECT COUNT(tv.violation_id) AS `count`
+          FROM t_violation tv
+     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id =ts.site_id
+     LEFT JOIN t_road_seg trs ON trs.src_site_id = ts.site_id
+     LEFT JOIN t_road tr ON tr.road_id = trs.road_id
+         WHERE tv.hphm =#{hphm}
+           AND road_name IS NOT NULL
+     UNION ALL
+        SELECT COUNT(tv.violation_id) AS `count`
+          FROM t_violation tv
+     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id =ts.site_id
+     LEFT JOIN t_road_seg trs ON trs.dst_site_id = ts.site_id
+     LEFT JOIN t_road tr ON tr.road_id = trs.road_id
+         WHERE tv.hphm =#{hphm}
+           AND road_name IS NOT NULL) AS tmp
+    </select>
+
+    <select id ="getIlTypeByHphm" resultType="hashmap">
+        SELECT tv.wzlx, COUNT(tv.violation_id)  AS `count`
+          FROM t_violation tv
+         WHERE tv.hphm =#{hphm}
+      GROUP BY tv.wzlx
+    </select>
+
+    <select id ="getIlTypeByYear" resultType="hashmap">
+        SELECT SUBSTRING(tv.create_time, 1,4) AS `year`, COUNT(tv.violation_id) AS `count`
+          FROM t_violation tv
+         WHERE tv.hphm =#{hphm}
+      GROUP BY SUBSTRING(tv.create_time, 1,4)
+      ORDER BY SUBSTRING(tv.create_time, 1,4) DESC
+         LIMIT 8
+    </select>
+
+    <select id ="getIllTopArea" resultMap="ilAreaDTO">
+        SELECT ta.area_name, COUNT(p.violation_id) AS `count`
+          FROM (
+        SELECT tv.violation_id, tv.camera_id
+          FROM t_violation tv
+         WHERE 1 = 1
+            <if test ="startTime != null and startTime !=''">
+                AND tv.create_time > #{startTime}
+            </if>
+            <if test ="endTime != null and endTime != ''">
+                AND #{endTime} > tv.create_time
+            </if>
+            <if test ="category == 0 ">
+                AND #{cg} = substring(tv.hphm, 1, 1)
+            </if>
+            <if test ="category == 1">
+                AND (substring(tv.hphm, 1, 1) > #{cg}
+                OR #{cg} > substring(tv.hphm, 1, 1))
+            </if>
+                ) p
+     LEFT JOIN t_camera tc ON p.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta ON ta.area_id = ts.area_id
+      GROUP BY ta.area_id
+         LIMIT 10
+    </select>
+
+    <select id ="getIlsTopSite" resultMap="ilSiteTopDTO">
+        SELECT ts.site_name, IFNULL(p.counts, 0)
+          FROM t_site ts
+     LEFT JOIN t_camera tc ON ts.site_id = tc.site_id
+     LEFT JOIN (
+        SELECT COUNT(tv.violation_id) counts, tv.camera_id
+          FROM t_violation tv
+         WHERE 1 = 1
+            <if test ="startTime != null and startTime !=''">
+                AND tv.create_time > #{startTime}
+            </if>
+            <if test ="endTime != null and endTime != ''">
+                AND #{endTime} > tv.create_time
+            </if>
+            <if test ="category == 0 ">
+                AND #{cg} = substring(tv.hphm, 1, 1)
+            </if>
+            <if test ="category == 1">
+                AND (SUBSTRING(tv.hphm, 1, 1) > #{cg}
+                OR #{cg} > substring(tv.hphm, 1, 1))
+            </if>
+      GROUP BY tv.camera_id) p ON p.camera_id = tc.camera_id
+      ORDER BY p.counts DESC
+         LIMIT 10
+    </select>
+
+    <select id ="getIlsSite" resultMap="ilSiteDTO">
+        SELECT ts.site_name, IFNULL(p.count1,0) AS `count`
+          FROM t_site ts
+     LEFT JOIN t_camera tc ON ts.site_id = tc.site_id
+     LEFT JOIN (
+        SELECT tv.camera_id, COUNT(tv.violation_id) AS count1
+          FROM t_violation tv
+      GROUP BY tv.camera_id) p ON tc.camera_id = p.camera_id
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getIlsSiteCount" resultType="Integer">
+        SELECT COUNT(ts.site_id)
+          FROM t_site ts
+    </select>
+
+    <select id ="getIlsMapSite" resultMap ="ilsMapSite">
+        SELECT ts.site_name, ts.lng, ts.lat
+          FROM t_site ts
+     LEFT JOIN t_camera tc ON ts.site_id = tc.site_id
+     LEFT JOIN (
+        SELECT COUNT(tv.violation_id) counts, tv.camera_id
+          FROM t_violation tv
+         WHERE 1 = 1
+            <if test ="startTime != null and startTime !=''">
+                AND tv.create_time > #{startTime}
+            </if>
+            <if test ="endTime != null and endTime != ''">
+                AND #{endTime} > tv.create_time
+            </if>
+            <if test ="category == 0 ">
+                AND #{cg} = substring(tv.hphm, 1, 1)
+            </if>
+            <if test ="category == 1">
+                AND (SUBSTRING(tv.hphm, 1, 1) > #{cg}
+                OR #{cg} > substring(tv.hphm, 1, 1))
+            </if>
+      GROUP BY tv.camera_id) p ON p.camera_id = tc.camera_id
+      ORDER BY p.counts DESC
+         LIMIT 10
+    </select>
+
+    <select id ="getIlsCount" resultType="Integer">
+        SELECT COUNT(tv.violation_id) AS count
+          FROM t_violation tv
+     LEFT JOIN t_camera tc
+            ON tc.camera_id = tv.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta
+            ON ta.area_id = ts.area_id
+     LEFT JOIN t_special_vehicle_type sv
+            ON sv.vehicle_type_num = tv.cllxzfl
+         WHERE 1 = 1
+            <if test="hphm != null and hphm != ''">
+                AND tv.hphm like CONCAT(#{hphm}, '%')
+            </if>
+            <if test="addr != null and addr != ''">
+                AND ts.site_name =#{addr}
+            </if>
+            <if test="illType != null and illType != ''">
+                AND tv.wzlx =#{illType}
+            </if>
+            <if test="vType != null and vType != ''">
+                AND tv.cllxzfl =#{vType}
+            </if>
+            <if test="category == 0 ">
+                AND #{cg} = substring(tv.hphm, 1, 1)
+            </if>
+            <if test="category == 1">
+                AND (substring(tv.hphm, 1, 1) > #{cg}
+                OR #{cg} > substring(tv.hphm, 1, 1))
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND tv.create_time >= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND #{endTime} >= tv.create_time
+            </if>
+    </select>
+
+    <select id ="getIlsPart" resultMap="illDTO">
+        SELECT tv.violation_id, tv.create_time, ts.site_name, tv.hphm, tv.wzlx, sv.vehicle_type_name, tv.image_hash
+          FROM t_violation tv
+     LEFT JOIN t_camera tc
+            ON tc.camera_id = tv.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta
+            ON ta.area_id = ts.area_id
+     LEFT JOIN t_special_vehicle_type sv
+            ON sv.vehicle_type_num = tv.cllxzfl
+         WHERE 1 = 1
+            <if test="hphm != null and hphm != ''">
+                AND tv.hphm like CONCAT(#{hphm}, '%')
+            </if>
+            <if test="addr != null and addr != ''">
+                AND ts.site_name =#{addr}
+            </if>
+            <if test="illType != null and illType != ''">
+                AND tv.wzlx =#{illType}
+            </if>
+            <if test="vType != null and vType != ''">
+                AND tv.cllxzfl =#{vType}
+            </if>
+            <if test="category == 0 ">
+                AND #{cg} = substring(tv.hphm, 1, 1)
+            </if>
+            <if test="category == 1">
+                AND (substring(tv.hphm, 1, 1) > #{cg}
+                OR #{cg} > substring(tv.hphm, 1, 1))
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND tv.create_time >= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND #{endTime} >= tv.create_time
+            </if>
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getVIlsHistoryCount" resultType="Integer">
+        SELECT COUNT(tv.violation_id)
+          FROM t_violation tv
+         WHERE tv.hphm =#{hphm}
+    </select>
+
+</mapper>

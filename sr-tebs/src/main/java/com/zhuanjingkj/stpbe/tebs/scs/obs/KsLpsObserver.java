@@ -35,8 +35,6 @@ public class KsLpsObserver implements ITvisStpObserver {
         index = hour + 1;
         String hType = vo.getVehicleHptzVO().getHpzt(); //牌照异常
         if(!"1".equals(hType)) {
-            String tblName = AppRegistry.tvisJsonTblName;
-            String imageHash = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
             //分时间段统计
             Integer count = (int)(redisTemplate.opsForList().index("ks_lps_time",index));
             redisTemplate.opsForList().set("ks_lps_time",index,count + 1);

@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.vm;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
@@ -17,6 +17,10 @@ public class VmIlsSiteDTO extends BaseDTO {
     private double lat;
     @JSONField(name = "count")
     private Integer count;
+
+    public VmIlsSiteDTO() {
+        super();
+    }
 
     public VmIlsSiteDTO(long siteId, String siteName, double lng, double lat, Integer count) {
         this.siteId = siteId;

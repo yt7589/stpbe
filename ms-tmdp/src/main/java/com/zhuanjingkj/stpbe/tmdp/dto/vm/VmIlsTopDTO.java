@@ -2,6 +2,8 @@ package com.zhuanjingkj.stpbe.tmdp.dto.vm;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlsTopAreaDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlsTopSiteDTO;
 
 import java.util.List;
 

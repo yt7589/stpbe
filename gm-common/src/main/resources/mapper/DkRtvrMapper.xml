@@ -12,13 +12,13 @@
     </resultMap>
 
     <insert id ="insertViolation">
-        INSERT INTO t_violation (tvis_json_id, vehs_idx, camera_id, hphm, csys, clpp, ppcx, cxnk, psfx, clwz, wzlx, cllxzfl, image_hash, create_time)
+        INSERT INTO t_violation (tvis_json_id, vehs_idx, camera_id, hphm, csys, clpp, ppcx, cxnk, psfx, clwz, wzlx, cllxzfl, image_hash, json_hash, tvis_json_tbl, create_time)
                          VALUES (#{tvisJsonId}, #{vehsIdx}, #{CameraId}, #{hphm}, #{csysName}, #{clppName}, #{ppcxName},
-                                 #{cxnkName}, #{psfx}, #{clwz}, #{wzlx}, #{vtype}, #{imageHash}, #{date})
+                                 #{cxnkName}, #{psfx}, #{clwz}, #{wzlx}, #{vtype}, #{imageHash}, #{jsonHash}, #{tblName}, #{date})
     </insert>
 
-    <select id ="getImageHash" resultType ="String">
-        SELECT image_hash
+    <select id ="getImageHash" resultType ="hashmap">
+        SELECT image_hash, json_hash
           FROM ${tblName}
          WHERE tvis_json_id =#{tvisJsonId}
     </select>

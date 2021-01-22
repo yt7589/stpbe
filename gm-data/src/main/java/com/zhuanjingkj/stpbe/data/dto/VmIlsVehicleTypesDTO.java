@@ -1,15 +1,19 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.vm;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
-public class VmIlsTypeDTO extends BaseDTO {
+public class VmIlsVehicleTypesDTO extends BaseDTO {
     @JSONField(name = "typeId")
     private long typeId;
     @JSONField(name = "typeName")
     private String typeName;
 
-    public VmIlsTypeDTO(long typeId, String typeName) {
+    public VmIlsVehicleTypesDTO() {
+        super();
+    }
+
+    public VmIlsVehicleTypesDTO(long typeId, String typeName) {
         this.typeId = typeId;
         this.typeName = typeName;
     }

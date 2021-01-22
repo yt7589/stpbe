@@ -65,6 +65,7 @@ public class TvisUtil {
     public static List<VehicleVo> parseTvisJson(long cameraId, String json) {
         JSONObject rstJson = JSONObject.parseObject(json);
         long streamId = rstJson.getLong("StreamID");
+
         // 获取特征向量
         JSONArray vehs = rstJson.getJSONArray("VEH");
         JSONObject vehJson = null;

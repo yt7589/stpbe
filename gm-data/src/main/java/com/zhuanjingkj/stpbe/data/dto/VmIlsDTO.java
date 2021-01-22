@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.vm;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
@@ -22,6 +22,12 @@ public class VmIlsDTO extends BaseDTO {
     private long imageId; //图片id
     @JSONField(name = "imageUrl")
     private String imageUrl; //图片路径
+    @JSONField(name ="imgageHash")
+    private String imageHash;
+
+    public VmIlsDTO() {
+        super();
+    }
 
     public VmIlsDTO(long ilId, String ilTime, String ilAddr, String hmhp, String category, String types, String ilTypes, long imageId, String imageUrl) {
         this.ilId = ilId;
@@ -105,5 +111,13 @@ public class VmIlsDTO extends BaseDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getImageHash() {
+        return imageHash;
+    }
+
+    public void setImageHash(String imageHash) {
+        this.imageHash = imageHash;
     }
 }

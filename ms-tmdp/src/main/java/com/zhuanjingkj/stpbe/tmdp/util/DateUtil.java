@@ -1,11 +1,13 @@
 package com.zhuanjingkj.stpbe.tmdp.util;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class DateUtil {
 
@@ -85,6 +87,12 @@ public class DateUtil {
 		LocalDate localDate = LocalDate.now();
 		return localDate.plusDays(num).format(dtfMd).toString();
 	}
+
+	public static String timeStamp2Date (String timeStamp) {
+		Long l = Long.parseLong(timeStamp);
+		LocalDateTime now = LocalDateTime.ofInstant(Instant.ofEpochMilli(l), TimeZone.getDefault().toZoneId());
+		return dtf.format(now);
+	}
 	public static void main(String[] args) {
 		System.out.println(getLocalDateTime());
 		System.out.println(isBefore("2020-08-03 14:48:26"));
@@ -107,7 +115,7 @@ public class DateUtil {
 
 		System.out.println(plusDays(-1));
 		System.out.println(plusDays(0));
-
+		System.out.println(timeStamp2Date("172214104"));
 	}
 
 	

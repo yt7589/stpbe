@@ -1,12 +1,12 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.vm;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 /**
- * 违章分布 =》 违章点位统计
+ * 违章分布 =》 违章点位列表统计
  */
-public class VmIlsTopSiteDTO extends BaseDTO {
+public class VmIlssDTO extends BaseDTO {
     @JSONField(name = "siteId")
     private long siteId;
     @JSONField(name = "siteName")
@@ -14,7 +14,11 @@ public class VmIlsTopSiteDTO extends BaseDTO {
     @JSONField(name = "count")
     private Integer count;
 
-    public VmIlsTopSiteDTO(long siteId, String siteName, Integer count) {
+    public VmIlssDTO() {
+        super();
+    }
+
+    public VmIlssDTO(long siteId, String siteName, Integer count) {
         this.siteId = siteId;
         this.siteName = siteName;
         this.count = count;
