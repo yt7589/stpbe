@@ -59,8 +59,8 @@ public class VmIlsService implements IVmIlsService {
         if(direction == 0) {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
         }
-        String cg = PropUtil.getValue("hphm.native.prefix");
-        cg ="京";
+//        String cg = PropUtil.getValue("hphm.native.prefix");
+        String cg ="京";
         if(StringUtils.isNotBlank(hphm)) {
             category = 3;
         }
@@ -295,8 +295,8 @@ public class VmIlsService implements IVmIlsService {
 
     @Override
     public List<VmIlsTopAreaDTO> queryIllArea(String startTime, String endTime, Integer category) {
-        String cg = PropUtil.getValue("hphm.native.prefix");
-        cg = "京";
+//        String cg = PropUtil.getValue("hphm.native.prefix");
+        String cg = "京";
         List<VmIlsTopAreaDTO> ilsArea = vmIlsMapper.getIllTopArea(startTime, endTime, category, cg);
 
 //        List<VmIlsTopAreaDTO> ilsArea = new ArrayList<>();
@@ -315,8 +315,8 @@ public class VmIlsService implements IVmIlsService {
 
     @Override
     public List<VmIlsTopSiteDTO> queryIllSite(String startTime, String endTime, Integer category) {
-        String cg = PropUtil.getValue("hphm.native.prefix");
-        cg = "京";
+//        String cg = PropUtil.getValue("hphm.native.prefix");
+        String cg = "京";
         List<VmIlsTopSiteDTO> ilsSite = vmIlsMapper.getIlsTopSite(startTime, endTime, category, cg);
 //        List<VmIlsTopSiteDTO> ilsSite = new ArrayList<>();
 //        ilsSite.add(new VmIlsTopSiteDTO(102,"西二旗",1100000));
@@ -361,8 +361,8 @@ public class VmIlsService implements IVmIlsService {
     @Override
     public ResultDTO<DbQrsDTO> querySiteIllegal_exp(String startTime, String endTime, Integer category) {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        String cg = PropUtil.getValue("hphm.native.prefix");
-        cg = "京";
+//        String cg = PropUtil.getValue("hphm.native.prefix");
+        String cg = "京";
         List<VmIlsSiteDTO> recs = vmIlsMapper.getIlsMapSite(startTime, endTime, category, cg);;
         DbQrsDTO data = new DbQrsDTO(10,10,0,10,0,recs);
 //        List<VmIlsSiteDTO> recs = new ArrayList<>();
@@ -383,8 +383,8 @@ public class VmIlsService implements IVmIlsService {
 
     @Override
     public Integer getIlsCount(String startTime, String endTime, Integer category, String vType, String illType, String hphm, String addr) {
-        String cg = PropUtil.getValue("hphm.native.prefix");
-        cg = "京";
+//        String cg = PropUtil.getValue("hphm.native.prefix");
+        String cg = "京";
         return vmIlsMapper.getIlsCount(startTime, endTime, category, cg, vType, illType, hphm, addr);
     }
 
@@ -394,7 +394,8 @@ public class VmIlsService implements IVmIlsService {
         if(direction == 0) {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
         }
-        String cg = PropUtil.getValue("hphm.native.prefix");
+//        String cg = PropUtil.getValue("hphm.native.prefix");
+        String cg = "京";
         if(StringUtils.isNotBlank(hphm)) {
             category = 3;
         }
