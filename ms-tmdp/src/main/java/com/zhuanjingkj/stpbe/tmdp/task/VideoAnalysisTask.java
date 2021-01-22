@@ -119,8 +119,11 @@ public class VideoAnalysisTask {
                 }
                 logger.info("##### step 1: idx=" + idx + "; cutImgFn=" + vo.getCutImgFn() +
                         "! currentArea=" + currentArea + "=" + w + "*" + h + "; maxArea=" + maxArea + "!");
-                maxArea = vo.getArea();
+                //maxArea = vo.getArea();
+                logger.info("##### step 1.1: idx=" + idx + "; cutImgFn=" + vo.getCutImgFn() +
+                        "! currentArea=" + currentArea + "=" + w + "*" + h + "; maxArea=" + maxArea + "!");
                 if (currentArea > maxArea) {
+                    maxArea = currentArea;
                     BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
                     try {
                         cutFileFn = "c_" + tvisJsonId + "_" + idx + ".jpg";
