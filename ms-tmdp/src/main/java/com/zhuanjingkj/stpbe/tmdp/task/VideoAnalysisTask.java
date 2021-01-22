@@ -129,9 +129,6 @@ public class VideoAnalysisTask {
                     try {
                         cutFileFn = "c_" + tvisJsonId + "_" + idx + ".jpg";
                         cutFileObj = new File(imgBaseFolder + cutFileFn);
-                        if (cutFileObj.exists()) {
-                            cutFileObj.delete();
-                        }
                         ImageIO.write(vehImg, "jpg", cutFileObj);
                     } catch (IOException e) {
                         e.printStackTrace();
