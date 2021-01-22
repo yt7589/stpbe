@@ -117,6 +117,7 @@ public class VideoAnalysisTask {
                 } else {
                     vo = cutVehs.get("" + veh.getTrackId());
                 }
+                logger.info("##### step 1: idx=" + idx + "; cutImgFn=" + vo.getCutImgFn() + "!");
                 maxArea = vo.getArea();
                 if (currentArea > maxArea) {
                     BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
@@ -126,7 +127,7 @@ public class VideoAnalysisTask {
                         if (cutFileObj.exists()) {
                             cutFileObj.delete();
                         }
-                        ImageIO.write(vehImg, "jpg", new File(imgBaseFolder + vo.getCutImgFn()));
+                        ImageIO.write(vehImg, "jpg", cutFileObj);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -136,6 +137,7 @@ public class VideoAnalysisTask {
                     vo.setH(h);
                     vo.setCutImgFn(cutFileFn);
                 }
+                logger.info("##### step 2: idx=" + idx + "; cutImgFn=" + vo.getCutImgFn() + "!");
                 vfvv = new WsmVideoFrameVehicleVO(veh.getTrackId(), idx,
                         veh.getVehicleCxtzVo().getPpcxCode(),
                         veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + vo.getCutImgFn(),
