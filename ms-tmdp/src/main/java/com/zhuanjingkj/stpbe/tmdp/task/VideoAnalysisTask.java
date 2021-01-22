@@ -125,10 +125,8 @@ public class VideoAnalysisTask {
                         cutFileObj = new File(imgBaseFolder + cutFileFn);
                         if (cutFileObj.exists()) {
                             cutFileObj.delete();
-                        } else {
-                            cutFileObj.createNewFile();
                         }
-                        ImageIO.write(vehImg, "jpg", new File(imgBaseFolder + cutFileFn));
+                        ImageIO.write(vehImg, "jpg", new File(imgBaseFolder + vo.getCutImgFn()));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -140,21 +138,13 @@ public class VideoAnalysisTask {
                 }
                 vfvv = new WsmVideoFrameVehicleVO(veh.getTrackId(), idx,
                         veh.getVehicleCxtzVo().getPpcxCode(),
-                        veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + cutFileFn,
+                        veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + vo.getCutImgFn(),
                         "50秒前", "无");
                 wvfvvs.add(vfvv);
                 idx++;
             }
-            File orgFileObj = new File(imgBaseFolder + orgFileFn);
-            if (!orgFileObj.exists()) {
-                try {
-                    orgFileObj.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
             try {
-                ImageIO.write(orgImg, "jpg", orgFileObj);
+                ImageIO.write(orgImg, "jpg", new File(imgBaseFolder + orgFileFn));
             } catch (IOException e) {
                 e.printStackTrace();
             }
