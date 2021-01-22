@@ -11,7 +11,6 @@ import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.VmIlsDTO;
 import com.zhuanjingkj.stpbe.data.dto.VmIlsVehicleTypesDTO;
 import com.zhuanjingkj.stpbe.data.dto.VmIlsTypeDTO;
-import com.zhuanjingkj.stpbe.tebs.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.VmIlsTopAreaDTO;
 import com.zhuanjingkj.stpbe.data.dto.VmIlsTopSiteDTO;
 import com.zhuanjingkj.stpbe.data.dto.VmIlsSiteDTO;
