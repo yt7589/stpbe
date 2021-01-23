@@ -62,6 +62,7 @@ public class TvisJsonRawListener {
         if (relativeImageFile==null || relativeImageFile.equals("") || relativeImageFile.length()<2) {
             return;
         }
+        System.out.println("##### ImageUrl=" + relativeImageFile + "! ##########");
         String imageFile = AppConst.VIDEO_FRAME_IMG_BASE_DIR + relativeImageFile.substring(2);
         Optional<String> imgRst = IpfsClient.uploadFile(imageFile);
         logger.info("step 3");
