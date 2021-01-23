@@ -23,8 +23,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 public class MsTmdpApplication {
     public static ConfigurableApplicationContext appCtx = null;
-    @Autowired
-    private VideoAnalysisTask videoAnalysisTask;
 
     public static void main(String[] args) {
         TmdpWsHandler.initialize();
