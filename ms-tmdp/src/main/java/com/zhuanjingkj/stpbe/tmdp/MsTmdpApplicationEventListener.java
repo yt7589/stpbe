@@ -8,9 +8,9 @@ import org.springframework.context.ApplicationListener;
 public class MsTmdpApplicationEventListener implements ApplicationListener {
     @Override
     public void onApplicationEvent(ApplicationEvent applicationEvent) {
-        if ( applicationEvent instanceof ApplicationReadyEvent) {
+        /*if ( applicationEvent instanceof ApplicationReadyEvent) {
             Thread thd = new Thread(new VideoAnalysisTask());
             thd.start();
-        }
+        }*/
     }
 }
