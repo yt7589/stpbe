@@ -27,6 +27,6 @@ public class MsTmdpApplication {
         MsTmdpApplication.appCtx = SpringApplication.run(MsTmdpApplication.class, args);
         AppRegistry.putParam(AppConst.APP_CTX, MsTmdpApplication.appCtx);
         Thread videoAnalysisThread = new Thread(new VideoAnalysisTask());
-
+        videoAnalysisThread.start();
     }
 }
