@@ -16,12 +16,4 @@ public class TmdpConfig {
         threadPoolTaskScheduler.setPoolSize(10);
         return threadPoolTaskScheduler;
     }
-
-    @Bean
-    public VideoAnalysisTask videoAnalysisTask() {
-        VideoAnalysisTask vat = new VideoAnalysisTask();
-        Thread thd = new Thread(vat);
-        thd.start();
-        return vat;
-    }
 }

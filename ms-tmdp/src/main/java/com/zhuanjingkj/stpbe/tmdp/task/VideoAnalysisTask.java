@@ -43,6 +43,11 @@ public class VideoAnalysisTask implements Runnable {
     private final static Logger logger = LoggerFactory.getLogger(VideoAnalysisTask.class);
     private static long wsmVfvvIdx = 0;
 
+    public VideoAnalysisTask() {
+        Thread thd = new Thread(this);
+        thd.start();
+    }
+
     public void run() {
         while (true) {
             runVideoAnalysisTask();
