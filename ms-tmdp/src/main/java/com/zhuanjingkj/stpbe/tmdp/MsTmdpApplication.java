@@ -3,6 +3,7 @@ package com.zhuanjingkj.stpbe.tmdp;
 import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.tmdp.controller.TmdpWsHandler;
+import com.zhuanjingkj.stpbe.tmdp.task.VideoAnalysisTask;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,5 +26,7 @@ public class MsTmdpApplication {
         TmdpWsHandler.initialize();
         MsTmdpApplication.appCtx = SpringApplication.run(MsTmdpApplication.class, args);
         AppRegistry.putParam(AppConst.APP_CTX, MsTmdpApplication.appCtx);
+        Thread videoAnalysisThread = new Thread(new VideoAnalysisTask());
+
     }
 }

@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class VideoAnalysisTask {
+public class VideoAnalysisTask implements Runnable {
     @Autowired
     private TvisJsonMapper tvisJsonMapper;
     private static List<String> streamIds = new ArrayList<>();
@@ -43,8 +43,20 @@ public class VideoAnalysisTask {
     private final static Logger logger = LoggerFactory.getLogger(VideoAnalysisTask.class);
     private static long wsmVfvvIdx = 0;
 
-    @Async("tmdpPool")
-    @Scheduled(cron = "*/1 * * * * ?")
+    public void run() {
+        while (true) {
+            runVideoAnalysisTask();
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //@Async("tmdpPool")
+    //@Scheduled(cron = "*/1 * * * * ?")
+    //
     public void runVideoAnalysisTask() {
         logger.info("### 视频分析定时任务1");
         String vaImgUrlBase = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=";
