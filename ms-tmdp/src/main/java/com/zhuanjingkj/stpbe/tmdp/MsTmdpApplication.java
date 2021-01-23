@@ -5,6 +5,7 @@ import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.tmdp.controller.TmdpWsHandler;
 import com.zhuanjingkj.stpbe.tmdp.task.VideoAnalysisTask;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -22,11 +23,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableScheduling
 public class MsTmdpApplication {
     public static ConfigurableApplicationContext appCtx = null;
+    @Autowired
+    private VideoAnalysisTask videoAnalysisTask;
+
     public static void main(String[] args) {
         TmdpWsHandler.initialize();
         MsTmdpApplication.appCtx = SpringApplication.run(MsTmdpApplication.class, args);
         AppRegistry.putParam(AppConst.APP_CTX, MsTmdpApplication.appCtx);
-        Thread videoAnalysisThread = new Thread(new VideoAnalysisTask());
-        videoAnalysisThread.start();
     }
 }
