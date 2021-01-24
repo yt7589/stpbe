@@ -37,16 +37,12 @@ import java.util.Map;
 public class VideoAnalysisTask implements Runnable {
     @Autowired
     private TvisJsonMapper tvisJsonMapper;
-    
+
     private static List<String> streamIds = new ArrayList<>();
     private static Map<String, List<WebSocketSession>> streamWsss = new HashMap<>();
     private static Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
     private final static Logger logger = LoggerFactory.getLogger(VideoAnalysisTask.class);
     private static long wsmVfvvIdx = 0;
-
-    /*public VideoAnalysisTask(TvisJsonMapper tvisJsonMapper) {
-        this.tvisJsonMapper = tvisJsonMapper;
-    }*/
 
     public void run() {
         while (true) {
