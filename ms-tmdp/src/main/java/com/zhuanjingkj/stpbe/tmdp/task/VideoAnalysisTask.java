@@ -48,7 +48,7 @@ public class VideoAnalysisTask implements Runnable {
         while (true) {
             runVideoAnalysisTask();
             try {
-                Thread.sleep(50);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -165,6 +165,7 @@ public class VideoAnalysisTask implements Runnable {
             for (WebSocketSession wss : wsss) {
                 if (wss.isOpen()) {
                     try {
+                        logger.info("step 5.5 send websocket message");
                         wss.sendMessage(new TextMessage(JSONObject.toJSONString(vfv)));
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -177,7 +178,7 @@ public class VideoAnalysisTask implements Runnable {
                     }
                 }
             }
-            logger.info("step 5");
+            logger.info("step 6");
             wsss.removeIf(wi->{return !wi.isOpen();}); // 移除所有关闭的WebSocket
         }
     }
