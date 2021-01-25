@@ -67,11 +67,13 @@ public class VideoAnalysisTask implements Runnable {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
+        logger.info("step 1");
         TvisJsonVO tvisJsonVO = null;
         WsmVideoFrameVO vfv = null;
         List<WsmVideoFrameVehicleVO> wvfvvs = null;
         WsmVideoFrameVehicleVO vfvv = null;
         for (String streamId : streamIds) {
+            logger.info("step 2");
             // 找到当前原始信息表
             tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, Long.parseLong(streamId));
             if (null == tvisJsonVO) {
@@ -97,6 +99,7 @@ public class VideoAnalysisTask implements Runnable {
             String orgFileFn = "n_" + tvisJsonId + ".jpg";
             vfv = new WsmVideoFrameVO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
             wvfvvs = vfv.getData();
+            logger.info("step 3");
             for (VehicleVo veh : vehs) {
                 String clwz = veh.getVehicleWztzVo().getClwz();
                 String[] arrs = clwz.split(",");
@@ -149,12 +152,14 @@ public class VideoAnalysisTask implements Runnable {
                 wvfvvs.add(vfvv);
                 idx++;
             }
+            logger.info("step 4");
             try {
                 ImageIO.write(orgImg, "jpg", new File(imgBaseFolder + orgFileFn));
             } catch (IOException e) {
                 e.printStackTrace();
             }
             // 生成一个定制的URL，可以通过SpringBoot来查看图片内容
+            logger.info("step 5");
             vfv.setData(wvfvvs);
             List<WebSocketSession> wsss = streamWsss.get("" + streamId);
             for (WebSocketSession wss : wsss) {
@@ -172,6 +177,7 @@ public class VideoAnalysisTask implements Runnable {
                     }
                 }
             }
+            logger.info("step 5");
             wsss.removeIf(wi->{return !wi.isOpen();}); // 移除所有关闭的WebSocket
         }
     }
