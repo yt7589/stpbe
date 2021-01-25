@@ -12,15 +12,26 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TasScheduledTask {
+public class TasScheduledTask implements Runnable {
     @Autowired
     private RedisTemplate redisTemplate;
     @Autowired
     private KafkaTemplate<Integer, String> kafkaTemplate;
     private static Logger logger = LoggerFactory.getLogger(TasScheduledTask.class);
 
-    @Async("tvisServerPool")
-    @Scheduled(cron = "*/1 * * * * ?")
+    public void run() {
+        while (true) {
+            runTasScheduledTask();
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //@Async("tvisServerPool")
+    //@Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
         JSONObject jo = (JSONObject) redisTemplate.opsForList().leftPop(AppConst.VIDEO_RECOG_RST_REDIS_KEY);
         if (null == jo) {

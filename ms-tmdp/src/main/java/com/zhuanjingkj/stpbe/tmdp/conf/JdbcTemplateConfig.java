@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.user.conf;
+package com.zhuanjingkj.stpbe.tmdp.conf;
 
 import com.zhuanjingkj.stpbe.db.DataSourceRegistry;
 import org.springframework.context.annotation.Bean;
