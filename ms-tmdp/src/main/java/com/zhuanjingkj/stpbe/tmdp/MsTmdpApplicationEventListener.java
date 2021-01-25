@@ -14,12 +14,12 @@ public class MsTmdpApplicationEventListener implements ApplicationListener {
 
     @Override
     public void onApplicationEvent(ApplicationEvent applicationEvent) {
-        System.out.println("########### onApplication Event #############");
+        /*System.out.println("########### onApplication Event #############");
         if ( applicationEvent instanceof ApplicationReadyEvent ||
                 applicationEvent instanceof ContextStartedEvent) {
             System.out.println("        create thread...");
             Thread thd = new Thread(new VideoAnalysisTask(tvisJsonMapper));
             thd.start();
-        }
+        }*/
     }
 }
