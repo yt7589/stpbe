@@ -42,10 +42,6 @@ public class DkRtvrObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
-        int iDebug = 1;
-        if (1 == iDebug) {
-            return ;
-        }
         boolean flag = false;
         /**
          * TODO
