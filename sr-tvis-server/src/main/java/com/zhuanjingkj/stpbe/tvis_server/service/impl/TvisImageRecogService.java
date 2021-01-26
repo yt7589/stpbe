@@ -158,7 +158,9 @@ public class TvisImageRecogService implements ITvisImageRecogService {
 
     private final static String REQUEST_ID_PREFIX = "a_";
     private String sendRequest(String requestList, String requestId, Object requestData) {
+        System.out.println("### sendRequest 1");
         if (requestData instanceof String) {
+            System.out.println("### sendRequest 2");
             redisTemplate.opsForList().leftPush(requestList, (String) requestData);
         } else {
             /*
@@ -198,25 +200,34 @@ public class TvisImageRecogService implements ITvisImageRecogService {
                 }
                 redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
             }*/
+            System.out.println("### sendRequest 3");
             redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
+            System.out.println("### sendRequest 4");
         }
 
         long startTime = System.currentTimeMillis();
         String response = null;
+        System.out.println("### sendRequest 5");
         do {
             try {
                 Thread.sleep(3);
             } catch (InterruptedException ignore) {
             }
+            System.out.println("### sendRequest 6");
             response = redisTemplate.opsForValue().get(requestId);
             if (response != null) {
+                System.out.println("### sendRequest 7");
                 break;
             }
+            System.out.println("### sendRequest 8");
         } while (System.currentTimeMillis() - startTime < timeout);
+        System.out.println("### sendRequest 9");
         if (response == null) {
+            System.out.println("### sendRequest 10");
             //throw new RuntimeException("等待执行结果超时");
             response = "{\"timestamp\":\"2020-11-26T08:29:34.273+0000\",\"status\":404,\"error\":\"Not Found\",\"message\":\"No message available\",\"path\":\"/vehicle/function/recognition\"}";
         }
+        System.out.println("### sendRequest 11");
 
         return response;
     }

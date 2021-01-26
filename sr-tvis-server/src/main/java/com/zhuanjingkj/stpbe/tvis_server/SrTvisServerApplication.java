@@ -23,9 +23,9 @@ public class SrTvisServerApplication {
         SpringApplication.run(SrTvisServerApplication.class, args);
     }
 
-    @PostConstruct
+    /*@PostConstruct
     public void startScheduledTask() {
         Thread thd = new Thread(tasScheduledTask);
         thd.start();
-    }
+    }*/
 }
