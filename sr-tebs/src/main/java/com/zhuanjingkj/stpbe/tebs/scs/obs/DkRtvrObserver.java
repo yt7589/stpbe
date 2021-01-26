@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 首页违章数据统计
@@ -41,6 +42,10 @@ public class DkRtvrObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        int iDebug = 1;
+        if (1 == iDebug) {
+            return ;
+        }
         boolean flag = false;
         /**
          * TODO
@@ -53,8 +58,12 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if (tblName == null) {
             return ;
         }
+
 //        Map<String, Object> dtMap = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
         logger.info("###### tblName=" + tblName + "; tvisJsonId=" + vo.getTvisJsonId() + "!");
+
+        Map<String, Object> dtMap = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
+
         String hphm = vo.getVehicleHptzVO().getHphm();
         long vehsIdx = vo.getVehsIdx();
 //        String imageHash = "";
@@ -223,7 +232,6 @@ public class DkRtvrObserver implements ITvisStpObserver {
 //            }
         }
         //车辆布控动态
-
         redisTemplate.opsForHash().increment("ks_vs_dyn_total",  hphm + "|" + code, 1);
         redisTemplate.opsForHash().put("ks_vs_dyn_time", hphm + "|" + code, date);
         redisTemplate.opsForList().leftPush("ks_vs_dyn_list", hphm + "|" + code);

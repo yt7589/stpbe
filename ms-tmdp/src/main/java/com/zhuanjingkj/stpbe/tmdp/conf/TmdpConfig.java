@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.conf;
 
+import com.zhuanjingkj.stpbe.tmdp.task.VideoAnalysisTask;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
