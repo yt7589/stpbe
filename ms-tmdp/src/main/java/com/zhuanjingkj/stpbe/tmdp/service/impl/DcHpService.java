@@ -42,7 +42,7 @@ public class DcHpService implements IDcHpService {
         Integer count = dcHpMapper.getVehicleCount(startTime, endTime, category, vType, ilType, hphm, vAddr);
         if(recs != null && recs.size() > 0) {
             for(int i = 0; i < recs.size(); i++) {
-                String tblName = recs.get(i).getTvisJsonTbl().replace("stpDb", "");
+                String tblName = recs.get(i).getTvisJsonTbl().replace("StpDb", "");
                 long jsonId = recs.get(i).getTvisJsonId();
                 Map<String, Object> map = dkRtvrMapper.getImageHash(jsonId, tblName);
                 if(map != null && map.size() > 0) {

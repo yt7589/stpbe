@@ -22,7 +22,7 @@ public class DkRtvrservice implements IDkRtvrservice {
         List<DkRtvrDTO> rtvrs = dkRtvrMapper.getTop2Violation();
         if(rtvrs != null && rtvrs.size() > 0) {
             for(int i = 0; i < rtvrs.size(); i++) {
-                String tblName = rtvrs.get(i).getTvisJsonTbl().replace("stpDb", "");
+                String tblName = rtvrs.get(i).getTvisJsonTbl().replace("StpDb", "");
                 long jsonId = rtvrs.get(i).getTvisJsonId();
                 Map<String, Object> map = dkRtvrMapper.getImageHash(jsonId, tblName);
                 rtvrs.get(i).setImgUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
