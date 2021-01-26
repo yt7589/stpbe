@@ -92,13 +92,14 @@ public class TmdpScheduledTask {
     private void pushKsAsLsvsMsg() {
         JSONArray data = new JSONArray();
         List<String> lsvs = redisTemplate.opsForList().range("ks_as_lsvs_list", 0, 9);
+        KsAsLsvDTO lsv = null;
         if(lsvs != null && lsvs.size() > 0) {
             for(int i = 0; i < lsvs.size(); i++) {
                 String val = lsvs.get(i);
                 if(StringUtils.isNotBlank(val)) {
                     String hphm = val.split("\\|")[0];
                     String cameraId = val.split("\\|")[1];
-                    KsAsLsvDTO lsv = new KsAsLsvDTO(0,0,0, "" + KsAsService.areaMap.get(cameraId),
+                    lsv = new KsAsLsvDTO(0,0,0, "" + KsAsService.areaMap.get(cameraId),
                             "" + redisTemplate.opsForHash().get("ks_as_lsvs_time", val),hphm,
                             Integer.parseInt("" + redisTemplate.opsForHash().get("ks_as_lsvs_total", val)));
                     data.put(lsv.toJsonObject());
@@ -147,6 +148,7 @@ public class TmdpScheduledTask {
 //                "2020-12-16 16:50:39", "豫A52301X", 9);
         seq++;
         tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_AS_LSVS, data.toString());
+        System.out.println("区域监管动态" + data.toString());
     }
 
     private void pushKsRssSfvs() {
@@ -212,6 +214,7 @@ public class TmdpScheduledTask {
     public void pushKsRssLsvs() {
         JSONArray data = new JSONArray();
         List<String> sfvs = redisTemplate.opsForList().range("ks_rss_lsvs_list", 0, 9);
+        KsRssLsvsDTO lsv = null;
         if(sfvs != null && sfvs.size() > 0) {
             for(int i = 0; i < sfvs.size(); i++) {
                 String val = sfvs.get(i);
@@ -220,7 +223,7 @@ public class TmdpScheduledTask {
                     String cameraId = val.split("\\|")[1];
                     String coordinate = "" + KsAsService.areaSiteMap.get(cameraId);
                     if(StringUtils.isNotBlank(coordinate)) {
-                        KsRssLsvsDTO lsv = new KsRssLsvsDTO(101, 0,0, "" + KsRssService.rssMap.get(cameraId), "" +redisTemplate.opsForHash().get("ks_rss_lsvs_time", val),
+                        lsv = new KsRssLsvsDTO(101, 0,0, "" + KsRssService.rssMap.get(cameraId), "" +redisTemplate.opsForHash().get("ks_rss_lsvs_time", val),
                         hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_rss_lsvs_total", val)));
                         data.put(lsv.toJsonObject());
                     }
@@ -257,6 +260,7 @@ public class TmdpScheduledTask {
 //        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 106, "B上地10街",
 //                "2020-12-19 16:50:39", "京A-XA001", 11);
         tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_RSS_SFVS, data.toString());
+        System.out.println("道路监管动态" + data.toString());
     }
 
     private void resetHtfs() {
