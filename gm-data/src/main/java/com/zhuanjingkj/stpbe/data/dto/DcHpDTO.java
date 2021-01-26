@@ -1,11 +1,17 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.dc;
+package com.zhuanjingkj.stpbe.data.dto;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class DcHpDTO extends BaseDTO {
     @JSONField(name = "dcId")
     private long dcId;
+    @JSONField(name = "tvisJsonId")
+    private long tvisJsonId;
+    @JSONField(name = "tvisJsonTbl")
+    private String tvisJsonTbl;
     @JSONField(name = "dcTime")
     private String dcTime;
     @JSONField(name = "dcAddr")
@@ -32,6 +38,21 @@ public class DcHpDTO extends BaseDTO {
         this.imageUrl = imageUrl;
     }
 
+    public JSONObject toJsonObject() {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("dcId", dcId);
+            obj.put("dcTime", dcTime);
+            obj.put("dcAddr", dcAddr);
+            obj.put("hphm", hphm);
+            obj.put("category", category);
+            obj.put("isIl", isIl);
+            obj.put("ilType", ilType);
+            obj.put("imageUrl", imageUrl);
+        } catch (JSONException ex) {
+        }
+        return obj;
+    }
     public long getDcId() {
         return dcId;
     }
@@ -94,5 +115,21 @@ public class DcHpDTO extends BaseDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public long getTvisJsonId() {
+        return tvisJsonId;
+    }
+
+    public void setTvisJsonId(long tvisJsonId) {
+        this.tvisJsonId = tvisJsonId;
+    }
+
+    public String getTvisJsonTbl() {
+        return tvisJsonTbl;
+    }
+
+    public void setTvisJsonTbl(String tvisJsonTbl) {
+        this.tvisJsonTbl = tvisJsonTbl;
     }
 }

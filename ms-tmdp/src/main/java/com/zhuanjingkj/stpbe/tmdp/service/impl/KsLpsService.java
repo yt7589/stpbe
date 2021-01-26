@@ -1,7 +1,9 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
+import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
 import com.zhuanjingkj.stpbe.common.mapper.KsLpsMapper;
+import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsLpsAreaDTO;
 import com.zhuanjingkj.stpbe.data.dto.KsLpsSiteDTO;
 import com.zhuanjingkj.stpbe.data.dto.KsLpsLalpDTO;
@@ -24,6 +26,9 @@ public class KsLpsService implements IKsLpsService {
 
     @Autowired
     private KsLpsMapper ksLpsMapper;
+
+    @Autowired
+    private DkRtvrMapper dkRtvrMapper;
 
     @Override
     public List<KsLpsTimeDTO> getTimeAbnormalLicensePlate() {
@@ -77,11 +82,16 @@ public class KsLpsService implements IKsLpsService {
 //        for (int i = 1; i < 10; i++ ) {
 //            lpsSite.add(new KsLpsLalpDTO((28 + i),(56 + i),(100 + i), ("上地" + i +"街"),"2020-12-25 14:40:13",("豫E" + (2222 + i)),(30 + i),(25 + i),"http://222.128.117.234:9003/imgs/pzyc.png"));
 //        }
-        String tblName = AppRegistry.tvisJsonTblName;
-        List<KsLpsLalpDTO> lpsSite = ksLpsMapper.getLpsLalp(tblName);
+        List<KsLpsLalpDTO> lpsSite = ksLpsMapper.getLpsLalp();
         if(lpsSite != null && lpsSite.size() >0) {
             for (int i = 0; i < lpsSite.size(); i++ ) {
-                lpsSite.get(i).setImageUrl("http://222.128.117.234:9003/imgs/pzyc.png");
+                long jsonId = lpsSite.get(i).getTvisJsonId();
+                String tblName = lpsSite.get(i).getTvisJsonTbl();
+                Map<String, Object> map = dkRtvrMapper.getImageHash(jsonId, tblName);
+                if(map != null && map.size() > 0) {
+                    lpsSite.get(i).setImageUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
+                    lpsSite.get(i).setOccurTime("" + map.get("occur_time"));
+                }
             }
         }
         return lpsSite;

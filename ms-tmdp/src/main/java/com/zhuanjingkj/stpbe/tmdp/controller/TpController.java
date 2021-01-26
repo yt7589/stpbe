@@ -1,10 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
-import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.tp.TpDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.tp.TpTfDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.tp.TpTfSiteDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.tp.TpTfpsDTO;
 import org.springframework.web.bind.annotation.*;
 

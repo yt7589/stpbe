@@ -10,12 +10,12 @@ import java.util.Map;
 @Repository
 public interface VmIlsMapper {
 
-    List<VmIlsDTO> getIllegalVehicle(@Param("tblName") String tblName, @Param("startIndex") Integer startIndex, @Param("amount") Integer amount, @Param("startTime") String startTime,
-                                     @Param("endTime") String endTime, @Param("category") Integer category, @Param("cg") String cg, @Param("vType") String vType, @Param("illType") String illType,
+    List<VmIlsDTO> getIllegalVehicle(@Param("startIndex") Integer startIndex, @Param("amount") Integer amount, @Param("startTime") String startTime,
+                                     @Param("endTime") String endTime, @Param("category") Integer category, @Param("vType") String vType, @Param("illType") String illType,
                                      @Param("hphm") String hphm, @Param("addr") String addr);
 
-    Integer getIllegalVehicleCount(@Param("tblName") String tblName, @Param("startIndex") Integer startIndex, @Param("amount") Integer amount, @Param("startTime") String startTime,
-                                   @Param("endTime") String endTime, @Param("category") Integer category, @Param("cg") String cg, @Param("vType") String vType, @Param("illType") String illType,
+    Integer getIllegalVehicleCount(@Param("startIndex") Integer startIndex, @Param("amount") Integer amount, @Param("startTime") String startTime,
+                                   @Param("endTime") String endTime, @Param("category") Integer category, @Param("vType") String vType, @Param("illType") String illType,
                                    @Param("hphm") String hphm, @Param("addr") String addr);
 
     List<VmIlsVehicleTypesDTO> getVType(@Param("level") Integer level);
@@ -38,23 +38,21 @@ public interface VmIlsMapper {
 
     List<Map<String, Object>> getIlTypeByYear(@Param("hphm") String hphm);
 
-    List<VmIlsTopAreaDTO> getIllTopArea(@Param("startTime") String startTime, @Param("endTime") String endTime, @Param("category") Integer category,
-                                     @Param("cg") String cg);
+    List<VmIlsTopAreaDTO> getIllTopArea(@Param("startTime") String startTime, @Param("endTime") String endTime, @Param("category") Integer category);
 
-    List<VmIlsTopSiteDTO> getIlsTopSite(@Param("startTime") String startTime, @Param("endTime") String endTime, @Param("category") Integer category,
-                                     @Param("cg") String cg);
+    List<VmIlsTopSiteDTO> getIlsTopSite(@Param("startTime") String startTime, @Param("endTime") String endTime, @Param("category") Integer category);
 
     List<VmIlssDTO> getIlsSite(@Param("startIndex") Integer startIndex, @Param("amount") Integer amount, @Param("startTime") String startTime, @Param("endTime") String endTime);
 
     Integer getIlsSiteCount();
 
-    List<VmIlsSiteDTO> getIlsMapSite(@Param("startTime") String startTime, @Param("endTime") String endTime, @Param("category") Integer category, @Param("cg") String cg);
+    List<VmIlsSiteDTO> getIlsMapSite(@Param("startTime") String startTime, @Param("endTime") String endTime, @Param("category") Integer category);
 
     Integer getIlsCount(@Param("startTime") String startTime, @Param("endTime") String endTime, @Param("category") Integer category,
-                        @Param("cg") String cg, @Param("vType") String vType, @Param("illType") String illType, @Param("hphm") String hphm, @Param("addr") String addr);
+                        @Param("vType") String vType, @Param("illType") String illType, @Param("hphm") String hphm, @Param("addr") String addr);
 
-    List<VmIlsDTO> getIlsPart(@Param("tblName") String tblName, @Param("startIndex") long startIndex, @Param("amount") long amount, @Param("startTime") String startTime,
-                              @Param("endTime") String endTime, @Param("category") Integer category, @Param("cg") String cg, @Param("vType") String vType, @Param("illType") String illType,
+    List<VmIlsDTO> getIlsPart(@Param("startIndex") long startIndex, @Param("amount") long amount, @Param("startTime") String startTime,
+                              @Param("endTime") String endTime, @Param("category") Integer category, @Param("vType") String vType, @Param("illType") String illType,
                               @Param("hphm") String hphm, @Param("addr") String addr);
 
     Integer getVIlsHistoryCount(@Param("hphm") String hphm);

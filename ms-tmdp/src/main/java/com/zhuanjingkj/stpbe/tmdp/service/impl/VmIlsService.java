@@ -58,8 +58,7 @@ public class VmIlsService implements IVmIlsService {
         if(direction == 0) {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
         }
-//        String cg = PropUtil.getValue("hphm.native.prefix");
-        String cg ="京";
+
         if(StringUtils.isNotBlank(hphm)) {
             category = 3;
         }
@@ -69,19 +68,16 @@ public class VmIlsService implements IVmIlsService {
         if(StringUtils.isNotBlank(endTime)) {
             endTime = endTime + " 23:59:59";
         }
-        String tblName = AppRegistry.tvisJsonTblName;
-        List<VmIlsDTO> recs = vmIlsMapper.getIllegalVehicle(tblName, startIndex, amount, startTime, endTime, category, cg, vType, illType, hphm, addr);
+        List<VmIlsDTO> recs = vmIlsMapper.getIllegalVehicle(startIndex, amount, startTime, endTime, category, vType, illType, hphm, addr);
         if(recs != null && recs.size() > 0) {
             for(int i = 0; i < recs.size(); i++) {
-                if(recs.get(i).getHmhp().contains(cg)) {
-                    recs.get(i).setCategory("本市");
-                } else {
-                    recs.get(i).setCategory("外埠");
+                Map<String, Object> map = dkRtvrMapper.getImageHash(recs.get(i).getTvisJsonId(), recs.get(i).getTvisJsonTbl());
+                if(map != null && map.size() > 0) {
+                    recs.get(i).setImageUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
                 }
-                recs.get(i).setImageUrl(IpfsClient.getIpfsUrl(recs.get(i).getImageHash()));
             }
         }
-        Integer count = vmIlsMapper.getIllegalVehicleCount(tblName, startIndex, amount, startTime, endTime, category, cg, vType, illType, hphm, addr);
+        Integer count = vmIlsMapper.getIllegalVehicleCount(startIndex, amount, startTime, endTime, category, vType, illType, hphm, addr);
         DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
 //        recs.add(new VmIlsDTO(101,"2020-12-21 16:18:52","海淀区西二旗","湘K·UV068","外埠","栏板式货车","副驾驶不系安全带",
 //                102,"http://222.128.117.234:9003/imgs/vmfjsbjaqd1.png"));
@@ -154,8 +150,14 @@ public class VmIlsService implements IVmIlsService {
     @Override
     public ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvId) {
         ResultDTO<VmIlsVdDTO> dto = new ResultDTO<>();
-        Map<String, Object> dtMap = vmIlsMapper.getFileHash(tvId);
-        String vehsIdx = dtMap.get("vehs_idx") + "";
+        Map<String, Object> prMap = vmIlsMapper.getFileHash(tvId);
+        Map<String, Object> dtMap = new HashMap<>();
+        if(prMap != null && prMap.size() > 0) {
+            long tvisJsonId = Long.parseLong(prMap.get("tvis_json_id") + "");
+            String tvisJsonTbl = prMap.get("tvis_json_tbl") + "" ;
+            dtMap = dkRtvrMapper.getImageHash(tvisJsonId, tvisJsonTbl);
+        }
+        String vehsIdx = prMap.get("vehs_idx") + "";
         String data = IpfsClient.getTextFile("" + dtMap.get("json_hash"));
         JSONObject dataJson = JSONObject.parseObject(data);
         long cameraId = dataJson.getLong("cameraId");
@@ -194,7 +196,7 @@ public class VmIlsService implements IVmIlsService {
             Integer ct_isSunVisor = Integer.parseInt(jsxwtzJson.getString("FJSZYB").replace("_", "")) >= 180 ? 1:0;
             //Integer mc_isHelmet = Integer.parseInt(jsxwtzJson.getString("MTCBDTK").replace("_", "")) >= 180 ? 1:0;
             vmIlsVdDTO = new VmIlsVdDTO(98,IpfsClient.getIpfsUrl("" + dtMap.get("image_hash")),timeStamp,
-                    ilsName, category, hphm, "" + dtMap.get("wzlx"),"" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
+                    ilsName, category, hphm, "" + prMap.get("wzlx"),"" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
                     "" + VEH_TYPE.get("C" + cxtzJson.get("CLLXZFL")), direction, md_isPhone,md_isWPhone, md_isSafetyBelt,
                     md_isSmoke,md_isSunVisor,ct_isSafetyBelt,ct_isSunVisor,0,"" + VEH_COLOR_CSYS.get(cxtzJson.getString("CSYS")),
                     cxtzJson.getString("PPXHMS"), "小型车",cxtzJson.getString("CXNK"),Integer.parseInt(cxtzJson.getString("PPXHKXD")),
@@ -222,7 +224,11 @@ public class VmIlsService implements IVmIlsService {
         List<VmIlsVhsDTO> recs = vmIlsMapper.getVIlRecord(hphm, startIndex, amount);
         if(recs != null && recs.size() > 0) {
             for (int i =0; i < recs.size(); i++) {
-                recs.get(i).setImageUrl(IpfsClient.getIpfsUrl(recs.get(i).getImageHash()));
+                Map<String, Object> map = dkRtvrMapper.getImageHash(recs.get(i).getTvisJsonId(), recs.get(i).getTvisJsonTbl());
+                if(map != null && map.size() > 0) {
+                    recs.get(i).setImageUrl(IpfsClient.getIpfsUrl(map.get("image_hash") + ""));
+                }
+
             }
         }
         Integer count = vmIlsMapper.getVIlCount(hphm);
@@ -295,8 +301,7 @@ public class VmIlsService implements IVmIlsService {
     @Override
     public List<VmIlsTopAreaDTO> queryIllArea(String startTime, String endTime, Integer category) {
 //        String cg = PropUtil.getValue("hphm.native.prefix");
-        String cg = "京";
-        List<VmIlsTopAreaDTO> ilsArea = vmIlsMapper.getIllTopArea(startTime, endTime, category, cg);
+        List<VmIlsTopAreaDTO> ilsArea = vmIlsMapper.getIllTopArea(startTime, endTime, category);
 
 //        List<VmIlsTopAreaDTO> ilsArea = new ArrayList<>();
 //        ilsArea.add(new VmIlsTopAreaDTO(102,"西二旗",1100000));
@@ -315,8 +320,7 @@ public class VmIlsService implements IVmIlsService {
     @Override
     public List<VmIlsTopSiteDTO> queryIllSite(String startTime, String endTime, Integer category) {
 //        String cg = PropUtil.getValue("hphm.native.prefix");
-        String cg = "京";
-        List<VmIlsTopSiteDTO> ilsSite = vmIlsMapper.getIlsTopSite(startTime, endTime, category, cg);
+        List<VmIlsTopSiteDTO> ilsSite = vmIlsMapper.getIlsTopSite(startTime, endTime, category);
 //        List<VmIlsTopSiteDTO> ilsSite = new ArrayList<>();
 //        ilsSite.add(new VmIlsTopSiteDTO(102,"西二旗",1100000));
 //        ilsSite.add(new VmIlsTopSiteDTO(103,"望京",1200000));
@@ -361,8 +365,7 @@ public class VmIlsService implements IVmIlsService {
     public ResultDTO<DbQrsDTO> querySiteIllegal_exp(String startTime, String endTime, Integer category) {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
 //        String cg = PropUtil.getValue("hphm.native.prefix");
-        String cg = "京";
-        List<VmIlsSiteDTO> recs = vmIlsMapper.getIlsMapSite(startTime, endTime, category, cg);;
+        List<VmIlsSiteDTO> recs = vmIlsMapper.getIlsMapSite(startTime, endTime, category);;
         DbQrsDTO data = new DbQrsDTO(10,10,0,10,0,recs);
 //        List<VmIlsSiteDTO> recs = new ArrayList<>();
 //        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街12号",116.085471,40.085471,110000));
@@ -383,8 +386,7 @@ public class VmIlsService implements IVmIlsService {
     @Override
     public Integer getIlsCount(String startTime, String endTime, Integer category, String vType, String illType, String hphm, String addr) {
 //        String cg = PropUtil.getValue("hphm.native.prefix");
-        String cg = "京";
-        return vmIlsMapper.getIlsCount(startTime, endTime, category, cg, vType, illType, hphm, addr);
+        return vmIlsMapper.getIlsCount(startTime, endTime, category, vType, illType, hphm, addr);
     }
 
     @Override
@@ -394,7 +396,6 @@ public class VmIlsService implements IVmIlsService {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
         }
 //        String cg = PropUtil.getValue("hphm.native.prefix");
-        String cg = "京";
         if(StringUtils.isNotBlank(hphm)) {
             category = 3;
         }
@@ -404,8 +405,8 @@ public class VmIlsService implements IVmIlsService {
         if(StringUtils.isNotBlank(endTime)) {
             endTime = endTime + " 23:59:59";
         }
-        String tblName = AppRegistry.tvisJsonTblName;
-        return vmIlsMapper.getIlsPart(tblName, startIndex, amount, startTime, endTime, category, cg, vType, illType, hphm, addr);
+        List<VmIlsDTO> ils = vmIlsMapper.getIlsPart(startIndex, amount, startTime, endTime, category, vType, illType, hphm, addr);
+        return ils;
     }
 
     @Override

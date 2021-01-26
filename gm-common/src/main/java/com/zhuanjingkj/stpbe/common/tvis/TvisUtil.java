@@ -84,6 +84,7 @@ public class TvisUtil {
         for (Object veh : vehs) {
             vehJson = (JSONObject) veh;
             vo = new VehicleVo();
+            vo.setOccurTime(vehJson.getString("OCCUR_TIME"));
             vo.setCameraId(cameraId);
             vo.setStreamId(streamId);
             vo.setTrackId(vehJson.getLong("TRACK_ID"));

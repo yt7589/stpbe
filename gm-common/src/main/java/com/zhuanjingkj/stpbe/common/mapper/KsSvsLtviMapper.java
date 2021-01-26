@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface KsSvsLtviMapper {
-    KsSvsLtviDTO getKsSvsLtvi(@Param("tblName") String tblName);
+    KsSvsLtviDTO getKsSvsLtvi();
 }

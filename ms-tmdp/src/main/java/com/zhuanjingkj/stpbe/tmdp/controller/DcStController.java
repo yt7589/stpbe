@@ -2,6 +2,8 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.*;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.DcStService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class DcStController {
 
+    @Autowired
+    private DcStService dcStService;
+
     /**
      * 数据统计
      * @param platform
@@ -24,13 +29,13 @@ public class DcStController {
      */
     @GetMapping(value = "/st/queryDataStatistics")
     public ResultDTO<DcStDTO> queryDataStatistics(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version
     ) {
         ResultDTO<DcStDTO> dto = new ResultDTO<DcStDTO>();
         DcStDTO dcSt = new DcStDTO();
-        DcStSysDTO dcSys = new DcStSysDTO(200,200,1,200,200,200); //系统概况
-        DcStTodayDTO dcToday = new DcStTodayDTO(123456,12346,500,70,65); //今日概况
+        DcStSysDTO dcSys = getSys_exp();  //系统概况
+        DcStTodayDTO dcToday = getStToday_exp(); //今日概况
         dcSt.setDcToday(dcToday);
         List<DcStVDTO> vst = getVst_exp(); // 过车车辆统计
         dcSt.setDcVSt(vst);
@@ -51,6 +56,13 @@ public class DcStController {
         return dto;
     }
 
+    private DcStSysDTO getSys_exp() {
+       return dcStService.getSys_exp();
+    }
+
+    private DcStTodayDTO getStToday_exp() {
+       return dcStService.getStToday_exp();
+    }
     private List<DcStVDTO> getVst_exp() {
         List<DcStVDTO> recs = new ArrayList<>();
         recs.add(new DcStVDTO("" + 1,120000,140000,110000));
@@ -70,11 +82,11 @@ public class DcStController {
 
     private List<DcStVAreaDTO> getVarea_exp() {
         List<DcStVAreaDTO> recs = new ArrayList<>();
-        recs.add(new DcStVAreaDTO(102,"北京市海淀区西二旗",200000));
-        recs.add(new DcStVAreaDTO(103,"北京市海淀区上地",300000));
-        recs.add(new DcStVAreaDTO(104,"北京市海淀区西直门街道",400000));
-        recs.add(new DcStVAreaDTO(105,"北京市海淀区知春路",500000));
-        recs.add(new DcStVAreaDTO(105,"北京市昌平区北七家",600000));
+        recs.add(new DcStVAreaDTO(102,"海淀区西二旗",200000));
+        recs.add(new DcStVAreaDTO(103,"海淀区上地",300000));
+        recs.add(new DcStVAreaDTO(104,"海淀区西直门",400000));
+        recs.add(new DcStVAreaDTO(105,"海淀区知春路",500000));
+        recs.add(new DcStVAreaDTO(105,"昌平区北七家",600000));
         return recs;
     }
 
@@ -102,37 +114,37 @@ public class DcStController {
 
     private List<DcStIlSiteDTO> getIlSite_exp() {
         List<DcStIlSiteDTO> recs = new ArrayList<>();
-        recs.add(new DcStIlSiteDTO(107,"北京市海淀区西二旗街道19号",116.0454321,40.423654,500000));
-        recs.add(new DcStIlSiteDTO(108,"北京市海淀区上地街道39号",116.0554321,40.443654,100000));
-        recs.add(new DcStIlSiteDTO(109,"北京市海淀区西直门街道29号",116.0654321,40.463654,200000));
-        recs.add(new DcStIlSiteDTO(101,"北京市海淀区知春路街道109号",116.0754321,40.483654,300000));
-        recs.add(new DcStIlSiteDTO(102,"北京市朝阳区东湖区99号",116.0854321,40.403654,400000));
-        recs.add(new DcStIlSiteDTO(103,"北京市昌平区北七家街道21号",116.0954321,40.413654,500000));
-        recs.add(new DcStIlSiteDTO(104,"北京市望京街道59号",116.1454321,40.553654,200000));
+        recs.add(new DcStIlSiteDTO(107,"海淀区西二旗",116.0454321,40.423654,500000));
+        recs.add(new DcStIlSiteDTO(108,"海淀区上地",116.0554321,40.443654,100000));
+        recs.add(new DcStIlSiteDTO(109,"海淀区西直门",116.0654321,40.463654,200000));
+        recs.add(new DcStIlSiteDTO(101,"海淀区知春路",116.0754321,40.483654,300000));
+        recs.add(new DcStIlSiteDTO(102,"朝阳区东湖区",116.0854321,40.403654,400000));
+        recs.add(new DcStIlSiteDTO(103,"昌平区北七家",116.0954321,40.413654,500000));
+        recs.add(new DcStIlSiteDTO(104,"朝阳区望京",116.1454321,40.553654,200000));
         return recs;
     }
 
     private List<DcStKvSiteDTO> getDcKvs_exp() {
         List<DcStKvSiteDTO> recs = new ArrayList<>();
-        recs.add(new DcStKvSiteDTO(107,"北京市海淀区上龙泽23号",116.1454321,40.553654,500000));
-        recs.add(new DcStKvSiteDTO(108,"北京市海淀区回龙观39号",116.2454321,40.653654,100000));
-        recs.add(new DcStKvSiteDTO(109,"北京市昌平区北七家街道21号",116.3454321,40.753654,200000));
-        recs.add(new DcStKvSiteDTO(101,"北京市海淀区西直门街道29号",116.4454321,40.853654,300000));
-        recs.add(new DcStKvSiteDTO(102,"北京市朝阳区东湖区99号",116.5454321,40.953654,400000));
-        recs.add(new DcStKvSiteDTO(103,"北京市海淀区上地街道39号",116.6454321,40.353654,500000));
-        recs.add(new DcStKvSiteDTO(104,"北京市海淀区西二旗街道19号",116.7454321,40.573654,100000));
+        recs.add(new DcStKvSiteDTO(107,"海淀区上龙泽",116.1454321,40.553654,500000));
+        recs.add(new DcStKvSiteDTO(108,"海淀区回龙观",116.2454321,40.653654,100000));
+        recs.add(new DcStKvSiteDTO(109,"昌平区北七家",116.3454321,40.753654,200000));
+        recs.add(new DcStKvSiteDTO(101,"海淀区西直门",116.4454321,40.853654,300000));
+        recs.add(new DcStKvSiteDTO(102,"朝阳区东湖区",116.5454321,40.953654,400000));
+        recs.add(new DcStKvSiteDTO(103,"海淀区上地",116.6454321,40.353654,500000));
+        recs.add(new DcStKvSiteDTO(104,"海淀区西二旗",116.7454321,40.573654,100000));
         return recs;
     }
 
     private List<DcStTruckSiteDTO> getDcTruckSite_exp() {
         List<DcStTruckSiteDTO> recs = new ArrayList<>();
-        recs.add(new DcStTruckSiteDTO(107,"北京市海淀区西二旗街道19号",116.7454321,40.573654,500000));
-        recs.add(new DcStTruckSiteDTO(108,"北京市海淀区上龙泽23号",116.6454321,40.673654,100000));
-        recs.add(new DcStTruckSiteDTO(109,"北京市望京街道59号",116.5454321,40.773654,200000));
-        recs.add(new DcStTruckSiteDTO(101,"北京市朝阳区东湖区99号",116.4454321,40.873654,300000));
-        recs.add(new DcStTruckSiteDTO(102,"北京市海淀区知春路街道109号",116.3454321,40.5973654,400000));
-        recs.add(new DcStTruckSiteDTO(103,"北京市海淀区西直门街道29号",116.2454321,40.5573654,500000));
-        recs.add(new DcStTruckSiteDTO(104,"北京市海淀区上地街道39号",116.1454321,40.5273654,200000));
+        recs.add(new DcStTruckSiteDTO(107,"海淀区西二旗",116.7454321,40.573654,50000));
+        recs.add(new DcStTruckSiteDTO(108,"海淀区上龙泽",116.6454321,40.673654,100000));
+        recs.add(new DcStTruckSiteDTO(109,"望京街道",116.5454321,40.773654,220000));
+        recs.add(new DcStTruckSiteDTO(101,"朝阳区东湖区",116.4454321,40.873654,110000));
+        recs.add(new DcStTruckSiteDTO(102,"海淀区知春路",116.3454321,40.5973654,70000));
+        recs.add(new DcStTruckSiteDTO(103,"海淀区西直门",116.2454321,40.5573654,50000));
+        recs.add(new DcStTruckSiteDTO(104,"海淀区上地",116.1454321,40.5273654,120000));
         return recs;
     }
 }

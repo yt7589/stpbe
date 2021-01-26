@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
+import com.zhuanjingkj.stpbe.tebs.util.PropUtil;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.VideoAnalysisService;
 import com.zhuanjingkj.stpbe.tmdp.task.VideoAnalysisTask;
 import org.apache.commons.lang.StringUtils;

@@ -1,13 +1,13 @@
 package com.zhuanjingkj.stpbe.tmdp.util;
 
+import org.apache.tomcat.jni.Local;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 public class DateUtil {
 
@@ -93,6 +93,19 @@ public class DateUtil {
 		LocalDateTime now = LocalDateTime.ofInstant(Instant.ofEpochMilli(l), TimeZone.getDefault().toZoneId());
 		return dtf.format(now);
 	}
+
+	/**
+	 * 连续30天的map
+	 * @return
+	 */
+	public static Map<String, Integer> timeFor30Map() {
+		String endTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		SortedMap<String, Integer> resMap = new TreeMap<>();
+		for(int i =0; i < 30; i++) {
+			resMap.put((plusDaysForDate(endTime, -i)), 0);
+		}
+		return resMap;
+	}
 	public static void main(String[] args) {
 		System.out.println(getLocalDateTime());
 		System.out.println(isBefore("2020-08-03 14:48:26"));
@@ -116,6 +129,12 @@ public class DateUtil {
 		System.out.println(plusDays(-1));
 		System.out.println(plusDays(0));
 		System.out.println(timeStamp2Date("172214104"));
+
+		System.out.println(plusDaysForDate("2021-01-25", -29));
+		Map<String, Integer> map = timeFor30Map();
+		for (String key : map.keySet()) {
+			System.out.println("key:" + key +"value:" + map.get(key));
+		}
 	}
 
 	

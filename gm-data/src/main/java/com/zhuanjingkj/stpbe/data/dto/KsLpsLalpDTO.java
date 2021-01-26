@@ -4,6 +4,10 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class KsLpsLalpDTO extends BaseDTO {
+    @JSONField(name = "tvisJsonId")
+    private long tvisJsonId;
+    @JSONField(name = "tvisJsonTbl")
+    private String tvisJsonTbl;
     @JSONField(name = "gcxh")
     private long gcxh; // 过车序号（原始图片）
     @JSONField(name = "sxh")
@@ -22,14 +26,12 @@ public class KsLpsLalpDTO extends BaseDTO {
     private int imageId;
     @JSONField(name = "imageUrl")
     private String imageUrl;
-    @JSONField(name = "imageHash")
-    private String imageHash;
 
     public KsLpsLalpDTO() {
         super();
     }
 
-    public KsLpsLalpDTO(long gcxh, long sxh, long siteId, String siteName, String occurTime, String hphm, int totalTimes, int imageId, String imageUrl, String imageHash) {
+    public KsLpsLalpDTO(long gcxh, long sxh, long siteId, String siteName, String occurTime, String hphm, int totalTimes, int imageId, String imageUrl) {
         this.gcxh = gcxh;
         this.sxh = sxh;
         this.siteId = siteId;
@@ -39,7 +41,6 @@ public class KsLpsLalpDTO extends BaseDTO {
         this.totalTimes = totalTimes;
         this.imageId = imageId;
         this.imageUrl = imageUrl;
-        this.imageHash = imageHash;
     }
 
     public long getGcxh() {
@@ -114,11 +115,19 @@ public class KsLpsLalpDTO extends BaseDTO {
         this.imageUrl = imageUrl;
     }
 
-    public String getImageHash() {
-        return imageHash;
+    public long getTvisJsonId() {
+        return tvisJsonId;
     }
 
-    public void setImageHash(String imageHash) {
-        this.imageHash = imageHash;
+    public void setTvisJsonId(long tvisJsonId) {
+        this.tvisJsonId = tvisJsonId;
+    }
+
+    public String getTvisJsonTbl() {
+        return tvisJsonTbl;
+    }
+
+    public void setTvisJsonTbl(String tvisJsonTbl) {
+        this.tvisJsonTbl = tvisJsonTbl;
     }
 }

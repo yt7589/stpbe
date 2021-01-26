@@ -7,6 +7,10 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
  * 违章监管 =》车辆违章历史列表
  */
 public class VmIlsVhsDTO extends BaseDTO {
+    @JSONField(name = "tvisJsonId")
+    private long tvisJsonId;
+    @JSONField(name = "tvisJsonTbl")
+    private String tvisJsonTbl;
     @JSONField(name = "ilId")
     private long ilId;
     @JSONField(name = "ilTime")
@@ -17,8 +21,6 @@ public class VmIlsVhsDTO extends BaseDTO {
     private String ilType;
     @JSONField(name = "imageUrl")
     private String imageUrl;
-    @JSONField(name = "imageHash")
-    private String imageHash;
 
     public VmIlsVhsDTO() {
         super();
@@ -72,11 +74,19 @@ public class VmIlsVhsDTO extends BaseDTO {
         this.imageUrl = imageUrl;
     }
 
-    public String getImageHash() {
-        return imageHash;
+    public long getTvisJsonId() {
+        return tvisJsonId;
     }
 
-    public void setImageHash(String imageHash) {
-        this.imageHash = imageHash;
+    public void setTvisJsonId(long tvisJsonId) {
+        this.tvisJsonId = tvisJsonId;
+    }
+
+    public String getTvisJsonTbl() {
+        return tvisJsonTbl;
+    }
+
+    public void setTvisJsonTbl(String tvisJsonTbl) {
+        this.tvisJsonTbl = tvisJsonTbl;
     }
 }

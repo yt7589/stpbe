@@ -4,6 +4,10 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class KsSvsLtviDTO extends BaseDTO {
+    @JSONField(name = "tvisJsonId")
+    private long tvisJsonId;
+    @JSONField(name = "tvisJsonTbl")
+    private String tvisJsonTbl;
     @JSONField(name = "siteId")
     private int siteId;
     @JSONField(name = "siteName")
@@ -177,5 +181,21 @@ public class KsSvsLtviDTO extends BaseDTO {
 
     public void setImageHash(String imageHash) {
         this.imageHash = imageHash;
+    }
+
+    public long getTvisJsonId() {
+        return tvisJsonId;
+    }
+
+    public void setTvisJsonId(long tvisJsonId) {
+        this.tvisJsonId = tvisJsonId;
+    }
+
+    public String getTvisJsonTbl() {
+        return tvisJsonTbl;
+    }
+
+    public void setTvisJsonTbl(String tvisJsonTbl) {
+        this.tvisJsonTbl = tvisJsonTbl;
     }
 }

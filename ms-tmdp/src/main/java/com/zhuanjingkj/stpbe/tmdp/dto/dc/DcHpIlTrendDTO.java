@@ -11,9 +11,9 @@ public class DcHpIlTrendDTO extends BaseDTO {
     @JSONField(name = "name")
     private String name;
     @JSONField(name = "count")
-    private int count;
+    private Integer count;
 
-    public DcHpIlTrendDTO(String name, int count) {
+    public DcHpIlTrendDTO(String name, Integer count) {
         this.name = name;
         this.count = count;
     }
@@ -26,11 +26,11 @@ public class DcHpIlTrendDTO extends BaseDTO {
         this.name = name;
     }
 
-    public int getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 }

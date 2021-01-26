@@ -4,6 +4,10 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class VmIlsDTO extends BaseDTO {
+    @JSONField(name = "tvisJsonId")
+    private long tvisJsonId;
+    @JSONField(name = "tvisJsonTbl")
+    private String tvisJsonTbl;
     @JSONField(name = "ilId")
     private long ilId; //违章id
     @JSONField(name = "ilTime")
@@ -22,8 +26,6 @@ public class VmIlsDTO extends BaseDTO {
     private long imageId; //图片id
     @JSONField(name = "imageUrl")
     private String imageUrl; //图片路径
-    @JSONField(name ="imgageHash")
-    private String imageHash;
 
     public VmIlsDTO() {
         super();
@@ -113,11 +115,19 @@ public class VmIlsDTO extends BaseDTO {
         this.imageUrl = imageUrl;
     }
 
-    public String getImageHash() {
-        return imageHash;
+    public long getTvisJsonId() {
+        return tvisJsonId;
     }
 
-    public void setImageHash(String imageHash) {
-        this.imageHash = imageHash;
+    public void setTvisJsonId(long tvisJsonId) {
+        this.tvisJsonId = tvisJsonId;
+    }
+
+    public String getTvisJsonTbl() {
+        return tvisJsonTbl;
+    }
+
+    public void setTvisJsonTbl(String tvisJsonTbl) {
+        this.tvisJsonTbl = tvisJsonTbl;
     }
 }

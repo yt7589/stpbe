@@ -12,5 +12,5 @@ public interface KsLpsMapper {
 
     Integer getLpsSiteCount(@Param("siteId") long siteId, @Param("hphm") String hphm);
 
-    List<KsLpsLalpDTO> getLpsLalp(@Param("tblName") String tblName);
+    List<KsLpsLalpDTO> getLpsLalp();
 }

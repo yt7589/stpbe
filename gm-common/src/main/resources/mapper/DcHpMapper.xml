@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DcHpMapper">
+    <resultMap  type="com.zhuanjingkj.stpbe.data.dto.DcHpDTO" id="dchpDTO">
+        <result column="tvis_json_id" property="tvisJsonId" jdbcType="INTEGER"/>
+        <result column="tvis_json_tbl" property="tvisJsonTbl" jdbcType="VARCHAR"/>
+        <result column="occur_time" property="dcTime" jdbcType="VARCHAR"/>
+        <result column="site_name" property="dcAddr" jdbcType="VARCHAR"/>
+        <result column="hphm" property="hphm" jdbcType="VARCHAR"/>
+        <result column="category" property="category" jdbcType="VARCHAR"/>
+        <result column="isIl" property="isIl" jdbcType="VARCHAR"/>
+        <result column="ilType" property="ilType" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insertItfVehicle">
+        INSERT INTO t_itf_vehicle(hphm, tvis_json_id, occur_time, camera_id, category, il_type, tvis_json_tbl)
+                           VALUES(#{dcHpDTO.hphm}, #{tvisJsonId}, #{dcHpDTO.dcTime}, #{dcHpDTO.dcAddr}, #{dcHpDTO.category}, #{dcHpDTO.ilType}, #{tvisJsonTbl})
+    </insert>
+
+    <select id ="getVehicleData" resultMap="dchpDTO">
+        SELECT tif.tvis_json_id, tif.tvis_json_tbl, tif.occur_time, ts.site_name, tif.hphm, IF(tif.category = 0, '本市', '外埠') AS category,
+               IF(tif.il_type ='','否', '是') AS isIl,
+               CASE tif.il_type
+               WHEN 'ZJSDDH' THEN '主驾驶打电话' WHEN 'ZJSKSJ' THEN '主驾驶看手机' WHEN 'ZJSBJAQD' THEN '主驾驶不系安全带'
+               WHEN 'ZJSCY' THEN '主驾驶抽烟' WHEN 'ZJSZYB' THEN '主驾驶放下遮阳板' WHEN 'FJSBJAQD' THEN '副驾驶不系安全带'
+               WHEN 'FJSZYB' THEN '副驾驶放下遮阳板' WHEN 'MTCBDTK' THEN '摩托车驾乘人员不戴头盔'
+               ELSE '无'
+               END 'ilType'
+          FROM t_itf_vehicle tif
+     LEFT JOIN t_camera tc
+            ON tc.camera_id = tif.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id = tc.site_id
+         WHERE 1 = 1
+            <if test="startTime != null and startTime != ''">
+                AND occur_time > #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND #{endTime} > occur_time
+            </if>
+            <if test="hphm != null and hphm != ''">
+                AND hphm =#{hphm}
+            </if>
+            <if test="category == 0">
+                AND category = 0
+            </if>
+            <if test="category == 1">
+                AND category = 1
+            </if>
+            <if test="vType != null and vType != ''">
+                AND cllxzfl =#{vType}
+            </if>
+            <if test="ilType != null and ilType != ''">
+                AND il_type =#{ilType}
+            </if>
+            <if test="vAddr != null and vAddr != ''">
+                AND ts.site_name =#{vAddr}
+            </if>
+        LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getVehicleCount" resultType="Integer">
+        SELECT count(1)
+          FROM t_itf_vehicle tif
+     LEFT JOIN t_camera tc
+            ON tc.camera_id = tif.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id = tc.site_id
+         WHERE  1 = 1
+            <if test="startTime != null and startTime != ''">
+                AND occur_time > #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND #{endTime} > occur_time
+            </if>
+            <if test="hphm != null and hphm != ''">
+                AND hphm =#{hphm}
+            </if>
+            <if test="category == 0">
+                AND category = 0
+            </if>
+            <if test="category == 1">
+                AND category = 1
+            </if>
+            <if test="vType != null and vType != ''">
+                AND cllxzfl =#{vType}
+            </if>
+            <if test="ilType != null and ilType != ''">
+                AND il_type =#{ilType}
+            </if>
+            <if test="vAddr != null and vAddr != ''">
+                AND ts.site_name =#{vAddr}
+            </if>
+    </select>
+
+    <select id="getVmDitCount" resultType="hashmap">
+        SELECT SUBSTRING(tv.create_time, 1, 10) as createTime, COUNT(1) as `count`
+          FROM t_violation tv
+         WHERE tv.create_time > #{startTime}
+           AND #{endTime} > tv.create_time
+      GROUP BY SUBSTRING(tv.create_time, 1, 10)
+      ORDER BY SUBSTRING(tv.create_time, 1, 10)
+    </select>
+
+    <select id ="getVmDrtCount" resultType="hashmap">
+        SELECT SUBSTRING(tiv.occur_time, 1, 10) as createTime, COUNT(1) as `count`
+          FROM t_itf_vehicle tiv
+         WHERE tiv.occur_time > #{startTime}
+           AND  #{endTime}> tiv.occur_time
+      GROUP BY SUBSTRING(tiv.occur_time, 1, 10)
+      ORDER BY SUBSTRING(tiv.occur_time, 1, 10)
+    </select>
+</mapper>

@@ -6,6 +6,7 @@ public class VehicleVo {
     private long cameraId;
     private long streamId;
     private long trackId; // 用于进行物体跟踪
+    private String occurTime; //时间
     private VehicleWztzVo vehicleWztzVo; // 位置特征
     private VehicleHptzVO vehicleHptzVO; // 号牌特征
     private VehicleCltzxlVo vehicleCltzxlVo; // 车辆特征向量
@@ -99,5 +100,13 @@ public class VehicleVo {
 
     public void setVehicleGxhtzVO(VehicleGxhtzVO vehicleGxhtzVO) {
         this.vehicleGxhtzVO = vehicleGxhtzVO;
+    }
+
+    public String getOccurTime() {
+        return occurTime;
+    }
+
+    public void setOccurTime(String occurTime) {
+        this.occurTime = occurTime;
     }
 }

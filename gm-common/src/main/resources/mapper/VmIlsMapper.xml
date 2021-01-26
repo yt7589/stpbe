@@ -2,13 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.VmIlsMapper">
     <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsDTO"  id ="illDTO" >
+        <result column="tvis_json_id" property="tvisJsonId" jdbcType="INTEGER"/>
         <result column="violation_id" property="ilId" jdbcType="INTEGER"/>
         <result column="create_time" property="ilTime" jdbcType="VARCHAR"/>
         <result column="site_name" property="ilAddr" jdbcType="VARCHAR"/>
         <result column="hphm" property="hmhp" jdbcType="VARCHAR"/>
         <result column="vehicle_type_name" property="types" jdbcType="VARCHAR"/>
         <result column="wzlx" property="ilTypes" jdbcType="VARCHAR"/>
-        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>
+<!--        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>-->
+        <result column="tvis_json_tbl" property="tvisJsonTbl" jdbcType="VARCHAR"/>
+        <result column="category" property="category" jdbcType="VARCHAR"/>
+
     </resultMap>
 
     <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsVehicleTypesDTO"  id ="vTypeDTO" >
@@ -22,11 +26,13 @@
     </resultMap>
 
     <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsVhsDTO"  id ="vilrDTO" >
+        <result column="tvis_json_id" property="tvisJsonId" jdbcType="INTEGER"/>
         <result column="violation_id" property="ilId" jdbcType="INTEGER"/>
         <result column="create_time" property="ilTime" jdbcType="VARCHAR"/>
         <result column="road_name" property="ilAddr" jdbcType="VARCHAR"/>
         <result column="wzlx" property="ilType" jdbcType="VARCHAR"/>
-        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>
+        <result column="tvis_json_tbl" property="tvisJsonTbl" jdbcType="VARCHAR"/>
+<!--        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>-->
     </resultMap>
 
     <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsTopAreaDTO" id ="ilAreaDTO">
@@ -57,8 +63,11 @@
     </resultMap>
 
     <select id ="getIllegalVehicle" resultMap="illDTO">
-        SELECT tv.violation_id, tv.create_time, ts.site_name, tv.hphm, tv.wzlx, sv.vehicle_type_name, tv.image_hash
+        SELECT tv.tvis_json_id, tv.violation_id, tv.create_time, ts.site_name, tv.hphm, tv.wzlx, sv.vehicle_type_name, tv.tvis_json_tbl,
+               IF(tv.category = 0, '本市', '外埠') AS category, tv.create_time
           FROM t_violation tv
+<!--     LEFT JOIN #{tblName} tj-->
+<!--            ON tv.tvis_json_id = tj.tvis_json_id-->
      LEFT JOIN t_camera tc
             ON tc.camera_id = tv.camera_id
      LEFT JOIN t_site ts
@@ -81,11 +90,10 @@
                 AND tv.cllxzfl =#{vType}
             </if>
             <if test="category == 0 ">
-                AND #{cg} = substring(tv.hphm, 1, 1)
+                AND category = 0
             </if>
             <if test="category == 1">
-                AND (substring(tv.hphm, 1, 1) > #{cg}
-                 OR #{cg} > substring(tv.hphm, 1, 1))
+                AND category = 1
             </if>
             <if test="startTime != null and startTime != ''">
                 AND tv.create_time >= #{startTime}
@@ -121,11 +129,10 @@
                 AND tv.cllxzfl =#{vType}
             </if>
             <if test="category == 0 ">
-                AND #{cg} = substring(tv.hphm, 1, 1)
+                AND category == 0
             </if>
             <if test="category == 1">
-                AND (substring(tv.hphm, 1, 1) > #{cg}
-                 OR #{cg} > substring(tv.hphm, 1, 1))
+                AND category == 1
             </if>
             <if test="startTime != null and startTime != ''">
                 AND tv.create_time >= #{startTime}
@@ -150,8 +157,9 @@
     </select>
 
     <select id ="getFileHash" resultType="hashmap">
-        SELECT tv.vehs_idx, tv.image_hash, tv.json_hash, tv.wzlx
+        SELECT tv.tvis_json_id, tv.vehs_idx, tv.wzlx, tv.tvis_json_tbl
           FROM t_violation tv
+<!--     LEFT JOIN #{tblName} tj ON tv.tvis_json_id = tj.tvis_json_id-->
          WHERE tv.violation_id =#{tvId}
     </select>
 
@@ -171,21 +179,33 @@
     </select>
 
     <select id="getVIlRecord" resultMap="vilrDTO">
-        SELECT tv.violation_id, tv.hphm, tv.create_time, tr.road_name, tv.wzlx, tv.image_hash
+        SELECT tv.tvis_json_id, tv.violation_id, tv.hphm, tv.create_time, tr.road_name, tv.wzlx, tv.tvis_json_tbl
           FROM t_violation tv
-     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
-     LEFT JOIN t_site ts ON tc.site_id =ts.site_id
-     LEFT JOIN t_road_seg trs ON trs.src_site_id = ts.site_id
-     LEFT JOIN t_road tr ON tr.road_id = trs.road_id
+<!--     LEFT JOIN #{tblName} tj-->
+<!--            ON tv.tvis_json_id = tj.tvis_json_id-->
+     LEFT JOIN t_camera tc
+            ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id =ts.site_id
+     LEFT JOIN t_road_seg trs
+            ON trs.src_site_id = ts.site_id
+     LEFT JOIN t_road tr
+            ON tr.road_id = trs.road_id
          WHERE tv.hphm =#{hphm}
            AND road_name IS NOT NULL
      UNION ALL
-        SELECT tv.violation_id, tv.hphm, tv.create_time,tr.road_name, tv.wzlx,tv.image_hash
+        SELECT tv.tvis_json_id, tv.violation_id, tv.hphm, tv.create_time,tr.road_name, tv.wzlx, tv.tvis_json_tbl
           FROM t_violation tv
-     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
-     LEFT JOIN t_site ts ON tc.site_id =ts.site_id
-     LEFT JOIN t_road_seg trs ON trs.dst_site_id = ts.site_id
-     LEFT JOIN t_road tr ON tr.road_id = trs.road_id
+<!--     LEFT JOIN #{tblName} tj-->
+<!--            ON tv.tvis_json_id = tj.tvis_json_id-->
+     LEFT JOIN t_camera tc
+            ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id =ts.site_id
+     LEFT JOIN t_road_seg trs
+            ON trs.dst_site_id = ts.site_id
+     LEFT JOIN t_road tr
+            ON tr.road_id = trs.road_id
          WHERE tv.hphm =#{hphm}
            AND road_name IS NOT NULL
          LIMIT #{startIndex}, #{amount}
@@ -196,19 +216,27 @@
           FROM (
         SELECT COUNT(tv.violation_id) AS `count`
           FROM t_violation tv
-     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
-     LEFT JOIN t_site ts ON tc.site_id =ts.site_id
-     LEFT JOIN t_road_seg trs ON trs.src_site_id = ts.site_id
-     LEFT JOIN t_road tr ON tr.road_id = trs.road_id
+     LEFT JOIN t_camera tc
+            ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id =ts.site_id
+     LEFT JOIN t_road_seg trs
+            ON trs.src_site_id = ts.site_id
+     LEFT JOIN t_road tr
+            ON tr.road_id = trs.road_id
          WHERE tv.hphm =#{hphm}
            AND road_name IS NOT NULL
      UNION ALL
         SELECT COUNT(tv.violation_id) AS `count`
           FROM t_violation tv
-     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
-     LEFT JOIN t_site ts ON tc.site_id =ts.site_id
-     LEFT JOIN t_road_seg trs ON trs.dst_site_id = ts.site_id
-     LEFT JOIN t_road tr ON tr.road_id = trs.road_id
+     LEFT JOIN t_camera tc
+            ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id =ts.site_id
+     LEFT JOIN t_road_seg trs
+            ON trs.dst_site_id = ts.site_id
+     LEFT JOIN t_road tr
+            ON tr.road_id = trs.road_id
          WHERE tv.hphm =#{hphm}
            AND road_name IS NOT NULL) AS tmp
     </select>
@@ -242,16 +270,18 @@
                 AND #{endTime} > tv.create_time
             </if>
             <if test ="category == 0 ">
-                AND #{cg} = substring(tv.hphm, 1, 1)
+                AND category == 0
             </if>
             <if test ="category == 1">
-                AND (substring(tv.hphm, 1, 1) > #{cg}
-                OR #{cg} > substring(tv.hphm, 1, 1))
+                AND category == 1
             </if>
                 ) p
-     LEFT JOIN t_camera tc ON p.camera_id = tc.camera_id
-     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
-     LEFT JOIN t_area ta ON ta.area_id = ts.area_id
+     LEFT JOIN t_camera tc
+            ON p.camera_id = tc.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta
+            ON ta.area_id = ts.area_id
       GROUP BY ta.area_id
          LIMIT 10
     </select>
@@ -271,13 +301,13 @@
                 AND #{endTime} > tv.create_time
             </if>
             <if test ="category == 0 ">
-                AND #{cg} = substring(tv.hphm, 1, 1)
+                AND category == 0
             </if>
             <if test ="category == 1">
-                AND (SUBSTRING(tv.hphm, 1, 1) > #{cg}
-                OR #{cg} > substring(tv.hphm, 1, 1))
+                AND category == 1
             </if>
-      GROUP BY tv.camera_id) p ON p.camera_id = tc.camera_id
+      GROUP BY tv.camera_id) p
+            ON p.camera_id = tc.camera_id
       ORDER BY p.counts DESC
          LIMIT 10
     </select>
@@ -285,11 +315,13 @@
     <select id ="getIlsSite" resultMap="ilSiteDTO">
         SELECT ts.site_name, IFNULL(p.count1,0) AS `count`
           FROM t_site ts
-     LEFT JOIN t_camera tc ON ts.site_id = tc.site_id
+     LEFT JOIN t_camera tc
+            ON ts.site_id = tc.site_id
      LEFT JOIN (
         SELECT tv.camera_id, COUNT(tv.violation_id) AS count1
           FROM t_violation tv
-      GROUP BY tv.camera_id) p ON tc.camera_id = p.camera_id
+      GROUP BY tv.camera_id) p
+            ON tc.camera_id = p.camera_id
          LIMIT #{startIndex}, #{amount}
     </select>
 
@@ -313,13 +345,13 @@
                 AND #{endTime} > tv.create_time
             </if>
             <if test ="category == 0 ">
-                AND #{cg} = substring(tv.hphm, 1, 1)
+                AND category == 0
             </if>
             <if test ="category == 1">
-                AND (SUBSTRING(tv.hphm, 1, 1) > #{cg}
-                OR #{cg} > substring(tv.hphm, 1, 1))
+                AND category == 1
             </if>
-      GROUP BY tv.camera_id) p ON p.camera_id = tc.camera_id
+      GROUP BY tv.camera_id) p
+            ON p.camera_id = tc.camera_id
       ORDER BY p.counts DESC
          LIMIT 10
     </select>
@@ -349,11 +381,10 @@
                 AND tv.cllxzfl =#{vType}
             </if>
             <if test="category == 0 ">
-                AND #{cg} = substring(tv.hphm, 1, 1)
+                AND category == 0
             </if>
             <if test="category == 1">
-                AND (substring(tv.hphm, 1, 1) > #{cg}
-                OR #{cg} > substring(tv.hphm, 1, 1))
+                AND category == 1
             </if>
             <if test="startTime != null and startTime != ''">
                 AND tv.create_time >= #{startTime}
@@ -364,7 +395,7 @@
     </select>
 
     <select id ="getIlsPart" resultMap="illDTO">
-        SELECT tv.violation_id, tv.create_time, ts.site_name, tv.hphm, tv.wzlx, sv.vehicle_type_name, tv.image_hash
+        SELECT tv.tvis_json_id, tv.violation_id, tv.create_time, ts.site_name, tv.hphm, tv.wzlx, sv.vehicle_type_name, tv.tvis_json_tbl, tv.create_time
           FROM t_violation tv
      LEFT JOIN t_camera tc
             ON tc.camera_id = tv.camera_id
@@ -374,6 +405,8 @@
             ON ta.area_id = ts.area_id
      LEFT JOIN t_special_vehicle_type sv
             ON sv.vehicle_type_num = tv.cllxzfl
+<!--     LEFT JOIN #{tblName} tj-->
+<!--            ON tv.tvis_json_id = tj.tvis_json_id-->
          WHERE 1 = 1
             <if test="hphm != null and hphm != ''">
                 AND tv.hphm like CONCAT(#{hphm}, '%')
@@ -388,11 +421,10 @@
                 AND tv.cllxzfl =#{vType}
             </if>
             <if test="category == 0 ">
-                AND #{cg} = substring(tv.hphm, 1, 1)
+                AND category = 0
             </if>
             <if test="category == 1">
-                AND (substring(tv.hphm, 1, 1) > #{cg}
-                OR #{cg} > substring(tv.hphm, 1, 1))
+                AND category = 1
             </if>
             <if test="startTime != null and startTime != ''">
                 AND tv.create_time >= #{startTime}

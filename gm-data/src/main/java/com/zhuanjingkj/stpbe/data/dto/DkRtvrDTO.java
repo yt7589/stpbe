@@ -3,6 +3,10 @@ package com.zhuanjingkj.stpbe.data.dto;
 import com.alibaba.fastjson.annotation.JSONField;
 
 public class DkRtvrDTO extends BaseDTO {
+    @JSONField(name = "tvisJsonId")
+    private long tvisJsonId;
+    @JSONField(name = "tvisJsonTbl")
+    private String tvisJsonTbl;
     @JSONField(name = "id")
     private int id;
     @JSONField(name = "siteId")
@@ -25,8 +29,6 @@ public class DkRtvrDTO extends BaseDTO {
     private String imgUrl;
     @JSONField(name = "imgId")
     private int imgId;
-    @JSONField(name = "imagehash")
-    private String imageHash;
 
     public DkRtvrDTO() {
         super();
@@ -136,11 +138,19 @@ public class DkRtvrDTO extends BaseDTO {
         this.imgId = imgId;
     }
 
-    public String getImageHash() {
-        return imageHash;
+    public long getTvisJsonId() {
+        return tvisJsonId;
     }
 
-    public void setImageHash(String imageHash) {
-        this.imageHash = imageHash;
+    public void setTvisJsonId(long tvisJsonId) {
+        this.tvisJsonId = tvisJsonId;
+    }
+
+    public String getTvisJsonTbl() {
+        return tvisJsonTbl;
+    }
+
+    public void setTvisJsonTbl(String tvisJsonTbl) {
+        this.tvisJsonTbl = tvisJsonTbl;
     }
 }
