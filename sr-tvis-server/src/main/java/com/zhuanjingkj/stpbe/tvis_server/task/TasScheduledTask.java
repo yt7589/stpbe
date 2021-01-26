@@ -23,7 +23,7 @@ public class TasScheduledTask implements Runnable {
         while (true) {
             runTasScheduledTask();
             try {
-                Thread.sleep(1000 * 60);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -33,14 +33,10 @@ public class TasScheduledTask implements Runnable {
     //@Async("tvisServerPool")
     //@Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
-        logger.info("##### runTasScheduledTask 1");
         JSONObject jo = (JSONObject) redisTemplate.opsForList().leftPop(AppConst.VIDEO_RECOG_RST_REDIS_KEY);
-        logger.info("##### runTasScheduledTask 2");
         if (null == jo) {
-            logger.info("##### runTasScheduledTask 3");
             return ;
         }
-        logger.info("##### runTasScheduledTask 4");
         String response = jo.toString();
         // 从Redis中读出视频识别结果，将其发送到Kafka
         // 向Kafka的Topic发送请求
@@ -51,9 +47,8 @@ public class TasScheduledTask implements Runnable {
             msg = new StringBuilder("{\"cameraId\": \"-1\", \"tvisJsonId\": "
                     + tvisJsonId + ", \"json\": " + response + "}");
         }
-        System.out.println("msg:" + msg + "!");
         kafkaTemplate.send("tvis", 0, msg.toString());
-        logger.info("send to Kafka: tvisJsonId=" + tvisJsonId + "!");
+        logger.info("### Yantao ###: send to Kafka: tvisJsonId=" + tvisJsonId + "!");
         kafkaTemplate.flush();
     }
 }
