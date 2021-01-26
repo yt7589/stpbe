@@ -161,9 +161,6 @@ public class TmdpScheduledTask {
                     String hphm = val.split("\\|")[0];
                     String cameraId = val.split("\\|")[1];
                     String coordinate = "" + KsRssService.rssSiteMap.get(cameraId);
-                    System.out.println("coordinate:" + coordinate);
-                    System.out.println(coordinate.split("\\|")[0]);
-                    System.out.println(coordinate.split("\\|")[1]);
                     if(StringUtils.isNotBlank(coordinate)) {
                         KsRssSfvsDTO lsv = new KsRssSfvsDTO(101, "" + KsRssService.rssMap.get(cameraId),
                                 hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_rss_lsvs_total", val)),
