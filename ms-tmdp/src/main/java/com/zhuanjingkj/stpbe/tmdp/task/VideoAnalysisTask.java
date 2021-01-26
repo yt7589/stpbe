@@ -48,7 +48,7 @@ public class VideoAnalysisTask implements Runnable {
         while (true) {
             runVideoAnalysisTask();
             try {
-                Thread.sleep(1000 * 60);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
