@@ -71,7 +71,7 @@ public class VmIlsService implements IVmIlsService {
         List<VmIlsDTO> recs = vmIlsMapper.getIllegalVehicle(startIndex, amount, startTime, endTime, category, vType, illType, hphm, addr);
         if(recs != null && recs.size() > 0) {
             for(int i = 0; i < recs.size(); i++) {
-                Map<String, Object> map = dkRtvrMapper.getImageHash(recs.get(i).getTvisJsonId(), recs.get(i).getTvisJsonTbl());
+                Map<String, Object> map = dkRtvrMapper.getImageHash(recs.get(i).getTvisJsonId(), recs.get(i).getTvisJsonTbl().replace("stpDb", ""));
                 if(map != null && map.size() > 0) {
                     recs.get(i).setImageUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
                 }
@@ -224,7 +224,7 @@ public class VmIlsService implements IVmIlsService {
         List<VmIlsVhsDTO> recs = vmIlsMapper.getVIlRecord(hphm, startIndex, amount);
         if(recs != null && recs.size() > 0) {
             for (int i =0; i < recs.size(); i++) {
-                Map<String, Object> map = dkRtvrMapper.getImageHash(recs.get(i).getTvisJsonId(), recs.get(i).getTvisJsonTbl());
+                Map<String, Object> map = dkRtvrMapper.getImageHash(recs.get(i).getTvisJsonId(), recs.get(i).getTvisJsonTbl().replace("stpDb", ""));
                 if(map != null && map.size() > 0) {
                     recs.get(i).setImageUrl(IpfsClient.getIpfsUrl(map.get("image_hash") + ""));
                 }
