@@ -86,7 +86,7 @@ public class KsLpsService implements IKsLpsService {
         if(lpsSite != null && lpsSite.size() >0) {
             for (int i = 0; i < lpsSite.size(); i++ ) {
                 long jsonId = lpsSite.get(i).getTvisJsonId();
-                String tblName = lpsSite.get(i).getTvisJsonTbl().replace("StpDb", "");
+                String tblName = lpsSite.get(i).getTvisJsonTbl().replace("StpDb.", "");
                 Map<String, Object> map = dkRtvrMapper.getImageHash(jsonId, tblName);
                 if(map != null && map.size() > 0) {
                     lpsSite.get(i).setImageUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
