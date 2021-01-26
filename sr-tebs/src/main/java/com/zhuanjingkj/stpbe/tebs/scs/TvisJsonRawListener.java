@@ -50,6 +50,11 @@ public class TvisJsonRawListener {
 
     @KafkaListener(id = "TvisJsonRawListener", topics = "tvis")
     public void listen(String json) {
+        System.out.println("delete topic content: " + json + "!");
+        int iDebug = 1;
+        if (1 == iDebug) {
+            return;
+        }
         logger.info("step 1");
         if (!isInitialized) {
             synchronized (logger) {
