@@ -28,8 +28,8 @@ public class TnVsController {
      */
     @GetMapping(value = "/vs/queryVehicleStatistics")
     public ResultDTO<TnVsDTO> queryEquipment(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version
     ) {
         ResultDTO<TnVsDTO> dto = new ResultDTO<TnVsDTO>();
         TnVsDTO tnVsDTO = new TnVsDTO();
@@ -45,45 +45,45 @@ public class TnVsController {
 
     private List<TnVsTopSiteDTO> getTvtsDTO_exp() {
         List<TnVsTopSiteDTO> tvts = new ArrayList<>();
-        tvts.add(new TnVsTopSiteDTO("上地三街105号", 320));
-        tvts.add(new TnVsTopSiteDTO("上地三街105号", 120));
-        tvts.add(new TnVsTopSiteDTO("上地三街105号", 220));
-        tvts.add(new TnVsTopSiteDTO("上地三街105号", 320));
-        tvts.add(new TnVsTopSiteDTO("上地三街105号", 420));
-        tvts.add(new TnVsTopSiteDTO("上地三街105号", 520));
-        tvts.add(new TnVsTopSiteDTO("上地三街105号", 620));
-        tvts.add(new TnVsTopSiteDTO("上地三街105号", 720));
-        tvts.add(new TnVsTopSiteDTO("上地三街105号", 820));
-        tvts.add(new TnVsTopSiteDTO("上地三街105号", 320));
+        tvts.add(new TnVsTopSiteDTO("海淀区西二旗", 320));
+        tvts.add(new TnVsTopSiteDTO("海淀区上地", 120));
+        tvts.add(new TnVsTopSiteDTO("海淀区西直门", 220));
+        tvts.add(new TnVsTopSiteDTO("海淀区知春路", 320));
+        tvts.add(new TnVsTopSiteDTO("朝阳区东湖渠", 420));
+        tvts.add(new TnVsTopSiteDTO("昌平区北七家", 520));
+        tvts.add(new TnVsTopSiteDTO("海淀区回龙观", 620));
+        tvts.add(new TnVsTopSiteDTO("海淀区龙泽", 720));
+        tvts.add(new TnVsTopSiteDTO("海淀区魏公村", 820));
+        tvts.add(new TnVsTopSiteDTO("海淀区大钟寺", 320));
         return tvts;
     }
 
     private List<TnVsTopVehicleDTO> getTvtvdDTO_exp() {
         List<TnVsTopVehicleDTO> tvtv = new ArrayList<>();
-        tvtv.add(new TnVsTopVehicleDTO("0",360));
-        tvtv.add(new TnVsTopVehicleDTO("1",360));
-        tvtv.add(new TnVsTopVehicleDTO("2",360));
-        tvtv.add(new TnVsTopVehicleDTO("3",360));
-        tvtv.add(new TnVsTopVehicleDTO("4",360));
-        tvtv.add(new TnVsTopVehicleDTO("5",360));
-        tvtv.add(new TnVsTopVehicleDTO("6",360));
-        tvtv.add(new TnVsTopVehicleDTO("7",360));
-        tvtv.add(new TnVsTopVehicleDTO("8",360));
-        tvtv.add(new TnVsTopVehicleDTO("9",360));
-        tvtv.add(new TnVsTopVehicleDTO("10",360));
-        tvtv.add(new TnVsTopVehicleDTO("11",360));
-        tvtv.add(new TnVsTopVehicleDTO("12",360));
-        tvtv.add(new TnVsTopVehicleDTO("13",360));
-        tvtv.add(new TnVsTopVehicleDTO("14",360));
-        tvtv.add(new TnVsTopVehicleDTO("15",360));
-        tvtv.add(new TnVsTopVehicleDTO("16",360));
-        tvtv.add(new TnVsTopVehicleDTO("17",360));
-        tvtv.add(new TnVsTopVehicleDTO("18",360));
-        tvtv.add(new TnVsTopVehicleDTO("19",360));
-        tvtv.add(new TnVsTopVehicleDTO("20",360));
-        tvtv.add(new TnVsTopVehicleDTO("21",360));
-        tvtv.add(new TnVsTopVehicleDTO("22",360));
-        tvtv.add(new TnVsTopVehicleDTO("23",360));
+        tvtv.add(new TnVsTopVehicleDTO("0",1360));
+        tvtv.add(new TnVsTopVehicleDTO("1",2360));
+        tvtv.add(new TnVsTopVehicleDTO("2",300));
+        tvtv.add(new TnVsTopVehicleDTO("3",500));
+        tvtv.add(new TnVsTopVehicleDTO("4",300));
+        tvtv.add(new TnVsTopVehicleDTO("5",1234));
+        tvtv.add(new TnVsTopVehicleDTO("6",1420));
+        tvtv.add(new TnVsTopVehicleDTO("7",1320));
+        tvtv.add(new TnVsTopVehicleDTO("8",1905));
+        tvtv.add(new TnVsTopVehicleDTO("9",1400));
+        tvtv.add(new TnVsTopVehicleDTO("10",203));
+        tvtv.add(new TnVsTopVehicleDTO("11",2050));
+        tvtv.add(new TnVsTopVehicleDTO("12",3030));
+        tvtv.add(new TnVsTopVehicleDTO("13",440));
+        tvtv.add(new TnVsTopVehicleDTO("14",1620));
+        tvtv.add(new TnVsTopVehicleDTO("15",1802));
+        tvtv.add(new TnVsTopVehicleDTO("16",1302));
+        tvtv.add(new TnVsTopVehicleDTO("17",1400));
+        tvtv.add(new TnVsTopVehicleDTO("18",1300));
+        tvtv.add(new TnVsTopVehicleDTO("19",1200));
+        tvtv.add(new TnVsTopVehicleDTO("20",1302));
+        tvtv.add(new TnVsTopVehicleDTO("21",1400));
+        tvtv.add(new TnVsTopVehicleDTO("22",1300));
+        tvtv.add(new TnVsTopVehicleDTO("23",2200));
         return tvtv;
     }
 
