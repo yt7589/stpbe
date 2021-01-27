@@ -1,6 +1,6 @@
 package com.zhuanjingkj.stpbe.data.dto;
 
-import com.alibaba.fastjson.JSONObject;
+import org.json.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 
 /**
@@ -35,13 +35,17 @@ public class KsAsLsvDTO {
 
     public JSONObject toJsonObject() {
         JSONObject obj = new JSONObject();
-        obj.put("gcxh", gcxh);
-        obj.put("sxh", sxh);
-        obj.put("siteId", siteId);
-        obj.put("siteName", siteName);
-        obj.put("occurTime", occurTime);
-        obj.put("hphm", hphm);
-        obj.put("totalTimes", totalTimes);
+        try{
+            obj.put("gcxh", gcxh);
+            obj.put("sxh", sxh);
+            obj.put("siteId", siteId);
+            obj.put("siteName", siteName);
+            obj.put("occurTime", occurTime);
+            obj.put("hphm", hphm);
+            obj.put("totalTimes", totalTimes);
+        } catch (Exception e) {
+
+        }
         return obj;
     }
 

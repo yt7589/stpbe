@@ -82,11 +82,11 @@ public class DcStController {
 
     private List<DcStVAreaDTO> getVarea_exp() {
         List<DcStVAreaDTO> recs = new ArrayList<>();
-        recs.add(new DcStVAreaDTO(102,"海淀区西二旗",200000));
-        recs.add(new DcStVAreaDTO(103,"海淀区上地",300000));
-        recs.add(new DcStVAreaDTO(104,"海淀区西直门",400000));
-        recs.add(new DcStVAreaDTO(105,"海淀区知春路",500000));
-        recs.add(new DcStVAreaDTO(105,"昌平区北七家",600000));
+        recs.add(new DcStVAreaDTO(102,"西二旗",200000));
+        recs.add(new DcStVAreaDTO(103,"上地",300000));
+        recs.add(new DcStVAreaDTO(104,"西直门",400000));
+        recs.add(new DcStVAreaDTO(105,"知春路",500000));
+        recs.add(new DcStVAreaDTO(105,"北七家",600000));
         return recs;
     }
 
@@ -114,24 +114,24 @@ public class DcStController {
 
     private List<DcStIlSiteDTO> getIlSite_exp() {
         List<DcStIlSiteDTO> recs = new ArrayList<>();
-        recs.add(new DcStIlSiteDTO(107,"海淀区西二旗",116.0454321,40.423654,500000));
-        recs.add(new DcStIlSiteDTO(108,"海淀区上地",116.0554321,40.443654,100000));
-        recs.add(new DcStIlSiteDTO(109,"海淀区西直门",116.0654321,40.463654,200000));
-        recs.add(new DcStIlSiteDTO(101,"海淀区知春路",116.0754321,40.483654,300000));
-        recs.add(new DcStIlSiteDTO(102,"朝阳区东湖区",116.0854321,40.403654,400000));
-        recs.add(new DcStIlSiteDTO(103,"昌平区北七家",116.0954321,40.413654,500000));
-        recs.add(new DcStIlSiteDTO(104,"朝阳区望京",116.1454321,40.553654,200000));
+        recs.add(new DcStIlSiteDTO(107,"西二旗",116.0454321,40.423654,111000));
+        recs.add(new DcStIlSiteDTO(108,"上地",116.0554321,40.443654,100000));
+        recs.add(new DcStIlSiteDTO(109,"西直门",116.0654321,40.463654,200000));
+        recs.add(new DcStIlSiteDTO(101,"知春路",116.0754321,40.483654,300000));
+        recs.add(new DcStIlSiteDTO(102,"东湖区",116.0854321,40.403654,400000));
+        recs.add(new DcStIlSiteDTO(103,"北七家",116.0954321,40.413654,150000));
+        recs.add(new DcStIlSiteDTO(104,"望京",116.1454321,40.553654,140000));
         return recs;
     }
 
     private List<DcStKvSiteDTO> getDcKvs_exp() {
         List<DcStKvSiteDTO> recs = new ArrayList<>();
-        recs.add(new DcStKvSiteDTO(107,"海淀区上龙泽",116.1454321,40.553654,500000));
+        recs.add(new DcStKvSiteDTO(107,"海淀区上龙泽",116.1454321,40.553654,140000));
         recs.add(new DcStKvSiteDTO(108,"海淀区回龙观",116.2454321,40.653654,100000));
-        recs.add(new DcStKvSiteDTO(109,"昌平区北七家",116.3454321,40.753654,200000));
-        recs.add(new DcStKvSiteDTO(101,"海淀区西直门",116.4454321,40.853654,300000));
-        recs.add(new DcStKvSiteDTO(102,"朝阳区东湖区",116.5454321,40.953654,400000));
-        recs.add(new DcStKvSiteDTO(103,"海淀区上地",116.6454321,40.353654,500000));
+        recs.add(new DcStKvSiteDTO(109,"昌平区北七家",116.3454321,40.753654,110000));
+        recs.add(new DcStKvSiteDTO(101,"海淀区西直门",116.4454321,40.853654,200000));
+        recs.add(new DcStKvSiteDTO(102,"朝阳区东湖区",116.5454321,40.953654,300000));
+        recs.add(new DcStKvSiteDTO(103,"海淀区上地",116.6454321,40.353654,200000));
         recs.add(new DcStKvSiteDTO(104,"海淀区西二旗",116.7454321,40.573654,100000));
         return recs;
     }
@@ -140,7 +140,7 @@ public class DcStController {
         List<DcStTruckSiteDTO> recs = new ArrayList<>();
         recs.add(new DcStTruckSiteDTO(107,"海淀区西二旗",116.7454321,40.573654,50000));
         recs.add(new DcStTruckSiteDTO(108,"海淀区上龙泽",116.6454321,40.673654,100000));
-        recs.add(new DcStTruckSiteDTO(109,"望京街道",116.5454321,40.773654,220000));
+        recs.add(new DcStTruckSiteDTO(109,"望京街道",116.5454321,40.773654,200000));
         recs.add(new DcStTruckSiteDTO(101,"朝阳区东湖区",116.4454321,40.873654,110000));
         recs.add(new DcStTruckSiteDTO(102,"海淀区知春路",116.3454321,40.5973654,70000));
         recs.add(new DcStTruckSiteDTO(103,"海淀区西直门",116.2454321,40.5573654,50000));

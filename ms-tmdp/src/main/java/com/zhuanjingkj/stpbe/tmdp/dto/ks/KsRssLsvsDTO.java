@@ -1,8 +1,8 @@
 package com.zhuanjingkj.stpbe.tmdp.dto.ks;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
+import org.json.JSONObject;
 
 public class KsRssLsvsDTO extends BaseDTO {
     @JSONField(name = "gcxh")
@@ -32,13 +32,16 @@ public class KsRssLsvsDTO extends BaseDTO {
 
     public JSONObject toJsonObject() {
         JSONObject obj = new JSONObject();
-        obj.put("gcxh", gcxh);
-        obj.put("sxh", sxh);
-        obj.put("siteId", siteId);
-        obj.put("siteName", siteName);
-        obj.put("occurTime", occurTime);
-        obj.put("hphm", hphm);
-        obj.put("totalTimes", totalTimes);
+        try{
+            obj.put("gcxh", gcxh);
+            obj.put("sxh", sxh);
+            obj.put("siteId", siteId);
+            obj.put("siteName", siteName);
+            obj.put("occurTime", occurTime);
+            obj.put("hphm", hphm);
+            obj.put("totalTimes", totalTimes);
+        } catch (Exception e){
+        }
         return obj;
     }
 

@@ -129,10 +129,10 @@
                 AND tv.cllxzfl =#{vType}
             </if>
             <if test="category == 0 ">
-                AND category == 0
+                AND category = 0
             </if>
             <if test="category == 1">
-                AND category == 1
+                AND category = 1
             </if>
             <if test="startTime != null and startTime != ''">
                 AND tv.create_time >= #{startTime}
@@ -270,10 +270,10 @@
                 AND #{endTime} > tv.create_time
             </if>
             <if test ="category == 0 ">
-                AND category == 0
+                AND category = 0
             </if>
             <if test ="category == 1">
-                AND category == 1
+                AND category = 1
             </if>
                 ) p
      LEFT JOIN t_camera tc
@@ -287,7 +287,7 @@
     </select>
 
     <select id ="getIlsTopSite" resultMap="ilSiteTopDTO">
-        SELECT ts.site_name, IFNULL(p.counts, 0)
+        SELECT ts.site_name, IFNULL(p.counts, 0) as `count`
           FROM t_site ts
      LEFT JOIN t_camera tc ON ts.site_id = tc.site_id
      LEFT JOIN (
@@ -301,10 +301,10 @@
                 AND #{endTime} > tv.create_time
             </if>
             <if test ="category == 0 ">
-                AND category == 0
+                AND category = 0
             </if>
             <if test ="category == 1">
-                AND category == 1
+                AND category = 1
             </if>
       GROUP BY tv.camera_id) p
             ON p.camera_id = tc.camera_id
@@ -345,10 +345,10 @@
                 AND #{endTime} > tv.create_time
             </if>
             <if test ="category == 0 ">
-                AND category == 0
+                AND category = 0
             </if>
             <if test ="category == 1">
-                AND category == 1
+                AND category = 1
             </if>
       GROUP BY tv.camera_id) p
             ON p.camera_id = tc.camera_id
@@ -381,10 +381,10 @@
                 AND tv.cllxzfl =#{vType}
             </if>
             <if test="category == 0 ">
-                AND category == 0
+                AND category = 0
             </if>
             <if test="category == 1">
-                AND category == 1
+                AND category = 1
             </if>
             <if test="startTime != null and startTime != ''">
                 AND tv.create_time >= #{startTime}

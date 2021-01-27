@@ -255,7 +255,7 @@ public class VmIlsController {
             @RequestParam(name = "v", required = false) String version,
             @RequestParam(name = "startTime", required = false) String startTime,
             @RequestParam(name = "endTime", required = false) String endTime,
-            @RequestParam(name = "category", required = false) Integer category
+            @RequestParam(name = "category", required = false, defaultValue = "0") Integer category
     ) {
         ResultDTO<VmIlsTopDTO> dto = new ResultDTO<>();
         VmIlsTopDTO data = new VmIlsTopDTO();

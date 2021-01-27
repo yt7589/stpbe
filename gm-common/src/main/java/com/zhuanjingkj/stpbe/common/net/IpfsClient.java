@@ -30,6 +30,7 @@ public class IpfsClient {
             fileHash = jo.getString("Hash");
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
         }
         if (fileHash != null) {
             return Optional.of(fileHash);

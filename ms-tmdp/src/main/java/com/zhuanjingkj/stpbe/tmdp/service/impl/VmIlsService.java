@@ -55,58 +55,60 @@ public class VmIlsService implements IVmIlsService {
     public ResultDTO<DbQrsDTO> queryIllegalVehicle_epx(Integer startIndex, Integer amount, Integer direction, String startTime, String endTime,
                                                        Integer category, String vType, String illType, String hphm, String addr) {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        if(direction == 0) {
-            startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
-        }
+//        if(direction == 0) {
+//            startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
+//        }
+//
+//        if(StringUtils.isNotBlank(hphm)) {
+//            category = 3;
+//        }
+//        if(StringUtils.isNotBlank(startTime)) {
+//            startTime = startTime + " 00:00:00";
+//        }
+//        if(StringUtils.isNotBlank(endTime)) {
+//            endTime = endTime + " 23:59:59";
+//        }
+//        List<VmIlsDTO> recs = vmIlsMapper.getIllegalVehicle(startIndex, amount, startTime, endTime, category, vType, illType, hphm, addr);
+//        if(recs != null && recs.size() > 0) {
+//            for(int i = 0; i < recs.size(); i++) {
+//                Map<String, Object> map = dkRtvrMapper.getImageHash(recs.get(i).getTvisJsonId(), recs.get(i).getTvisJsonTbl().replace("StpDb.", ""));
+//                if(map != null && map.size() > 0) {
+//                    recs.get(i).setImageUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
+//                }
+//            }
+//        }
+//        Integer count = vmIlsMapper.getIllegalVehicleCount(startIndex, amount, startTime, endTime, category, vType, illType, hphm, addr);
 
-        if(StringUtils.isNotBlank(hphm)) {
-            category = 3;
-        }
-        if(StringUtils.isNotBlank(startTime)) {
-            startTime = startTime + " 00:00:00";
-        }
-        if(StringUtils.isNotBlank(endTime)) {
-            endTime = endTime + " 23:59:59";
-        }
-        List<VmIlsDTO> recs = vmIlsMapper.getIllegalVehicle(startIndex, amount, startTime, endTime, category, vType, illType, hphm, addr);
-        if(recs != null && recs.size() > 0) {
-            for(int i = 0; i < recs.size(); i++) {
-                Map<String, Object> map = dkRtvrMapper.getImageHash(recs.get(i).getTvisJsonId(), recs.get(i).getTvisJsonTbl().replace("StpDb.", ""));
-                if(map != null && map.size() > 0) {
-                    recs.get(i).setImageUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
-                }
-            }
-        }
-        Integer count = vmIlsMapper.getIllegalVehicleCount(startIndex, amount, startTime, endTime, category, vType, illType, hphm, addr);
-        DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
-//        recs.add(new VmIlsDTO(101,"2020-12-21 16:18:52","海淀区西二旗","湘K·UV068","外埠","栏板式货车","副驾驶不系安全带",
-//                102,"http://222.128.117.234:9003/imgs/vmfjsbjaqd1.png"));
-//
-//        recs.add(new VmIlsDTO(102,"2020-12-22 16:18:52","海淀区上地南路","湘C·AS661","外埠","轿车","副驾驶不系安全带",
-//                103,"http://222.128.117.234:9003/imgs/vmfjsbjaqd2.png"));
-//
-//        recs.add(new VmIlsDTO(103,"2020-12-23 16:18:52","海淀区上地西里","渝A·865XB","外埠","面包车","副驾驶不系安全带",
-//                104,"http://222.128.117.234:9003/imgs/vmfjsbjaqd3.png"));
-//
-//        recs.add(new VmIlsDTO(10,"2020-12-24 16:18:52","海淀区知春路","闽C·53245","外埠","栏板式货车","主驾驶不系安全带",
-//                105,"http://222.128.117.234:9003/imgs/vmzjsbjaqd1.png"));
-//
-//        recs.add(new VmIlsDTO(105,"2020-12-25 16:18:52","朝阳区望京","桂A·39655","外埠","中型客车","主驾驶不系安全带",
-//                106,"http://222.128.117.234:9003/imgs/vmzjsbjaqd2.png"));
-//
-//        recs.add(new VmIlsDTO(106,"2020-12-26 16:18:52","朝阳区大屯路","渝B·VB098","外埠","面包车","主驾驶打电话",
-//                107,"http://222.128.117.234:9003/imgs/vmzjsddh1.png"));
-//
-//        recs.add(new VmIlsDTO(107,"2020-12-27 16:18:52","昌平区回南路","京GWM567","本市","轿车","主驾驶打电话",
-//                108,"http://222.128.117.234:9003/imgs/vmzjsddh2.png"));
-//
-//        recs.add(new VmIlsDTO(108,"2020-12-28 16:18:52","朝阳区关庄","云A·918RT","外埠","轿车","主驾驶看手机",
-//                109,"http://222.128.117.234:9003/imgs/vmzjsksj1.png"));
-//
-//        recs.add(new VmIlsDTO(108,"2020-12-29 16:18:52","朝阳区关庄","豫A·9YR78","外埠","轿车","主驾驶看手机",
-//                109,"http://222.128.117.234:9003/imgs/vmzjsksj2.png"));
-//
-//        data.setRecs(recs);
+        List<VmIlsDTO> recs = new ArrayList<>();
+        recs.add(new VmIlsDTO(101,"2020-12-21 16:18:52","海淀区西二旗","湘K·UV068","外埠","栏板式货车","副驾驶不系安全带",
+                102,"http://222.128.117.234:9003/imgs/vmfjsbjaqd1.png"));
+
+        recs.add(new VmIlsDTO(102,"2020-12-22 16:18:52","海淀区上地南路","湘C·AS661","外埠","轿车","副驾驶不系安全带",
+                103,"http://222.128.117.234:9003/imgs/vmfjsbjaqd2.png"));
+
+        recs.add(new VmIlsDTO(103,"2020-12-23 16:18:52","海淀区上地西里","渝A·865XB","外埠","面包车","副驾驶不系安全带",
+                104,"http://222.128.117.234:9003/imgs/vmfjsbjaqd3.png"));
+
+        recs.add(new VmIlsDTO(10,"2020-12-24 16:18:52","海淀区知春路","闽C·53245","外埠","栏板式货车","主驾驶不系安全带",
+                105,"http://222.128.117.234:9003/imgs/vmzjsbjaqd1.png"));
+
+        recs.add(new VmIlsDTO(105,"2020-12-25 16:18:52","朝阳区望京","桂A·39655","外埠","中型客车","主驾驶不系安全带",
+                106,"http://222.128.117.234:9003/imgs/vmzjsbjaqd2.png"));
+
+        recs.add(new VmIlsDTO(106,"2020-12-26 16:18:52","朝阳区大屯路","渝B·VB098","外埠","面包车","主驾驶打电话",
+                107,"http://222.128.117.234:9003/imgs/vmzjsddh1.png"));
+
+        recs.add(new VmIlsDTO(107,"2020-12-27 16:18:52","昌平区回南路","京GWM567","本市","轿车","主驾驶打电话",
+                108,"http://222.128.117.234:9003/imgs/vmzjsddh2.png"));
+
+        recs.add(new VmIlsDTO(108,"2020-12-28 16:18:52","朝阳区关庄","云A·918RT","外埠","轿车","主驾驶看手机",
+                109,"http://222.128.117.234:9003/imgs/vmzjsksj1.png"));
+
+        recs.add(new VmIlsDTO(108,"2020-12-29 16:18:52","朝阳区关庄","豫A·9YR78","外埠","轿车","主驾驶看手机",
+                109,"http://222.128.117.234:9003/imgs/vmzjsksj2.png"));
+
+        DbQrsDTO data = new DbQrsDTO(9,recs.size(),startIndex,amount,direction,recs);
+        data.setRecs(recs);
 
         dto.setData(data);
         return dto;
