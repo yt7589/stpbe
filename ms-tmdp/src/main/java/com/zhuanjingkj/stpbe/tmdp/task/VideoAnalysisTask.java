@@ -105,7 +105,7 @@ public class VideoAnalysisTask implements Runnable {
                 w = Integer.parseInt(arrs[2]);
                 h = Integer.parseInt(arrs[3]);
                 currentArea = w * h;
-                if (!cutVehs.containsKey("" + veh.getTrackId())) {
+                if (!cutVehs.containsKey("" + veh.getTrackId()) && veh.getTrackId()!=-1) {
                     vo = new CameraVehicleRecordVO();
                     vo.setTvisJsonId(veh.getTvisJsonId());
                     vo.setVehsIdx((int)veh.getVehsIdx());
@@ -126,7 +126,7 @@ public class VideoAnalysisTask implements Runnable {
                 TvisSodImage.drawString(orgImg, Font.BOLD, 25,
                         Color.RED, x, y + 3, hphm + ":" + ppxhms);
                 maxArea = vo.getArea();
-                if (1>0 || currentArea >= maxArea) {
+                if (currentArea >= maxArea) {
                     maxArea = currentArea;
                     BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
                     try {
