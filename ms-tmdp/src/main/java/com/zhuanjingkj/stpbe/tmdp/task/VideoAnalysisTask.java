@@ -126,7 +126,7 @@ public class VideoAnalysisTask implements Runnable {
                 TvisSodImage.drawString(orgImg, Font.BOLD, 25,
                         Color.RED, x, y + 3, hphm + ":" + ppxhms);
                 maxArea = vo.getArea();
-                if (currentArea >= maxArea) {
+                if (1>0 || currentArea >= maxArea) {
                     maxArea = currentArea;
                     BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
                     try {
