@@ -43,7 +43,7 @@ public class VideoAnalysisTask implements Runnable {
     private static Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
     private final static Logger logger = LoggerFactory.getLogger(VideoAnalysisTask.class);
     private static long wsmVfvvIdx = 0;
-    private final static long VAT_INTERVAL = 500; // 每*毫秒运行一次
+    private final static long VAT_INTERVAL = 1000; // 每*毫秒运行一次
 
     public void run() {
         while (true) {
@@ -127,7 +127,7 @@ public class VideoAnalysisTask implements Runnable {
                 TvisSodImage.drawString(orgImg, Font.BOLD, 25,
                         Color.RED, x, y + 3, hphm + ":" + ppxhms);
                 maxArea = vo.getArea();
-                if (currentArea >= maxArea) {
+                if (1>0 || currentArea >= maxArea) {
                     maxArea = currentArea;
                     BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
                     try {
