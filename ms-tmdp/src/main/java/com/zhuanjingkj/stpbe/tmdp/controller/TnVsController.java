@@ -45,16 +45,16 @@ public class TnVsController {
 
     private List<TnVsTopSiteDTO> getTvtsDTO_exp() {
         List<TnVsTopSiteDTO> tvts = new ArrayList<>();
-        tvts.add(new TnVsTopSiteDTO("海淀区西二旗", 320));
-        tvts.add(new TnVsTopSiteDTO("海淀区上地", 120));
-        tvts.add(new TnVsTopSiteDTO("海淀区西直门", 220));
-        tvts.add(new TnVsTopSiteDTO("海淀区知春路", 320));
-        tvts.add(new TnVsTopSiteDTO("朝阳区东湖渠", 420));
-        tvts.add(new TnVsTopSiteDTO("昌平区北七家", 520));
-        tvts.add(new TnVsTopSiteDTO("海淀区回龙观", 620));
-        tvts.add(new TnVsTopSiteDTO("海淀区龙泽", 720));
-        tvts.add(new TnVsTopSiteDTO("海淀区魏公村", 820));
-        tvts.add(new TnVsTopSiteDTO("海淀区大钟寺", 320));
+        tvts.add(new TnVsTopSiteDTO("海淀区西二旗", 311000020));
+        tvts.add(new TnVsTopSiteDTO("海淀区上地", 1200000000));
+        tvts.add(new TnVsTopSiteDTO("海淀区西直门", 2120000000));
+        tvts.add(new TnVsTopSiteDTO("海淀区知春路", 310000002));
+        tvts.add(new TnVsTopSiteDTO("朝阳区东湖渠", 410000002));
+        tvts.add(new TnVsTopSiteDTO("昌平区北七家", 510000002));
+        tvts.add(new TnVsTopSiteDTO("海淀区回龙观", 611200002));
+        tvts.add(new TnVsTopSiteDTO("海淀区龙泽", 722658240));
+        tvts.add(new TnVsTopSiteDTO("海淀区魏公村", 813123300));
+        tvts.add(new TnVsTopSiteDTO("海淀区大钟寺", 322100110));
         return tvts;
     }
 
