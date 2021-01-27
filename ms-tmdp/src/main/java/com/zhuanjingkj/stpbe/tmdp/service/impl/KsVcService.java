@@ -7,6 +7,7 @@ import com.zhuanjingkj.stpbe.data.rto.ks.DeleteVehicleFromVcRTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsVcLsvsDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsVcSfvsDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IKsVcService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -101,15 +102,20 @@ public class KsVcService implements IKsVcService {
     public ResultDTO<DbQrsDTO> queryVcDynLsvs_exp() {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         List<KsVcLsvsDTO> recs = new ArrayList<>();
-        List<String> ill = redisTemplate.opsForList().range("ks_vs_dyn_list", 0, 3);
+        List<String> ill = redisTemplate.opsForList().range("ks_vs_dyn_list", 0, 10);
         if(ill != null && ill.size() > 0) {
             for(int i = 0; i < ill.size(); i++) {
                 String val = ill.get(i);
-                String hphm = val.split("\\|")[0];
-                String cameraId = val.split("\\|")[1];
-                KsVcLsvsDTO illLsvs = new KsVcLsvsDTO(0,0,101,"" + KsAsService.areaMap.get(cameraId),
-                        "" + redisTemplate.opsForHash().get("ks_vs_dyn_time", val),hphm,Integer.parseInt("" + redisTemplate.opsForHash().get("ks_vs_dyn_total", val)));
-                recs.add(illLsvs);
+                if(StringUtils.isNotBlank(val)) {
+                    String hphm = val.split("\\|")[0];
+                    String cameraId = val.split("\\|")[1];
+                    KsVcLsvsDTO illLsvs = new KsVcLsvsDTO(0,0,101,"" + KsAsService.areaMap.get(cameraId),
+                            "" + redisTemplate.opsForHash().get("ks_vs_dyn_time", val),hphm,Integer.parseInt("" + redisTemplate.opsForHash().get("ks_vs_dyn_total", val)));
+                    recs.add(illLsvs);
+                    if(recs.size() == 3) {
+                        break;
+                    }
+                }
             }
         }
         DbQrsDTO data = new DbQrsDTO(4,4,0,4,1,recs);
