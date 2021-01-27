@@ -43,12 +43,13 @@ public class VideoAnalysisTask implements Runnable {
     private static Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
     private final static Logger logger = LoggerFactory.getLogger(VideoAnalysisTask.class);
     private static long wsmVfvvIdx = 0;
+    private final static long VAT_INTERVAL = 500; // 每*毫秒运行一次
 
     public void run() {
         while (true) {
             runVideoAnalysisTask();
             try {
-                Thread.sleep(1000);
+                Thread.sleep(VAT_INTERVAL);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -105,7 +106,7 @@ public class VideoAnalysisTask implements Runnable {
                 w = Integer.parseInt(arrs[2]);
                 h = Integer.parseInt(arrs[3]);
                 currentArea = w * h;
-                if (!cutVehs.containsKey("" + veh.getTrackId()) && veh.getTrackId()!=-1) {
+                if (!cutVehs.containsKey("" + veh.getTrackId())) {
                     vo = new CameraVehicleRecordVO();
                     vo.setTvisJsonId(veh.getTvisJsonId());
                     vo.setVehsIdx((int)veh.getVehsIdx());

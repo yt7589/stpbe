@@ -18,12 +18,13 @@ public class TasScheduledTask implements Runnable {
     @Autowired
     private KafkaTemplate<Integer, String> kafkaTemplate;
     private static Logger logger = LoggerFactory.getLogger(TasScheduledTask.class);
+    private final static long TST_INTERVAL = 500; // 每*毫秒运行一次
 
     public void run() {
         while (true) {
             runTasScheduledTask();
             try {
-                Thread.sleep(1000);
+                Thread.sleep(TST_INTERVAL);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
