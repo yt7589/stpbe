@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.common.tvis;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.AppConst;
@@ -10,13 +11,16 @@ import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
 import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
 import com.zhuanjingkj.stpbe.data.vo.*;
 import org.apache.commons.io.FileUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.*;
 
 public class TvisUtil {
     public final static String ERROR_RESPONSE = "ERROR";
+    public final static int TVIS_RST_TIMEOUT = 300;
 
     /**
      * 上传图片返回图片JSON格式识别结果
@@ -38,10 +42,122 @@ public class TvisUtil {
      */
     public static String submitTvisImage(Map<String, Object> map, File f) {
         String type = "file";
-        String url = AppConst.TVIS_SUBMIT_IMAGE_URL;
+        String url = AppConst.TVIS_SERVER_BASE_URL + AppConst.TSC_SUBMIT_IMAGE;
         return processTvisImage(url, type, map, f);
     }
 
+
+
+    public static String sendByteRequest(RedisTemplate redisTemplate, RedisTemplate<String, byte[]> redisTemplate2, String requestQueue, byte[] data) {
+        String requestId = UUID.randomUUID().toString();
+        byte[] id = requestId.getBytes(Charset.forName("UTF-8"));
+        byte[] requestData = new byte[id.length + data.length];
+        System.arraycopy(id, 0, requestData, 0, id.length);
+        System.arraycopy(data, 0, requestData, id.length, data.length);
+        data = null;
+        return sendRequest(redisTemplate, redisTemplate2, requestQueue, requestId, requestData);
+    }
+
+    public static String sendStringRequest(RedisTemplate redisTemplate, RedisTemplate<String, byte[]> redisTemplate2, String requestQueue, String request) {
+        String requestId = UUID.randomUUID().toString();
+        return sendRequest(redisTemplate, redisTemplate2, requestQueue, requestId, joinParams(requestId, request));
+    }
+
+    public static String sendMapRequest(RedisTemplate redisTemplate, RedisTemplate<String, byte[]> redisTemplate2, String requestQueue, Map<String, Object> request) {
+        String requestId = UUID.randomUUID().toString();
+        request.put("requestId", requestId);
+        return sendRequest(redisTemplate, redisTemplate2, requestQueue, requestId, JSON.toJSONString(request));
+    }
+
+
+    public static String joinParams(String... param) {
+        return String.join("||", param);
+    }
+
+    private final static String REQUEST_ID_PREFIX = "a_";
+    public static String sendRequest(RedisTemplate redisTemplate, RedisTemplate<String, byte[]> redisTemplate2, String requestList, String requestId, Object requestData) {
+        if (requestData instanceof String) {
+            redisTemplate.opsForList().leftPush(requestList, (String) requestData);
+        } else {
+            /*
+            synchronized (this){
+                logger.info("sendRequest 3.1");
+                // 设置请求编号超时时间
+                redisTemplate.opsForValue().set(REQUEST_ID_PREFIX + requestId, "0", REQUEST_EXPIRED_TIME, TimeUnit.MILLISECONDS);
+                logger.info("sendRequest 3.2");
+                // 取出最老请求的请求编号
+                long rlSize = redisTemplate2.opsForList().size(requestList);
+                logger.info("sendRequest 3.3 rlSize=" + rlSize + "!");
+                byte[] topVal;
+                if(rlSize > 0){
+                    logger.info("sendRequest 3.4");
+                    topVal = redisTemplate2.opsForList().range(requestList, rlSize-1, rlSize).get(0);
+                    logger.info("sendRequest 3.5");
+                    StringBuilder oldRequestId = new StringBuilder(REQUEST_ID_PREFIX);
+                    String oldRawRequestId = new String(topVal, 0, REQUEST_ID_LEN, Charset.forName("UTF-8"));
+                    oldRequestId.append(new String(topVal, 0, REQUEST_ID_LEN, Charset.forName("UTF-8")));
+                    logger.info("sendRequest 3.6 oldRequestId=" + oldRequestId + "!");
+                    // 如果最老请求编号在Redis中不存在，证明该请求已过期，则删除该请求，继续比较接下来的元素
+                    while (redisTemplate.opsForValue().get(oldRequestId.toString()) == null) {
+                        logger.info("sendRequest 3.7");
+                        redisTemplate2.opsForList().rightPop(requestList);
+                        logger.info("sendRequest 3.8");
+                        rlSize = redisTemplate2.opsForList().size(requestList);
+                        logger.info("sendRequest 3.9");
+                        if(rlSize<=0)
+                            break;
+                        logger.info("sendRequest 3.10");
+                        topVal = redisTemplate2.opsForList().range(requestList, rlSize-1, rlSize).get(0);
+                        logger.info("sendRequest 3.11");
+                        oldRequestId = new StringBuilder(REQUEST_ID_PREFIX);
+                        oldRequestId.append(new String(topVal, 0, 36, Charset.forName("UTF-8")));
+                        logger.info("sendRequest 3.12");
+                    }
+                }
+                redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
+            }*/
+            redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
+        }
+
+        long startTime = System.currentTimeMillis();
+        String response = null;
+        do {
+            try {
+                Thread.sleep(3);
+            } catch (InterruptedException ignore) {
+            }
+            response = (String) redisTemplate.opsForValue().get(requestId);
+            if (response != null) {
+                break;
+            }
+        } while (System.currentTimeMillis() - startTime < TVIS_RST_TIMEOUT);
+        if (response == null) {
+            //throw new RuntimeException("等待执行结果超时");
+            response = "{\"timestamp\":\"2020-11-26T08:29:34.273+0000\",\"status\":404,\"error\":\"Not Found\",\"message\":\"No message available TvisImageRecogService Ln227\",\"path\":\"/vehicle/function/recognition\"}";
+        }
+
+        return response;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 通过HTTP POST方式调用sr-tvis-server来进行图片识别
+     * @param url
+     * @param type
+     * @param map
+     * @param f
+     * @return
+     */
     private static String processTvisImage(String url, String type, Map<String, Object> map, File f) {
         boolean sendName = true;
 

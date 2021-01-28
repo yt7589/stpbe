@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tvis_server.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.tvis_server.service.ITvisImageRecogService;
 import com.zhuanjingkj.stpbe.tvis_server.vo.TvisImageErrorResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -46,25 +47,25 @@ public class TvisImageRecogService implements ITvisImageRecogService {
 
     @Override
     public Map<String, Object> createLib(String name) {
-        String response = sendStringRequest(LIST_CREATE_LIB, name);
+        String response = TvisUtil.sendStringRequest(redisTemplate, redisTemplate2, LIST_CREATE_LIB, name);
         return JSON.parseObject(response);
     }
 
     @Override
     public Map<String, Object> queryLib(String id) {
-        String response = sendStringRequest(LIST_QUERY_LIB, id);
+        String response = TvisUtil.sendStringRequest(redisTemplate, redisTemplate2, LIST_QUERY_LIB, id);
         return JSON.parseObject(response);
     }
 
     @Override
     public Map<String, Object> updateLib(Map<String, Object> params) {
-        String response = sendStringRequest(LIST_UPDATE_LIB, JSON.toJSONString(params));
+        String response = TvisUtil.sendStringRequest(redisTemplate, redisTemplate2, LIST_UPDATE_LIB, JSON.toJSONString(params));
         return JSON.parseObject(response);
     }
 
     @Override
     public Map<String, Object> recognition(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData) {
-        String response = sendByteRequest(LIST_VEHICLE_RECOGNITION, imageData);
+        String response = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_RECOGNITION, imageData);
         if(StringUtils.equals(response,"0")){
             TvisImageErrorResponse responseError = new TvisImageErrorResponse(4,gcxh,MSG);
             return JSON.parseObject(JSON.toJSONString(responseError));
@@ -75,6 +76,26 @@ public class TvisImageRecogService implements ITvisImageRecogService {
         kafkaTemplate.flush();
         return JSON.parseObject(response);
     }
+
+    @Override
+    public Map<String, Object> compareVehicle(String cltzxx1, String cltzxx2) {
+        String response = TvisUtil.sendStringRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_COMPARE, TvisUtil.joinParams(cltzxx1, cltzxx2));
+        return JSON.parseObject(response);
+    }
+
+    @Override
+    public Map<String, Object> compareInLib(String cltzxx, String kid, String xsdyz, String fydx, String ys) {
+        String response = TvisUtil.sendStringRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_COMPARE_IN_LIB, TvisUtil.joinParams(cltzxx, kid, xsdyz, fydx, ys));
+        return JSON.parseObject(response);
+    }
+
+
+
+
+
+
+
+
 
     /**
      * 生成西安临时静态识别结果
@@ -113,110 +134,6 @@ public class TvisImageRecogService implements ITvisImageRecogService {
         resp.append("        \"TimeStamp\":\"169688436\"\r\n");
         resp.append("}");
         return resp.toString();
-    }
-
-    @Override
-    public Map<String, Object> compareVehicle(String cltzxx1, String cltzxx2) {
-        String response = sendStringRequest(LIST_VEHICLE_COMPARE, joinParams(cltzxx1, cltzxx2));
-        return JSON.parseObject(response);
-    }
-
-    @Override
-    public Map<String, Object> compareInLib(String cltzxx, String kid, String xsdyz, String fydx, String ys) {
-        String response = sendStringRequest(LIST_VEHICLE_COMPARE_IN_LIB, joinParams(cltzxx, kid, xsdyz, fydx, ys));
-        return JSON.parseObject(response);
-    }
-
-
-
-    private String joinParams(String... param) {
-        return String.join("||", param);
-    }
-
-    private String sendByteRequest(String requestQueue, byte[] data) {
-        String requestId = UUID.randomUUID().toString();
-        byte[] id = requestId.getBytes(Charset.forName("UTF-8"));
-        byte[] requestData = new byte[id.length + data.length];
-        System.arraycopy(id, 0, requestData, 0, id.length);
-        System.arraycopy(data, 0, requestData, id.length, data.length);
-        data = null;
-        return sendRequest(requestQueue, requestId, requestData);
-    }
-
-    private String sendStringRequest(String requestQueue, String request) {
-        String requestId = UUID.randomUUID().toString();
-        return sendRequest(requestQueue, requestId, joinParams(requestId, request));
-    }
-
-    private String sendMapRequest(String requestQueue, Map<String, Object> request) {
-        String requestId = UUID.randomUUID().toString();
-        request.put("requestId", requestId);
-        return sendRequest(requestQueue, requestId, JSON.toJSONString(request));
-    }
-
-    private final static String REQUEST_ID_PREFIX = "a_";
-    private String sendRequest(String requestList, String requestId, Object requestData) {
-        if (requestData instanceof String) {
-            redisTemplate.opsForList().leftPush(requestList, (String) requestData);
-        } else {
-            /*
-            synchronized (this){
-                logger.info("sendRequest 3.1");
-                // 设置请求编号超时时间
-                redisTemplate.opsForValue().set(REQUEST_ID_PREFIX + requestId, "0", REQUEST_EXPIRED_TIME, TimeUnit.MILLISECONDS);
-                logger.info("sendRequest 3.2");
-                // 取出最老请求的请求编号
-                long rlSize = redisTemplate2.opsForList().size(requestList);
-                logger.info("sendRequest 3.3 rlSize=" + rlSize + "!");
-                byte[] topVal;
-                if(rlSize > 0){
-                    logger.info("sendRequest 3.4");
-                    topVal = redisTemplate2.opsForList().range(requestList, rlSize-1, rlSize).get(0);
-                    logger.info("sendRequest 3.5");
-                    StringBuilder oldRequestId = new StringBuilder(REQUEST_ID_PREFIX);
-                    String oldRawRequestId = new String(topVal, 0, REQUEST_ID_LEN, Charset.forName("UTF-8"));
-                    oldRequestId.append(new String(topVal, 0, REQUEST_ID_LEN, Charset.forName("UTF-8")));
-                    logger.info("sendRequest 3.6 oldRequestId=" + oldRequestId + "!");
-                    // 如果最老请求编号在Redis中不存在，证明该请求已过期，则删除该请求，继续比较接下来的元素
-                    while (redisTemplate.opsForValue().get(oldRequestId.toString()) == null) {
-                        logger.info("sendRequest 3.7");
-                        redisTemplate2.opsForList().rightPop(requestList);
-                        logger.info("sendRequest 3.8");
-                        rlSize = redisTemplate2.opsForList().size(requestList);
-                        logger.info("sendRequest 3.9");
-                        if(rlSize<=0)
-                            break;
-                        logger.info("sendRequest 3.10");
-                        topVal = redisTemplate2.opsForList().range(requestList, rlSize-1, rlSize).get(0);
-                        logger.info("sendRequest 3.11");
-                        oldRequestId = new StringBuilder(REQUEST_ID_PREFIX);
-                        oldRequestId.append(new String(topVal, 0, 36, Charset.forName("UTF-8")));
-                        logger.info("sendRequest 3.12");
-                    }
-                }
-                redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
-            }*/
-            redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
-        }
-
-        long startTime = System.currentTimeMillis();
-        String response = null;
-        do {
-            try {
-                Thread.sleep(3);
-            } catch (InterruptedException ignore) {
-            }
-            response = redisTemplate.opsForValue().get(requestId);
-            if (response != null) {
-                break;
-            }
-        } while (System.currentTimeMillis() - startTime < timeout);
-        if (response == null) {
-            //throw new RuntimeException("等待执行结果超时");
-            response = "{\"timestamp\":\"2020-11-26T08:29:34.273+0000\",\"status\":404,\"error\":\"Not Found\",\"message\":\"No message available TvisImageRecogService Ln227\",\"path\":\"/vehicle/function/recognition\"}";
-        }
-
-        return response;
     }
 
     private String testData = "{\n" +

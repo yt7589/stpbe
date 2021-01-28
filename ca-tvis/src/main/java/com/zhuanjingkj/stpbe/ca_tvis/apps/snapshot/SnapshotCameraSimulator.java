@@ -13,9 +13,6 @@ public class SnapshotCameraSimulator implements ISnapshotCamera {
     public SnapshotCameraSimulator(String baseFolder) {
         imageFiles = new ArrayList<>();
         FileUtil.getFolderFnsRecursive(baseFolder, imageFiles);
-        for (String imageFile : imageFiles) {
-            System.out.println("##### " + imageFile + "!");
-        }
         idx = 0;
     }
     @Override
