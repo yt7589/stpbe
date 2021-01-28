@@ -2,6 +2,9 @@ package com.zhuanjingkj.stpbe.tmdp.dto.dc;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
+import com.zhuanjingkj.stpbe.data.dto.DcStIlSiteDTO;
+import com.zhuanjingkj.stpbe.data.dto.DcStVAreaDTO;
+import com.zhuanjingkj.stpbe.data.dto.DcStVSiteDTO;
 
 import java.util.List;
 
@@ -14,7 +17,7 @@ public class DcStDTO extends BaseDTO {
     @JSONField(name = "dcToday")
     private DcStTodayDTO dcToday; //今日概况
     @JSONField(name = "dcVSt")
-    List<DcStVDTO> dcVSt; //过车量统计
+    private DcStVDTO dcVSt; //过车量统计
     @JSONField(name = "dcVArea")
     List<DcStVAreaDTO> dcVArea; //过车量地区前5
     @JSONField(name = "dcVSite")
@@ -44,11 +47,11 @@ public class DcStDTO extends BaseDTO {
         this.dcToday = dcToday;
     }
 
-    public List<DcStVDTO> getDcVSt() {
+    public DcStVDTO getDcVSt() {
         return dcVSt;
     }
 
-    public void setDcVSt(List<DcStVDTO> dcVSt) {
+    public void setDcVSt(DcStVDTO dcVSt) {
         this.dcVSt = dcVSt;
     }
 

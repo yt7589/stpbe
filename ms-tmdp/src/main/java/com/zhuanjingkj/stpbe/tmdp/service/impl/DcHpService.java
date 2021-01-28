@@ -67,7 +67,7 @@ public class DcHpService implements IDcHpService {
     @Override
     public List<DcHpIlTrendDTO> getDit_exp() {
         List<DcHpIlTrendDTO> dit = new ArrayList<>();
-        Map<String, Integer> res30Map = DateUtil.timeFor30Map();
+        Map<String, Integer> res30Map = DateUtil.timeFor30Map(30);
         String endTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String startTime = DateUtil.plusDaysForDate(endTime, -29);
         List<Map<String,Object>> recs = dcHpMapper.getVmDitCount(startTime, endTime);
@@ -87,7 +87,7 @@ public class DcHpService implements IDcHpService {
     @Override
     public List<DcHpRgTrendDTO> getDrt_exp() {
         List<DcHpRgTrendDTO> drt = new ArrayList<>();
-        Map<String, Integer> res30Map = DateUtil.timeFor30Map();
+        Map<String, Integer> res30Map = DateUtil.timeFor30Map(30);
         String endTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String startTime = DateUtil.plusDaysForDate(endTime, -29);
         List<Map<String, Object>> recs = dcHpMapper.getVmDrtCount(startTime, endTime);
