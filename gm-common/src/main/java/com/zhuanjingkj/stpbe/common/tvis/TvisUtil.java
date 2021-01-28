@@ -18,10 +18,32 @@ import java.util.*;
 public class TvisUtil {
     public final static String ERROR_RESPONSE = "ERROR";
 
+    /**
+     * 上传图片返回图片JSON格式识别结果
+     * @param map
+     * @param f
+     * @return
+     */
     public static String recognizeImageFile(Map<String, Object> map, File f) {
-        boolean sendName = true;
         String type = "file";
         String url = AppConst.TVIS_SERVER_URL;
+        return processTvisImage(url, type, map, f);
+    }
+
+    /**
+     * 提交抓拍机图片，只返回成功失败处理结果
+     * @param map
+     * @param f
+     * @return
+     */
+    public static String submitTvisImage(Map<String, Object> map, File f) {
+        String type = "file";
+        String url = AppConst.TVIS_SUBMIT_IMAGE_URL;
+        return processTvisImage(url, type, map, f);
+    }
+
+    private static String processTvisImage(String url, String type, Map<String, Object> map, File f) {
+        boolean sendName = true;
 
         String response = null;
         try {

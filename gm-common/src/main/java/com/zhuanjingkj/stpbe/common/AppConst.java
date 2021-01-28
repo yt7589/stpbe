@@ -17,6 +17,7 @@ public class AppConst {
     public final static String KAFKA_SERVER = "192.168.2.68:9092";
     // TVIS相关
     public final static String TVIS_SERVER_URL = "http://192.168.2.68:9008/vehicle/function/recognition";
+    public final static String TVIS_SUBMIT_IMAGE_URL = "http://192.168.2.68:9008/tvis/submitImage";
     public final static String VIDEO_TVIS_ADDR = "192.168.2.68";
     public final static short VIDEO_TVIS_PORT = 4040;
     // Milvus图搜相关

@@ -19,6 +19,9 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.*;
 
+/**
+ * 启动参数：mgqs d:\awork\work\es_images\images http://192.168.2.68:9510/vehicle/function/recognition http://192.168.2.15 http://
+ */
 @Service
 public class MgqsClient implements ITvisClient {
     public final static int ARGS_ROOT_PATH_IDX = 1;
