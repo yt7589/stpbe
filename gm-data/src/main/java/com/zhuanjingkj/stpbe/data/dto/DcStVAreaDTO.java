@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.dc;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
@@ -14,6 +14,10 @@ public class DcStVAreaDTO extends BaseDTO {
     private String areaName;
     @JSONField(name = "count")
     private Integer count;
+
+    public DcStVAreaDTO() {
+        super();
+    }
 
     public DcStVAreaDTO(long areaId, String areaName, Integer count) {
         this.areaId = areaId;
