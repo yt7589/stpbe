@@ -3,8 +3,8 @@ package com.zhuanjingkj.stpbe.tebs.scs.obs;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
 import com.zhuanjingkj.stpbe.common.mapper.KsvssKsvrpMapper;
+import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class KsSvsKsvrpObserver implements ITvisStpObserver {

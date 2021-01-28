@@ -2,9 +2,9 @@ package com.zhuanjingkj.stpbe.tebs.scs.obs;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.DcHpMapper;
+import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.dto.DcHpDTO;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.tebs.util.PropUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

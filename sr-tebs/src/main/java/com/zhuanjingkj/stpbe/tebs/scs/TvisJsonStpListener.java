@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tebs.scs;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tebs.scs.obs.*;
@@ -92,19 +93,6 @@ public class TvisJsonStpListener {
             observers.add(dcHpObserver);
             isFirstRun = false;
         }
-        JSONObject rawJo = JSONObject.parseObject(json);
-        long tvisJsonId = rawJo.getLong("tvisJsonId");
-        long cameraId = rawJo.getLong("cameraId");
-        JSONObject rstJo = rawJo.getJSONObject("json");
-        List<VehicleVo> vehs = TvisUtil.parseTvisJson(cameraId, rstJo.toJSONString());
-        long vehsIdx = 0;
-        for (VehicleVo veh : vehs) {
-            veh.setTvisJsonId(tvisJsonId);
-            veh.setVehsIdx(vehsIdx);
-            vehsIdx++;
-            for (ITvisStpObserver obs : observers) {
-                obs.notifyObserver(veh);
-            }
-        }
+        TvisUtil.processStpTvisJson(observers, json);
     }
 }

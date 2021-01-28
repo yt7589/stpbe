@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tebs.scs;
+package com.zhuanjingkj.stpbe.common.tvis;
 
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import org.springframework.core.env.Environment;

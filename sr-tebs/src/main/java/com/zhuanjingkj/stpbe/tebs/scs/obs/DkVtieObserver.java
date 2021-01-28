@@ -1,13 +1,8 @@
 package com.zhuanjingkj.stpbe.tebs.scs.obs;
 
-import com.alibaba.fastjson.JSONObject;
-import com.netflix.discovery.converters.Auto;
-import com.zhuanjingkj.stpbe.common.AppRegistry;
-import com.zhuanjingkj.stpbe.data.vo.VehicleHptzVO;
+import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.tebs.scs.ITvisStpObserver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;

@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.BmyDao;
+import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
+import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.data.dto.BmyDTO;
 import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
 import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
@@ -13,9 +16,10 @@ import com.zhuanjingkj.stpbe.data.vo.*;
 import org.apache.commons.io.FileUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TvisUtil {
@@ -69,10 +73,110 @@ public class TvisUtil {
         return sendRequest(redisTemplate, redisTemplate2, requestQueue, requestId, JSON.toJSONString(request));
     }
 
-
     public static String joinParams(String... param) {
         return String.join("||", param);
     }
+
+
+
+    public static void rotateTvisJsonTbl(TvisJsonMapper tvisJsonMapper) {
+        // 生成当前数据表
+        String tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
+        String[] arrs = tvisJsonTblName.split("_");
+        long idx = Long.parseLong(arrs[arrs.length - 1]);
+        AppRegistry.tvisJsonTblName = AppConst.TVIS_JSON_TBL_PREFIX + String.format("%08d", idx+1);
+        AppRegistry.tvisJsonTblRecs = 0;
+        tvisJsonMapper.createTvisJsonTbl(AppRegistry.tvisJsonTblName);
+    }
+
+    public static void processRawTvisJson(RedisTemplate redisTemplate, TvisJsonMapper tvisJsonMapper, String json) {
+        System.out.println("###### TvisJsonRawListener.listen 1");
+        JSONObject jo = JSONObject.parseObject(json);
+        String relativeImageFile = jo.getJSONObject("json").getString("ImageUrl");
+        if (relativeImageFile==null || relativeImageFile.equals("") || relativeImageFile.length()<2) {
+            return;
+        }
+        String imageFile = AppConst.VIDEO_FRAME_IMG_BASE_DIR + relativeImageFile.substring(2);
+        Optional<String> imgRst = IpfsClient.uploadFile(imageFile);
+        final StringBuilder imageHash = new StringBuilder();
+        imgRst.ifPresent((str) -> {
+            imageHash.append(str);
+        });
+        // 生成临时JSON文件，上传到IPFS得到jsonHash
+        FileOutputStream fos = null;
+        OutputStreamWriter osw = null;
+        BufferedWriter bw = null;
+        Random rand = new Random();
+        String jf = AppConst.JSON_TMP_BASE_DIR + "json_" + System.currentTimeMillis() + "_" + rand.nextInt() + ".json";
+        try {
+            fos = new FileOutputStream(new File(jf));
+            bw = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
+            bw.write(json);
+            bw.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        final StringBuilder jsonHash = new StringBuilder();
+        Optional<String> jsonRst = IpfsClient.uploadFile(jf);
+        jsonRst.ifPresent((jsonStr)->{
+            jsonHash.append(jsonStr);
+        });
+        // 获取imageHash、cameraId、streamId、pts，将其存入mysql数据库中
+        long tvisJsonId = 0;
+        if (jo.containsKey("tvisJsonId")) {
+            tvisJsonId = jo.getLong("tvisJsonId");
+        } else {
+            tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
+        }
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String occurTime = df.format(new Date());
+        String cameraIdStr = jo.getString("cameraId");
+        long cameraId = Long.parseLong(cameraIdStr);
+        JSONObject rstJo = jo.getJSONObject("json");
+        String streamIdStr = rstJo.getString("StreamID");
+        long streamId = Long.parseLong(streamIdStr);
+        String ptsStr = rstJo.getString("TimeStamp");
+        long pts = Long.parseLong(ptsStr);
+        TvisJsonVO vo = new TvisJsonVO(AppRegistry.tvisJsonTblName, tvisJsonId, occurTime,
+                cameraId, streamId, pts, imageHash.toString(), jsonHash.toString());
+        tvisJsonMapper.insertTvisJson(vo);
+        AppRegistry.tvisJsonTblRecs++;
+        if (AppRegistry.tvisJsonTblRecs >= AppConst.TVIS_JSON_TBL_MAX_RECS) {
+            rotateTvisJsonTbl(tvisJsonMapper);
+        }
+    }
+
+    public static void processStpTvisJson(List<ITvisStpObserver> observers, String json) {
+        JSONObject rawJo = JSONObject.parseObject(json);
+        long tvisJsonId = rawJo.getLong("tvisJsonId");
+        long cameraId = rawJo.getLong("cameraId");
+        JSONObject rstJo = rawJo.getJSONObject("json");
+        List<VehicleVo> vehs = TvisUtil.parseTvisJson(cameraId, rstJo.toJSONString());
+        long vehsIdx = 0;
+        for (VehicleVo veh : vehs) {
+            veh.setTvisJsonId(tvisJsonId);
+            veh.setVehsIdx(vehsIdx);
+            vehsIdx++;
+            for (ITvisStpObserver obs : observers) {
+                obs.notifyObserver(veh);
+            }
+        }
+    }
+
+
+
+
+
 
     private final static String REQUEST_ID_PREFIX = "a_";
     public static String sendRequest(RedisTemplate redisTemplate, RedisTemplate<String, byte[]> redisTemplate2, String requestList, String requestId, Object requestData) {
