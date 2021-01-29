@@ -99,7 +99,12 @@ public class TvisUtil {
         if (relativeImageFile==null || relativeImageFile.equals("") || relativeImageFile.length()<2) {
             return;
         }
-        String imageFile = AppConst.VIDEO_FRAME_IMG_BASE_DIR + relativeImageFile.substring(2);
+        String imageFile = "";
+        if (jo.getJSONObject("json").getString("StreamID").equals("-1")) {
+            imageFile = relativeImageFile;
+        } else {
+            imageFile = AppConst.VIDEO_FRAME_IMG_BASE_DIR + relativeImageFile.substring(2);
+        }
         Optional<String> imgRst = IpfsClient.uploadFile(imageFile);
         final StringBuilder imageHash = new StringBuilder();
         imgRst.ifPresent((str) -> {

@@ -50,6 +50,7 @@ public class StpImageService implements IStpImageService {
         String rawResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_RECOGNITION, imageData);
         JSONObject jo = JSONObject.parseObject(rawResp);
         jo.put("ImageUrl", imageFile);
+        jo.put("StreamID", "-1");
         String response = jo.toJSONString();
         long tvisJsonId = 0;
         StringBuilder msg = null;
