@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tebs.scs.obs;
+package com.zhuanjingkj.stpbe.common.tvis.obs;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;

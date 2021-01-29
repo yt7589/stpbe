@@ -14,6 +14,7 @@ import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
 import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
 import com.zhuanjingkj.stpbe.data.vo.*;
 import org.apache.commons.io.FileUtils;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.io.*;
