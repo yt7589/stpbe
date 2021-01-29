@@ -69,6 +69,7 @@ public class StpImageService implements IStpImageService {
         logger.info("#Yt#: step 4");
         TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, msg.toString());
         if (isFirstRun) {
+            TvisUtil.rotateTvisJsonTbl(tvisJsonMapper);
             tvisStpOberverManager.initialize(observers, environment);
             isFirstRun = false;
         }
