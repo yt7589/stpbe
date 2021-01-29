@@ -47,9 +47,7 @@ public class StpImageService implements IStpImageService {
 
     @Override
     public ResultDTO<SubmitImageDTO> submitImage(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData) {
-        logger.info("#Yt#: step 1");
         String response = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_RECOGNITION, imageData);
-        logger.info("#Yt#: step 2 response: " + response + "!");
         long tvisJsonId = 0; //Long.parseLong(jo.getString("tvisJsonId"));
         StringBuilder msg = null;
         synchronized (redisTemplate) {
@@ -61,18 +59,16 @@ public class StpImageService implements IStpImageService {
         SubmitImageDTO data = new SubmitImageDTO();
         rst.setData(data);
         if(StringUtils.equals(response,"0")){
-            logger.info("#Yt#: step 3");
             rst.setCode(4);
             data.setTvisJsonId(-1);
             return rst;
         }
-        logger.info("#Yt#: step 4");
-        TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, msg.toString());
         if (isFirstRun) {
             TvisUtil.rotateTvisJsonTbl(tvisJsonMapper);
             tvisStpOberverManager.initialize(observers, environment);
             isFirstRun = false;
         }
+        TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, msg.toString());
         TvisUtil.processStpTvisJson(observers, msg.toString());
         JSONObject jo = JSON.parseObject(response);
         data.setTvisJsonId(tvisJsonId);

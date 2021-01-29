@@ -8,4 +8,9 @@ public class SnapshotCameraHttpClient implements ISnapshotCamera {
     public String getSnapshotFile() {
         return null;
     }
+
+    @Override
+    public long getCameraId() {
+        return 0;
+    }
 }

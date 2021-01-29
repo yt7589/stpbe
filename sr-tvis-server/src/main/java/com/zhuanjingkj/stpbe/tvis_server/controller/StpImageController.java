@@ -44,6 +44,7 @@ public class StpImageController {
                                                  @RequestParam(name = "TPXX", required = false) MultipartFile file,
                                                  @RequestParam(name = "TPWJ", required = false) String tpwj) {
         logger.info("#Yt#: step 1");
+        logger.info("#Yt#: step 1.2 image=" + file.getOriginalFilename() + "!");
         byte[] data = null;
         if ("1".equals(tplx)) {
             if (file != null) {

@@ -94,7 +94,6 @@ public class TvisUtil {
     }
 
     public static void processRawTvisJson(RedisTemplate redisTemplate, TvisJsonMapper tvisJsonMapper, String json) {
-        System.out.println("###### TvisJsonRawListener.listen 1");
         JSONObject jo = JSONObject.parseObject(json);
         String relativeImageFile = jo.getJSONObject("json").getString("ImageUrl");
         if (relativeImageFile==null || relativeImageFile.equals("") || relativeImageFile.length()<2) {
@@ -165,7 +164,6 @@ public class TvisUtil {
         long tvisJsonId = rawJo.getLong("tvisJsonId");
         long cameraId = rawJo.getLong("cameraId");
         JSONObject rstJo = rawJo.getJSONObject("json");
-        logger.info("cameraId=" + cameraId + "; json=" + rstJo + "; \r\njson:" + rstJo.toJSONString() + "!!!!!!!!");
         List<VehicleVo> vehs = TvisUtil.parseTvisJson(cameraId, rstJo.toJSONString());
         long vehsIdx = 0;
         for (VehicleVo veh : vehs) {
