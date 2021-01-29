@@ -46,9 +46,12 @@ public class StpImageService implements IStpImageService {
     private Environment environment;
 
     @Override
-    public ResultDTO<SubmitImageDTO> submitImage(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData) {
-        String response = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_RECOGNITION, imageData);
-        long tvisJsonId = 0; //Long.parseLong(jo.getString("tvisJsonId"));
+    public ResultDTO<SubmitImageDTO> submitImage(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData, String imageFile) {
+        String rawResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_RECOGNITION, imageData);
+        JSONObject jo = JSONObject.parseObject(rawResp);
+        jo.put("ImageUrl", imageFile);
+        String response = jo.toJSONString();
+        long tvisJsonId = 0;
         StringBuilder msg = null;
         synchronized (redisTemplate) {
             tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
@@ -68,9 +71,9 @@ public class StpImageService implements IStpImageService {
             tvisStpOberverManager.initialize(observers, environment);
             isFirstRun = false;
         }
+        logger.info("#Yt#: json: " + msg.toString() + "!");
         TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, msg.toString());
         TvisUtil.processStpTvisJson(observers, msg.toString());
-        JSONObject jo = JSON.parseObject(response);
         data.setTvisJsonId(tvisJsonId);
         return rst;
     }

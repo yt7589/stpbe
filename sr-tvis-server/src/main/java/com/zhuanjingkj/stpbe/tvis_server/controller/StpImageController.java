@@ -71,6 +71,6 @@ public class StpImageController {
         }
         logger.info("#Yt#: step 1.3 image=" + imageFile.getAbsolutePath() + "!");
         logger.info("#Yt#: step 2");
-        return stpImageService.submitImage(cameraId, "0", mrhpt, hphm, data);
+        return stpImageService.submitImage(cameraId, "0", mrhpt, hphm, data, imageFile.getAbsolutePath());
     }
 }

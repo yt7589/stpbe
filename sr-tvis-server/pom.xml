@@ -129,7 +129,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <!-- stp132: logback补充jar -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -138,16 +138,15 @@
                 <exclusion>
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-log4j12</artifactId>
-
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
             <version>1.2.3</version>
         </dependency>
+        <!-- stp132_end -->
     </dependencies>
     <dependencyManagement>
         <dependencies>
