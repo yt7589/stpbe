@@ -14,6 +14,8 @@ import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
 import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
 import com.zhuanjingkj.stpbe.data.vo.*;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -26,6 +28,7 @@ import java.util.*;
 public class TvisUtil {
     public final static String ERROR_RESPONSE = "ERROR";
     public final static int TVIS_RST_TIMEOUT = 300;
+    private final static Logger logger = LoggerFactory.getLogger(TvisUtil.class);
 
     /**
      * 上传图片返回图片JSON格式识别结果
@@ -162,6 +165,7 @@ public class TvisUtil {
         long tvisJsonId = rawJo.getLong("tvisJsonId");
         long cameraId = rawJo.getLong("cameraId");
         JSONObject rstJo = rawJo.getJSONObject("json");
+        logger.info("cameraId=" + cameraId + "; json=" + rstJo + "; \r\njson:" + rstJo.toJSONString() + "!!!!!!!!");
         List<VehicleVo> vehs = TvisUtil.parseTvisJson(cameraId, rstJo.toJSONString());
         long vehsIdx = 0;
         for (VehicleVo veh : vehs) {

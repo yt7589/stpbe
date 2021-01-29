@@ -66,25 +66,4 @@ public class SnapshotTask implements Runnable {
         String response = null;
         return TvisUtil.submitTvisImage(map, f);
     }
-
-    private String postFile(String url, Map<String, Object> data) throws IOException {
-        HttpPost post = new HttpPost(url);
-        try {
-//            post.addHeader("Connection", "close");
-            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            for (Map.Entry<String, Object> entry : data.entrySet()) {
-                if (entry.getValue() instanceof File) {
-                    builder.addBinaryBody(entry.getKey(), (File) entry.getValue());
-                } else {
-                    builder.addTextBody(entry.getKey(), String.valueOf(entry.getValue()));
-                }
-            }
-            post.setEntity(builder.build());
-            CloseableHttpResponse response = httpclient.execute(post);
-            return EntityUtils.toString(response.getEntity());
-        } finally {
-//            post.releaseConnection();
-        }
-    }
 }

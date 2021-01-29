@@ -16,7 +16,7 @@ public class AppConst {
     public final static String KAFKA_GROUP_KB_TITF = "kbTitf";
     public final static String KAFKA_SERVER = "192.168.2.68:9092";
     // TVIS相关
-    public final static String TVIS_SERVER_BASE_URL = "http://192.168.2.35:9008/";
+    public final static String TVIS_SERVER_BASE_URL = "http://192.168.2.68:9008/";
     public final static String TSC_SUBMIT_IMAGE = "stp/submitImage";
     public final static String TVIS_SERVER_URL = "http://192.168.2.68:9008/vehicle/function/recognition";
     public final static String VIDEO_TVIS_ADDR = "192.168.2.68";
