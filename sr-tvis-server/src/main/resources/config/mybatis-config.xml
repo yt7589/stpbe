@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <package name="com.yefeng.vehicle.domain.po"/>
+        <!-- <package name="com.yefeng.vehicle.domain.po"/> -->
     </typeAliases>
     <mappers>
-        <mapper resource="mapper/VehicleAnalysisWztzMapper.xml"/>
+        <!-- <mapper resource="mapper/VehicleAnalysisWztzMapper.xml"/> -->
     </mappers>
 </configuration>
