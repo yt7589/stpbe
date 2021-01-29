@@ -23,8 +23,6 @@ public class SrTvisServerApplication {
 
     public static void main(String[] args) {
         System.out.println("Traffic Video Image Structure Server v0.0.1");
-        GrqEngine.createGrqDb(); // 仅需运行一次！！！！！！！！！！！
-        GrqEngine.initializeGrp();
         SpringApplication.run(SrTvisServerApplication.class, args);
     }
 
