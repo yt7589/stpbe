@@ -21,8 +21,8 @@ import java.util.Map;
 @RequestMapping("/stp")
 public class StpImageController {
     private final static Logger logger = LoggerFactory.getLogger(StpImageController.class);
-    @Autowired
-    private StpImageService stpImageService;
+    //@Autowired
+    //private StpImageService stpImageService;
     private static long seq = 0;
     /**
      * 抓拍机上传图片，返回图片处理是否成功
@@ -44,7 +44,7 @@ public class StpImageController {
                                                  @RequestParam(name = "TPXX", required = false) MultipartFile file,
                                                  @RequestParam(name = "TPWJ", required = false) String tpwj) {
         logger.info("#Yt#: step 1");
-        byte[] data = null;
+        /*byte[] data = null;
         if ("1".equals(tplx)) {
             if (file != null) {
                 try {
@@ -57,6 +57,7 @@ public class StpImageController {
             data = Base64.getDecoder().decode(tpwj);
         }
         logger.info("#Yt#: step 2");
-        return stpImageService.submitImage(cameraId, "0", mrhpt, hphm, data);
+        return stpImageService.submitImage(cameraId, "0", mrhpt, hphm, data);*/
+        return null;
     }
 }
