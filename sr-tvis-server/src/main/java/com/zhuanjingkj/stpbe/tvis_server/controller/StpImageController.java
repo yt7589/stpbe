@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Map;
@@ -57,6 +60,16 @@ public class StpImageController {
         } else if ("2".equals(tplx)) {
             data = Base64.getDecoder().decode(tpwj);
         }
+        File imageFile = new File("c" + cameraId + "_" + System.currentTimeMillis() + ".jpg");
+        try {
+            FileOutputStream fos = new FileOutputStream(imageFile);
+            fos.write(data);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        logger.info("#Yt#: step 1.3 image=" + imageFile.getAbsolutePath() + "!");
         logger.info("#Yt#: step 2");
         return stpImageService.submitImage(cameraId, "0", mrhpt, hphm, data);
     }
