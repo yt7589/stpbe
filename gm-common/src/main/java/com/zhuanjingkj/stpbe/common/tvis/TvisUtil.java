@@ -334,7 +334,9 @@ public class TvisUtil {
             vo.setOccurTime(vehJson.getString("OCCUR_TIME"));
             vo.setCameraId(cameraId);
             vo.setStreamId(streamId);
-            vo.setTrackId(vehJson.getLong("TRACK_ID"));
+            if (vehJson.getLong("TRACK_ID") != null) {
+                vo.setTrackId(vehJson.getLong("TRACK_ID"));
+            }
             // 位置特征解析
             vehicleWztzVo = new VehicleWztzVo();
             wztzJson = vehJson.getJSONObject("WZTZ");
