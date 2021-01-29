@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tvis_server;
 
+import com.zhuanjingkj.stpbe.common.mgq.GrqEngine;
 import com.zhuanjingkj.stpbe.tvis_server.task.TasScheduledTask;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class SrTvisServerApplication {
 
     public static void main(String[] args) {
         System.out.println("Traffic Video Image Structure Server v0.0.1");
+        GrqEngine.createGrqDb(); // 仅需运行一次！！！！！！！！！！！
+        GrqEngine.initializeGrp();
         SpringApplication.run(SrTvisServerApplication.class, args);
     }
 
