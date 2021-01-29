@@ -25,7 +25,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Service
+@Service
 public class StpImageService implements IStpImageService {
     private final static String LIST_VEHICLE_RECOGNITION = "vehicle-recognition-list";
     private final static Logger logger = LoggerFactory.getLogger(StpImageService.class);

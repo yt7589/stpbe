@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tvis_server;
 
 import com.zhuanjingkj.stpbe.tvis_server.task.TasScheduledTask;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +15,7 @@ import javax.annotation.PostConstruct;
 @EnableScheduling
 @EnableTransactionManagement(proxyTargetClass = true)
 @ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.*"})
+@MapperScan({"com.zhuanjingkj.stpbe.tvis_server.mapper", "com.zhuanjingkj.stpbe.common.mapper"})
 public class SrTvisServerApplication {
     @Autowired
     private TasScheduledTask tasScheduledTask;
