@@ -111,7 +111,7 @@ public class TnVaController {
         List<TnVaSdInfoDTO> recs = new ArrayList<TnVaSdInfoDTO>();
         recs.add(new TnVaSdInfoDTO(20201228,"海淀区>上地","东南","普通摄像头","已接入"));
         recs.add(new TnVaSdInfoDTO(20201228,"海淀区>西二旗","西北","抓拍机","异常"));
-        recs.add(new TnVaSdInfoDTO(20201228,"海淀区>西二旗","西北","抓拍机","已接入"));
+        recs.add(new TnVaSdInfoDTO(100,"海淀区>西二旗","西北","抓拍机","已接入"));
         ts.setRecs(recs);
         ts.setCamera(1);
         ts.setSnapshot(2);
