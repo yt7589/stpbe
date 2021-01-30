@@ -9,6 +9,8 @@ import com.zhuanjingkj.stpbe.common.tvis.TvisStpOberverManager;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.SubmitImageDTO;
+import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
+import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameVehicleDTO;
 import com.zhuanjingkj.stpbe.tvis_server.dto.TvisAnalysisItemDTO;
 import com.zhuanjingkj.stpbe.tvis_server.dto.TvisAnalysisResultDTO;
 import com.zhuanjingkj.stpbe.tvis_server.service.IStpImageService;
@@ -89,20 +91,20 @@ public class StpImageService implements IStpImageService {
      * @return
      */
     @Override
-    public ResultDTO<TvisAnalysisResultDTO> getTvisAnalysisResult(long cameraId, long baseTvisJsonId, int direction) {
-        ResultDTO<TvisAnalysisResultDTO> dto = new ResultDTO<>();
-        TvisAnalysisResultDTO data = new TvisAnalysisResultDTO();
-        data.setTvisJsonId(108);
-        data.setOriginImageUrl("http://a.jpg");
-        TvisAnalysisItemDTO item = null;
-        List<TvisAnalysisItemDTO> items = new ArrayList<>();
+    public ResultDTO<WsmVideoFrameDTO> getTvisAnalysisResult(long cameraId, long baseTvisJsonId, int direction) {
+        ResultDTO<WsmVideoFrameDTO> dto = new ResultDTO<>(); // long tvisJsonId, long pts, String originImage
+        WsmVideoFrameDTO data = new WsmVideoFrameDTO(1, 2, "http://a.com/b.jpg");
+        WsmVideoFrameVehicleDTO item = null;
+        List<WsmVideoFrameVehicleDTO> items = new ArrayList<>();
+        // long wvfvvId, long trackId, int vehIdx, String ppcxnk, String hphm,
+        //                                   String cutImgUrl, String crossTime, String trafficViolationName
         for (int i=0; i<5; i++) {
-            item = new TvisAnalysisItemDTO(100 + i, 200 + i,
-                    "http://b" + i + ".jpg", "京00" + i,
-                    "5" + i + "秒前", "无违章" + i);
+            item = new WsmVideoFrameVehicleDTO(i, 100+i, 10+i, "nk",
+                    "h" + i, "c.jpg" + i,
+                    "cross" + i, "tvn" + i);
             items.add(item);
         }
-        data.setItems(items);
+        data.setData(items);
         dto.setData(data);
         return dto;
     }

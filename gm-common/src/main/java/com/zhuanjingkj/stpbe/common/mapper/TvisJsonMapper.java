@@ -33,4 +33,30 @@ public interface TvisJsonMapper {
      * @return
      */
     public TvisJsonVO getLatestStreamFrame(@Param("tblName") String tblName, @Param("streamId") long streamId);
+
+    /**
+     * 获取指定抓拍机最新图片
+     * @param tblName
+     * @param cameraId
+     * @return
+     */
+    public TvisJsonVO getLatestCameraFrame(@Param("tblName") String tblName, @Param("cameraId") long cameraId);
+
+    /**
+     * 获取指定抓拍机指定图片的前一张图片
+     * @param tblName
+     * @param cameraId
+     * @return
+     */
+    public TvisJsonVO getPrevCameraFrame(@Param("tblName") String tblName, @Param("cameraId") long cameraId,
+                                         @Param("baseTvisJsonId") long baseTvisJsonId);
+
+    /**
+     * 获取指定抓拍机指定图片的后一张图片
+     * @param tblName
+     * @param cameraId
+     * @return
+     */
+    public TvisJsonVO getNextCameraFrame(@Param("tblName") String tblName, @Param("cameraId") long cameraId,
+                                         @Param("baseTvisJsonId") long baseTvisJsonId);
 }

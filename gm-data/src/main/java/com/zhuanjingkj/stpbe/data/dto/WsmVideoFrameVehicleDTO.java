@@ -1,9 +1,9 @@
-package com.zhuanjingkj.stpbe.data.vo;
+package com.zhuanjingkj.stpbe.data.dto;
 
 /**
  * 返回给客户端的WebSocket消息内容中的每一辆车
  */
-public class WsmVideoFrameVehicleVO {
+public class WsmVideoFrameVehicleDTO extends BaseDTO {
     private long wvfvvId;
     private long trackId;
     private int vehIdx;
@@ -13,8 +13,8 @@ public class WsmVideoFrameVehicleVO {
     private String crossTime;
     private String trafficViolationName;
 
-    public WsmVideoFrameVehicleVO(long wvfvvId, long trackId, int vehIdx, String ppcxnk, String hphm,
-                                  String cutImgUrl, String crossTime, String trafficViolationName) {
+    public WsmVideoFrameVehicleDTO(long wvfvvId, long trackId, int vehIdx, String ppcxnk, String hphm,
+                                   String cutImgUrl, String crossTime, String trafficViolationName) {
         this.wvfvvId = wvfvvId;
         this.trackId = trackId;
         this.vehIdx = vehIdx;

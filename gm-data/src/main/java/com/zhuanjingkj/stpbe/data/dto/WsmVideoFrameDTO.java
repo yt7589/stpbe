@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.data.vo;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,14 +6,14 @@ import java.util.List;
 /**
  * 返回给客户端的WebSocket消息内容
  */
-public class WsmVideoFrameVO {
+public class WsmVideoFrameDTO extends BaseDTO {
     private long tvisJsonId;
     private long pts;
     private String originImage;
-    private List<WsmVideoFrameVehicleVO> data;
+    private List<WsmVideoFrameVehicleDTO> data;
     private int trafficViolationIdx = -1;
 
-    public WsmVideoFrameVO(long tvisJsonId, long pts, String originImage) {
+    public WsmVideoFrameDTO(long tvisJsonId, long pts, String originImage) {
         this.tvisJsonId = tvisJsonId;
         this.pts = pts;
         this.originImage = originImage;
@@ -44,11 +44,11 @@ public class WsmVideoFrameVO {
         this.originImage = originImage;
     }
 
-    public List<WsmVideoFrameVehicleVO> getData() {
+    public List<WsmVideoFrameVehicleDTO> getData() {
         return data;
     }
 
-    public void setData(List<WsmVideoFrameVehicleVO> data) {
+    public void setData(List<WsmVideoFrameVehicleDTO> data) {
         this.data = data;
     }
 

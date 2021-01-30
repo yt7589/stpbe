@@ -5,19 +5,16 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
-import com.zhuanjingkj.stpbe.common.BmyDao;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
-import com.zhuanjingkj.stpbe.data.dto.BmyDTO;
-import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
-import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
+import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
+import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameVehicleDTO;
 import com.zhuanjingkj.stpbe.data.vo.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.imageio.ImageIO;
@@ -186,13 +183,13 @@ public class TvisUtil {
         }
     }
 
-    public static WsmVideoFrameVO getTvisFrameAnalysisResult(TvisJsonVO tvisJsonVO,
-                                                             Map<String, CameraVehicleRecordVO> cutVehs) {
+    public static WsmVideoFrameDTO getTvisFrameAnalysisResult(TvisJsonVO tvisJsonVO,
+                                                              Map<String, CameraVehicleRecordVO> cutVehs) {
         long wsmVfvvIdx = 0;
         String vaImgUrlBase = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=";
-        WsmVideoFrameVO vfv = null;
-        List<WsmVideoFrameVehicleVO> wvfvvs = null;
-        WsmVideoFrameVehicleVO vfvv = null;
+        WsmVideoFrameDTO vfv = null;
+        List<WsmVideoFrameVehicleDTO> wvfvvs = null;
+        WsmVideoFrameVehicleDTO vfvv = null;
         long tvisJsonId = tvisJsonVO.getTvisJsonId();
         // 获取图片
         BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
@@ -211,7 +208,7 @@ public class TvisUtil {
         File cutFileObj = null;
         String imgBaseFolder = "images/";
         String orgFileFn = "n_" + tvisJsonId + ".jpg";
-        vfv = new WsmVideoFrameVO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
+        vfv = new WsmVideoFrameDTO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
         wvfvvs = vfv.getData();
         for (VehicleVo veh : vehs) {
             String clwz = veh.getVehicleWztzVo().getClwz();
@@ -258,7 +255,7 @@ public class TvisUtil {
                 vo.setH(h);
                 vo.setCutImgFn(cutFileFn);
             }
-            vfvv = new WsmVideoFrameVehicleVO(wsmVfvvIdx++, veh.getTrackId(), idx,
+            vfvv = new WsmVideoFrameVehicleDTO(wsmVfvvIdx++, veh.getTrackId(), idx,
                     veh.getVehicleCxtzVo().getPpcxCode(),
                     veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + vo.getCutImgFn(),
                     "50秒前", "无");
@@ -275,10 +272,10 @@ public class TvisUtil {
         return vfv;
     }
 
-    public static WsmVideoFrameVO getTvisVideoAnalysisResult(TvisJsonMapper tvisJsonMapper,
-                                                        List<String> streamIds,
-                                                        Map<String, CameraVehicleRecordVO> cutVehs,
-                                                        long streamId) {
+    public static WsmVideoFrameDTO getTvisVideoAnalysisResult(TvisJsonMapper tvisJsonMapper,
+                                                              List<String> streamIds,
+                                                              Map<String, CameraVehicleRecordVO> cutVehs,
+                                                              long streamId) {
         if (StringUtils.isBlank(AppRegistry.tvisJsonTblName)) {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
@@ -291,10 +288,10 @@ public class TvisUtil {
         return getTvisFrameAnalysisResult(tvisJsonVO, cutVehs);
     }
 
-    public static WsmVideoFrameVO getTvisImageAnalysisResult(long cameraId, long baseTvisJsonId, long direction) {
+    public static WsmVideoFrameDTO getTvisImageAnalysisResult(long cameraId, long baseTvisJsonId, long direction) {
         Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
         TvisJsonVO tvisJsonVO = null;
-        WsmVideoFrameVO vfv = getTvisFrameAnalysisResult(tvisJsonVO, cutVehs);
+        WsmVideoFrameDTO vfv = getTvisFrameAnalysisResult(tvisJsonVO, cutVehs);
         // 转变为图像识别结果模式
         return vfv;
     }

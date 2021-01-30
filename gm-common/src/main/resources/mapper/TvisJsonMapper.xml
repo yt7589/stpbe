@@ -49,8 +49,27 @@
     <select id="getLatestStreamFrame" resultMap="tvisJsonVOMap">
         select tvis_json_id, occur_time, camera_id, image_hash,
         json_hash, pts
-        from ${tblName} where stream_id=#{streamId} and tvis_json_id=
-        (select max(tvis_json_id) from ${tblName})
+        from ${tblName} where tvis_json_id=
+        (select max(tvis_json_id) from ${tblName} where stream_id=#{streamId})
+    </select>
+
+    <select id="getLatestCameraFrame" resultMap="tvisJsonVOMap">
+        select tvis_json_id, occur_time, camera_id, image_hash,
+        json_hash, pts
+        from ${tblName} where tvis_json_id=
+        (select max(tvis_json_id) from ${tblName} where camera_id=#{cameraId})
+    </select>
+
+    <select id="getPrevStreamFrame" resultMap="tvisJsonVOMap">
+        select tvis_json_id, occur_time, camera_id, image_hash,
+        json_hash, pts
+        from ${tblName} where camera_id=#{cameraId} and tvis_json_id &lt; #{baseTvisJsonId} limit 0, 1
+    </select>
+
+    <select id="getNextStreamFrame" resultMap="tvisJsonVOMap">
+        select tvis_json_id, occur_time, camera_id, image_hash,
+        json_hash, pts
+        from ${tblName} where camera_id=#{cameraId} and tvis_json_id > #{baseTvisJsonId} limit 0, 1
     </select>
 
 </mapper>

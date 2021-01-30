@@ -1,28 +1,17 @@
 package com.zhuanjingkj.stpbe.tmdp.task;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zhuanjingkj.stpbe.common.AppConst;
-import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
-import com.zhuanjingkj.stpbe.common.net.IpfsClient;
-import com.zhuanjingkj.stpbe.common.tvis.TvisSodImage;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
 import com.zhuanjingkj.stpbe.data.vo.*;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +51,7 @@ public class VideoAnalysisTask implements Runnable {
     public void runVideoAnalysisTask() {
         logger.info("### 视频分析定时任务1 time=" + (System.currentTimeMillis() - prevTime) + "!");
         prevTime = System.currentTimeMillis();
-        WsmVideoFrameVO vfv = null;
+        WsmVideoFrameDTO vfv = null;
         for (String streamId : streamIds) {
             vfv = TvisUtil.getTvisVideoAnalysisResult(tvisJsonMapper, streamIds, cutVehs, Long.parseLong(streamId));
             List<WebSocketSession> wsss = streamWsss.get("" + streamId);

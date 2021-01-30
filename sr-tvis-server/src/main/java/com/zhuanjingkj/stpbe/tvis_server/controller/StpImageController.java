@@ -3,7 +3,7 @@ package com.zhuanjingkj.stpbe.tvis_server.controller;
 
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.SubmitImageDTO;
-import com.zhuanjingkj.stpbe.tvis_server.dto.TvisAnalysisResultDTO;
+import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
 import com.zhuanjingkj.stpbe.tvis_server.service.impl.StpImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +73,7 @@ public class StpImageController {
     }
 
     @GetMapping("/getTvisAnalysisResult")
-    public ResultDTO<TvisAnalysisResultDTO> getTvisAnalysisResult(
+    public ResultDTO<WsmVideoFrameDTO> getTvisAnalysisResult(
             @RequestParam("p") String platform,
             @RequestParam("v") String version,
             @RequestParam("cameraId") long cameraId,
