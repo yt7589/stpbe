@@ -8,7 +8,9 @@ import com.zhuanjingkj.stpbe.tmdp.service.ITmdpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TmdpService implements ITmdpService {
     private final static String LIST_VEHICLE_RECOGNITION = "vehicle-recognition-list";
     private final static Logger logger = LoggerFactory.getLogger(TmdpService.class);
