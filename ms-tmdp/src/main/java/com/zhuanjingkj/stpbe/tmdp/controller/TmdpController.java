@@ -4,13 +4,10 @@ import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 import com.zhuanjingkj.stpbe.data.dto.CreateRtspBindDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
 import com.zhuanjingkj.stpbe.data.rto.CreateRtspBindRTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.*;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.DkTitfService;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtieService;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVtpService;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.DkVttfService;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.TvisSdkService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +40,8 @@ public class TmdpController {
     @Autowired
     private TvisSdkService tvisSdkService;
     @Autowired
+    private TmdpService tmdpService;
+    @Autowired
     private TvisJsonMapper tvisJsonMapper;
     private final static Logger logger = LoggerFactory.getLogger(TmdpController.class);
     @Value("${base-image-folder}")
@@ -68,6 +67,33 @@ public class TmdpController {
                 .contentType(MediaType.parseMediaType("image/jpeg")).
                         body(new FileSystemResource(imgFile));
     }
+
+
+
+    @GetMapping("/getTvisAnalysisResult")
+    public ResultDTO<WsmVideoFrameDTO> getTvisAnalysisResult(
+            @RequestParam("p") String platform,
+            @RequestParam("v") String version,
+            @RequestParam("cameraId") long cameraId,
+            @RequestParam("tvisJsonId") long tvisJsonId,
+            @RequestParam("direction") int direction
+    ) {
+        return tmdpService.getTvisAnalysisResult(cameraId, tvisJsonId, direction);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping("/t001")
     public ResultDTO<BaseDTO> t001(
