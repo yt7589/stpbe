@@ -6,7 +6,7 @@ import com.zhuanjingkj.stpbe.common.mapper.KsVcMapper;
 import com.zhuanjingkj.stpbe.common.mapper.KsvssKsvrpMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.tebs.util.PropUtil;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
