@@ -261,9 +261,13 @@ public class DkRtvrObserver implements ITvisStpObserver {
 
     private void insertViolation(VehicleVo vo, Integer cameraId, String hphm, String wzlx, String vType, /**String imageHash,
                                  String jsonHash,*/ String tblName, Integer category, String date) {
+        String psfx = vo.getVehicleWztzVo().getPsfx();
+        if (null == psfx || psfx.equals("")) {
+            psfx = "3";
+        }
         dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(),cameraId, hphm,
                 vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
-                vo.getVehicleWztzVo().getPsfx(), vo.getVehicleWztzVo().getClwz(), wzlx, vType, category, tblName, date);
+                psfx, vo.getVehicleWztzVo().getClwz(), wzlx, vType, category, tblName, date);
     }
 
 }
