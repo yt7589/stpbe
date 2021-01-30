@@ -3,14 +3,12 @@ package com.zhuanjingkj.stpbe.tvis_server.controller;
 
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.SubmitImageDTO;
+import com.zhuanjingkj.stpbe.tvis_server.dto.TvisAnalysisResultDTO;
 import com.zhuanjingkj.stpbe.tvis_server.service.impl.StpImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -18,7 +16,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/stp")
@@ -27,6 +24,7 @@ public class StpImageController {
     @Autowired
     private StpImageService stpImageService;
     private static long seq = 0;
+
     /**
      * 抓拍机上传图片，返回图片处理是否成功
      * @param gcxh
@@ -72,5 +70,16 @@ public class StpImageController {
         logger.info("#Yt#: step 1.3 image=" + imageFile.getAbsolutePath() + "!");
         logger.info("#Yt#: step 2");
         return stpImageService.submitImage(cameraId, "0", mrhpt, hphm, data, imageFile.getAbsolutePath());
+    }
+
+    @GetMapping("/getTvisAnalysisResult")
+    public ResultDTO<TvisAnalysisResultDTO> getTvisAnalysisResult(
+            @RequestParam("p") String platform,
+            @RequestParam("v") String version,
+            @RequestParam("cameraId") long cameraId,
+            @RequestParam("tvisJsonId") long tvisJsonId,
+            @RequestParam("direction") int direction
+    ) {
+        return stpImageService.getTvisAnalysisResult(cameraId, tvisJsonId, direction);
     }
 }

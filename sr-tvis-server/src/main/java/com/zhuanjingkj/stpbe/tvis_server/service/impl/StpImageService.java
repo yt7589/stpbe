@@ -9,6 +9,8 @@ import com.zhuanjingkj.stpbe.common.tvis.TvisStpOberverManager;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.SubmitImageDTO;
+import com.zhuanjingkj.stpbe.tvis_server.dto.TvisAnalysisItemDTO;
+import com.zhuanjingkj.stpbe.tvis_server.dto.TvisAnalysisResultDTO;
 import com.zhuanjingkj.stpbe.tvis_server.service.IStpImageService;
 import com.zhuanjingkj.stpbe.tvis_server.vo.TvisImageErrorResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -77,5 +79,31 @@ public class StpImageService implements IStpImageService {
         TvisUtil.processStpTvisJson(observers, msg.toString());
         data.setTvisJsonId(tvisJsonId);
         return rst;
+    }
+
+    /**
+     * 获取指定摄像头的识别结果供前端进行显示（路网实况=》图像分析中）
+     * @param cameraId 摄像头编号
+     * @param baseTvisJsonId 参考识别结果编号
+     * @param direction 0：最新；1：前一张；2：后一张
+     * @return
+     */
+    @Override
+    public ResultDTO<TvisAnalysisResultDTO> getTvisAnalysisResult(long cameraId, long baseTvisJsonId, int direction) {
+        ResultDTO<TvisAnalysisResultDTO> dto = new ResultDTO<>();
+        TvisAnalysisResultDTO data = new TvisAnalysisResultDTO();
+        data.setTvisJsonId(108);
+        data.setOriginImageUrl("http://a.jpg");
+        TvisAnalysisItemDTO item = null;
+        List<TvisAnalysisItemDTO> items = new ArrayList<>();
+        for (int i=0; i<5; i++) {
+            item = new TvisAnalysisItemDTO(100 + i, 200 + i,
+                    "http://b" + i + ".jpg", "京00" + i,
+                    "5" + i + "秒前", "无违章" + i);
+            items.add(item);
+        }
+        data.setItems(items);
+        dto.setData(data);
+        return dto;
     }
 }
