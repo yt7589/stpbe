@@ -160,7 +160,10 @@ public class TvisUtil {
             streamId = Long.parseLong(streamIdStr);
         } catch (Exception ex) {}
         String ptsStr = rstJo.getString("TimeStamp");
-        long pts = Long.parseLong(ptsStr);
+        long pts = 0;
+        try {
+            pts = Long.parseLong(ptsStr);
+        } catch (Exception ex) {}
         TvisJsonVO vo = new TvisJsonVO(AppRegistry.tvisJsonTblName, tvisJsonId, occurTime,
                 cameraId, streamId, pts, imageHash.toString(), jsonHash.toString());
         tvisJsonMapper.insertTvisJson(vo);
