@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.tp;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
@@ -11,6 +11,10 @@ public class TpTfStDTO extends BaseDTO {
     private String name;
     @JSONField(name = "count")
     private Integer count;
+
+    public TpTfStDTO() {
+        super();
+    }
 
     public TpTfStDTO(String name, Integer count) {
         this.name = name;

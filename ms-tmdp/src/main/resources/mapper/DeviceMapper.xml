@@ -1,222 +1,222 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhuanjingkj.stpbe.tmdp.mapper.DeviceMapper">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DeviceMapper">
 
-    <select id="getDevice" resultType="com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO">
-        select
-        t_camera.camera_id as cameraId,
-        t_camera.camera_code as cameraCode,
-        t_camera.rtp_push_addr as rtpPushAddr,
-        t_camera.camera_type_id as cameraTypeId,
-        t_camera.direction as direction,
-        t_camera.vehicle_direction as vehicleDirection,
-        t_camera.site_id as siteId,
-        t_camera.city as city,
-        t_site.site_name as siteName,
-        t_camera_type.camera_type_name as cameraTypeName
-        from
-        t_camera,
-        t_camera_type,
-        t_site
-        where
-        t_camera.camera_type_id = t_camera_type.camera_type_id
-        and
-        t_camera.site_id = t_site.site_id
-        <if test="cameraTypeId != null">
-            and t_camera.camera_type_id = #{cameraTypeId}
-        </if>
+<!--    <select id="getDevice" resultType="com.zhuanjingkj.stpbe.tmdp.dto.camera.CameraDTO">-->
+<!--        select-->
+<!--        t_camera.camera_id as cameraId,-->
+<!--        t_camera.camera_code as cameraCode,-->
+<!--        t_camera.rtp_push_addr as rtpPushAddr,-->
+<!--        t_camera.camera_type_id as cameraTypeId,-->
+<!--        t_camera.direction as direction,-->
+<!--        t_camera.vehicle_direction as vehicleDirection,-->
+<!--        t_camera.site_id as siteId,-->
+<!--        t_camera.city as city,-->
+<!--        t_site.site_name as siteName,-->
+<!--        t_camera_type.camera_type_name as cameraTypeName-->
+<!--        from-->
+<!--        t_camera,-->
+<!--        t_camera_type,-->
+<!--        t_site-->
+<!--        where-->
+<!--        t_camera.camera_type_id = t_camera_type.camera_type_id-->
+<!--        and-->
+<!--        t_camera.site_id = t_site.site_id-->
+<!--        <if test="cameraTypeId != null">-->
+<!--            and t_camera.camera_type_id = #{cameraTypeId}-->
+<!--        </if>-->
 
-        <if test="cameraCode != null and cameraCode != ''">
-            and t_camera.camera_code = #{cameraCode}
-        </if>
-    </select>
+<!--        <if test="cameraCode != null and cameraCode != ''">-->
+<!--            and t_camera.camera_code = #{cameraCode}-->
+<!--        </if>-->
+<!--    </select>-->
 
-    <select id="getDeviceType" resultType="com.zhuanjingkj.stpbe.data.entity.CameraType">
-        select
-        camera_type_id as cameraTypeId,
-        camera_type_name as cameraTypeName
-        from
-        t_camera_type
-    </select>
+<!--    <select id="getDeviceType" resultType="com.zhuanjingkj.stpbe.data.entity.CameraType">-->
+<!--        select-->
+<!--        camera_type_id as cameraTypeId,-->
+<!--        camera_type_name as cameraTypeName-->
+<!--        from-->
+<!--        t_camera_type-->
+<!--    </select>-->
 
-    <delete id="deleteDevice" parameterType="java.lang.Integer">
-        DELETE FROM t_camera WHERE camera_id=#{cameraId}
-    </delete>
+<!--    <delete id="deleteDevice" parameterType="java.lang.Integer">-->
+<!--        DELETE FROM t_camera WHERE camera_id=#{cameraId}-->
+<!--    </delete>-->
 
-    <insert id="insertDevice" parameterType="com.zhuanjingkj.stpbe.tmdp.rto.CameraRTO">
-        insert into
-        t_camera
-        (
-        camera_code,
-        site_id,
-        start_time,
-        end_time,
-        rec_state,
-        rtsp_url,
-        rtp_push_addr,
-        web_url,
-        ftp_url,
-        upload_url,
-        status,
-        region_id,
-        direction,
-        camera_type_id,
-        vehicle_direction,
-        city)
-        values
-        (
-            #{cameraCode},
-            #{siteId},
-            #{startTime},
-            #{endTime},
-            #{recState},
-            #{rtspUrl},
-            #{rtpPushAddr},
-            #{webUrl},
-            #{ftpUrl},
-            #{uploadUrl},
-            #{status},
-            #{regionId},
-            #{direction},
-            #{cameraTypeId},
-            #{vehicleDirection},
-            #{city}
-        )
-    </insert>
+<!--    <insert id="insertDevice" parameterType="com.zhuanjingkj.stpbe.tmdp.rto.CameraRTO">-->
+<!--        insert into-->
+<!--        t_camera-->
+<!--        (-->
+<!--        camera_code,-->
+<!--        site_id,-->
+<!--        start_time,-->
+<!--        end_time,-->
+<!--        rec_state,-->
+<!--        rtsp_url,-->
+<!--        rtp_push_addr,-->
+<!--        web_url,-->
+<!--        ftp_url,-->
+<!--        upload_url,-->
+<!--        status,-->
+<!--        region_id,-->
+<!--        direction,-->
+<!--        camera_type_id,-->
+<!--        vehicle_direction,-->
+<!--        city)-->
+<!--        values-->
+<!--        (-->
+<!--            #{cameraCode},-->
+<!--            #{siteId},-->
+<!--            #{startTime},-->
+<!--            #{endTime},-->
+<!--            #{recState},-->
+<!--            #{rtspUrl},-->
+<!--            #{rtpPushAddr},-->
+<!--            #{webUrl},-->
+<!--            #{ftpUrl},-->
+<!--            #{uploadUrl},-->
+<!--            #{status},-->
+<!--            #{regionId},-->
+<!--            #{direction},-->
+<!--            #{cameraTypeId},-->
+<!--            #{vehicleDirection},-->
+<!--            #{city}-->
+<!--        )-->
+<!--    </insert>-->
 
-    <select id="getSite" resultType="com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteInfoDTO" parameterType="java.lang.Integer">
-        select
-        site_id as siteId,
-        site_name as siteName,
-        lng,
-        lat,
-        region_id as regionId,
-        region_name as regionName
-        from
-        t_site,
-        t_region
-        where
-        t_site.region_id = t_region.id
-        and
-        t_site.site_id = #{siteId}
-    </select>
+<!--    <select id="getSite" resultType="com.zhuanjingkj.stpbe.tmdp.dto.camera.SiteInfoDTO" parameterType="java.lang.Integer">-->
+<!--        select-->
+<!--        site_id as siteId,-->
+<!--        site_name as siteName,-->
+<!--        lng,-->
+<!--        lat,-->
+<!--        region_id as regionId,-->
+<!--        region_name as regionName-->
+<!--        from-->
+<!--        t_site,-->
+<!--        t_region-->
+<!--        where-->
+<!--        t_site.region_id = t_region.id-->
+<!--        and-->
+<!--        t_site.site_id = #{siteId}-->
+<!--    </select>-->
 
-    <update id="updateDevice" parameterType="com.zhuanjingkj.stpbe.tmdp.rto.CameraRTO">
-        update t_camera
-        set
-        <if test="cameraCode != null and cameraCode!=''">
-            camera_code = #{cameraCode},
-        </if>
-        <if test="siteId != null ">
-            site_id =  #{siteId},
-        </if>
-        <if test="startTime != null and startTime!=''">
-            start_time = #{startTime},
-        </if>
-        <if test="endTime != null and endTime!=''">
-            end_time = #{endTime},
-        </if>
-        <if test="recState != null">
-            rec_state = #{recState},
-        </if>
-        <if test="rtspUrl != null and rtspUrl!=''">
-            rtsp_url = #{rtspUrl},
-        </if>
-        <if test="rtpPushAddr != null and rtpPushAddr!=''">
-            rtp_push_addr = #{rtpPushAddr},
-        </if>
-        <if test="webUrl != null and webUrl!=''">
-            web_url = #{webUrl},
-        </if>
-        <if test="ftpUrl != null and ftpUrl!=''">
-            ftp_url = #{ftpUrl},
-        </if>
-        <if test="uploadUrl != null and uploadUrl!=''">
-            upload_url = #{uploadUrl},
-        </if>
-        <if test="status != null and status!=''">
-            status = #{status},
-        </if>
-        <if test="regionId != null and regionId!=''">
-            region_id = #{regionId},
-        </if>
-        <if test="direction != null and direction!=''">
-            direction = #{direction},
-        </if>
+<!--    <update id="updateDevice" parameterType="com.zhuanjingkj.stpbe.tmdp.rto.CameraRTO">-->
+<!--        update t_camera-->
+<!--        set-->
+<!--        <if test="cameraCode != null and cameraCode!=''">-->
+<!--            camera_code = #{cameraCode},-->
+<!--        </if>-->
+<!--        <if test="siteId != null ">-->
+<!--            site_id =  #{siteId},-->
+<!--        </if>-->
+<!--        <if test="startTime != null and startTime!=''">-->
+<!--            start_time = #{startTime},-->
+<!--        </if>-->
+<!--        <if test="endTime != null and endTime!=''">-->
+<!--            end_time = #{endTime},-->
+<!--        </if>-->
+<!--        <if test="recState != null">-->
+<!--            rec_state = #{recState},-->
+<!--        </if>-->
+<!--        <if test="rtspUrl != null and rtspUrl!=''">-->
+<!--            rtsp_url = #{rtspUrl},-->
+<!--        </if>-->
+<!--        <if test="rtpPushAddr != null and rtpPushAddr!=''">-->
+<!--            rtp_push_addr = #{rtpPushAddr},-->
+<!--        </if>-->
+<!--        <if test="webUrl != null and webUrl!=''">-->
+<!--            web_url = #{webUrl},-->
+<!--        </if>-->
+<!--        <if test="ftpUrl != null and ftpUrl!=''">-->
+<!--            ftp_url = #{ftpUrl},-->
+<!--        </if>-->
+<!--        <if test="uploadUrl != null and uploadUrl!=''">-->
+<!--            upload_url = #{uploadUrl},-->
+<!--        </if>-->
+<!--        <if test="status != null and status!=''">-->
+<!--            status = #{status},-->
+<!--        </if>-->
+<!--        <if test="regionId != null and regionId!=''">-->
+<!--            region_id = #{regionId},-->
+<!--        </if>-->
+<!--        <if test="direction != null and direction!=''">-->
+<!--            direction = #{direction},-->
+<!--        </if>-->
 
-        <if test="cameraTypeId != null">
-            camera_type_id = #{cameraTypeId},
-        </if>
+<!--        <if test="cameraTypeId != null">-->
+<!--            camera_type_id = #{cameraTypeId},-->
+<!--        </if>-->
 
-        <if test="vehicleDirection != null">
-            vehicle_direction = #{vehicleDirection},
-        </if>
-        <if test="city != null and city!=''">
-            city = #{city}
-        </if>
-        where
-        camera_id = #{cameraId}
-    </update>
+<!--        <if test="vehicleDirection != null">-->
+<!--            vehicle_direction = #{vehicleDirection},-->
+<!--        </if>-->
+<!--        <if test="city != null and city!=''">-->
+<!--            city = #{city}-->
+<!--        </if>-->
+<!--        where-->
+<!--        camera_id = #{cameraId}-->
+<!--    </update>-->
 
-    <select id="getDeviceById" resultType="java.lang.Integer" parameterType="java.lang.Integer">
-        select
-        camera_id
-        from
-        t_camera
-        where
-        camera_id = #{cameraId}
-    </select>
+<!--    <select id="getDeviceById" resultType="java.lang.Integer" parameterType="java.lang.Integer">-->
+<!--        select-->
+<!--        camera_id-->
+<!--        from-->
+<!--        t_camera-->
+<!--        where-->
+<!--        camera_id = #{cameraId}-->
+<!--    </select>-->
 
-    <select id="getRegion" resultType="com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO">
-        select
-        t.id as id,
-        t.region_name as regionName,
-        t.parent_id as parentId,
-        t.level as level ,
-        t.is_emphasis_region as isEmphasisRegion,
-        t1.region_name as parentRegionName,
-        t1.level as parentLevel
-        FROM
-        t_region t
-        LEFT JOIN t_region t1 ON t.parent_id = t1.id
-    </select>
+<!--    <select id="getRegion" resultType="com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO">-->
+<!--        select-->
+<!--        t.id as id,-->
+<!--        t.region_name as regionName,-->
+<!--        t.parent_id as parentId,-->
+<!--        t.level as level ,-->
+<!--        t.is_emphasis_region as isEmphasisRegion,-->
+<!--        t1.region_name as parentRegionName,-->
+<!--        t1.level as parentLevel-->
+<!--        FROM-->
+<!--        t_region t-->
+<!--        LEFT JOIN t_region t1 ON t.parent_id = t1.id-->
+<!--    </select>-->
 
-    <delete id="deleteRegion" parameterType="java.lang.Integer">
-        delete
-        from
-        t_region
-        where
-        id=#{id}
-    </delete>
+<!--    <delete id="deleteRegion" parameterType="java.lang.Integer">-->
+<!--        delete-->
+<!--        from-->
+<!--        t_region-->
+<!--        where-->
+<!--        id=#{id}-->
+<!--    </delete>-->
 
-    <select id="getRegionByParentId" resultType="com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO" parameterType="com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO">
-        select
-        t.id as id,
-        t.region_name as regionName,
-        t.parent_id as parentId,
-        t.level as level ,
-        t.is_emphasis_region as isEmphasisRegion,
-        t1.region_name as parentRegionName,
-        t1.level as parentLevel
-        FROM
-        t_region t
-        LEFT JOIN t_region t1 ON t.parent_id = t1.id
-        where
-        1=1
-        <if test="id != null">
-            and t.parent_id = #{id}
-        </if>
-        <if test="regionName != null and regionName!=''">
-            and t.region_name = #{regionName}
-        </if>
-        <if test="parentId != null">
-            and t.parent_id = #{parentId}
-        </if>
-        <if test="level != null">
-            and t.level = #{level}
-        </if>
-        <if test="isEmphasisRegion != null">
-            and t.is_emphasis_region = #{isEmphasisRegion}
-        </if>
-    </select>
+<!--    <select id="getRegionByParentId" resultType="com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO" parameterType="com.zhuanjingkj.stpbe.tmdp.dto.RegionBaseDTO">-->
+<!--        select-->
+<!--        t.id as id,-->
+<!--        t.region_name as regionName,-->
+<!--        t.parent_id as parentId,-->
+<!--        t.level as level ,-->
+<!--        t.is_emphasis_region as isEmphasisRegion,-->
+<!--        t1.region_name as parentRegionName,-->
+<!--        t1.level as parentLevel-->
+<!--        FROM-->
+<!--        t_region t-->
+<!--        LEFT JOIN t_region t1 ON t.parent_id = t1.id-->
+<!--        where-->
+<!--        1=1-->
+<!--        <if test="id != null">-->
+<!--            and t.parent_id = #{id}-->
+<!--        </if>-->
+<!--        <if test="regionName != null and regionName!=''">-->
+<!--            and t.region_name = #{regionName}-->
+<!--        </if>-->
+<!--        <if test="parentId != null">-->
+<!--            and t.parent_id = #{parentId}-->
+<!--        </if>-->
+<!--        <if test="level != null">-->
+<!--            and t.level = #{level}-->
+<!--        </if>-->
+<!--        <if test="isEmphasisRegion != null">-->
+<!--            and t.is_emphasis_region = #{isEmphasisRegion}-->
+<!--        </if>-->
+<!--    </select>-->
 </mapper>

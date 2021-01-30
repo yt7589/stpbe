@@ -5,10 +5,12 @@ import com.zhuanjingkj.stpbe.data.dto.DcStVAreaDTO;
 import com.zhuanjingkj.stpbe.data.dto.DcStVMDTO;
 import com.zhuanjingkj.stpbe.data.dto.DcStVSiteDTO;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
+@Repository
 public interface DcStMapper {
 
     Integer getDeviceCount();

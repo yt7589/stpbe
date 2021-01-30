@@ -1,9 +1,9 @@
-package com.zhuanjingkj.stpbe.tmdp.rto.dm;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.zhuanjingkj.stpbe.data.rto.BaseRTO;
+import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
-public class UpdateDeviceInfoRTO extends BaseRTO {
+public class DmDeviceDTO extends BaseDTO {
     @JSONField(name = "deviceNo")
     private String deviceNo; //设备编号
     @JSONField(name = "cityCode")
@@ -21,8 +21,12 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
     @JSONField(name = "videoUrl")
     private String videoUrl; //视频流地址
 
-    public UpdateDeviceInfoRTO(String deviceNo, String cityCode, String cityName,
-                               String deviceType, String deviceNode, String deviceDirection, String vehicleDirection, String videoUrl) {
+    public DmDeviceDTO() {
+        super();
+    }
+
+    public DmDeviceDTO(String deviceNo, String cityCode, String cityName, String deviceType,
+                       String deviceNode, String deviceDirection, String vehicleDirection, String videoUrl) {
         this.deviceNo = deviceNo;
         this.cityCode = cityCode;
         this.cityName = cityName;

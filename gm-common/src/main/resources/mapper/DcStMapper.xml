@@ -44,7 +44,7 @@
           FROM t_itf_vehicle tif
          WHERE tif.category =1
       GROUP BY tif.camera_id) p
-            ON tc.camera_code = p.camera_id
+            ON tc.camera_id = p.camera_id
      LEFT JOIN t_site ts
             ON ts.site_id = tc.site_id
      LEFT JOIN t_area ta
@@ -63,7 +63,7 @@
 <!--         WHERE tif.category =1-->
       GROUP BY tif.camera_id
              ) p
-            ON tc.camera_code = p.camera_id
+            ON tc.camera_id = p.camera_id
      LEFT JOIN t_site ts
             ON ts.site_id = tc.site_id
       ORDER BY p.`count` DESC

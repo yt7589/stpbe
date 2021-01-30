@@ -1,9 +1,9 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.tp;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
-public class TpTfpsDTO extends BaseDTO {
+public class DcLrSiteDTO extends BaseDTO {
     @JSONField(name = "siteId")
     private long siteId;
     @JSONField(name = "siteName")
@@ -12,8 +12,14 @@ public class TpTfpsDTO extends BaseDTO {
     private double lng;
     @JSONField(name = "lat")
     private double lat;
+    @JSONField(name = "count")
+    private Integer count;
 
-    public TpTfpsDTO(long siteId, String siteName, double lng, double lat) {
+    public DcLrSiteDTO() {
+        super();
+    }
+
+    public DcLrSiteDTO(long siteId, String siteName, double lng, double lat) {
         this.siteId = siteId;
         this.siteName = siteName;
         this.lng = lng;
@@ -50,5 +56,13 @@ public class TpTfpsDTO extends BaseDTO {
 
     public void setLat(double lat) {
         this.lat = lat;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

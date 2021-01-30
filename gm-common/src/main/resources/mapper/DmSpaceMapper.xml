@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DmSpaceMapper">
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.DmAmAreaDTO" id="dmAmDTO">
+        <result column="areaId" property="areaId" jdbcType="INTEGER"/>
+        <result column="areaName" property="areaName" jdbcType="VARCHAR"/>
+        <result column="parentCode" property="parentCode" jdbcType="VARCHAR"/>
+        <result column="parentName" property="parentName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id ="getSpaceArea" resultMap ="dmAmDTO">
+        SELECT ta.area_id AS areaId, ta.area_name AS areaName, tr.area_id AS parentCode, tr.area_name AS parentName
+          FROM t_area ta
+     LEFT JOIN t_area tr ON ta.parent_area_id = tr.area_id
+         WHERE ta.parent_area_id > 0
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getSpaceAreaCount" resultType ="Integer">
+        SELECT COUNT(1) AS `count`
+          FROM t_area ta
+     LEFT JOIN t_area tr
+            ON ta.parent_area_id = tr.area_id
+         WHERE ta.parent_area_id > 0
+    </select>
+
+    <select id ="getSpaceAreaInfo" resultType ="hashmap">
+        SELECT ta.parent_area_id, ta.group_code, ta.`level`
+          FROM t_area ta
+         WHERE ta.area_id =#{parentId}
+    </select>
+
+    <select id ="getSpaceMaxCode" resultType ="String">
+        SELECT group_code
+          FROM t_area ta
+         WHERE ta.group_code LIKE CONCAT(#{code}, '%') ESCAPE '#'
+      ORDER BY group_code DESC
+         LIMIT 1
+    </select>
+
+    <insert id="insertDmSpace" keyProperty="rto.areaId" useGeneratedKeys="true">
+        INSERT INTO t_area(area_name, parent_area_id, group_code, `level`)
+                    VALUES(#{rto.areaName}, #{rto.parentCode}, #{newcode}, #{level})
+    </insert>
+
+    <update id ="updateAreaInfo">
+        UPDATE t_area ta SET ta.area_name =#{areaName}
+         WHERE ta.area_id =#{areaId}
+    </update>
+
+    <delete id ="deleteSpaceArea">
+        DELETE
+          FROM t_area
+         WHERE area_id =#{areaId}
+    </delete>
+</mapper>

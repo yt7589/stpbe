@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace ="com.zhuanjingkj.stpbe.common.mapper.TpMapper">
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.TpTfpsDTO" id="tpDTO">
+        <result column="site_id" property="siteId" jdbcType="INTEGER"/>
+        <result column="site_name" property="siteName" jdbcType="VARCHAR"/>
+        <result column="lng" property="lng" jdbcType="DOUBLE"/>
+        <result column="lat" property="lat" jdbcType="DOUBLE"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id ="getTrafficPrognosis" resultMap ="tpDTO">
+        SELECT ts.site_id, ts.site_name, ts.lng, ts.lat, COUNT(1) AS `count`
+          FROM t_itf_vehicle tiv
+     LEFT JOIN t_camera tc
+            ON tc.camera_id = tiv.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id = ts.site_id
+         WHERE hphm =#{hphm}
+           AND tiv.occur_time >= #{startTime} AND #{endTime} >= tiv.occur_time
+      GROUP BY ts.site_id
+    </select>
+</mapper>

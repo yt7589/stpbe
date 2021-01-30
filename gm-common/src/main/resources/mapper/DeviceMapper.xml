@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DeviceMapper">
+    <resultMap id="deviceDTO" type="com.zhuanjingkj.stpbe.data.dto.DmDeviceDTO">
+        <result column="camera_id" property="deviceNo" jdbcType="INTEGER"/>
+        <result column="area_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="camera_type_name" property="deviceType" jdbcType="VARCHAR"/>
+        <result column="site_name" property="deviceNode" jdbcType="VARCHAR"/>
+        <result column="dname" property="deviceDirection" jdbcType="VARCHAR"/>
+        <result column="sc_type_name" property="vehicleDirection" jdbcType="VARCHAR"/>
+        <result column="rtsp_url" property="videoUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.DmDeviceTypeDTO" id="deviceTypeDTO" >
+        <result column="camera_type" property="dtId" jdbcType="INTEGER"/>
+        <result column="camera_type_name" property="dtName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.DmDeviceNodeDTO" id="deviceNodeDTO" >
+        <result column="site_id" property="deviceNodeId" jdbcType="INTEGER"/>
+        <result column="site_name" property="deviceNodeName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id ="getDmDevice" resultMap ="deviceDTO">
+        SELECT tc.camera_id, ta.area_name, tct.camera_type_name, ts.site_name,
+               case td.direction_name
+               when 'east' then '东'
+               when 'esatsouth' then '东南'
+               when 'eastnorth' then '东北'
+               when 'west' then '西'
+               when 'westsouth' then '西南'
+               when 'westnorth' then '西北'
+               when 'north' then '北'
+               when 'south' then '南'
+               else '无'
+               end 'dname', tst.sc_type_name, tc.rtsp_url
+          FROM t_camera tc
+     LEFT JOIN t_site ts
+            ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta
+            ON ts.area_id = ta.area_id
+     LEFT JOIN t_sc_type tst
+            ON tc.sc_type_id = tst.sc_type_id
+     LEFT JOIN t_camera_type tct
+            ON tc.camera_type_id = tct.camera_type
+     LEFT JOIN t_direction td
+            ON tc.direction_id = td.direction_id
+         WHERE 1 = 1
+            <if test="type != null and type != ''">
+                AND tc.camera_type_id =#{type}
+            </if>
+            <if test="code != null and code != ''">
+                AND tc.camera_id =#{code}
+            </if>
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getDmDeviceCount" resultType ="Integer">
+        SELECT count(1)
+          FROM t_camera tc
+     LEFT JOIN t_site ts
+            ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta
+            ON ts.area_id = ta.area_id
+     LEFT JOIN t_sc_type tst
+            ON tc.sc_type_id = tst.sc_type_id
+     LEFT JOIN t_camera_type tct
+            ON tc.camera_type_id = tct.camera_type
+     LEFT JOIN t_direction td
+            ON tc.direction_id = td.direction_id
+         WHERE 1 = 1
+            <if test="type != null and type != ''">
+                AND tc.camera_type_id =#{type}
+            </if>
+            <if test="code != null and code != ''">
+                AND tc.camera_id =#{code}
+            </if>
+    </select>
+
+    <delete id ="deleteDevice">
+        DELETE
+          FROM t_camera
+         WHERE camera_id =#{deviceNo}
+    </delete>
+
+    <insert id="addDevice" useGeneratedKeys="true" keyProperty="rto.deviceId">
+        INSERT INTO t_camera(camera_code, camera_type_id, site_id, direction_id, sc_type_id, rtsp_url)
+                      VALUES(#{rto.deviceNo}, #{rto.deviceType}, #{rto.deviceNode}, #{rto.deviceDirection}, #{rto.vehicleDirection}, #{rto.dtUrl})
+    </insert>
+
+    <select id ="getDmDeviceType" resultMap="deviceTypeDTO">
+        SELECT tct.camera_type, tct.camera_type_name
+          FROM t_camera_type tct
+    </select>
+
+    <select id ="queryDeviceNode" resultMap ="deviceNodeDTO">
+        SELECT ts.site_id, ts.site_name
+          FROM t_site ts
+    </select>
+
+    <update id="updateDeviceInfo" parameterType="com.zhuanjingkj.stpbe.data.rto.dm.UpdateDeviceInfoRTO">
+        UPDATE t_camera tc
+           SET
+            <if test="rto.deviceNo != null and rto.deviceNo != ''">
+                tc.camera_code =#{rto.deviceNo},
+            </if>
+            <if test="rto.deviceNode != null and rto.deviceNode != ''">
+                tc.site_id =#{rto.deviceNode},
+            </if>
+            <if test="rto.deviceDirection != null and rto.deviceDirection != ''">
+                tc.direction_id =#{rto.deviceDirection},
+            </if>
+            <if test="rto.vehicleDirection != null and rto.vehicleDirection != ''">
+                tc.sc_type_id =#{rto.vehicleDirection},
+            </if>
+            <if test="rto.deviceType != null and rto.deviceType != ''">
+                tc.camera_type_id =#{rto.deviceType},
+            </if>
+            <if test="rto.videoUrl != null and rto.videoUrl != ''">
+                tc.rtsp_url =#{rto.videoUrl}
+            </if>
+         WHERE tc.camera_id = #{rto.deviceId}
+    </update>
+</mapper>
