@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tebs.util;
+package com.zhuanjingkj.stpbe.common.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +26,7 @@ public class PropUtil {
         } catch (Exception e) {
             log.error("读取属性文件错误:",e);
         }
+        log.info("############ value=" + value + "!!!!!!!!!!!!!!!!!!");
         return value;
     }
 
