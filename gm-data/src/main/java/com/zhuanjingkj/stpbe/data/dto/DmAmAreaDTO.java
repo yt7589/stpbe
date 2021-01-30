@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.dm;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
@@ -16,6 +16,10 @@ public class DmAmAreaDTO extends BaseDTO {
     private String parentCode; // 区域父节点code
     @JSONField(name = "parentName")
     private String parentName; // 区域父节点名称
+
+    public DmAmAreaDTO() {
+        super();
+    }
 
     public DmAmAreaDTO(long areaId, String areaName, String parentCode, String parentName) {
         this.areaId = areaId;

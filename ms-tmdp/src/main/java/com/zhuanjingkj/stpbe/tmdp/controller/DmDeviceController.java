@@ -5,12 +5,11 @@ import com.zhuanjingkj.stpbe.data.dto.DbInsertResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.FileExpDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.dm.DmDeviceDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.dm.DmDeviceNodeDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.dm.DmDeviceTypeDTO;
-import com.zhuanjingkj.stpbe.tmdp.rto.dm.AddDeviceToDsRTO;
+import com.zhuanjingkj.stpbe.data.dto.DmDeviceDTO;
+import com.zhuanjingkj.stpbe.data.rto.dm.AddDeviceToDsRTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.dm.DeleteDeviceFromDsRTO;
-import com.zhuanjingkj.stpbe.tmdp.rto.dm.UpdateDeviceInfoRTO;
+import com.zhuanjingkj.stpbe.data.rto.dm.UpdateDeviceInfoRTO;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.DeviceService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
 import com.zhuanjingkj.stpbe.tmdp.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Device Management
@@ -31,6 +29,9 @@ import java.util.Map;
 @RequestMapping(value = "/dm")
 @CrossOrigin(origins = "*")
 public class DmDeviceController {
+
+    @Autowired
+    private DeviceService deviceService;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -52,7 +53,7 @@ public class DmDeviceController {
         @RequestParam(name = "type", required = false) String type,
         @RequestParam(name = "code", required = false) String code
     ) {
-        return queryDevice_exp();
+        return queryDevice_exp(startIndex, amount, direction, type, code);
     }
 
     /**
@@ -167,94 +168,27 @@ public class DmDeviceController {
         return updateDeviceInfo_exp(rto);
     }
 
-    private ResultDTO<DbQrsDTO> queryDevice_exp() {
-        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
-        List<DmDeviceDTO> recs = new ArrayList<>();
-        recs.add(new DmDeviceDTO("JHSD0001","JHS0001","北京市海淀区","视频监控",
-                "北京市海淀区西二旗街道19号","东南","车头","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0002","JHS0001","北京市海淀区","卡口相机",
-                "北京市海淀区上地街道39号","东北","车尾","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0003","JHS0001","北京市海淀区","卡口相机",
-                "北京市海淀区西直门街道29号","东南","车头","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0004","JHS0001","北京市海淀区","卡口相机",
-                "北京市海淀区知春路街道109号","西南","车尾","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0005","JHS0001","北京市朝阳区","视频监控",
-                "北京市朝阳区东湖区99号","东","车尾","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0006","JHS0001","北京市昌平区","视频监控",
-                "北京市昌平区北七家街道21号","南","车头","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0007","JHS0001","北京市海淀区","视频监控",
-                "北京市海淀区知春路街道109号","西","车尾","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0008","JHS0001","北京市海淀区","卡口相机",
-                "海淀区上地8街8号位","北","车头","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0009","JHS0001","北京市海淀区","视频监控",
-                "北京市海淀区西直门街道29号","北","车头","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0010","JHS0001","北京市海淀区","卡口相机",
-                "北京市海淀区西二旗街道19号","东","车尾","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0011","JHS0001","北京市朝阳","视频监控",
-                "北京市望京街道59号","东南","车尾","http://192.168.11.117:8080/resf"));
-
-        data.setRecs(recs);
-        dto.setData(data);
-        return dto;
+    private ResultDTO<DbQrsDTO> queryDevice_exp(Integer startIndex, Integer amount, Integer direction, String type, String code) {
+        return deviceService.queryDevice_exp(startIndex, amount, direction, type, code);
     }
 
     private ResultDTO<DbDeleteResultDTO> deleteDevice_exp(DeleteDeviceFromDsRTO rto) {
-        System.out.println("deviceno:" + rto.getDeviceNo());
-        ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<DbDeleteResultDTO>();
-        DbDeleteResultDTO data = new DbDeleteResultDTO(0);
-        dto.setData(data);
-        return dto;
+        return deviceService.deleteDevice_exp(rto);
     }
 
     private ResultDTO<DbInsertResultDTO> addDevice_exp(AddDeviceToDsRTO rto) {
-        System.out.println(rto.getDeviceNo());
-        ResultDTO<DbInsertResultDTO> dto = new ResultDTO<>();
-        DbInsertResultDTO data = new DbInsertResultDTO(10,1);
-        dto.setData(data);
-        return dto;
+        return deviceService.addDevice_exp(rto);
     }
 
     public ResultDTO<DbQrsDTO> queryDeviceNode_exp() {
-        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
-        List<DmDeviceNodeDTO> recs = new ArrayList<>();
-        recs.add(new DmDeviceNodeDTO("DN00015", "海淀区上地八街1号位"));
-        recs.add(new DmDeviceNodeDTO("DN00016", "海淀区上地八街2号位"));
-        recs.add(new DmDeviceNodeDTO("DN00017", "海淀区上地八街3号位"));
-        recs.add(new DmDeviceNodeDTO("DN00018", "海淀区上地八街4号位"));
-        recs.add(new DmDeviceNodeDTO("DN00019", "海淀区上地八街5号位"));
-        recs.add(new DmDeviceNodeDTO("DN00014", "海淀区上地八街6号位"));
-        data.setRecs(recs);
-        dto.setData(data);
-        return dto;
+        return deviceService.queryDeviceNode_exp();
     }
 
     private ResultDTO<DbQrsDTO> queryDeviceType_exp() {
-        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
-        List<DmDeviceTypeDTO> recs = new ArrayList<>();
-        recs.add(new DmDeviceTypeDTO("DT0001", "卡口相机"));
-        recs.add(new DmDeviceTypeDTO("DT0002", "视频监控"));
-        data.setRecs(recs);
-        dto.setData(data);
-        return dto;
+        return deviceService.queryDeviceType_exp();
     }
 
     private ResultDTO<DbDeleteResultDTO> updateDeviceInfo_exp(UpdateDeviceInfoRTO rto) {
-        ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
-        DbDeleteResultDTO data = new DbDeleteResultDTO(0);
-        dto.setData(data);
-        return  dto;
+        return  deviceService.updateDeviceInfo_exp(rto);
     }
 }

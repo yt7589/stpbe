@@ -20,6 +20,8 @@ public class DateUtil {
 	private static DateTimeFormatter dtfMd = DateTimeFormatter.ofPattern("MM-dd");
 
 	private static DateTimeFormatter dtfYm = DateTimeFormatter.ofPattern("yyyy-MM");
+
+	private static DateTimeFormatter dtfHm = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 	
 	/**
 	 * 获取当前时间字符串 2021-01-28 10:03:42
@@ -90,6 +92,17 @@ public class DateUtil {
 	public static String plusDays(String date, Integer num){
 		LocalDateTime ldt = LocalDateTime.parse(date, dtf);
 		return ldt.plusDays(num).format(dtf).toString();
+	}
+
+	/**
+	 * 2021-01-28 10:16 > 2021-01-29 10:16
+	 * @param date
+	 * @param num = 1
+	 * @return
+	 */
+	public static String plus7Days(String date, Integer num){
+		LocalDateTime ldt = LocalDateTime.parse(date, dtfHm);
+		return ldt.plusDays(num).format(dtfHm).toString();
 	}
 
 	/**
@@ -222,5 +235,7 @@ public class DateUtil {
 			System.out.println("key:" + key +"value:" + map.get(key));
 		}
 		System.out.println(timeForMdStr("2021-01-27"));
+
+		System.out.println("plusDays:" + plus7Days("2021-01-28 10:19", -7));
 	}
 }

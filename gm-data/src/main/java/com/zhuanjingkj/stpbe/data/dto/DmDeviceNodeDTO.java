@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.dm;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
@@ -8,6 +8,10 @@ public class DmDeviceNodeDTO extends BaseDTO {
     private String deviceNodeId;
     @JSONField(name = "deviceNodeName")
     private String deviceNodeName;
+
+    public DmDeviceNodeDTO() {
+        super();
+    }
 
     public DmDeviceNodeDTO(String deviceNodeId, String deviceNodeName) {
         this.deviceNodeId = deviceNodeId;

@@ -1,11 +1,17 @@
-package com.zhuanjingkj.stpbe.tmdp.rto.dm;
+package com.zhuanjingkj.stpbe.data.rto.dm;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.rto.BaseRTO;
 
-public class AddDeviceToDsRTO extends BaseRTO {
+public class UpdateDeviceInfoRTO extends BaseRTO {
+    @JSONField(name = "deviceId")
+    private String deviceId;
     @JSONField(name = "deviceNo")
     private String deviceNo; //设备编号
+    @JSONField(name = "cityCode")
+    private String cityCode; //城市编号
+    @JSONField(name = "cityName")
+    private String cityName; //城市名称
     @JSONField(name = "deviceType")
     private String deviceType; //设备类型
     @JSONField(name = "deviceNode")
@@ -14,16 +20,23 @@ public class AddDeviceToDsRTO extends BaseRTO {
     private String deviceDirection; //朝向
     @JSONField(name = "vehicleDirection")
     private String vehicleDirection; //车辆方向
-    @JSONField(name = "dtUrl")
-    private String dtUrl; //数据地址
+    @JSONField(name = "videoUrl")
+    private String videoUrl; //视频流地址
 
-    public AddDeviceToDsRTO(String deviceNo, String deviceType, String deviceNode, String deviceDirection, String vehicleDirection, String dtUrl) {
+    public UpdateDeviceInfoRTO() {
+        super();
+    }
+
+    public UpdateDeviceInfoRTO(String deviceNo, String cityCode, String cityName,
+                               String deviceType, String deviceNode, String deviceDirection, String vehicleDirection, String videoUrl) {
         this.deviceNo = deviceNo;
+        this.cityCode = cityCode;
+        this.cityName = cityName;
         this.deviceType = deviceType;
         this.deviceNode = deviceNode;
         this.deviceDirection = deviceDirection;
         this.vehicleDirection = vehicleDirection;
-        this.dtUrl = dtUrl;
+        this.videoUrl = videoUrl;
     }
 
     public String getDeviceNo() {
@@ -32,6 +45,22 @@ public class AddDeviceToDsRTO extends BaseRTO {
 
     public void setDeviceNo(String deviceNo) {
         this.deviceNo = deviceNo;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public String getDeviceType() {
@@ -66,11 +95,19 @@ public class AddDeviceToDsRTO extends BaseRTO {
         this.vehicleDirection = vehicleDirection;
     }
 
-    public String getDtUrl() {
-        return dtUrl;
+    public String getVideoUrl() {
+        return videoUrl;
     }
 
-    public void setDtUrl(String dtUrl) {
-        this.dtUrl = dtUrl;
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 }
