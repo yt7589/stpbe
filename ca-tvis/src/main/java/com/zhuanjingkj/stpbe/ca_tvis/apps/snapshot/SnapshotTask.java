@@ -4,6 +4,8 @@ import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.HashMap;
@@ -13,6 +15,7 @@ public class SnapshotTask implements Runnable {
     private long snapshotInterval = 3000;
     private ISnapshotCamera snapshotCamera;
     private static CloseableHttpClient httpclient = null;
+    private final static Logger logger = LoggerFactory.getLogger(SnapshotTask.class);
 
     public SnapshotTask(ISnapshotCamera snapshotCamera) {
         this.snapshotCamera = snapshotCamera;
@@ -56,6 +59,7 @@ public class SnapshotTask implements Runnable {
         map.put("cameraId", "" + cameraId);
         map.put("TPMC", f.getName());
         String response = null;
+        logger.info("### before submitTvisImage");
         return TvisUtil.submitTvisImage(map, f);
     }
 }

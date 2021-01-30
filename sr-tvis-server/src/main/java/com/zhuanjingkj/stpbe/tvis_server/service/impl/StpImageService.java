@@ -92,8 +92,9 @@ public class StpImageService implements IStpImageService {
      */
     @Override
     public ResultDTO<WsmVideoFrameDTO> getTvisAnalysisResult(long cameraId, long baseTvisJsonId, int direction) {
-        ResultDTO<WsmVideoFrameDTO> dto = new ResultDTO<>(); // long tvisJsonId, long pts, String originImage
-        WsmVideoFrameDTO data = new WsmVideoFrameDTO(1, 2, "http://a.com/b.jpg");
+        ResultDTO<WsmVideoFrameDTO> dto = new ResultDTO<>();
+        WsmVideoFrameDTO vfv = TvisUtil.getTvisImageAnalysisResult(tvisJsonMapper, cameraId, baseTvisJsonId, direction);
+        /*WsmVideoFrameDTO data = new WsmVideoFrameDTO(1, 2, "http://a.com/b.jpg");
         WsmVideoFrameVehicleDTO item = null;
         List<WsmVideoFrameVehicleDTO> items = new ArrayList<>();
         // long wvfvvId, long trackId, int vehIdx, String ppcxnk, String hphm,
@@ -104,8 +105,8 @@ public class StpImageService implements IStpImageService {
                     "cross" + i, "tvn" + i);
             items.add(item);
         }
-        data.setData(items);
-        dto.setData(data);
+        data.setData(items);*/
+        dto.setData(vfv);
         return dto;
     }
 }

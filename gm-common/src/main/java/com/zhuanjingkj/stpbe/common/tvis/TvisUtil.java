@@ -53,6 +53,7 @@ public class TvisUtil {
     public static String submitTvisImage(Map<String, Object> map, File f) {
         String type = "file";
         String url = AppConst.TVIS_SERVER_BASE_URL + AppConst.TSC_SUBMIT_IMAGE;
+        logger.info("### TvisUtil.submitTvisImage");
         return processTvisImage(url, type, map, f);
     }
 
@@ -154,7 +155,10 @@ public class TvisUtil {
         long cameraId = Long.parseLong(cameraIdStr);
         JSONObject rstJo = jo.getJSONObject("json");
         String streamIdStr = rstJo.getString("StreamID");
-        long streamId = Long.parseLong(streamIdStr);
+        long streamId = -1;
+        try {
+            streamId = Long.parseLong(streamIdStr);
+        } catch (Exception ex) {}
         String ptsStr = rstJo.getString("TimeStamp");
         long pts = Long.parseLong(ptsStr);
         TvisJsonVO vo = new TvisJsonVO(AppRegistry.tvisJsonTblName, tvisJsonId, occurTime,
@@ -288,9 +292,22 @@ public class TvisUtil {
         return getTvisFrameAnalysisResult(tvisJsonVO, cutVehs);
     }
 
-    public static WsmVideoFrameDTO getTvisImageAnalysisResult(long cameraId, long baseTvisJsonId, long direction) {
-        Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
+    public static WsmVideoFrameDTO getTvisImageAnalysisResult(TvisJsonMapper tvisJsonMapper, long cameraId, long baseTvisJsonId, long direction) {
+        if (StringUtils.isBlank(AppRegistry.tvisJsonTblName)) {
+            // 获取当前t_tvis_json_*表名
+            AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
+        }
         TvisJsonVO tvisJsonVO = null;
+        if (baseTvisJsonId<0 || 0 == direction) {
+            tvisJsonVO = tvisJsonMapper.getLatestCameraFrame(AppRegistry.tvisJsonTblName, cameraId);
+        } else {
+            if (1 == direction) {
+                tvisJsonVO = tvisJsonMapper.getPrevCameraFrame(AppRegistry.tvisJsonTblName, cameraId, baseTvisJsonId);
+            } else if (2 == direction) {
+                tvisJsonVO = tvisJsonMapper.getNextCameraFrame(AppRegistry.tvisJsonTblName, cameraId, baseTvisJsonId);
+            }
+        }
+        Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
         WsmVideoFrameDTO vfv = getTvisFrameAnalysisResult(tvisJsonVO, cutVehs);
         // 转变为图像识别结果模式
         return vfv;
@@ -387,13 +404,13 @@ public class TvisUtil {
      */
     private static String processTvisImage(String url, String type, Map<String, Object> map, File f) {
         boolean sendName = true;
-
+        logger.info("### TvisUtil.processTvisImage 1");
         String response = null;
         try {
             if ("file".equals(type)) {
                 map.put("TPXX", f);
                 map.put("TPLX", "1");
-                System.out.println("recognizeImageFile.recognizeImageFile 1");
+                System.out.println("recognizeImageFile.recognizeImageFile 1 url=" + url + "!");
                 response = HttpUtil.postFile(url, map);
                 System.out.println("recognizeImageFile.recognizeImageFile 2 response:" + response + "!");
             } else {
@@ -404,11 +421,13 @@ public class TvisUtil {
             map.clear();
             map = null;
         } catch (IOException ex) {
+            logger.info("### exception: " + ex.getMessage() + "!");
             return ERROR_RESPONSE;
         }
         if (isSuccessRequest(response)) {
             return response;
         } else {
+            logger.info("### error response:" + response + "!");
             return ERROR_RESPONSE;
         }
     }
