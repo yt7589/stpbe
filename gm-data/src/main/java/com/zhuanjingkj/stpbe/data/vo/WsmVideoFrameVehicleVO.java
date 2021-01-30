@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.vo;
+package com.zhuanjingkj.stpbe.data.vo;
 
 /**
  * 返回给客户端的WebSocket消息内容中的每一辆车

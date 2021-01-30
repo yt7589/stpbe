@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tmdp.vo;
+package com.zhuanjingkj.stpbe.data.vo;
 
 import java.util.ArrayList;
 import java.util.List;

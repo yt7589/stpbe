@@ -7,11 +7,7 @@ import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.common.tvis.TvisSodImage;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
-import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.tmdp.vo.CameraVehicleRecordVO;
-import com.zhuanjingkj.stpbe.tmdp.vo.WsmVideoFrameVO;
-import com.zhuanjingkj.stpbe.tmdp.vo.WsmVideoFrameVehicleVO;
+import com.zhuanjingkj.stpbe.data.vo.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +41,10 @@ public class VideoAnalysisTask implements Runnable {
     private static long wsmVfvvIdx = 0;
     private final static long VAT_INTERVAL = 1000; // 每*毫秒运行一次
 
+    private long cameraId;
+
     public void run() {
+        cameraId = 1;
         while (true) {
             runVideoAnalysisTask();
             try {
@@ -63,100 +62,9 @@ public class VideoAnalysisTask implements Runnable {
     public void runVideoAnalysisTask() {
         logger.info("### 视频分析定时任务1 time=" + (System.currentTimeMillis() - prevTime) + "!");
         prevTime = System.currentTimeMillis();
-        String vaImgUrlBase = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=";
-        if (StringUtils.isBlank(AppRegistry.tvisJsonTblName)) {
-            // 获取当前t_tvis_json_*表名
-            AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
-        }
-        TvisJsonVO tvisJsonVO = null;
         WsmVideoFrameVO vfv = null;
-        List<WsmVideoFrameVehicleVO> wvfvvs = null;
-        WsmVideoFrameVehicleVO vfvv = null;
         for (String streamId : streamIds) {
-            // 找到当前原始信息表
-            tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, Long.parseLong(streamId));
-            if (null == tvisJsonVO) {
-                continue;
-            }
-            long tvisJsonId = tvisJsonVO.getTvisJsonId();
-            // 获取图片
-            BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
-            // 获取JSON结果
-            String jsonStr = IpfsClient.getTextFile(tvisJsonVO.getJsonHash());
-            JSONObject jo = JSONObject.parseObject(jsonStr);
-            JSONObject joRst = jo.getJSONObject("json");
-            List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
-            // 在图像上绘制一个矩形框并保存到当前目录下
-            CameraVehicleRecordVO vo = null;
-            int x, y, w, h; // 检测框位置
-            int idx = 0;
-            int currentArea = 0;
-            int maxArea = 0;
-            String cutFileFn = null;
-            File cutFileObj = null;
-            String imgBaseFolder = "images/";
-            String orgFileFn = "n_" + tvisJsonId + ".jpg";
-            vfv = new WsmVideoFrameVO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
-            wvfvvs = vfv.getData();
-            for (VehicleVo veh : vehs) {
-                String clwz = veh.getVehicleWztzVo().getClwz();
-                String[] arrs = clwz.split(",");
-                x = Integer.parseInt(arrs[0]);
-                y = Integer.parseInt(arrs[1]);
-                w = Integer.parseInt(arrs[2]);
-                h = Integer.parseInt(arrs[3]);
-                currentArea = w * h;
-                if (!cutVehs.containsKey("" + veh.getTrackId())) {
-                    vo = new CameraVehicleRecordVO();
-                    vo.setTvisJsonId(veh.getTvisJsonId());
-                    vo.setVehsIdx((int)veh.getVehsIdx());
-                    vo.setSxh((int)veh.getVehsIdx());
-                    vo.setX(x);
-                    vo.setY(y);
-                    vo.setW(w);
-                    vo.setH(h);
-                    vo.setOrgImgFn(orgFileFn);
-                    cutVehs.put("" + veh.getTrackId(), vo);
-                } else {
-                    vo = cutVehs.get("" + veh.getTrackId());
-                }
-                TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
-                // 车型特征
-                String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
-                String hphm = veh.getVehicleHptzVO().getHphm();
-                TvisSodImage.drawString(orgImg, Font.BOLD, 25,
-                        Color.RED, x, y + 3, hphm + ":" + ppxhms);
-                maxArea = vo.getArea();
-                if (1>0 || currentArea >= maxArea) {
-                    maxArea = currentArea;
-                    BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
-                    try {
-                        cutFileFn = "c_" + tvisJsonId + "_" + idx + ".jpg";
-                        cutFileObj = new File(imgBaseFolder + cutFileFn);
-                        ImageIO.write(vehImg, "jpg", cutFileObj);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    vo.setX(x);
-                    vo.setY(y);
-                    vo.setW(w);
-                    vo.setH(h);
-                    vo.setCutImgFn(cutFileFn);
-                }
-                vfvv = new WsmVideoFrameVehicleVO(wsmVfvvIdx++, veh.getTrackId(), idx,
-                        veh.getVehicleCxtzVo().getPpcxCode(),
-                        veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + vo.getCutImgFn(),
-                        "50秒前", "无");
-                wvfvvs.add(vfvv);
-                idx++;
-            }
-            try {
-                ImageIO.write(orgImg, "jpg", new File(imgBaseFolder + orgFileFn));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            // 生成一个定制的URL，可以通过SpringBoot来查看图片内容
-            vfv.setData(wvfvvs);
+            vfv = TvisUtil.getTvisVideoAnalysisResult(tvisJsonMapper, streamIds, cutVehs, Long.parseLong(streamId));
             List<WebSocketSession> wsss = streamWsss.get("" + streamId);
             for (WebSocketSession wss : wsss) {
                 if (wss.isOpen()) {

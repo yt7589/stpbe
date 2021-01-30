@@ -14,16 +14,21 @@ import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
 import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
 import com.zhuanjingkj.stpbe.data.vo.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 public class TvisUtil {
     public final static String ERROR_RESPONSE = "ERROR";
@@ -179,6 +184,119 @@ public class TvisUtil {
                 obs.notifyObserver(veh);
             }
         }
+    }
+
+    public static WsmVideoFrameVO getTvisFrameAnalysisResult(TvisJsonVO tvisJsonVO,
+                                                             Map<String, CameraVehicleRecordVO> cutVehs) {
+        long wsmVfvvIdx = 0;
+        String vaImgUrlBase = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=";
+        WsmVideoFrameVO vfv = null;
+        List<WsmVideoFrameVehicleVO> wvfvvs = null;
+        WsmVideoFrameVehicleVO vfvv = null;
+        long tvisJsonId = tvisJsonVO.getTvisJsonId();
+        // 获取图片
+        BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
+        // 获取JSON结果
+        String jsonStr = IpfsClient.getTextFile(tvisJsonVO.getJsonHash());
+        JSONObject jo = JSONObject.parseObject(jsonStr);
+        JSONObject joRst = jo.getJSONObject("json");
+        List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
+        // 在图像上绘制一个矩形框并保存到当前目录下
+        CameraVehicleRecordVO vo = null;
+        int x, y, w, h; // 检测框位置
+        int idx = 0;
+        int currentArea = 0;
+        int maxArea = 0;
+        String cutFileFn = null;
+        File cutFileObj = null;
+        String imgBaseFolder = "images/";
+        String orgFileFn = "n_" + tvisJsonId + ".jpg";
+        vfv = new WsmVideoFrameVO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
+        wvfvvs = vfv.getData();
+        for (VehicleVo veh : vehs) {
+            String clwz = veh.getVehicleWztzVo().getClwz();
+            String[] arrs = clwz.split(",");
+            x = Integer.parseInt(arrs[0]);
+            y = Integer.parseInt(arrs[1]);
+            w = Integer.parseInt(arrs[2]);
+            h = Integer.parseInt(arrs[3]);
+            currentArea = w * h;
+            if (!cutVehs.containsKey("" + veh.getTrackId())) {
+                vo = new CameraVehicleRecordVO();
+                vo.setTvisJsonId(veh.getTvisJsonId());
+                vo.setVehsIdx((int)veh.getVehsIdx());
+                vo.setSxh((int)veh.getVehsIdx());
+                vo.setX(x);
+                vo.setY(y);
+                vo.setW(w);
+                vo.setH(h);
+                vo.setOrgImgFn(orgFileFn);
+                cutVehs.put("" + veh.getTrackId(), vo);
+            } else {
+                vo = cutVehs.get("" + veh.getTrackId());
+            }
+            TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
+            // 车型特征
+            String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
+            String hphm = veh.getVehicleHptzVO().getHphm();
+            TvisSodImage.drawString(orgImg, Font.BOLD, 25,
+                    Color.RED, x, y + 3, hphm + ":" + ppxhms);
+            maxArea = vo.getArea();
+            if (1>0 || currentArea >= maxArea) {
+                maxArea = currentArea;
+                BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
+                try {
+                    cutFileFn = "c_" + tvisJsonId + "_" + idx + ".jpg";
+                    cutFileObj = new File(imgBaseFolder + cutFileFn);
+                    ImageIO.write(vehImg, "jpg", cutFileObj);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                vo.setX(x);
+                vo.setY(y);
+                vo.setW(w);
+                vo.setH(h);
+                vo.setCutImgFn(cutFileFn);
+            }
+            vfvv = new WsmVideoFrameVehicleVO(wsmVfvvIdx++, veh.getTrackId(), idx,
+                    veh.getVehicleCxtzVo().getPpcxCode(),
+                    veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + vo.getCutImgFn(),
+                    "50秒前", "无");
+            wvfvvs.add(vfvv);
+            idx++;
+        }
+        try {
+            ImageIO.write(orgImg, "jpg", new File(imgBaseFolder + orgFileFn));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 生成一个定制的URL，可以通过SpringBoot来查看图片内容
+        vfv.setData(wvfvvs);
+        return vfv;
+    }
+
+    public static WsmVideoFrameVO getTvisVideoAnalysisResult(TvisJsonMapper tvisJsonMapper,
+                                                        List<String> streamIds,
+                                                        Map<String, CameraVehicleRecordVO> cutVehs,
+                                                        long streamId) {
+        if (StringUtils.isBlank(AppRegistry.tvisJsonTblName)) {
+            // 获取当前t_tvis_json_*表名
+            AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
+        }
+        TvisJsonVO tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, streamId);
+        if (null == tvisJsonVO) {
+            return null;
+        }
+
+        return getTvisFrameAnalysisResult(tvisJsonVO, cutVehs);
+    }
+
+    public static WsmVideoFrameVO getTvisImageAnalysisResult(long cameraId, long baseTvisJsonId, long direction) {
+        Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
+        TvisJsonVO tvisJsonVO = null;
+        WsmVideoFrameVO vfv = getTvisFrameAnalysisResult(tvisJsonVO, cutVehs);
+        // 转变为图像识别结果模式
+        return vfv;
     }
 
 
