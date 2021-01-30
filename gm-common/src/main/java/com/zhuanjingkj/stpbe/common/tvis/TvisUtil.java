@@ -197,6 +197,9 @@ public class TvisUtil {
         WsmVideoFrameDTO vfv = null;
         List<WsmVideoFrameVehicleDTO> wvfvvs = null;
         WsmVideoFrameVehicleDTO vfvv = null;
+        if (null == tvisJsonVO) {
+            return null;
+        }
         long tvisJsonId = tvisJsonVO.getTvisJsonId();
         // 获取图片
         BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
