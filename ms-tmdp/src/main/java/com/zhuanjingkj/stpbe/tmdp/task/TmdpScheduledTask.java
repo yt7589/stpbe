@@ -49,13 +49,6 @@ public class TmdpScheduledTask {
             pushKsRssLsvs();
             KS_RSS_LSVS_COUNT = 0;
         }
-
-        Integer hour = LocalDateTime.now().getHour();
-        Integer second = LocalDateTime.now().getSecond();
-        Integer minute = LocalDateTime.now().getMinute();
-        if(hour == 0 && second == 0 && minute == 0) {
-            resetHtfs();
-        }
     }
 
     private static int seq = 0;
@@ -66,6 +59,9 @@ public class TmdpScheduledTask {
         if(sfvs != null && sfvs.size() > 0) {
             for(int i = 0; i < sfvs.size(); i++) {
                 String val = sfvs.get(i);
+                if("0".equals(val)) {
+                    continue;
+                }
                 if(StringUtils.isNotBlank(val)) {
                     String hphm = val.split("\\|")[0];
                     String cameraId = val.split("\\|")[1];
@@ -99,6 +95,9 @@ public class TmdpScheduledTask {
         if(lsvs != null && lsvs.size() > 0) {
             for(int i = 0; i < lsvs.size(); i++) {
                 String val = lsvs.get(i);
+                if("0".equals(val)) {
+                    continue;
+                }
                 if(StringUtils.isNotBlank(val)) {
                     String hphm = val.split("\\|")[0];
                     String cameraId = val.split("\\|")[1];
@@ -160,7 +159,9 @@ public class TmdpScheduledTask {
         if(sfvs != null && sfvs.size() > 0) {
             for(int i = 0; i < sfvs.size(); i++) {
                 String val = sfvs.get(i);
-
+                if("0".equals(val)) {
+                    continue;
+                }
                 if(StringUtils.isNotBlank(val)) {
                     String hphm = val.split("\\|")[0];
                     String cameraId = val.split("\\|")[1];
@@ -220,6 +221,9 @@ public class TmdpScheduledTask {
         if(sfvs != null && sfvs.size() > 0) {
             for(int i = 0; i < sfvs.size(); i++) {
                 String val = sfvs.get(i);
+                if("0".equals(val)) {
+                    continue;
+                }
                 if(StringUtils.isNotBlank(val)) {
                     String hphm = val.split("\\|")[0];
                     String cameraId = val.split("\\|")[1];
@@ -264,59 +268,4 @@ public class TmdpScheduledTask {
         tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_RSS_SFVS, data.toString());
     }
 
-    private void resetHtfs() {
-        /**
-         * 1.把今日过车量统计到本周过车量
-         */
-        Integer vToday = (int)(redisTemplate.opsForValue().get("dk_htfs_today") == null ? 0 : redisTemplate.opsForValue().get("dk_htfs_today"));
-        redisTemplate.opsForList().leftPush("dk_htfs_week", vToday);
-        if(redisTemplate.opsForList().size("dk_htfs_week") > 6) {
-            redisTemplate.opsForList().rightPop("dk_htfs_week");
-        }
-        /**
-         * 2.今日过车量重置为0
-         */
-        redisTemplate.opsForValue().set("dk_htfs_today",0); //重置今日过车数量
-        Integer day = LocalDate.now().getDayOfMonth();
-        /**
-         * 3.如果当前日期为1号，重置本月累计过车量为0
-         */
-        if(day == 1) {
-            redisTemplate.opsForValue().set("dk_htfs_month",0); //重置本月过车数量
-        }
-        /**
-         * 4.清空本日违章趋势图数据
-         */
-        if(redisTemplate.hasKey("dk_rtvr_violation")) {
-            redisTemplate.delete("dk_rtvr_violation");
-            redisTemplate.opsForList().rightPushAll("dk_rtvr_violation", 0,0,0,0,0,0,0,0,0,0,0,0);
-        }
-        /**
-         * 5.特殊车辆监管页面四个值每天0点重置
-         */
-        {
-        //轿车
-        redisTemplate.opsForValue().set("ks_svs_car", 0);
-        //SUV
-        redisTemplate.opsForValue().set("ks_svs_suv", 0);
-        //MPV
-        redisTemplate.opsForValue().set("ks_svs_mpv", 0);
-        //面包车
-        redisTemplate.opsForValue().set("ks_svs_van", 0);
-        //罐式货车
-        redisTemplate.opsForValue().set("ks_svs_tank_truck", 0);
-        //普通货车
-        redisTemplate.opsForValue().set("ks_svs_normal_truck", 0);
-        //箱式货车
-        redisTemplate.opsForValue().set("ks_svs_van_truck", 0);
-        //栏板式货车
-        redisTemplate.opsForValue().set("ks_svs_slab_truck", 0);
-        //平板式货车
-        redisTemplate.opsForValue().set("ks_svs_flat_truck", 0);
-        //仓栅式货车
-        redisTemplate.opsForValue().set("ks_svs_grate_truck", 0);
-        //其他
-        redisTemplate.opsForValue().set("ks_svs_others", 0);
-        }
-    }
 }

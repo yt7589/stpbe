@@ -41,7 +41,7 @@ public class KsAsObserver implements ITvisStpObserver {
     @Override
     public void initialize(Environment env) {
         if(!redisTemplate.hasKey("ks_as_lsvs_list")) {
-            redisTemplate.opsForList().rightPushAll("ks_as_lsvs_list",0);
+            redisTemplate.opsForList().rightPushAll("ks_as_lsvs_list","0");
         }
     }
 }
