@@ -23,6 +23,7 @@
         <module>ms-sdk-server</module>
         <module>ag-zjc-saas</module>
         <module>ca-tvis</module>
+        <module>sr-idr</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
