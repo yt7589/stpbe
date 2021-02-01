@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DmRoadMapper">
+    <resultMap type="com.zhuanjingkj.stpbe.data.rto.dm.DmRoadSectionDTO"  id="roadDTO">
+        <result column="road_id" property="rssId" jdbcType="INTEGER"/>
+        <result column="road_name" property="rssName" jdbcType="VARCHAR"/>
+        <result column="road_seg_name" property="rssAddr" jdbcType="VARCHAR"/>
+        <result column="src_site_name" property="srcSiteName" jdbcType="VARCHAR"/>
+        <result column="src_site_lng" property="srcSiteLng" jdbcType="DOUBLE"/>
+        <result column="src_site_lat" property="srcSiteLat" jdbcType="DOUBLE"/>
+        <result column="dst_site_name" property="dstSiteName" jdbcType="VARCHAR"/>
+        <result column="dst_site_lng" property="dstSiteLng" jdbcType="DOUBLE"/>
+        <result column="dst_site_lat" property="dstSiteLat" jdbcType="DOUBLE"/>
+        <result column="level" property="level" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id ="getRoad" resultMap ="roadDTO">
+        SELECT tr.road_id, tr.road_name, trs.road_seg_name, IF(`status` = 0, '普通路段', '重点路段') AS `level`,
+               ts.site_name AS src_site_name, ts.lng AS src_site_lng, ts.lat AS src_site_lat,
+               tsi.site_name AS dst_site_name, tsi.lng AS dst_site_lng, ts.lat AS dst_site_lat
+          FROM t_road tr
+     LEFT JOIN t_road_seg trs
+            ON tr.road_id = trs.road_id
+     LEFT JOIN t_site ts
+            ON trs.src_site_id = ts.site_id
+     LEFT JOIN t_site tsi
+            ON trs.dst_site_id = tsi.site_id
+         WHERE 1 = 1
+            <if test="roadName != null and roadName !=''">
+                AND tr.road_name =#{roadName}
+            </if>
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getRoadCount" resultType ="Integer">
+        SELECT count(1)
+          FROM t_road tr
+     LEFT JOIN t_road_seg trs
+            ON tr.road_id = trs.road_id
+     LEFT JOIN t_site ts
+            ON trs.src_site_id = ts.site_id
+     LEFT JOIN t_site tsi
+            ON trs.dst_site_id = tsi.site_id
+         WHERE tr.road_name =#{roadName}
+    </select>
+
+    <insert id="addRoadSection" useGeneratedKeys="true" keyProperty="rto.rssId">
+        INSERT INTO t_road(road_name) VALUES(#{rto.rssName})
+    </insert>
+
+    <delete id ="deleteRoadSection">
+        DELETE
+          FROM t_road
+         WHERE road_id =#{rto.rssId}
+    </delete>
+</mapper>

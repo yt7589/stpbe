@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DmNodeMapper">
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.DmNodeDTO" id="dmNodeDTO">
+        <result column="site_id" property="nodeId" jdbcType="INTEGER"/>
+        <result column="city" property="cityName" jdbcType="VARCHAR"/>
+        <result column="site_name" property="nodeName" jdbcType="VARCHAR"/>
+        <result column="position" property="nodeAddr" jdbcType="VARCHAR"/>
+        <result column="lng" property="lng" jdbcType="DOUBLE"/>
+        <result column="lat" property="lat" jdbcType="DOUBLE"/>
+        <result column="area_id" property="areaId" jdbcType="DOUBLE"/>
+    </resultMap>
+    <select id ="getNodeList" resultMap="dmNodeDTO">
+        SELECT ts.city, ts.site_id, ts.site_name, ts.`position`, ts.lng, ts.lat, ts.area_id
+          FROM t_site ts
+         WHERE 1 = 1
+            <if test="nodeAddr != null and nodeAddr !=''">
+                AND ts.`position` =#{nodeAddr}
+            </if>
+            <if test="nodeName != null and nodeName != ''">
+                AND ts.site_name =#{nodeName}
+            </if>
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getNodeCount" resultType ="Integer">
+        SELECT count(1)
+          FROM t_site ts
+         WHERE 1 = 1
+            <if test="nodeAddr != null and nodeAddr !=''">
+                AND ts.`position` =#{nodeAddr}
+            </if>
+            <if test="nodeName != null and nodeName != ''">
+                AND ts.site_name =#{nodeName}
+            </if>
+    </select>
+
+    <delete id ="deleteNode">
+        DELETE
+          FROM t_site
+         WHERE site_id =#{nodeId}
+    </delete>
+
+    <insert id ="addNode2Nd" keyProperty="rto.nodeId" useGeneratedKeys="true">
+        INSERT INTO t_site(site_name, city, `position`, lng, lat, area_id)
+                    VALUES(#{rto.nodeName}, #{rto.nodeName}, #{rto.nodeAddr}, #{rto.lng}, #{rto.lat}, #{rto.areaId})
+    </insert>
+
+    <update id ="updateNode">
+        UPDATE t_site ts
+           SET ts.site_name =#{rto.nodeName}, ts.city =#{rto.cityName}, ts.`position` =#{rto.nodeAddr},
+               ts.lng =#{rto.lng}, ts.lat =#{rto.lat}, ts.area_id =#{rto.areaId}
+         WHERE ts.site_id =#{rto.nodeId}
+    </update>
+</mapper>

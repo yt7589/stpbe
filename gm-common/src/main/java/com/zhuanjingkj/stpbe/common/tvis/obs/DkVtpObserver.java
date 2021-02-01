@@ -18,19 +18,19 @@ public class DkVtpObserver implements ITvisStpObserver {
     public void notifyObserver(VehicleVo vo) {
         String vType = vo.getVehicleCxtzVo().getCllxzflCode();
         if("131".equals(vType)) {  //轿车
-            redisTemplate.opsForValue().increment("DK_VT_CAR");
+            redisTemplate.opsForValue().increment("dk_vt_car");
         } else if("132".equals(vType)) { //SUV
-            redisTemplate.opsForValue().increment("DK_VT_SUV");
+            redisTemplate.opsForValue().increment("dk_vt_suv");
         } else if("133".equals(vType)) { //MPV
-            redisTemplate.opsForValue().increment("DK_VT_MPV");
+            redisTemplate.opsForValue().increment("dk_vt_mpv");
         } else if("134".equals(vType)) { //面包车
-            redisTemplate.opsForValue().increment("DK_VT_VAN");
+            redisTemplate.opsForValue().increment("dk_vt_van");
         } else if("211".equals(vType)) { //罐式货车
-            redisTemplate.opsForValue().increment("DK_VT_TANK_TRUCK");
+            redisTemplate.opsForValue().increment("dk_vt_tank_truck");
         } else if("216".equals(vType)) { //普通货车
-            redisTemplate.opsForValue().increment("DK_VT_NORMAL_TRUCK");
+            redisTemplate.opsForValue().increment("dk_vt_normal_truck");
         } else { //其他
-            redisTemplate.opsForValue().increment("DK_VT_OTHERS");
+            redisTemplate.opsForValue().increment("dk_vt_others");
         }
 
     }

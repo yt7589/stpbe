@@ -43,13 +43,13 @@ public class DkVtpService implements IDkVtpService {
     public List<DkVtpDTO> getDkVtpDTOs_exp() {
         List<DkVtpDTO> vtps = new ArrayList<>();
         DkVtpDTO item = null;
-        int car = (Integer)(redisTemplate.opsForValue().get("DK_VT_CAR") == null ? 0 : redisTemplate.opsForValue().get("DK_VT_CAR"));
-        int suv = (Integer)(redisTemplate.opsForValue().get("DK_VT_SUV") == null ? 0 : redisTemplate.opsForValue().get("DK_VT_SUV"));
-        int mpv = (Integer)(redisTemplate.opsForValue().get("DK_VT_MPV") == null ? 0 : redisTemplate.opsForValue().get("DK_VT_MPV"));
-        int van = (Integer)(redisTemplate.opsForValue().get("DK_VT_VAN") == null ? 0 : redisTemplate.opsForValue().get("DK_VT_VAN"));
-        int tTruck = (Integer)(redisTemplate.opsForValue().get("DK_VT_TANK_TRUCK") == null ? 0 : redisTemplate.opsForValue().get("DK_VT_TANK_TRUCK"));
-        int nTruck = (Integer)(redisTemplate.opsForValue().get("DK_VT_NORMAL_TRUCK") == null ? 0 : redisTemplate.opsForValue().get("DK_VT_NORMAL_TRUCK"));
-        int others = (Integer)(redisTemplate.opsForValue().get("DK_VT_OTHERS") == null ? 0 : redisTemplate.opsForValue().get("DK_VT_OTHERS"));
+        int car = (Integer)(redisTemplate.opsForValue().get("dk_vt_car") == null ? 0 : redisTemplate.opsForValue().get("dk_vt_car"));
+        int suv = (Integer)(redisTemplate.opsForValue().get("dk_vt_suv") == null ? 0 : redisTemplate.opsForValue().get("dk_vt_suv"));
+        int mpv = (Integer)(redisTemplate.opsForValue().get("dk_vt_mpv") == null ? 0 : redisTemplate.opsForValue().get("dk_vt_mpv"));
+        int van = (Integer)(redisTemplate.opsForValue().get("dk_vt_van") == null ? 0 : redisTemplate.opsForValue().get("dk_vt_van"));
+        int tTruck = (Integer)(redisTemplate.opsForValue().get("dk_vt_tank_truck") == null ? 0 : redisTemplate.opsForValue().get("dk_vt_tank_truck"));
+        int nTruck = (Integer)(redisTemplate.opsForValue().get("dk_vt_normal_truck") == null ? 0 : redisTemplate.opsForValue().get("dk_vt_normal_truck"));
+        int others = (Integer)(redisTemplate.opsForValue().get("dk_vt_others") == null ? 0 : redisTemplate.opsForValue().get("dk_vt_others"));
         int total = car + suv + mpv + van + tTruck + nTruck + others;
         item = new DkVtpDTO(DK_VT_CAR, (int)(car/(total+0.001)*100));
         vtps.add(item);

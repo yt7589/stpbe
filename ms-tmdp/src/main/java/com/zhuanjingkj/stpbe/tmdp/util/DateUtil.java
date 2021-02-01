@@ -101,6 +101,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String plus7Days(String date, Integer num){
+		System.out.println("date" + date);
 		LocalDateTime ldt = LocalDateTime.parse(date, dtfHm);
 		return ldt.plusDays(num).format(dtfHm).toString();
 	}

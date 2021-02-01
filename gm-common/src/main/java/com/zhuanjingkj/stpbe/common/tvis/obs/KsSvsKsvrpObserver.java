@@ -51,7 +51,7 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
         } else {
             index = (hour + 1)/2 - 1;
         }
-        if(true) {
+        if(vNum.contains(vZtype)) {
             Integer count = (int)(redisTemplate.opsForList().index("ks_ksvrp_vehicle",index));
 //            redisTemplate.opsForList().rightPush("ks_ksvrp_images", imageHash); //重点监控车辆实时图片
             redisTemplate.opsForList().set("ks_ksvrp_vehicle", index, count + 1);  //重点监控车辆小时分布图
@@ -75,7 +75,7 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
 
             //重点监管车辆数量统计
             redisTemplate.opsForValue().increment("dcst_key_vehicle", 1);
-
+            //重点车辆点位排名TOP7
             redisTemplate.opsForZSet().incrementScore("dcst_top7_site_" + ym, "C0000011", 11);
             redisTemplate.opsForZSet().incrementScore("dcst_top7_site_" + ym, "C0000012", 12);
             redisTemplate.opsForZSet().incrementScore("dcst_top7_site_" + ym, "C0000013", 13);
@@ -89,7 +89,7 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
         //大货车小时分布图
         if("21".equals(vType)) {
             Integer count = (int)(redisTemplate.opsForList().index("ks_ksvrp_truck",index));
-            redisTemplate.opsForList().set("ks_ksvrp_vehicle", index, count + 1);  //重点监控车辆小时分布图
+            redisTemplate.opsForList().set("ks_ksvrp_truck", index, count + 1);  //重点监控车辆小时分布图
 
             //大货车数量统计
             redisTemplate.opsForValue().increment("dcst_key_truck", 1);
@@ -109,10 +109,6 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
 
     @Override
     public void initialize(Environment env) {
-        if(!redisTemplate.hasKey("ks_ksvrp_images")) {
-            redisTemplate.opsForList().rightPushAll("ks_ksvrp_images", "","");
-        }
-
         if(!redisTemplate.hasKey("ks_ksvrp_images")) {
             redisTemplate.opsForList().rightPushAll("ks_ksvrp_images", "","");
         }

@@ -1,9 +1,9 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.dm;
+package com.zhuanjingkj.stpbe.data.rto.dm;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
+import com.zhuanjingkj.stpbe.data.rto.BaseRTO;
 
-public class DmNodeDTO extends BaseDTO {
+public class UpdateNodeRTO extends BaseRTO {
     @JSONField(name = "nodeId")
     private long nodeId; //节点id
     @JSONField(name = "cityName")
@@ -16,8 +16,14 @@ public class DmNodeDTO extends BaseDTO {
     private double lng; //节点经度
     @JSONField(name = "lat")
     private double lat; //节点纬度
+    @JSONField(name = "areaId")
+    private long areaId;
 
-    public DmNodeDTO(long nodeId, String cityName, String nodeName, String nodeAddr, double lng, double lat) {
+    public UpdateNodeRTO() {
+        super();
+    }
+
+    public UpdateNodeRTO(long nodeId, String cityName, String nodeName, String nodeAddr, double lng, double lat) {
         this.nodeId = nodeId;
         this.cityName = cityName;
         this.nodeName = nodeName;
@@ -72,5 +78,13 @@ public class DmNodeDTO extends BaseDTO {
 
     public void setLat(double lat) {
         this.lat = lat;
+    }
+
+    public long getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(long areaId) {
+        this.areaId = areaId;
     }
 }

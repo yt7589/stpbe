@@ -19,6 +19,7 @@ public class KsSvsObserver implements ITvisStpObserver {
     @Override
     public void notifyObserver(VehicleVo vo) {
         String vType = vo.getVehicleCxtzVo().getCllxzflCode();
+        //本日重点监控车辆车型构成
         if("131".equals(vType)) {  //轿车
             redisTemplate.opsForValue().increment("ks_svs_car");
         } else if("132".equals(vType)) { //SUV
@@ -42,6 +43,7 @@ public class KsSvsObserver implements ITvisStpObserver {
         } else { //其他
             redisTemplate.opsForValue().increment("ks_svs_others");
         }
+        //本日重点监控车辆区域分布图
         redisTemplate.opsForHash().increment("ks_svs_area", "C0000001", 1);
         redisTemplate.opsForHash().increment("ks_svs_area", "C0000002", 2);
         redisTemplate.opsForHash().increment("ks_svs_area", "C0000003", 3);
