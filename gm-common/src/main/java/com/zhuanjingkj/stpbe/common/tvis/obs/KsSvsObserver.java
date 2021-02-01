@@ -18,6 +18,7 @@ public class KsSvsObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        System.out.println("KsSvsObserver...");
         String vType = vo.getVehicleCxtzVo().getCllxzflCode();
         //本日重点监控车辆车型构成
         if("131".equals(vType)) {  //轿车

@@ -24,6 +24,7 @@ public class DkVttfObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        System.out.println("DkVttfObserver...");
         String vType = vo.getVehicleCxtzVo().getCllxflCode();
         Integer hour = LocalDateTime.now().getHour();
         Integer index = 0;

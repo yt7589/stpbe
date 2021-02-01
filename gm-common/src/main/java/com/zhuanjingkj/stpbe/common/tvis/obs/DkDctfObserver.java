@@ -18,6 +18,7 @@ public class DkDctfObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        System.out.println("DkDctfObserver...");
         redisTemplate.opsForHash().increment("dk_dctf_area", "C0000001", 1);
         redisTemplate.opsForHash().increment("dk_dctf_area", "C0000002", 2);
         redisTemplate.opsForHash().increment("dk_dctf_area", "C0000003", 3);

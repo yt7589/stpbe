@@ -21,6 +21,7 @@ public class KsLpsObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        System.out.println("KsLpsObserver...");
         Integer hour = LocalDateTime.now().getHour();
         Integer index = 0;
 //        if(hour % 2 == 0) {

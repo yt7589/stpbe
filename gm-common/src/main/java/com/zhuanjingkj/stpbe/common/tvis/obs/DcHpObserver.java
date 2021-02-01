@@ -15,6 +15,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * 数据中心首页
+ */
 @Component
 public class DcHpObserver implements ITvisStpObserver {
 
@@ -29,6 +32,7 @@ public class DcHpObserver implements ITvisStpObserver {
         /**
          * 1.识别对象
          */
+        System.out.println("DcHpObserver...");
         String time = vo.getOccurTime() == null ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : vo.getOccurTime();
         String hphm = vo.getVehicleHptzVO().getHphm();
         long cameraId = vo.getCameraId();

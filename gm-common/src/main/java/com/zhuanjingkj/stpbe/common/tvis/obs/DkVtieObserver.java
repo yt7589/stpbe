@@ -18,6 +18,7 @@ public class DkVtieObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        System.out.println("DkVtieObserver...");
         String hphm = vo.getVehicleHptzVO().getHphm();
         if (hphm != null && !hphm.equals("")) {
             if (hphm.indexOf(hphmNativePrefix) >= 0) {

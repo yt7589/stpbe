@@ -19,6 +19,7 @@ public class KsAsObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        System.out.println("KsAsObserver...");
         long cameraId = vo.getCameraId();
         String hphm = vo.getVehicleHptzVO().getHphm();
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

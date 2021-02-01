@@ -22,6 +22,7 @@ public class DkTitfObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        System.out.println("DkTitfObserver...");
         int hour = LocalDateTime.now().getHour();
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         if(hour >= 0 && hour < 4 ) { //0~4时过车量

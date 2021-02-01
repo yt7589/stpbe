@@ -18,6 +18,7 @@ public class DkHtfsObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        System.out.println("DkHtfsObserver...");
         redisTemplate.opsForValue().increment("dk_htfs_today");
         redisTemplate.opsForValue().increment("dk_htfs_month");
     }

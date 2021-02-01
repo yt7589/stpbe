@@ -16,6 +16,7 @@ public class DkVtpObserver implements ITvisStpObserver {
     private RedisTemplate redisTemplate;
     @Override
     public void notifyObserver(VehicleVo vo) {
+        System.out.println("DkVtpObserver...");
         String vType = vo.getVehicleCxtzVo().getCllxzflCode();
         if("131".equals(vType)) {  //轿车
             redisTemplate.opsForValue().increment("dk_vt_car");

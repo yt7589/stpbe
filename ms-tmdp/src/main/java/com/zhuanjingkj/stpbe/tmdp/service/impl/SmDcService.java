@@ -37,6 +37,14 @@ public class SmDcService implements ISmDcService {
         redisTemplate.opsForValue().set("ks_ksvrp_site", 0); //重点监控车辆点位分布图
         redisTemplate.opsForValue().set("ks_ksvrp_truck", 0); //大货车小时分布图
 
+        if(redisTemplate.hasKey("ks_svs_area")) { //大货车点位统计
+            redisTemplate.delete("ks_svs_area");
+        }
+
+        if(redisTemplate.hasKey("ks_ksvrp_site")) { //大货车点位统计
+            redisTemplate.delete("ks_ksvrp_site");
+        }
+
         /**
          * 1.本日过车量清空前统计到本周过车量
          * 2.如果本周过车量列表大于6，要从右侧删除一个

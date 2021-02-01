@@ -29,6 +29,7 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        System.out.println("KsSvsKsvrpObserver...");
         List<String> vNum = ksvssKsvrpMapper.getVTypeNum(); //重点监控车辆编号
         String vZtype = vo.getVehicleCxtzVo().getCllxzflCode(); //车辆类型子分类
         String vType = vo.getVehicleCxtzVo().getCllxflCode(); //车辆类型分类

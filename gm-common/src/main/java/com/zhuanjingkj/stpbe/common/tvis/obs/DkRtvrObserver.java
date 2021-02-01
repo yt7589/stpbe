@@ -42,12 +42,13 @@ public class DkRtvrObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
-        boolean flag = false;
         /**
          * TODO
          *此cameraId 为测试id
          * cameraId = vo.getCameraId()
          */
+        System.out.println("DkRtvrObserver...");
+        boolean flag = false;
         List<String> vNum = ksvssKsvrpMapper.getVTypeNum();
         String  vType = vo.getVehicleCxtzVo().getCllxzflCode();
         String tblName = AppRegistry.tvisJsonTblName;

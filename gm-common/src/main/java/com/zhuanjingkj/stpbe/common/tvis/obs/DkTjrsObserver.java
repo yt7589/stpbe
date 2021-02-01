@@ -18,6 +18,7 @@ public class DkTjrsObserver implements ITvisStpObserver {
 
     @Override
     public void notifyObserver(VehicleVo vo) {
+        System.out.println("DkTjrsObserver...");
         redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000001", 1);
         redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000002", 2);
         redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000003", 3);
