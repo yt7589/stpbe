@@ -124,4 +124,9 @@
      LEFT JOIN t_site ts
             ON tc.site_id = ts.site_id
     </select>
+
+    <delete id ="deleteTifData">
+        DELETE
+          FROM t_itf_vehicle;
+    </delete>
 </mapper>

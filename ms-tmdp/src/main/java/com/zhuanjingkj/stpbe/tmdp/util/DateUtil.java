@@ -21,6 +21,8 @@ public class DateUtil {
 
 	private static DateTimeFormatter dtfYm = DateTimeFormatter.ofPattern("yyyy-MM");
 
+	private static DateTimeFormatter dtfYm1 = DateTimeFormatter.ofPattern("yyyyMM");
+
 	private static DateTimeFormatter dtfHm = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 	
 	/**
@@ -146,6 +148,16 @@ public class DateUtil {
 	public static String countMonth(Integer num){
 		LocalDateTime localDateTime = LocalDateTime.now();
 		return localDateTime.plusMonths(num).format(dtf).toString();
+	}
+
+	/**
+	 * months 2021-01-28 10:24:36 > +num  2021-02-28 10:24:36
+	 * @param num = 1
+	 * @return
+	 */
+	public static String countMonthYm1(Integer num){
+		LocalDateTime localDateTime = LocalDateTime.now();
+		return localDateTime.plusMonths(num).format(dtfYm1).toString();
 	}
 
 	/**

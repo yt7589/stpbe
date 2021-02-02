@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
+import com.zhuanjingkj.stpbe.common.mapper.DcStMapper;
 import com.zhuanjingkj.stpbe.tmdp.service.ISmDcService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class SmDcService implements ISmDcService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private DcStMapper dcStMapper;
 
     /**
      * 每日0点需要清除的数据
@@ -32,11 +36,6 @@ public class SmDcService implements ISmDcService {
         redisTemplate.opsForValue().set("ks_svs_grate_truck", 0); //仓栅式货车
         redisTemplate.opsForValue().set("ks_svs_others", 0); //其他
 
-        redisTemplate.opsForValue().set("ks_svs_area", 0); //区域分布图
-        redisTemplate.opsForValue().set("ks_ksvrp_vehicle", 0); //重点监控车辆小时分布图
-        redisTemplate.opsForValue().set("ks_ksvrp_site", 0); //重点监控车辆点位分布图
-        redisTemplate.opsForValue().set("ks_ksvrp_truck", 0); //大货车小时分布图
-
         if(redisTemplate.hasKey("ks_svs_area")) { //大货车点位统计
             redisTemplate.delete("ks_svs_area");
         }
@@ -45,6 +44,23 @@ public class SmDcService implements ISmDcService {
             redisTemplate.delete("ks_ksvrp_site");
         }
 
+        if(redisTemplate.hasKey("ks_ksvrp_vehicle")) {
+            redisTemplate.delete("ks_ksvrp_vehicle");
+            redisTemplate.opsForList().rightPushAll("ks_ksvrp_vehicle", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
+
+        if(redisTemplate.hasKey("ks_svs_area")){
+            redisTemplate.delete("ks_svs_area");
+        }
+
+        if(redisTemplate.hasKey("ks_ksvrp_site")){
+            redisTemplate.delete("ks_ksvrp_site");
+        }
+
+        if(redisTemplate.hasKey("ks_ksvrp_truck")) {
+            redisTemplate.delete("ks_ksvrp_truck");
+            redisTemplate.opsForList().rightPushAll("ks_ksvrp_truck", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
         /**
          * 1.本日过车量清空前统计到本周过车量
          * 2.如果本周过车量列表大于6，要从右侧删除一个
@@ -57,7 +73,6 @@ public class SmDcService implements ISmDcService {
             redisTemplate.opsForList().rightPop("dk_htfs_week");
         }
         redisTemplate.opsForValue().set("dk_htfs_today", 0); //首页本日过车量
-
     }
 
     /**
@@ -165,7 +180,7 @@ public class SmDcService implements ISmDcService {
         }
 
         //zset
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
+        String date = DateUtil.countMonthYm1(-1);
         if(redisTemplate.hasKey("dcst_top7_site_" + date)) { //重点车辆点位排名TOP7
             redisTemplate.delete("dcst_top7_site_" + date);
         }
@@ -173,7 +188,6 @@ public class SmDcService implements ISmDcService {
         if(redisTemplate.hasKey("dc_st_truck")) { //大货车点位统计
             redisTemplate.delete("dc_st_truck");
         }
-
+        dcStMapper.deleteTifData();
     }
-
 }

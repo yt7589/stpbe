@@ -38,4 +38,6 @@ public interface DcStMapper {
     List<DcStIlSiteDTO> getDcstIlTop7Site();
 
     List<Map<String, Object>> getSiteInfo();
+
+    Integer deleteTifData();
 }
