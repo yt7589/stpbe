@@ -11,19 +11,19 @@ import java.util.*;
 
 public class DateUtil {
 
-	private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	
-	private static DateTimeFormatter dtfYmd = DateTimeFormatter.ofPattern("yyyyMMdd");
-	
-	private static DateTimeFormatter dtfYmd2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-	private static DateTimeFormatter dtfMd = DateTimeFormatter.ofPattern("MM-dd");
+	public static DateTimeFormatter dtfYmd = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-	private static DateTimeFormatter dtfYm = DateTimeFormatter.ofPattern("yyyy-MM");
+	public static DateTimeFormatter DTF_NYR = DateTimeFormatter.ofPattern("yyyy-MM-dd"); //年月日
 
-	private static DateTimeFormatter dtfYm1 = DateTimeFormatter.ofPattern("yyyyMM");
+	public static DateTimeFormatter DTF_MD = DateTimeFormatter.ofPattern("MM-dd");
 
-	private static DateTimeFormatter dtfHm = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+	public static DateTimeFormatter DTF_YM = DateTimeFormatter.ofPattern("yyyy-MM");
+
+	public static DateTimeFormatter dtfYm1 = DateTimeFormatter.ofPattern("yyyyMM");
+
+	public static DateTimeFormatter DTF_HM = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 	
 	/**
 	 * 获取当前时间字符串 2021-01-28 10:03:42
@@ -82,7 +82,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String getMonthOfYear(){
-		return LocalDate.now().format(dtfYm);
+		return LocalDate.now().format(DTF_YM);
 	}
 
 	/**
@@ -102,10 +102,22 @@ public class DateUtil {
 	 * @param num = 1
 	 * @return
 	 */
-	public static String plus7Days(String date, Integer num){
-		System.out.println("date" + date);
-		LocalDateTime ldt = LocalDateTime.parse(date, dtfHm);
-		return ldt.plusDays(num).format(dtfHm).toString();
+	public static String plus7Days(String date, Integer num, DateTimeFormatter dtf){
+		System.out.println("date:" + date);
+		LocalDateTime ldt = LocalDateTime.parse(date, dtf);
+		return ldt.plusDays(num).format(dtf).toString();
+	}
+
+	/**
+	 * 2021-01-28 > 2021-01-29
+	 * @param date
+	 * @param num = 1
+	 * @return
+	 */
+	public static String plusDays(String date, Integer num, DateTimeFormatter dtf){
+		System.out.println("date:" + date);
+		LocalDate ldt = LocalDate.parse(date, dtf);
+		return ldt.plusDays(num).format(dtf).toString();
 	}
 
 	/**
@@ -115,8 +127,8 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String plusDaysForDate(String date, Integer num){
-		LocalDate ldt = LocalDate.parse(date, dtfYmd2);
-		return ldt.plusDays(num).format(dtfYmd2).toString();
+		LocalDate ldt = LocalDate.parse(date, DTF_NYR);
+		return ldt.plusDays(num).format(DTF_NYR).toString();
 	}
 
 	/**
@@ -161,7 +173,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * days 2021-01-28 10:25:59 > + num 2021-01-29 10:26:12
+	 * days 20210128 > + num 20210129
 	 * @param num = 1
 	 * @return
 	 */
@@ -185,8 +197,8 @@ public class DateUtil {
 	 * 连续30天的map
 	 * @return
 	 */
-	public static Map<String, Integer> timeFor30Map(Integer num) {
-		String endTime = LocalDate.now().format(dtfYmd2);
+	public static Map<String, Integer> dayFor30Map(Integer num, DateTimeFormatter dtf) {
+		String endTime = LocalDate.now().format(dtf);
 		SortedMap<String, Integer> resMap = new TreeMap<>();
 		for(int i =0; i < num; i++) {
 			resMap.put((plusDaysForDate(endTime, -i)), 0);
@@ -210,6 +222,37 @@ public class DateUtil {
 		}
 		return resMap;
 	}
+
+	/**
+	 * 12个月份 2020-01 ...
+	 * @return
+	 */
+	public static Map<String, Integer> timeFor24Map() {
+		SortedMap<String, Integer> resMap = new TreeMap<>();
+		for (int i =1; i <= 24; i++) {
+			if(i < 10) {
+				resMap.put("0" + i, 0);
+			} else {
+				resMap.put("" + i, 0);
+			}
+		}
+		return resMap;
+	}
+	/**
+	 * flag = false 往前数
+	 * @param num
+	 * @param flag
+	 * @return
+	 */
+	public static SortedMap<String, Integer> monthFor3Map(Integer num, boolean flag) {
+		SortedMap<String, Integer> resMap = new TreeMap<>();
+		Integer nm = 0;
+		for(int i = 0; i < num; i++) {
+			nm = flag == true ? i : -i;
+			resMap.put(LocalDate.now().plusMonths(nm).format(DateTimeFormatter.ofPattern("yyyy-MM")), 0);
+		}
+		return resMap;
+	}
 	/**
 	 * 日期转换：2021-01-01 > 01-01
 	 * @param date
@@ -217,7 +260,7 @@ public class DateUtil {
 	 */
 	public static String timeForMdStr(String date) {
 		LocalDate ld = LocalDate.parse(date);
-		return ld.format(dtfMd);
+		return ld.format(DTF_MD);
 	}
 
 	public static void main(String[] args) {
@@ -243,12 +286,15 @@ public class DateUtil {
 		System.out.println("plusDays:" +plusDays(0));
 		System.out.println("timeStamp2Date" + timeStamp2Date("172214104"));
 		System.out.println("plusDaysForDate" + plusDaysForDate("2021-01-25", -29));
-		Map<String, Integer> map = timeFor30Map(7);
+		Map<String, Integer> map = dayFor30Map(7, DateUtil.DTF_NYR);
 		for (String key : map.keySet()) {
 			System.out.println("key:" + key +"value:" + map.get(key));
 		}
 		System.out.println(timeForMdStr("2021-01-27"));
 
-		System.out.println("plusDays:" + plus7Days("2021-01-28 10:19", -7));
+		System.out.println("plusDays:" + plus7Days("2021-01-28 10:19", -7, DTF_NYR));
+
+		System.out.println("monthFor3Map"  + monthFor3Map(3, false));
 	}
+
 }

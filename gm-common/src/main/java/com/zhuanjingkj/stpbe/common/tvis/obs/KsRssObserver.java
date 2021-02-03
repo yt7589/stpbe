@@ -26,11 +26,12 @@ public class KsRssObserver implements ITvisStpObserver {
         //统计同一辆车在同一个设备下通过的次数
         int random = (int)(Math.random()*15) + 1;
         String code ="";
-        if(random < 10) {
-            code = "C000000" + random;
-        } else {
-            code = "C00000" + random;
-        }
+//        if(random < 10) {
+//            code = "C000000" + random;
+//        } else {
+//            code = "C00000" + random;
+//        }
+        code = "" + cameraId;
         if(StringUtils.isBlank(hphm)) {
             hphm = "豫A888888";
         }

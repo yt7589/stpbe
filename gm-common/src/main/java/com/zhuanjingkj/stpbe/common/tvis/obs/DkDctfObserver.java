@@ -19,21 +19,22 @@ public class DkDctfObserver implements ITvisStpObserver {
     @Override
     public void notifyObserver(VehicleVo vo) {
         System.out.println("DkDctfObserver...");
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000001", 1);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000002", 2);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000003", 3);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000004", 4);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000005", 5);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000006", 6);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000007", 7);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000008", 8);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000009", 9);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000010", 10);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000011", 11);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000012", 12);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000013", 13);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000014", 14);
-        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000015", 10);
+        redisTemplate.opsForHash().increment("dk_dctf_area", vo.getCameraId(), 1);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000001", 1);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000002", 2);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000003", 3);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000004", 4);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000005", 5);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000006", 6);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000007", 7);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000008", 8);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000009", 9);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000010", 10);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000011", 11);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000012", 12);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000013", 13);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000014", 14);
+//        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000015", 10);
     }
 
     @Override

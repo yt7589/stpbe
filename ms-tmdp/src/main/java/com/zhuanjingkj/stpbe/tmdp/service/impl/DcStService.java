@@ -81,7 +81,7 @@ public class DcStService implements IDcStService {
     @Override
     public List<DcStVTrendDTO> getVTr_exp() {
         List<DcStVTrendDTO> recs = new ArrayList<>();
-        Map<String, Integer> res30Map = DateUtil.timeFor30Map(7); //生成7日过车集合
+        Map<String, Integer> res30Map = DateUtil.dayFor30Map(7, DateUtil.DTF_NYR); //生成7日过车集合
         String endTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String startTime = DateUtil.plusDaysForDate(endTime, -6);
         List<Map<String, Object>> res = dcStMapper.getWeekVehicle(endTime, startTime);
