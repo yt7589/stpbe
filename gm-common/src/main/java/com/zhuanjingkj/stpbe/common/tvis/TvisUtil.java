@@ -53,7 +53,6 @@ public class TvisUtil {
     public static String submitTvisImage(Map<String, Object> map, File f) {
         String type = "file";
         String url = AppConst.TVIS_SERVER_BASE_URL + AppConst.TSC_SUBMIT_IMAGE;
-        logger.info("### TvisUtil.submitTvisImage");
         return processTvisImage(url, type, map, f);
     }
 
