@@ -20,6 +20,7 @@ public class TmdpService implements ITmdpService {
     @Override
     public ResultDTO<WsmVideoFrameDTO> getTvisAnalysisResult(long cameraId, long baseTvisJsonId, int direction) {
         ResultDTO<WsmVideoFrameDTO> dto = new ResultDTO<>();
+        logger.info("call TvisUtil.getTvisImageAnalysisResult");
         WsmVideoFrameDTO vfv = TvisUtil.getTvisImageAnalysisResult(tvisJsonMapper, cameraId, baseTvisJsonId, direction);
         dto.setData(vfv);
         return dto;

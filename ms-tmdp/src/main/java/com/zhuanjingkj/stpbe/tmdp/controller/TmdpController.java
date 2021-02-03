@@ -78,6 +78,7 @@ public class TmdpController {
             @RequestParam("tvisJsonId") long tvisJsonId,
             @RequestParam("direction") int direction
     ) {
+        logger.info("call service.getTvisAnalysisResult");
         return tmdpService.getTvisAnalysisResult(cameraId, tvisJsonId, direction);
     }
 
