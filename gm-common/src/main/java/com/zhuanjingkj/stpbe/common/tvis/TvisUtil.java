@@ -467,13 +467,16 @@ public class TvisUtil {
                 map.put("TPXX", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(f)));
                 response = HttpUtil.postString(url, map);
             }
+            System.out.println("recognizeImageFile.recognizeImageFile 3");
             map.clear();
             map = null;
         } catch (IOException ex) {
             logger.info("### exception: " + ex.getMessage() + "!");
             return ERROR_RESPONSE;
         }
+        System.out.println("recognizeImageFile.recognizeImageFile 4");
         if (isSuccessRequest(response)) {
+            System.out.println("recognizeImageFile.recognizeImageFile 5");
             return response;
         } else {
             logger.info("### error response:" + response + "!");
@@ -484,8 +487,8 @@ public class TvisUtil {
     private static boolean isSuccessRequest(String response) {
         try {
             JSONObject json = JSONObject.parseObject(response); //JSONUtil.parseObj(response);
-            Integer code = json.getIntValue("CODE"); //json.getInt("CODE");
-            if (Integer.valueOf(1).equals(code)) {
+            Integer code = json.getIntValue("code"); //json.getInt("CODE");
+            if (Integer.valueOf(0).equals(code)) {
                 return true;
             } else {
                 return false;

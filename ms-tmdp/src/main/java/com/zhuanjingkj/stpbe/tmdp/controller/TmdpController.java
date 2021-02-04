@@ -1,10 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
-import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
-import com.zhuanjingkj.stpbe.data.dto.CreateRtspBindDTO;
-import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
+import com.zhuanjingkj.stpbe.data.dto.*;
 import com.zhuanjingkj.stpbe.data.rto.CreateRtspBindRTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.*;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.*;
@@ -17,12 +14,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Date;
 
 @RestController
@@ -80,6 +82,51 @@ public class TmdpController {
     ) {
         logger.info("call service.getTvisAnalysisResult");
         return tmdpService.getTvisAnalysisResult(cameraId, tvisJsonId, direction);
+    }
+
+
+
+    /**
+     * 抓拍机上传图片，返回图片处理是否成功
+     * @param gcxh
+     * @param tplx
+     * @param mrhpt
+     * @param hphm
+     * @param cameraId
+     * @param file
+     * @param tpwj
+     * @return
+     */
+    @PostMapping("/recognizeTvisImage")
+    public ResultDTO<SubmitImageDTO> recognizeTvisImage(@RequestParam("GCXH") String gcxh,
+                                                 @RequestParam("TPLX") String tplx,
+                                                 @RequestParam(name = "MRHPT", required = false) String mrhpt,
+                                                 @RequestParam(name = "HPHM", required = false) String hphm,
+                                                 @RequestParam(name = "cameraId", required = true) String cameraId,
+                                                 @RequestParam(name = "TPXX", required = false) MultipartFile file,
+                                                 @RequestParam(name = "TPWJ", required = false) String tpwj) {
+        byte[] data = null;
+        if ("1".equals(tplx)) {
+            if (file != null) {
+                try {
+                    data = file.getBytes();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if ("2".equals(tplx)) {
+            data = Base64.getDecoder().decode(tpwj);
+        }
+        File imageFile = new File("c" + cameraId + "_" + System.currentTimeMillis() + ".jpg");
+        try {
+            FileOutputStream fos = new FileOutputStream(imageFile);
+            fos.write(data);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return tmdpService.recognizeTvisImage(cameraId, "0", mrhpt, hphm, data, imageFile.getAbsolutePath());
     }
 
 

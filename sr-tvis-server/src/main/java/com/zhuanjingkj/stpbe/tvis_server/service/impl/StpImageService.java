@@ -48,37 +48,9 @@ public class StpImageService implements IStpImageService {
     private Environment environment;
 
     @Override
-    public ResultDTO<SubmitImageDTO> submitImage(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData, String imageFile) {
-        /*String rawResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_RECOGNITION, imageData);
-        JSONObject jo = JSONObject.parseObject(rawResp);
-        jo.put("ImageUrl", imageFile);
-        jo.put("StreamID", "-1");
-        String response = jo.toJSONString();
-        long tvisJsonId = 0;
-        StringBuilder msg = null;
-        synchronized (redisTemplate) {
-            tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
-            msg = new StringBuilder("{\"cameraId\":" + cameraId + ", \"tvisJsonId\": "
-                    + tvisJsonId + ", \"json\": " + response + "}");
-        }
-        ResultDTO<SubmitImageDTO> rst = new ResultDTO<>();
-        SubmitImageDTO data = new SubmitImageDTO();
-        rst.setData(data);
-        if(StringUtils.equals(response,"0")){
-            rst.setCode(4);
-            data.setTvisJsonId(-1);
-            return rst;
-        }
-        if (isFirstRun) {
-            TvisUtil.rotateTvisJsonTbl(tvisJsonMapper);
-            tvisStpOberverManager.initialize(observers, environment);
-            isFirstRun = false;
-        }
-        TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, msg.toString());
-        TvisUtil.processStpTvisJson(observers, msg.toString());
-        data.setTvisJsonId(tvisJsonId);
-        data.setJsonResult(rawResp);
-        return rst;*/
+    public ResultDTO<SubmitImageDTO> submitImage(String cameraId, String gcxh,
+                                                 String mrhpt, String hphm,
+                                                 byte[] imageData, String imageFile) {
         String streamId = "-1";
         ResultDTO<SubmitImageDTO> rst = new ResultDTO<>();
         SubmitImageDTO data = TvisUtil.recognizeTvisImage(environment, redisTemplate, redisTemplate2,
