@@ -1,4 +1,4 @@
-package com.zhuanjingkj.stpbe.tvis_server.conf;
+package com.zhuanjingkj.stpbe.common.util;
 
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;

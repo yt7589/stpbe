@@ -1,12 +1,12 @@
 package com.zhuanjingkj.stpbe.tvis_server.conf;
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
+import com.zhuanjingkj.stpbe.common.util.ByteArrayRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
