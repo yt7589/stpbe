@@ -12,20 +12,30 @@ public class DcRtRoadJamDTO extends BaseDTO {
     private long rdId; //路段id
     @JSONField(name = "rdName")
     private String rdName; //路段名称
-    @JSONField(name = "lng")
-    private double lng; //经度
-    @JSONField(name = "lat")
-    private double lat; //纬度
-    @JSONField(name = "count")
-    private double count; //拥堵指数
+    @JSONField(name = "srcLng")
+    private double srcLng; //开始经度
+    @JSONField(name = "srcLat")
+    private double srcLat; //开始纬度
+    @JSONField(name = "dstLng")
+    private double dstLng; //结尾经度
+    @JSONField(name = "dstLat")
+    private double dstLat; //结尾纬度
     @JSONField(name = "rg")
     private double rg; //环比
+    @JSONField(name = "count")
+    private double count; //拥堵指数
 
-    public DcRtRoadJamDTO(long rdId, String rdName, double lng, double lat, double count, double rg) {
+    public DcRtRoadJamDTO() {
+        super();
+    }
+
+    public DcRtRoadJamDTO(long rdId, String rdName, double srcLng, double srcLat, double dstLng, double dstLat, double count, double rg) {
         this.rdId = rdId;
         this.rdName = rdName;
-        this.lng = lng;
-        this.lat = lat;
+        this.srcLng = srcLng;
+        this.srcLat = srcLat;
+        this.dstLng = dstLng;
+        this.dstLat = dstLat;
         this.count = count;
         this.rg = rg;
     }
@@ -46,20 +56,36 @@ public class DcRtRoadJamDTO extends BaseDTO {
         this.rdName = rdName;
     }
 
-    public double getLng() {
-        return lng;
+    public double getSrcLng() {
+        return srcLng;
     }
 
-    public void setLng(double lng) {
-        this.lng = lng;
+    public void setSrcLng(double srcLng) {
+        this.srcLng = srcLng;
     }
 
-    public double getLat() {
-        return lat;
+    public double getSrcLat() {
+        return srcLat;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
+    public void setSrcLat(double srcLat) {
+        this.srcLat = srcLat;
+    }
+
+    public double getDstLng() {
+        return dstLng;
+    }
+
+    public void setDstLng(double dstLng) {
+        this.dstLng = dstLng;
+    }
+
+    public double getDstLat() {
+        return dstLat;
+    }
+
+    public void setDstLat(double dstLat) {
+        this.dstLat = dstLat;
     }
 
     public double getCount() {

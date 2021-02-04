@@ -157,7 +157,7 @@
     </select>
 
     <select id ="getFileHash" resultType="hashmap">
-        SELECT tv.tvis_json_id, tv.vehs_idx, tv.wzlx, tv.tvis_json_tbl
+        SELECT tv.tvis_json_id, tv.vehs_idx, tv.wzlx, tv.tvis_json_tbl, tv.category
           FROM t_violation tv
 <!--     LEFT JOIN #{tblName} tj ON tv.tvis_json_id = tj.tvis_json_id-->
          WHERE tv.violation_id =#{tvId}

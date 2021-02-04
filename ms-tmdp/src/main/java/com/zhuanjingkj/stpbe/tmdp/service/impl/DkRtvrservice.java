@@ -28,7 +28,6 @@ public class DkRtvrservice implements IDkRtvrservice {
                 if(map != null && map.size() > 0) {
                     rtvrs.get(i).setImgUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
                 }
-
             }
         }
 //        List<DkRtvrDTO> rtvrs = new ArrayList<>();
