@@ -34,8 +34,6 @@ public class StpImageService implements IStpImageService {
     private final static String LIST_VEHICLE_RECOGNITION = "vehicle-recognition-list";
     private final static Logger logger = LoggerFactory.getLogger(StpImageService.class);
 
-    private static List<ITvisStpObserver> observers = new ArrayList<>();
-    private static boolean isFirstRun = true;
     @Autowired
     private StringRedisTemplate redisTemplate;
     @Resource(name = "redisTemplate2")
@@ -51,7 +49,7 @@ public class StpImageService implements IStpImageService {
 
     @Override
     public ResultDTO<SubmitImageDTO> submitImage(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData, String imageFile) {
-        String rawResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_RECOGNITION, imageData);
+        /*String rawResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_RECOGNITION, imageData);
         JSONObject jo = JSONObject.parseObject(rawResp);
         jo.put("ImageUrl", imageFile);
         jo.put("StreamID", "-1");
@@ -79,6 +77,19 @@ public class StpImageService implements IStpImageService {
         TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, msg.toString());
         TvisUtil.processStpTvisJson(observers, msg.toString());
         data.setTvisJsonId(tvisJsonId);
+        data.setJsonResult(rawResp);
+        return rst;*/
+        String streamId = "-1";
+        ResultDTO<SubmitImageDTO> rst = new ResultDTO<>();
+        SubmitImageDTO data = TvisUtil.recognizeTvisImage(environment, redisTemplate, redisTemplate2,
+                tvisJsonMapper, tvisStpOberverManager, LIST_VEHICLE_RECOGNITION,
+                cameraId, streamId,
+                imageFile, imageData);
+        rst.setData(data);
+        if (data.getTvisJsonId() < 0) {
+            rst.setCode(4);
+            return rst;
+        }
         return rst;
     }
 

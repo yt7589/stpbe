@@ -8,6 +8,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 public class SubmitImageDTO {
     @JSONField(name = "tvisJsonId")
     private long tvisJsonId;
+    @JSONField(name = "jsonResult")
+    private String jsonResult;
 
     public long getTvisJsonId() {
         return tvisJsonId;
@@ -15,5 +17,13 @@ public class SubmitImageDTO {
 
     public void setTvisJsonId(long tvisJsonId) {
         this.tvisJsonId = tvisJsonId;
+    }
+
+    public String getJsonResult() {
+        return jsonResult;
+    }
+
+    public void setJsonResult(String jsonResult) {
+        this.jsonResult = jsonResult;
     }
 }

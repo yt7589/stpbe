@@ -8,6 +8,8 @@ import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
+import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.dto.SubmitImageDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameVehicleDTO;
 import com.zhuanjingkj.stpbe.data.vo.*;
@@ -15,7 +17,9 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -388,6 +392,44 @@ public class TvisUtil {
         }
 
         return response;
+    }
+
+    private static boolean isFirstRun = true;
+    private static List<ITvisStpObserver> observers = new ArrayList<>();
+    public static SubmitImageDTO recognizeTvisImage(Environment environment, StringRedisTemplate redisTemplate,
+                                                    RedisTemplate<String, byte[]> redisTemplate2,
+                                                    TvisJsonMapper tvisJsonMapper,
+                                                    TvisStpOberverManager tvisStpOberverManager,
+                                                    String redis_request_queue,
+                                                    String cameraId, String streamId, String imageFile,
+                                                    byte[] imageData) {
+        String rawResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, redis_request_queue, imageData);
+        JSONObject jo = JSONObject.parseObject(rawResp);
+        jo.put("ImageUrl", imageFile);
+        jo.put("StreamID", streamId);
+        String response = jo.toJSONString();
+        long tvisJsonId = 0;
+        StringBuilder msg = null;
+        synchronized (redisTemplate) {
+            tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
+            msg = new StringBuilder("{\"cameraId\":" + cameraId + ", \"tvisJsonId\": "
+                    + tvisJsonId + ", \"json\": " + response + "}");
+        }
+        SubmitImageDTO data = new SubmitImageDTO();
+        if(org.apache.commons.lang3.StringUtils.equals(response,"0")){
+            data.setTvisJsonId(-1);
+            return data;
+        }
+        if (isFirstRun) {
+            TvisUtil.rotateTvisJsonTbl(tvisJsonMapper);
+            tvisStpOberverManager.initialize(observers, environment);
+            isFirstRun = false;
+        }
+        TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, msg.toString());
+        TvisUtil.processStpTvisJson(observers, msg.toString());
+        data.setTvisJsonId(tvisJsonId);
+        data.setJsonResult(rawResp);
+        return data;
     }
 
 
