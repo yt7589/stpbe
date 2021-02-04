@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class RedisConfig {
     @Bean
     @Qualifier("serializableRedisTemplate")
-    public RedisTemplate<String, Serializable> redisTemplate(LettuceConnectionFactory connectionFactory) {
+    public RedisTemplate<String, Serializable> redisTemplateData(LettuceConnectionFactory connectionFactory) {
         RedisTemplate<String, Serializable> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
