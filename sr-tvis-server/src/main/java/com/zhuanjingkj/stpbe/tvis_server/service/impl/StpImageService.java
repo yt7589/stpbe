@@ -1,21 +1,12 @@
 package com.zhuanjingkj.stpbe.tvis_server.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
-import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.common.tvis.TvisStpOberverManager;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.dto.SubmitImageDTO;
+import com.zhuanjingkj.stpbe.data.dto.RecognizeTvisImageDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
-import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameVehicleDTO;
-import com.zhuanjingkj.stpbe.tvis_server.dto.TvisAnalysisItemDTO;
-import com.zhuanjingkj.stpbe.tvis_server.dto.TvisAnalysisResultDTO;
 import com.zhuanjingkj.stpbe.tvis_server.service.IStpImageService;
-import com.zhuanjingkj.stpbe.tvis_server.vo.TvisImageErrorResponse;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +17,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class StpImageService implements IStpImageService {
@@ -48,12 +37,12 @@ public class StpImageService implements IStpImageService {
     private Environment environment;
 
     @Override
-    public ResultDTO<SubmitImageDTO> submitImage(String cameraId, String gcxh,
-                                                 String mrhpt, String hphm,
-                                                 byte[] imageData, String imageFile) {
+    public ResultDTO<RecognizeTvisImageDTO> submitImage(String cameraId, String gcxh,
+                                                        String mrhpt, String hphm,
+                                                        byte[] imageData, String imageFile) {
         String streamId = "-1";
-        ResultDTO<SubmitImageDTO> rst = new ResultDTO<>();
-        SubmitImageDTO data = TvisUtil.recognizeTvisImage(environment, redisTemplate, redisTemplate2,
+        ResultDTO<RecognizeTvisImageDTO> rst = new ResultDTO<>();
+        RecognizeTvisImageDTO data = TvisUtil.submitTvisImage(environment, redisTemplate, redisTemplate2,
                 tvisJsonMapper, tvisStpOberverManager, LIST_VEHICLE_RECOGNITION,
                 cameraId, streamId,
                 imageFile, imageData);

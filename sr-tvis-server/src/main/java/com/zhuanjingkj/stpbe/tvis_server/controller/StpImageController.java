@@ -2,7 +2,7 @@ package com.zhuanjingkj.stpbe.tvis_server.controller;
 
 
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.dto.SubmitImageDTO;
+import com.zhuanjingkj.stpbe.data.dto.RecognizeTvisImageDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
 import com.zhuanjingkj.stpbe.tvis_server.service.impl.StpImageService;
 import org.slf4j.Logger;
@@ -37,13 +37,13 @@ public class StpImageController {
      * @return
      */
     @PostMapping("/submitImage")
-    public ResultDTO<SubmitImageDTO> submitImage(@RequestParam("GCXH") String gcxh,
-                                                 @RequestParam("TPLX") String tplx,
-                                                 @RequestParam(name = "MRHPT", required = false) String mrhpt,
-                                                 @RequestParam(name = "HPHM", required = false) String hphm,
-                                                 @RequestParam(name = "cameraId", required = true) String cameraId,
-                                                 @RequestParam(name = "TPXX", required = false) MultipartFile file,
-                                                 @RequestParam(name = "TPWJ", required = false) String tpwj) {
+    public ResultDTO<RecognizeTvisImageDTO> submitImage(@RequestParam("GCXH") String gcxh,
+                                                        @RequestParam("TPLX") String tplx,
+                                                        @RequestParam(name = "MRHPT", required = false) String mrhpt,
+                                                        @RequestParam(name = "HPHM", required = false) String hphm,
+                                                        @RequestParam(name = "cameraId", required = true) String cameraId,
+                                                        @RequestParam(name = "TPXX", required = false) MultipartFile file,
+                                                        @RequestParam(name = "TPWJ", required = false) String tpwj) {
         byte[] data = null;
         if ("1".equals(tplx)) {
             if (file != null) {

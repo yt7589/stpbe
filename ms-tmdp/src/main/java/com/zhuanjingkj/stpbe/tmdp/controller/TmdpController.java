@@ -98,13 +98,13 @@ public class TmdpController {
      * @return
      */
     @PostMapping("/recognizeTvisImage")
-    public ResultDTO<SubmitImageDTO> recognizeTvisImage(@RequestParam("GCXH") String gcxh,
-                                                 @RequestParam("TPLX") String tplx,
-                                                 @RequestParam(name = "MRHPT", required = false) String mrhpt,
-                                                 @RequestParam(name = "HPHM", required = false) String hphm,
-                                                 @RequestParam(name = "cameraId", required = true) String cameraId,
-                                                 @RequestParam(name = "TPXX", required = false) MultipartFile file,
-                                                 @RequestParam(name = "TPWJ", required = false) String tpwj) {
+    public ResultDTO<RecognizeTvisImageDTO> recognizeTvisImage(@RequestParam("GCXH") String gcxh,
+                                                               @RequestParam("TPLX") String tplx,
+                                                               @RequestParam(name = "MRHPT", required = false) String mrhpt,
+                                                               @RequestParam(name = "HPHM", required = false) String hphm,
+                                                               @RequestParam(name = "cameraId", required = true) String cameraId,
+                                                               @RequestParam(name = "TPXX", required = false) MultipartFile file,
+                                                               @RequestParam(name = "TPWJ", required = false) String tpwj) {
         byte[] data = null;
         if ("1".equals(tplx)) {
             if (file != null) {

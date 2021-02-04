@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.common;
 
 public class AppConst {
     public final static String JWT_KEY = "zjc";
+    public final static String LIST_VEHICLE_RECOGNITION = "vehicle-recognition-list";
     // 认证相关
     public final static String AUTH_REDIS_USER_PREFIX = "u_";
     public final static long REDIS_USER_DURATION = 60 * 1000;

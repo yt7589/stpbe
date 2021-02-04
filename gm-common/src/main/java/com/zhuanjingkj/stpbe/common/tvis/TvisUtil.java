@@ -8,8 +8,7 @@ import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
-import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.dto.SubmitImageDTO;
+import com.zhuanjingkj.stpbe.data.dto.RecognizeTvisImageDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameVehicleDTO;
 import com.zhuanjingkj.stpbe.data.vo.*;
@@ -396,13 +395,13 @@ public class TvisUtil {
 
     private static boolean isFirstRun = true;
     private static List<ITvisStpObserver> observers = new ArrayList<>();
-    public static SubmitImageDTO recognizeTvisImage(Environment environment, StringRedisTemplate redisTemplate,
-                                                    RedisTemplate<String, byte[]> redisTemplate2,
-                                                    TvisJsonMapper tvisJsonMapper,
-                                                    TvisStpOberverManager tvisStpOberverManager,
-                                                    String redis_request_queue,
-                                                    String cameraId, String streamId, String imageFile,
-                                                    byte[] imageData) {
+    public static RecognizeTvisImageDTO submitTvisImage(Environment environment, StringRedisTemplate redisTemplate,
+                                                        RedisTemplate<String, byte[]> redisTemplate2,
+                                                        TvisJsonMapper tvisJsonMapper,
+                                                        TvisStpOberverManager tvisStpOberverManager,
+                                                        String redis_request_queue,
+                                                        String cameraId, String streamId, String imageFile,
+                                                        byte[] imageData) {
         String rawResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, redis_request_queue, imageData);
         JSONObject jo = JSONObject.parseObject(rawResp);
         jo.put("ImageUrl", imageFile);
@@ -415,7 +414,7 @@ public class TvisUtil {
             msg = new StringBuilder("{\"cameraId\":" + cameraId + ", \"tvisJsonId\": "
                     + tvisJsonId + ", \"json\": " + response + "}");
         }
-        SubmitImageDTO data = new SubmitImageDTO();
+        RecognizeTvisImageDTO data = new RecognizeTvisImageDTO();
         if(org.apache.commons.lang3.StringUtils.equals(response,"0")){
             data.setTvisJsonId(-1);
             return data;

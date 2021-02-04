@@ -1,10 +1,11 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
+import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.tvis.TvisStpOberverManager;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.dto.SubmitImageDTO;
+import com.zhuanjingkj.stpbe.data.dto.RecognizeTvisImageDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.ITmdpService;
 import org.slf4j.Logger;
@@ -19,7 +20,6 @@ import javax.annotation.Resource;
 
 @Service
 public class TmdpService implements ITmdpService {
-    private final static String LIST_VEHICLE_RECOGNITION = "vehicle-recognition-list";
     private final static Logger logger = LoggerFactory.getLogger(TmdpService.class);
 
     @Autowired
@@ -34,27 +34,31 @@ public class TmdpService implements ITmdpService {
     private Environment environment;
 
     @Override
-    public ResultDTO<WsmVideoFrameDTO> getTvisAnalysisResult(long cameraId, long baseTvisJsonId, int direction) {
+    public ResultDTO<WsmVideoFrameDTO> getTvisAnalysisResult(long cameraId,
+                                                             long baseTvisJsonId,
+                                                             int direction) {
         ResultDTO<WsmVideoFrameDTO> dto = new ResultDTO<>();
         logger.info("call TvisUtil.getTvisImageAnalysisResult");
-        WsmVideoFrameDTO vfv = TvisUtil.getTvisImageAnalysisResult(tvisJsonMapper, cameraId, baseTvisJsonId, direction);
+        WsmVideoFrameDTO vfv = TvisUtil.getTvisImageAnalysisResult(tvisJsonMapper,
+                cameraId, baseTvisJsonId, direction);
         dto.setData(vfv);
         return dto;
     }
 
     @Override
-    public ResultDTO<SubmitImageDTO> recognizeTvisImage(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData, String imageFile) {
-        String streamId = "-1";
-        ResultDTO<SubmitImageDTO> rst = new ResultDTO<>();
-        SubmitImageDTO data = TvisUtil.recognizeTvisImage(environment, redisTemplate, redisTemplate2,
-                tvisJsonMapper, tvisStpOberverManager, LIST_VEHICLE_RECOGNITION,
-                cameraId, streamId,
-                imageFile, imageData);
+    public ResultDTO<RecognizeTvisImageDTO> recognizeTvisImage(String cameraId, String gcxh,
+                                                               String mrhpt, String hphm,
+                                                               byte[] imageData, String imageFile) {
+        logger.info("recognizeTvisImage 1");
+        String jsonResult = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2,
+                AppConst.LIST_VEHICLE_RECOGNITION, imageData);
+        logger.info("recognizeTvisImage 2:" + jsonResult + "!");
+        ResultDTO<RecognizeTvisImageDTO> rst = new ResultDTO<>();
+        RecognizeTvisImageDTO data = new RecognizeTvisImageDTO();
         rst.setData(data);
-        if (data.getTvisJsonId() < 0) {
-            rst.setCode(4);
-            return rst;
-        }
+        data.setTvisJsonId(0);
+        data.setJsonResult(jsonResult);
+        logger.info("recognizeTvisImage 3");
         return rst;
     }
 }

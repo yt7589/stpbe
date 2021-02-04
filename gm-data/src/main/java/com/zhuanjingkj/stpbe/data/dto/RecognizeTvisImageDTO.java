@@ -5,7 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 /**
  * 抓拍机上传图片响应结果
  */
-public class SubmitImageDTO {
+public class RecognizeTvisImageDTO {
     @JSONField(name = "tvisJsonId")
     private long tvisJsonId;
     @JSONField(name = "jsonResult")
