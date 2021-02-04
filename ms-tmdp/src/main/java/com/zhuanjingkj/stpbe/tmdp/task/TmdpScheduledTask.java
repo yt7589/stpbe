@@ -68,7 +68,9 @@ public class TmdpScheduledTask {
                     String coordinate = "" + KsAsService.areaSiteMap.get(cameraId);
                     if(StringUtils.isNotBlank(coordinate)) {
                         lsv = new KsRssSfvsDTO(101, "" + KsAsService.areaMap.get(cameraId),
-                                hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_as_lsvs_total", val)), Double.parseDouble(coordinate.split("\\|")[0]),Double.parseDouble(coordinate.split("\\|")[1]));
+                                hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_as_lsvs_total", val)),
+                                Double.parseDouble(coordinate.split("\\|")[0] == null ? "0" : coordinate.split("\\|")[0]),
+                                Double.parseDouble(coordinate.split("\\|")[1] == null ? "0" : coordinate.split("\\|")[1]));
                         data.put(lsv.toJsonObject());
                     }
                 }
@@ -103,7 +105,7 @@ public class TmdpScheduledTask {
                     String cameraId = val.split("\\|")[1];
                     lsv = new KsAsLsvDTO(1,1,1, "" + KsAsService.areaMap.get(cameraId),
                             "" + redisTemplate.opsForHash().get("ks_as_lsvs_time", val),hphm,
-                            Integer.parseInt("" + redisTemplate.opsForHash().get("ks_as_lsvs_total", val)));
+                            Integer.parseInt(redisTemplate.opsForHash().get("ks_as_lsvs_total", val) == null ? "0" : "" + redisTemplate.opsForHash().get("ks_as_lsvs_total", val)));
                     data.put(lsv.toJsonObject());
                 }
             }
@@ -168,8 +170,9 @@ public class TmdpScheduledTask {
                     String coordinate = "" + KsRssService.rssSiteMap.get(cameraId);
                     if(StringUtils.isNotBlank(coordinate)) {
                         lsv = new KsRssSfvsDTO(101, "" + KsRssService.rssMap.get(cameraId),
-                                hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_rss_lsvs_total", val)),
-                                Double.parseDouble(coordinate.split("\\|")[0]),Double.parseDouble(coordinate.split("\\|")[1]));
+                                hphm, Integer.parseInt(redisTemplate.opsForHash().get("ks_rss_lsvs_total", val) == null ? "0" : "" + redisTemplate.opsForHash().get("ks_rss_lsvs_total", val)),
+                                Double.parseDouble(coordinate.split("\\|")[0] == null ? "0" : coordinate.split("\\|")[0]),
+                                Double.parseDouble(coordinate.split("\\|")[1] == null ? "0" : coordinate.split("\\|")[1]));
                         data.put(lsv.toJsonObject());
                     }
                 }
@@ -230,7 +233,7 @@ public class TmdpScheduledTask {
                     String coordinate = "" + KsAsService.areaSiteMap.get(cameraId);
                     if(StringUtils.isNotBlank(coordinate)) {
                         lsv = new KsRssLsvsDTO(1, 1,1, "" + KsRssService.rssMap.get(cameraId), "" +redisTemplate.opsForHash().get("ks_rss_lsvs_time", val),
-                        hphm, Integer.parseInt("" + redisTemplate.opsForHash().get("ks_rss_lsvs_total", val)));
+                        hphm, Integer.parseInt(redisTemplate.opsForHash().get("ks_rss_lsvs_total", val) == null ? "0" : ""+redisTemplate.opsForHash().get("ks_rss_lsvs_total", val)));
                         data.put(lsv.toJsonObject());
                     }
                 }
