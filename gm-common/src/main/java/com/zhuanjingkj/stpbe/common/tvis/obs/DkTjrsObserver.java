@@ -19,21 +19,22 @@ public class DkTjrsObserver implements ITvisStpObserver {
     @Override
     public void notifyObserver(VehicleVo vo) {
         System.out.println("DkTjrsObserver...");
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000001", 1);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000002", 2);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000003", 3);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000004", 4);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000005", 5);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000006", 6);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000007", 7);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000008", 8);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000009", 9);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000010", 10);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000011", 11);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000012", 12);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000013", 13);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000014", 14);
-        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000015", 10);
+        redisTemplate.opsForHash().increment("dk_tjrs_road", vo.getCameraId(), 1);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000001", 1);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000002", 2);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000003", 3);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000004", 4);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000005", 5);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000006", 6);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000007", 7);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000008", 8);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000009", 9);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000010", 10);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000011", 11);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000012", 12);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000013", 13);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000014", 14);
+//        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000015", 10);
     }
 
     @Override

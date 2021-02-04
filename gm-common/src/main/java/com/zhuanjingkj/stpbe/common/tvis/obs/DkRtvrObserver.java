@@ -89,7 +89,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if(StringUtils.isNotBlank(zjsddh)) {
             String state = zjsddh.split("_")[0];
             String rb = zjsddh.split("_")[1];
-            if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
+            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
                 insertViolation(vo,3, hphm,"主驾驶打电话", vType, tblName, category, date);
                 flag = true;
             }
@@ -98,7 +98,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if(StringUtils.isNotBlank(fjsbjaqd)) {
             String state = fjsbjaqd.split("_")[0];
             String rb = fjsbjaqd.split("_")[1];
-            if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
+            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
                 insertViolation(vo,4, hphm,"副驾驶不系安全带", vType, tblName, category, date);
                 flag = true;
             }
@@ -107,7 +107,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if(StringUtils.isNotBlank(fjszyb)) {
             String state = fjszyb.split("_")[0];
             String rb = fjszyb.split("_")[1];
-            if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
+            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
                 insertViolation(vo,5, hphm,"副驾驶放下遮阳板", vType, tblName, category, date);
                 flag = true;
             }
@@ -116,7 +116,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if(StringUtils.isNotBlank(zjsbjaqd)) {
             String state = zjsbjaqd.split("_")[0];
             String rb = zjsbjaqd.split("_")[1];
-            if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
+            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
                 insertViolation(vo,6, hphm,"主驾驶不系安全带", vType, tblName, category, date);
                 flag = true;
             }
@@ -125,7 +125,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if(StringUtils.isNotBlank(zjscy)) {
             String state = zjscy.split("_")[0];
             String rb = zjscy.split("_")[1];
-            if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
+            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
                 insertViolation(vo,7, hphm,"主驾驶抽烟", vType, tblName, category, date);
                 flag = true;
             }
@@ -134,7 +134,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if(StringUtils.isNotBlank(zjsksj)) {
             String state = zjsksj.split("_")[0];
             String rb = zjsksj.split("_")[1];
-            if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
+            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
                 insertViolation(vo,8, hphm,"主驾驶看手机", vType, tblName, category, date);
                 flag = true;
             }
@@ -143,7 +143,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if(StringUtils.isNotBlank(zjszyb)) {
             String state = zjszyb.split("_")[0];
             String rb = zjszyb.split("_")[1];
-            if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
+            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
                 insertViolation(vo,9, hphm,"主驾驶放下遮阳板", vType, tblName, category, date);
                 flag = true;
             }
@@ -152,7 +152,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if(StringUtils.isNotBlank(mtcbdtk)) {
             String state = mtcbdtk.split("_")[0];
             String rb = mtcbdtk.split("_")[1];
-            if("0".equals(state) && "80".compareTo(rb) == -1) { //违章
+            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
                 insertViolation(vo,10, hphm,"摩托车不戴头盔", vType, tblName, category, date);
                 flag = true;
             }
@@ -211,22 +211,22 @@ public class DkRtvrObserver implements ITvisStpObserver {
 
             long cameraId = vo.getCameraId();
             List<String> ksvcHphm = ksVcMapper.getKsvcHphm();
-            if(random == 0) {
-                random = 4;
-            }
-            if(random < 10) {
-                code = "C000000" + random;
-            } else {
-                code = "C00000" + random;
-            }
-
-//            if(ksvcHphm.contains(hphm)) {
+//            if(random == 0) {
+//                random = 4;
+//            }
+//            if(random < 10) {
+//                code = "C000000" + random;
+//            } else {
+//                code = "C00000" + random;
+//            }
+            code = "" +cameraId;
+            if(ksvcHphm.contains(hphm)) {
                 //布控违章记录统计同一辆车在同一个设备下通过的次数
                 redisTemplate.opsForHash().increment("ks_vs_ill_total",  hphm + "|" + code, 1);
                 redisTemplate.opsForHash().put("ks_vs_ill_time", hphm + "|" + code, date);
                 redisTemplate.opsForList().leftPush("ks_vs_ill_list", hphm + "|" + code);
                 redisTemplate.opsForValue().increment("dcst_vehicle_alerts", 1);
-//            }
+            }
         }
         //车辆布控动态
         redisTemplate.opsForHash().increment("ks_vs_dyn_total",  hphm + "|" + code, 1);

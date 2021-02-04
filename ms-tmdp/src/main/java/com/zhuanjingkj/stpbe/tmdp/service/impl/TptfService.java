@@ -23,7 +23,7 @@ public class TptfService implements ITptfService {
         ResultDTO<TpTfDTO> dto = new ResultDTO<TpTfDTO>();
         TpTfDTO tfDTO = new TpTfDTO();
         String pTime = date + " " + time;
-        String queryTime = DateUtil.plus7Days(pTime,-7);
+        String queryTime = DateUtil.plus7Days(pTime,-7, DateUtil.DTF_HM);
         Integer count = tptfMapper.getVehicle4TimeCount(queryTime);
         List<TpTfStDTO> tfst = tptfMapper.getVehicle4TimeSite(queryTime);
         List<TpTfSiteDTO> tfs = tptfMapper.getVehicle4TimeMap(queryTime);

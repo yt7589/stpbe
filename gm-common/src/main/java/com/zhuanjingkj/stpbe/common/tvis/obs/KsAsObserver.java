@@ -26,14 +26,16 @@ public class KsAsObserver implements ITvisStpObserver {
         //统计同一辆车在同一个设备下通过的次数
         int random = (int)(Math.random()*15) + 1;
         String code ="";
-        if(random < 10) {
-            code = "C000000" + random;
-        } else {
-            code = "C00000" + random;
-        }
+//        if(random < 10) {
+//            code = "C000000" + random;
+//        } else {
+//            code = "C00000" + random;
+//        }
+
         if(StringUtils.isBlank(hphm)) {
             hphm = "豫A888888";
         }
+        code = "" + cameraId;
         redisTemplate.opsForHash().increment("ks_as_lsvs_total",  hphm + "|" + code, 1);
         redisTemplate.opsForHash().put("ks_as_lsvs_time", hphm + "|" + code, date);
         redisTemplate.opsForList().leftPush("ks_as_lsvs_list", hphm + "|" + code);

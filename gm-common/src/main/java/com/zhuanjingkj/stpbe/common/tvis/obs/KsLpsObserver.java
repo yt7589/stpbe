@@ -43,21 +43,22 @@ public class KsLpsObserver implements ITvisStpObserver {
 //            map.put("image", imageHash);
 //            redisTemplate.opsForList().rightPush("ks_lps", map);
             //分区域统计
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000001", 1);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000002", 2);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000003", 3);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000004", 4);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000005", 5);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000006", 6);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000007", 7);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000008", 8);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000009", 9);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000010", 10);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000011", 11);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000012", 12);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000013", 13);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000014", 14);
-            redisTemplate.opsForHash().increment("ks_lps_area", "C0000015", 10);
+            redisTemplate.opsForHash().increment("ks_lps_area", vo.getCameraId(), 1);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000001", 1);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000002", 2);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000003", 3);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000004", 4);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000005", 5);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000006", 6);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000007", 7);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000008", 8);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000009", 9);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000010", 10);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000011", 11);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000012", 12);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000013", 13);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000014", 14);
+//            redisTemplate.opsForHash().increment("ks_lps_area", "C0000015", 10);
         }
         //分类型统计
         if("0".equals(hType)) {

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DcRtMapper">
+    <select id ="getDcForWeek" resultType ="hashmap">
+        SELECT SUBSTRING(tiv.occur_time, 6, 5) AS `rj`, COUNT(1) AS `count`
+          FROM t_itf_vehicle tiv
+         WHERE tiv.occur_time > #{startTime}
+           AND #{endTime} > tiv.occur_time
+      GROUP BY SUBSTRING(tiv.occur_time, 6, 5)
+    </select>
+
+    <select id ="getDcFor3m" resultType ="hashmap">
+        SELECT SUBSTRING(tiv.occur_time, 1, 7) AS `rj`, COUNT(1) AS `count`
+          FROM t_itf_vehicle tiv
+         WHERE tiv.occur_time > #{startTime}
+           AND #{endTime} > tiv.occur_time
+      GROUP BY SUBSTRING(tiv.occur_time, 1, 7)
+    </select>
+
+    <select id ="getDcForDay" resultType ="hashmap">
+        SELECT SUBSTRING(tiv.occur_time, 12, 2) AS `rj`, COUNT(1) AS `count`
+          FROM t_itf_vehicle tiv
+         WHERE tiv.occur_time > #{endTime}
+           AND #{pEndTime} > tiv.occur_time
+      GROUP BY SUBSTRING(tiv.occur_time, 12, 2)
+    </select>
+
+    <select id ="getRajForDay" resultType ="hashmap">
+        SELECT ta.area_name, COUNT(1) AS `count`, ts.lng, ts.lat
+          FROM t_itf_vehicle tiv
+     LEFT JOIN t_camera tc ON tiv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta ON ts.area_id = ta.area_id
+         WHERE tiv.occur_time > #{startTime}
+           AND #{endTime} > tiv.occur_time
+      GROUP BY ts.site_id
+      ORDER BY COUNT(1) DESC
+         LIMIT 10
+    </select>
+
+</mapper>
