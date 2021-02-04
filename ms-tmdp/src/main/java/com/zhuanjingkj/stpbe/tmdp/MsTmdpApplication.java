@@ -19,7 +19,7 @@ import javax.annotation.PostConstruct;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableTransactionManagement(proxyTargetClass = true)
-@ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.tmdp.*"})
+@ComponentScan(basePackages = {"com.zhuanjingkj.stpbe.*"})
 @MapperScan({"com.zhuanjingkj.stpbe.tmdp.mapper", "com.zhuanjingkj.stpbe.common.mapper"})
 @EnableScheduling
 public class MsTmdpApplication {
