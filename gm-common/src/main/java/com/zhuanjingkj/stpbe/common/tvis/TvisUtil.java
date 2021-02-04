@@ -245,7 +245,7 @@ public class TvisUtil {
             // 车型特征
             String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
             String hphm = veh.getVehicleHptzVO().getHphm();
-            TvisSodImage.drawString(orgImg, Font.BOLD, 25,
+            TvisSodImage.drawString(orgImg, Font.BOLD, 50,
                     Color.RED, x, y + 3, hphm + ":" + ppxhms);
             maxArea = vo.getArea();
             if (1>0 || currentArea >= maxArea) {
@@ -297,29 +297,25 @@ public class TvisUtil {
         return getTvisFrameAnalysisResult(tvisJsonVO, cutVehs);
     }
 
-    public static WsmVideoFrameDTO getTvisImageAnalysisResult(TvisJsonMapper tvisJsonMapper, long cameraId, long baseTvisJsonId, long direction) {
-        logger.info("#Yt#: step 1");
+    public static WsmVideoFrameDTO getTvisImageAnalysisResult(TvisJsonMapper tvisJsonMapper,
+                                                              long cameraId, long baseTvisJsonId,
+                                                              long direction) {
         if (StringUtils.isBlank(AppRegistry.tvisJsonTblName)) {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
-        logger.info("#Yt#: step 2");
         TvisJsonVO tvisJsonVO = null;
         if (baseTvisJsonId<0 || 0 == direction) {
-            logger.info("#Yt#: step 3");
             tvisJsonVO = tvisJsonMapper.getLatestCameraFrame(AppRegistry.tvisJsonTblName, cameraId);
         } else {
-            logger.info("#Yt#: step 4");
             if (1 == direction) {
                 tvisJsonVO = tvisJsonMapper.getPrevCameraFrame(AppRegistry.tvisJsonTblName, cameraId, baseTvisJsonId);
             } else if (2 == direction) {
                 tvisJsonVO = tvisJsonMapper.getNextCameraFrame(AppRegistry.tvisJsonTblName, cameraId, baseTvisJsonId);
             }
         }
-        logger.info("#Yt#: step 5");
         Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
         WsmVideoFrameDTO vfv = getTvisFrameAnalysisResult(tvisJsonVO, cutVehs);
-        logger.info("#Yt#: step 6");
         // 转变为图像识别结果模式
         return vfv;
     }

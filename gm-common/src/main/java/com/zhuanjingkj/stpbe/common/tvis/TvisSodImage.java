@@ -34,7 +34,7 @@ public class TvisSodImage {
         Graphics2D g2d = img.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(color);
-        int lineWith = 1;
+        int lineWith = 3;
         BasicStroke bs1 = new BasicStroke(lineWith);       // 笔画的轮廓（画笔宽度/线宽为5px）
         g2d.setStroke(bs1);
         g2d.drawRect(x, y, w, h);

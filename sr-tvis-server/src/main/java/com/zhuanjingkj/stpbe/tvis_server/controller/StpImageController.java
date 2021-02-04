@@ -44,8 +44,6 @@ public class StpImageController {
                                                  @RequestParam(name = "cameraId", required = true) String cameraId,
                                                  @RequestParam(name = "TPXX", required = false) MultipartFile file,
                                                  @RequestParam(name = "TPWJ", required = false) String tpwj) {
-        logger.info("#Yt#: step 1");
-        logger.info("#Yt#: step 1.2 image=" + file.getOriginalFilename() + "!");
         byte[] data = null;
         if ("1".equals(tplx)) {
             if (file != null) {
@@ -67,8 +65,6 @@ public class StpImageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        logger.info("#Yt#: step 1.3 image=" + imageFile.getAbsolutePath() + "!");
-        logger.info("#Yt#: step 2");
         return stpImageService.submitImage(cameraId, "0", mrhpt, hphm, data, imageFile.getAbsolutePath());
     }
 

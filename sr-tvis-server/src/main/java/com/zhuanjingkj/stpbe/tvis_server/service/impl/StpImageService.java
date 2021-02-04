@@ -76,7 +76,6 @@ public class StpImageService implements IStpImageService {
             tvisStpOberverManager.initialize(observers, environment);
             isFirstRun = false;
         }
-        logger.info("#Yt#: json: " + msg.toString() + "!");
         TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, msg.toString());
         TvisUtil.processStpTvisJson(observers, msg.toString());
         data.setTvisJsonId(tvisJsonId);
