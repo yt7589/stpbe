@@ -4,10 +4,12 @@ import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcCsDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IDcCsService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class DcCsService implements IDcCsService {
     @Override
     public ResultDTO<DbQrsDTO> queryVehicleByGraph(String cltzxl, String psfx,
