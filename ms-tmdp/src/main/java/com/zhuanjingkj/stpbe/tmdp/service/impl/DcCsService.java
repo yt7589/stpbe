@@ -25,22 +25,28 @@ public class DcCsService implements IDcCsService {
                                                    String cllxfl, String cllxzfl,
                                                    String startDate, String endDate,
                                                    String startTime, String endTime) {
-        TvisJsonVO v2 = TvisUtil.getTvisJsonVOById(tvisJsonMapper,4339813);
-        System.out.println("v0.0.1 new method =" + v2 + "; imageHash=" + v2.getImageHash() + "!");
         // 生成查询条件
         List<List<Float>> embeddinbs = new ArrayList<>();
         List<Float> embedding = new ArrayList<>();
         String[] feats = cltzxl.split(",");
         for (String feat : feats) {
-            System.out.println("### float: " + Float.valueOf(feat) + "!");
             embedding.add(Float.valueOf(feat));
         }
         embeddinbs.add(embedding);
         String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
         List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, 9999);
+        System.out.println("results:" + results.size() + "!");
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
         List<DcCsDTO> recs = new ArrayList<>();
+        DcCsDTO rec = null;
+        TvisJsonVO tvisJsonVO = null;
+        for (TvisGrqRstVo result : results) {
+            tvisJsonVO = TvisUtil.getTvisJsonVOById(tvisJsonMapper, result.getTvisJsonId());
+            rec = new DcCsDTO(102,"v1.北京市海淀区西二旗","2020-12-01 15:11:26","http://222.128.117.234:8090/www/images/ytsc_001.jpg");
+            rec.setPicUrl("http://192.168.2.68:9095/ipfs/" + tvisJsonVO.getImageHash());
+            recs.add(rec);
+        }
         /*TvisUtil.
         for (TvisGrqRstVo result : results) {
             result
