@@ -20,7 +20,7 @@ public class SrTebsApplication {
         System.out.println("Traffic Event Bus System v0.0.1");
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // 将删除所有数据！！！！！！！！！！！！！！！！！！！！！！！！！！！
-        GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         GrqEngine.initializeGrp();
         SpringApplication.run(SrTebsApplication.class, args);

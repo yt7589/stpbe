@@ -21,6 +21,14 @@
         limit 0, 1
     </select>
 
+    <select id="getTvisJsonTblNames" resultType="java.lang.String">
+        select table_name from information_schema.tables
+        where table_schema='StpDb' and
+        table_name like 't_tvis_json_%' order by table_name desc
+    </select>
+
+
+
     <update id="createTvisJsonTbl">
         CREATE TABLE IF NOT EXISTS ${_parameter} (
         tvis_json_id BIGINT NOT NULL,
@@ -70,6 +78,12 @@
         select tvis_json_id, occur_time, camera_id, image_hash,
         json_hash, pts
         from ${tblName} where camera_id=#{cameraId} and tvis_json_id > #{baseTvisJsonId} limit 0, 1
+    </select>
+
+    <select id="getFrameByTvisJsonId" resultMap="tvisJsonVOMap">
+        select tvis_json_id, occur_time, camera_id, image_hash,
+        json_hash, pts
+        from ${tblName} where tvis_json_id=#{tvisJsonId}
     </select>
 
 </mapper>

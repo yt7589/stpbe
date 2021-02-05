@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
+import com.zhuanjingkj.stpbe.common.mgq.GrqEngine;
 import com.zhuanjingkj.stpbe.tmdp.controller.TmdpWsHandler;
 import com.zhuanjingkj.stpbe.tmdp.task.VideoAnalysisTask;
 import org.mybatis.spring.annotation.MapperScan;
@@ -28,6 +29,11 @@ public class MsTmdpApplication {
     public static ConfigurableApplicationContext appCtx = null;
 
     public static void main(String[] args) {
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // 将删除所有数据！！！！！！！！！！！！！！！！！！！！！！！！！！！
+        //GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        GrqEngine.initializeGrp();
         TmdpWsHandler.initialize();
         MsTmdpApplication.appCtx = SpringApplication.run(MsTmdpApplication.class, args);
         AppRegistry.putParam(AppConst.APP_CTX, MsTmdpApplication.appCtx);

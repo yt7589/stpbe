@@ -4,6 +4,8 @@ import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TvisJsonMapper {
     /**
@@ -59,4 +61,18 @@ public interface TvisJsonMapper {
      */
     public TvisJsonVO getNextCameraFrame(@Param("tblName") String tblName, @Param("cameraId") long cameraId,
                                          @Param("baseTvisJsonId") long baseTvisJsonId);
+
+    /**
+     * 获取当前所有t_tvis_json_*的数据库表名，按时间先后排列，新创建的在前面
+     * @return
+     */
+    public List<String> getTvisJsonTblNames();
+
+    /**
+     * 在指定数据表tblName中查找指定tvisJsonId的记录，如果没有则返回null
+     * @param tblName
+     * @param tvisJsonId
+     * @return
+     */
+    public TvisJsonVO getFrameByTvisJsonId(@Param("tblName") String tblName, @Param("tvisJsonId") long tvisJsonId);
 }

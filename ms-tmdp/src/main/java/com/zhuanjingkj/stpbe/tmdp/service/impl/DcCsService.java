@@ -1,9 +1,15 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
+import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
+import com.zhuanjingkj.stpbe.common.mgq.GrqEngine;
+import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.vo.TvisGrqRstVo;
+import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcCsDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IDcCsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,14 +17,39 @@ import java.util.List;
 
 @Service
 public class DcCsService implements IDcCsService {
+    @Autowired
+    private TvisJsonMapper tvisJsonMapper;
+
     @Override
     public ResultDTO<DbQrsDTO> queryVehicleByGraph(String cltzxl, String psfx,
                                                    String cllxfl, String cllxzfl,
                                                    String startDate, String endDate,
                                                    String startTime, String endTime) {
+        // 生成查询条件
+        List<List<Float>> embeddinbs = new ArrayList<>();
+        List<Float> embedding = new ArrayList<>();
+        String[] feats = cltzxl.split(",");
+        for (String feat : feats) {
+            embedding.add(Float.parseFloat(feat));
+        }
+        embeddinbs.add(embedding);
+        String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
+        List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, Long.MAX_VALUE);
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
         List<DcCsDTO> recs = new ArrayList<>();
+        List<String> tbls = tvisJsonMapper.getTvisJsonTblNames();
+        for (String tbl : tbls) {
+            System.out.println("### " + tbl + "!");
+        }
+        TvisJsonVO v1 = tvisJsonMapper.getFrameByTvisJsonId(tbls.get(0), 1);
+        System.out.println("v1=" + v1 + "!");
+        TvisJsonVO v2 = tvisJsonMapper.getFrameByTvisJsonId(tbls.get(0), 4339813);
+        System.out.println("v2=" + v2 + "; imageHash=" + v2.getImageHash() + "!");
+        /*TvisUtil.
+        for (TvisGrqRstVo result : results) {
+            result
+        }*/
         recs.add(new DcCsDTO(102,"v1.北京市海淀区西二旗","2020-12-01 15:11:26","http://222.128.117.234:8090/www/images/ytsc_001.jpg"));
         recs.add(new DcCsDTO(103,"v1.北京市海淀区上地","2020-12-02 15:11:26","http://222.128.117.234:8090/www/images/ytsc_002.jpg"));
         recs.add(new DcCsDTO(104,"v1.北京市海淀区西直门","2020-12-03 15:11:26","http://222.128.117.234:8090/www/images/ytsc_003.jpg"));
