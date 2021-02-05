@@ -29,12 +29,9 @@ public class TnVaController {
     @GetMapping(value = "/va/queryDeviceDeploy")
     public ResultDTO<DbQrsDTO> queryEquipment(
         @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
+        @RequestParam(name = "v", required = false) String version
     ) {
-        return queryDeviceDeploy_exp(startIndex, amount, direction);
+        return queryDeviceDeploy_exp();
     }
 
     /**
@@ -64,7 +61,7 @@ public class TnVaController {
         @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
         @RequestParam(name = "siteId", required = false) long siteId
     ) {
-        return querySdInfo_exp();
+        return querySdInfo_exp(startIndex, amount, direction, siteId);
     }
 
     /**
@@ -82,26 +79,16 @@ public class TnVaController {
         return querySdPic_exp();
     }
 
-    private ResultDTO<DbQrsDTO> queryDeviceDeploy_exp(Integer startIndex, Integer amount, Integer direction) {
-        return tnVaService.queryDeviceDeploy_exp(startIndex, amount, direction);
+    private ResultDTO<DbQrsDTO> queryDeviceDeploy_exp() {
+        return tnVaService.queryDeviceDeploy_exp();
     }
 
     private ResultDTO<TnVaDeviceDTO> queryDevice_exp() {
         return tnVaService.queryDevice_exp();
     }
 
-    private ResultDTO<TnVaSiteInfoDTO> querySdInfo_exp() {
-        ResultDTO<TnVaSiteInfoDTO> dto = new ResultDTO<>();
-        TnVaSiteInfoDTO ts = new TnVaSiteInfoDTO();
-        List<TnVaSdInfoDTO> recs = new ArrayList<TnVaSdInfoDTO>();
-        recs.add(new TnVaSdInfoDTO(20201228,"海淀区>上地","东南","普通摄像头","已接入"));
-        recs.add(new TnVaSdInfoDTO(20201228,"海淀区>西二旗","西北","抓拍机","异常"));
-        recs.add(new TnVaSdInfoDTO(100,"海淀区>西二旗","西北","抓拍机","已接入"));
-        ts.setRecs(recs);
-        ts.setCamera(1);
-        ts.setSnapshot(2);
-        dto.setData(ts);
-        return dto;
+    private ResultDTO<TnVaSiteInfoDTO> querySdInfo_exp(Integer startIndex, Integer amount, Integer direction, long siteId) {
+        return tnVaService.querySdInfo_exp(startIndex, amount, direction, siteId);
     }
 
     private ResultDTO<DbQrsDTO> querySdPic_exp() {

@@ -7,7 +7,13 @@
         <result column="lng" property="lng" jdbcType="DOUBLE"/>
         <result column="lat" property="lat" jdbcType="DOUBLE"/>
     </resultMap>
-
+    <resultMap  type="com.zhuanjingkj.stpbe.data.dto.TnVaSdInfoDTO" id="sdInfoDTO">
+        <result column="camera_id" property="diId" jdbcType="INTEGER"/>
+        <result column="position" property="diAddr" jdbcType="VARCHAR"/>
+        <result column="direction_name" property="direction" jdbcType="DOUBLE"/>
+        <result column="camera_type_name" property="category" jdbcType="DOUBLE"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
     <select id ="getSite" resultMap ="tvDTO">
         SELECT ts.site_id, ts.site_name, ts.lng, ts.lat
           FROM t_site ts
@@ -22,5 +28,36 @@
         SELECT tc.camera_type_id, tc.`status`, COUNT(1) AS `count`
           FROM t_camera tc
       GROUP BY tc.camera_type_id, tc.`status`
+    </select>
+
+    <select id ="getSiteInfo" resultMap ="sdInfoDTO">
+        SELECT tc.camera_id, ts.`position`,
+               CASE td.direction_name
+               WHEN 'east' THEN '东'
+               WHEN 'eastsouth' THEN '东南'
+               WHEN 'eastnorth' THEN '东北'
+               WHEN 'west' THEN '西'
+               WHEN 'westsouth' THEN '西南'
+               WHEN 'westnorth' THEN '西北'
+               WHEN 'north' THEN '北'
+               WHEN 'south' THEN '南'
+               ELSE ''
+               END 'direction_name',
+               tct.camera_type_name,
+               IF(tc.`status` = 1,'正常','异常') AS `status`
+          FROM t_camera tc
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+     LEFT JOIN t_direction td ON tc.direction_id = td.direction_id
+     LEFT JOIN t_camera_type tct ON tct.camera_type = tc.camera_type_id
+         WHERE ts.site_id =#{siteId}
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getDevCount" resultType="hashmap">
+        SELECT tc.camera_type_id, COUNT(1) AS `count`
+          FROM t_camera tc
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+         WHERE ts.site_id =1
+      GROUP BY tc.camera_type_id
     </select>
 </mapper>
