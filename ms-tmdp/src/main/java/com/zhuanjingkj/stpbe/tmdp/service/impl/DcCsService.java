@@ -36,7 +36,7 @@ public class DcCsService implements IDcCsService {
         }
         embeddinbs.add(embedding);
         String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
-        List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, Long.MAX_VALUE);
+        List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, 9999999);
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
         List<DcCsDTO> recs = new ArrayList<>();
