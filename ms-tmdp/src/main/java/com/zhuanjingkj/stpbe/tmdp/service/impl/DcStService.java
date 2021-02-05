@@ -27,7 +27,9 @@ public class DcStService implements IDcStService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    private static Map<String, Object> siteMap = new HashMap<>();
+    public static Map<String, Object> siteNameMap = new HashMap<>();
+
+    public static Map<String, Object> siteMap = new HashMap<>();
 
     @Override
     public DcStSysDTO getSys_exp() {
@@ -163,7 +165,7 @@ public class DcStService implements IDcStService {
         Iterator<ZSetOperations.TypedTuple<Object>> iterator = typedTupleSet.iterator();
         while (iterator.hasNext()){
             ZSetOperations.TypedTuple<Object>  typedTuple = iterator.next();
-            recs.add(new DcStKvSiteDTO(0, "" + siteMap.get(typedTuple.getValue()),0,0,typedTuple.getScore().intValue()));
+            recs.add(new DcStKvSiteDTO(0, "" + siteNameMap.get(typedTuple.getValue()),0,0,typedTuple.getScore().intValue()));
 //            Object value = typedTuple.getValue();
 //            double score1 = typedTuple.getScore();
 //            System.out.println("通过reverseRangeWithScores(K key, long start, long end)方法索引倒序排列区间值:" + value + "----->" + score1);
@@ -178,7 +180,7 @@ public class DcStService implements IDcStService {
         Iterator<ZSetOperations.TypedTuple<Object>> iterator = typedTupleSet.iterator();
         while (iterator.hasNext()){
             ZSetOperations.TypedTuple<Object>  typedTuple = iterator.next();
-            recs.add(new DcStTruckSiteDTO(0, "" + siteMap.get(typedTuple.getValue()),0,0,typedTuple.getScore().intValue()));
+            recs.add(new DcStTruckSiteDTO(0, "" + siteNameMap.get(typedTuple.getValue()),0,0,typedTuple.getScore().intValue()));
 //            Object value = typedTuple.getValue();
 //            double score1 = typedTuple.getScore();
 //            System.out.println("通过reverseRangeWithScores(K key, long start, long end)方法索引倒序排列区间值:" + value + "----->" + score1);
@@ -191,7 +193,8 @@ public class DcStService implements IDcStService {
         List<Map<String, Object>> recs = dcStMapper.getSiteInfo(); //{"code" : "site_name"}
         if(recs != null && recs.size() > 0) {
             for (int i = 0; i < recs.size(); i++) {
-                siteMap.put("" + recs.get(i).get("camera_code"), recs.get(i).get("site_name"));
+                siteNameMap.put("" + recs.get(i).get("camera_code"), recs.get(i).get("site_name"));
+                siteMap.put("" + recs.get(i).get("camera_code"), recs.get(i).get("coordinate"));
             }
         }
     }
