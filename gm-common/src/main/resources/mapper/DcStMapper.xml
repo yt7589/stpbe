@@ -119,7 +119,7 @@
     </select>
 
     <select id ="getSiteInfo" resultType ="hashmap">
-        SELECT tc.camera_code, ts.site_name
+        SELECT tc.camera_code, ts.site_name, CONCAT(ts.lng, '|', ts.lat) AS coordinate
           FROM t_camera tc
      LEFT JOIN t_site ts
             ON tc.site_id = ts.site_id
