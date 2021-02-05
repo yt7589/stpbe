@@ -33,7 +33,7 @@ public class DcCsService implements IDcCsService {
         String[] feats = cltzxl.split(",");
         for (String feat : feats) {
             System.out.println("### float: " + Float.valueOf(feat) + "!");
-            embedding.add(Float.valueOf(feat));
+            embedding.add(Float.valueOf(0.1f));
         }
         embeddinbs.add(embedding);
         String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
