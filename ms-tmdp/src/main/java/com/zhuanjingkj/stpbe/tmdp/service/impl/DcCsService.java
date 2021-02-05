@@ -33,11 +33,11 @@ public class DcCsService implements IDcCsService {
         String[] feats = cltzxl.split(",");
         for (String feat : feats) {
             System.out.println("### float: " + Float.valueOf(feat) + "!");
-            embedding.add(Float.valueOf(0.1f));
+            embedding.add(Float.valueOf(feat));
         }
         embeddinbs.add(embedding);
         String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
-        List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, 9999999);
+        List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, 9999);
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
         List<DcCsDTO> recs = new ArrayList<>();
