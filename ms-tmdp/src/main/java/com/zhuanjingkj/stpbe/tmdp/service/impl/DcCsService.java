@@ -26,7 +26,7 @@ public class DcCsService implements IDcCsService {
                                                    String startDate, String endDate,
                                                    String startTime, String endTime) {
         TvisJsonVO v2 = TvisUtil.getTvisJsonVOById(tvisJsonMapper,4339813);
-        System.out.println("new method =" + v2 + "; imageHash=" + v2.getImageHash() + "!");
+        System.out.println("v0.0.1 new method =" + v2 + "; imageHash=" + v2.getImageHash() + "!");
         // 生成查询条件
         List<List<Float>> embeddinbs = new ArrayList<>();
         List<Float> embedding = new ArrayList<>();
