@@ -53,20 +53,20 @@ public class TnVsService implements ITnVsService {
     @Override
     public TnVsVehicleDTO getTvtvdDTO_exp() {
         TnVsVehicleDTO tv = new TnVsVehicleDTO();
-        List<TnVsTopVehicleDTO> tvtv = new ArrayList<>();
+        List<TnVsTopVehicleDTO> tvtv = null;
         String today = DateUtil.plusDays(0);
         String yesterday = DateUtil.plusDays(-1);
         List<Integer> tsfvs = redisTemplate.opsForList().range("tn_vs_trend_" + today, 0, 23);
         List<Integer> ysfvs = redisTemplate.opsForList().range("tn_vs_trend_" + yesterday, 0, 23);
         if(tsfvs != null && tsfvs.size() > 0) {
-            tvtv.clear();
+            tvtv = new ArrayList<>();
             for(int i = 0; i < tsfvs.size(); i++) {
                 tvtv.add(new TnVsTopVehicleDTO("" + (i+1), tsfvs.get(i)));
             }
             tv.setTsfvs(tvtv);
         }
         if(ysfvs != null && ysfvs.size() > 0) {
-            tvtv.clear();
+            tvtv = new ArrayList<>();
             for(int i = 0; i < ysfvs.size(); i++) {
                 tvtv.add(new TnVsTopVehicleDTO("" + (i+1), ysfvs.get(i)));
             }

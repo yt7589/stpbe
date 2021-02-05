@@ -3,8 +3,8 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.tn.*;
-import com.zhuanjingkj.stpbe.tmdp.rto.tn.TnVaDeviceRTO;
-import com.zhuanjingkj.stpbe.tmdp.rto.tn.TnVaSiteInfoRTO;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.TnVaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,16 +19,22 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class TnVaController {
 
+    @Autowired
+    private TnVaService tnVaService;
+
     /**
      * 设备部署点位
      * @return
      */
     @GetMapping(value = "/va/queryDeviceDeploy")
     public ResultDTO<DbQrsDTO> queryEquipment(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version,
+        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
     ) {
-        return queryDeviceDeploy_exp();
+        return queryDeviceDeploy_exp(startIndex, amount, direction);
     }
 
     /**
@@ -37,8 +43,8 @@ public class TnVaController {
      */
     @GetMapping(value = "/va/queryDevice")
     public ResultDTO<TnVaDeviceDTO> queryDevice(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version
     ) {
         return queryDevice_exp();
     }
@@ -76,33 +82,12 @@ public class TnVaController {
         return querySdPic_exp();
     }
 
-    private ResultDTO<DbQrsDTO> queryDeviceDeploy_exp() {
-        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
-        List<TnVaDeviceDeployDTO> recs = new ArrayList<>();
-        double lng = 116.490094;
-        double lat = 39.857702;
-        int idx = 0;
-        recs.add(new TnVaDeviceDeployDTO(100 + idx,"上地三街10号", lng + idx*0.01, lat + idx*0.01));
-        idx++;
-        recs.add(new TnVaDeviceDeployDTO(100 + idx,"西三旗", lng + idx*0.01, lat + idx*0.01));
-        idx++;
-        recs.add(new TnVaDeviceDeployDTO(100 + idx,"清河中街", lng + idx*0.01, lat + idx*0.01));
-        idx++;
-        recs.add(new TnVaDeviceDeployDTO(100 + idx,"北土城路", lng + idx*0.01, lat + idx*0.01));
-        idx++;
-        recs.add(new TnVaDeviceDeployDTO(100 + idx,"中关村大街", lng + idx*0.01, lat + idx*0.01));
-        idx++;
-        data.setRecs(recs);
-        dto.setData(data);
-        return dto;
+    private ResultDTO<DbQrsDTO> queryDeviceDeploy_exp(Integer startIndex, Integer amount, Integer direction) {
+        return tnVaService.queryDeviceDeploy_exp(startIndex, amount, direction);
     }
 
     private ResultDTO<TnVaDeviceDTO> queryDevice_exp() {
-        ResultDTO<TnVaDeviceDTO> dto = new ResultDTO<>();
-        TnVaDeviceDTO data = new TnVaDeviceDTO(18000, 20,19000, 10);
-        dto.setData(data);
-        return dto;
+        return tnVaService.queryDevice_exp();
     }
 
     private ResultDTO<TnVaSiteInfoDTO> querySdInfo_exp() {

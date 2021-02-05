@@ -174,7 +174,7 @@ public class VmIlsService implements IVmIlsService {
             vehJson  = (JSONObject) veh;
             System.out.println(vehJson);
             if(!vehJson.get("SXH").equals(vehsIdx)) {
-                continue;
+//                continue;
             }
             JSONObject hptzJson = vehJson.getJSONObject("HPTZ");
             JSONObject wztzJson = vehJson.getJSONObject("WZTZ");
@@ -202,7 +202,9 @@ public class VmIlsService implements IVmIlsService {
                     cxtzJson.getString("PPXHMS"), "小型车",cxtzJson.getString("CXNK"),Integer.parseInt(cxtzJson.getString("PPXHKXD")),
                     Integer.parseInt(hptzJson.getString("HPZT")),"" + VEH_COLOR_HPYS.get(hptzJson.getString("HPYS")),
                     "" + VEH_HPHM_HPZT.get("C" + hptzJson.get("HPZL")),"" + VEH_HPHM_HPZL.get("C" + hptzJson.get("HPZL")),
-                    Integer.parseInt(hptzJson.getString("YWLSHP")), Integer.parseInt(hptzJson.getString("HPKXD")),hptzJson.getString("MWHPKXD"));
+                    Integer.parseInt(StringUtils.isBlank(hptzJson.getString("YWLSHP")) ? "0" : hptzJson.getString("YWLSHP")),
+                    Integer.parseInt(StringUtils.isBlank(hptzJson.getString("HPKXD")) ? "0" : hptzJson.getString("HPKXD")),
+                    hptzJson.getString("MWHPKXD"));
         }
 
 //        VmIlsVdDTO vmIlsVdDTO = new VmIlsVdDTO(98,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg","2020-12-28 15:26:30",
