@@ -32,6 +32,7 @@ public class DcCsService implements IDcCsService {
         List<Float> embedding = new ArrayList<>();
         String[] feats = cltzxl.split(",");
         for (String feat : feats) {
+            System.out.println("### float: " + Float.valueOf(feat) + "!");
             embedding.add(Float.valueOf(feat));
         }
         embeddinbs.add(embedding);
