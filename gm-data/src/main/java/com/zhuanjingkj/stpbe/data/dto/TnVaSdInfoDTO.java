@@ -1,7 +1,6 @@
-package com.zhuanjingkj.stpbe.tmdp.dto.tn;
+package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 /**
  * 点位设备信息
