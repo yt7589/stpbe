@@ -25,16 +25,10 @@ public class DcCsService implements IDcCsService {
                                                    String cllxfl, String cllxzfl,
                                                    String startDate, String endDate,
                                                    String startTime, String endTime) {
-        List<String> tbls = tvisJsonMapper.getTvisJsonTblNames();
-        for (String tbl : tbls) {
-            System.out.println("### " + tbl + "!");
-        }
-        TvisJsonVO v1 = tvisJsonMapper.getFrameByTvisJsonId(tbls.get(0), 1);
-        System.out.println("v1=" + v1 + "!");
-        TvisJsonVO v2 = tvisJsonMapper.getFrameByTvisJsonId(tbls.get(0), 4339813);
-        System.out.println("v2=" + v2 + "; imageHash=" + v2.getImageHash() + "!");
+        TvisJsonVO v2 = TvisUtil.getTvisJsonVOById(tvisJsonMapper,4339813);
+        System.out.println("new method =" + v2 + "; imageHash=" + v2.getImageHash() + "!");
         // 生成查询条件
-        /*List<List<Float>> embeddinbs = new ArrayList<>();
+        List<List<Float>> embeddinbs = new ArrayList<>();
         List<Float> embedding = new ArrayList<>();
         String[] feats = cltzxl.split(",");
         for (String feat : feats) {
@@ -42,7 +36,7 @@ public class DcCsService implements IDcCsService {
         }
         embeddinbs.add(embedding);
         String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
-        List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, Long.MAX_VALUE);*/
+        /*List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, Long.MAX_VALUE);*/
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
         List<DcCsDTO> recs = new ArrayList<>();

@@ -323,6 +323,25 @@ public class TvisUtil {
         return vfv;
     }
 
+    /**
+     * 获取指定tvisJsonId所对应的t_tvis_json_*表中记录的值对象，首先取出所有t_tvis_json_*表名
+     * 列表，由新到老排列，依次从这些表中取tvisJsonId的记录，如果有则返回，如果都没有查到则返回null
+     * @param tvisJsonMapper
+     * @param tvisJsonId
+     * @return
+     */
+    public static TvisJsonVO getTvisJsonVOById(TvisJsonMapper tvisJsonMapper, long tvisJsonId) {
+        List<String> tbls = tvisJsonMapper.getTvisJsonTblNames();
+        TvisJsonVO vo = null;
+        for (String tbl : tbls) {
+            vo = tvisJsonMapper.getFrameByTvisJsonId(tbl, tvisJsonId);
+            if (vo != null) {
+                return vo;
+            }
+        }
+        return vo;
+    }
+
 
 
 
