@@ -57,7 +57,7 @@
         SELECT tc.camera_type_id, COUNT(1) AS `count`
           FROM t_camera tc
      LEFT JOIN t_site ts ON tc.site_id = ts.site_id
-         WHERE ts.site_id =1
+         WHERE ts.site_id =#{siteId}
       GROUP BY tc.camera_type_id
     </select>
 </mapper>
