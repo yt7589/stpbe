@@ -49,16 +49,13 @@ public class TmdpService implements ITmdpService {
     public ResultDTO<RecognizeTvisImageDTO> recognizeTvisImage(String cameraId, String gcxh,
                                                                String mrhpt, String hphm,
                                                                byte[] imageData, String imageFile) {
-        logger.info("recognizeTvisImage 1");
         String jsonResult = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2,
                 AppConst.LIST_VEHICLE_RECOGNITION, imageData);
-        logger.info("recognizeTvisImage 2:" + jsonResult + "!");
         ResultDTO<RecognizeTvisImageDTO> rst = new ResultDTO<>();
         RecognizeTvisImageDTO data = new RecognizeTvisImageDTO();
         rst.setData(data);
         data.setTvisJsonId(0);
         data.setJsonResult(jsonResult);
-        logger.info("recognizeTvisImage 3");
         return rst;
     }
 }

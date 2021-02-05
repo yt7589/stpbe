@@ -25,19 +25,6 @@ public class DcCsService implements IDcCsService {
                                                    String cllxfl, String cllxzfl,
                                                    String startDate, String endDate,
                                                    String startTime, String endTime) {
-        // 生成查询条件
-        List<List<Float>> embeddinbs = new ArrayList<>();
-        List<Float> embedding = new ArrayList<>();
-        String[] feats = cltzxl.split(",");
-        for (String feat : feats) {
-            embedding.add(Float.parseFloat(feat));
-        }
-        embeddinbs.add(embedding);
-        String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
-        List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, Long.MAX_VALUE);
-        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-        DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
-        List<DcCsDTO> recs = new ArrayList<>();
         List<String> tbls = tvisJsonMapper.getTvisJsonTblNames();
         for (String tbl : tbls) {
             System.out.println("### " + tbl + "!");
@@ -46,6 +33,19 @@ public class DcCsService implements IDcCsService {
         System.out.println("v1=" + v1 + "!");
         TvisJsonVO v2 = tvisJsonMapper.getFrameByTvisJsonId(tbls.get(0), 4339813);
         System.out.println("v2=" + v2 + "; imageHash=" + v2.getImageHash() + "!");
+        // 生成查询条件
+        /*List<List<Float>> embeddinbs = new ArrayList<>();
+        List<Float> embedding = new ArrayList<>();
+        String[] feats = cltzxl.split(",");
+        for (String feat : feats) {
+            embedding.add(Float.parseFloat(feat));
+        }
+        embeddinbs.add(embedding);
+        String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
+        List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, Long.MAX_VALUE);*/
+        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
+        DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
+        List<DcCsDTO> recs = new ArrayList<>();
         /*TvisUtil.
         for (TvisGrqRstVo result : results) {
             result
