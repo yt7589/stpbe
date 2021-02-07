@@ -92,6 +92,7 @@ public class VmIlsController {
             @RequestParam(name = "tvisJsonId", required = false) Integer tvisJsonId,
             @RequestParam(name = "vehIdx", required = false) Integer vehIdx
     ) {
+        System.out.println("tvisJsonId:" + tvisJsonId + "; vehIdx:" + vehIdx);
         return queryIlsDat_exp(tvisJsonId, vehIdx);
     }
     /**
