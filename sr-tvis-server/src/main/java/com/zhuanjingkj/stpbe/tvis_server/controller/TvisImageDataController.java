@@ -53,8 +53,45 @@ public class TvisImageDataController {
      */
     @PostMapping("/function/truckRecog")
     public Map<String, Object> truckRecog(
-            @RequestParam(name = "TP", required = true) String tp) {
+            @RequestParam(name = "TP", required = true) String tp
+    ) {
         return wxs2102Service.truckRecog(tp);
+    }
+
+    /**
+     * 载人识别接口
+     * @param tp
+     * @return
+     */
+    @PostMapping("/function/carryPerson")
+    public Map<String, Object> carryPerson(
+            @RequestParam(name = "TP", required = true) String tp
+    ) {
+        return wxs2102Service.carryPerson(tp);
+    }
+
+    /**
+     * 放大号识别接口
+     * @param tp
+     * @return
+     */
+    @PostMapping("/function/bigPlate")
+    public Map<String, Object> bigPlate(
+            @RequestParam(name = "TP", required = true) String tp
+    ) {
+        return wxs2102Service.bigPlate(tp);
+    }
+
+    /**
+     * 外卖快递识别接口
+     * @param tp
+     * @return
+     */
+    @PostMapping("/function/motorClassify")
+    public Map<String, Object> motorClassify(
+            @RequestParam(name = "TP", required = true) String tp
+    ) {
+        return wxs2102Service.motorClassify(tp);
     }
 
 

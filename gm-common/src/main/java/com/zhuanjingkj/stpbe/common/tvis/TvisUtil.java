@@ -391,7 +391,8 @@ public class TvisUtil {
             }*/
             redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
         }
-
+        // ！！！！！ 测试程序，正式环境下需保持注释掉状态 ！！！！！！
+        //prepareWxs2102TestRst(redisTemplate, requestList, requestId);
         long startTime = System.currentTimeMillis();
         String response = null;
         do {
@@ -629,5 +630,54 @@ public class TvisUtil {
             }
         }
         return tzxl;
+    }
+
+    /**
+     * 无锡所2021年2月新接口测试临时测试代码
+     */
+    private static void prepareWxs2102TestRst(RedisTemplate redisTemplate, String requestList, String requestId) {
+        Object obj = redisTemplate.opsForList().rightPop(requestList);
+        System.out.println("req:" + obj + "; type=" + obj.getClass().getCanonicalName() + "!");
+        if (requestList.equals("truckRecog")) {
+            generateTruckRecogResult(redisTemplate, requestId);
+        } else if (requestList.equals("carryPerson")) {
+            generateCarryPersonResult(redisTemplate, requestId);
+        } else if (requestList.equals("bigPlate")) {
+            generateBigPlateResult(redisTemplate, requestId);
+        } else if (requestList.equals("motorClassify")) {
+            generateMotorClassifyResult(redisTemplate, requestId);
+        }
+    }
+
+    private static void generateTruckRecogResult(RedisTemplate redisTemplate, String requestId) {
+        org.json.JSONObject jo = new org.json.JSONObject();
+        jo.put("CLLX", "211");
+        jo.put("CLLXKXD", "99");
+        jo.put("YWFD", "1");
+        jo.put("YWFDKXD", "98");
+        jo.put("YWPG", "1");
+        jo.put("YWPGKXD", "97");
+        redisTemplate.opsForValue().set(requestId, jo.toString());
+    }
+
+    private static void generateCarryPersonResult(RedisTemplate redisTemplate, String requestId) {
+        org.json.JSONObject jo = new org.json.JSONObject();
+        jo.put("WZ", "101,102,103,104:201,202,203,204");
+        redisTemplate.opsForValue().set(requestId, jo.toString());
+    }
+
+    private static void generateBigPlateResult(RedisTemplate redisTemplate, String requestId) {
+        org.json.JSONObject jo = new org.json.JSONObject();
+        jo.put("YWFDH", "1");
+        jo.put("FDHWZ", "100, 200, 300, 400");
+        jo.put("HPHM", "京A-XY123");
+        jo.put("KXD", "99");
+        redisTemplate.opsForValue().set(requestId, jo.toString());
+    }
+
+    private static void generateMotorClassifyResult(RedisTemplate redisTemplate, String requestId) {
+        org.json.JSONObject jo = new org.json.JSONObject();
+        jo.put("LX", "3");
+        redisTemplate.opsForValue().set(requestId, jo.toString());
     }
 }
