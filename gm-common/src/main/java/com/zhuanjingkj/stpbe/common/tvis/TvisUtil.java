@@ -536,10 +536,12 @@ public class TvisUtil {
         VehicleCltzxlVo vehicleCltzxlVo = null;
         VehicleJsxwtzVO vehicleJsxwtzVO = null;
         VehicleGxhtzVO vehicleGxhtzVO = null;
+        int vehIdx = 0;
         if (vehs != null) {
             for (Object veh : vehs) {
                 vehJson = (JSONObject) veh;
                 vo = new VehicleVo();
+                vo.setVehsIdx(vehIdx++);
                 vo.setOccurTime(vehJson.getString("OCCUR_TIME"));
                 vo.setCameraId(cameraId);
                 vo.setStreamId(streamId);
