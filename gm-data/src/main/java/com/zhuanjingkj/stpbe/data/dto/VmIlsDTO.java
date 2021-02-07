@@ -26,12 +26,14 @@ public class VmIlsDTO extends BaseDTO {
     private long imageId; //图片id
     @JSONField(name = "imageUrl")
     private String imageUrl; //图片路径
+    @JSONField(name = "vehsIdx")
+    private Integer vehsIdx;
 
     public VmIlsDTO() {
         super();
     }
 
-    public VmIlsDTO(long ilId, String ilTime, String ilAddr, String hmhp, String category, String types, String ilTypes, long imageId, String imageUrl) {
+    public VmIlsDTO(long ilId, String ilTime, String ilAddr, String hmhp, String category, String types, String ilTypes, long imageId, String imageUrl, Integer vehsIdx) {
         this.ilId = ilId;
         this.ilTime = ilTime;
         this.ilAddr = ilAddr;
@@ -41,6 +43,7 @@ public class VmIlsDTO extends BaseDTO {
         this.ilTypes = ilTypes;
         this.imageId = imageId;
         this.imageUrl = imageUrl;
+        this.vehsIdx = vehsIdx;
     }
 
     public long getIlId() {
@@ -129,5 +132,13 @@ public class VmIlsDTO extends BaseDTO {
 
     public void setTvisJsonTbl(String tvisJsonTbl) {
         this.tvisJsonTbl = tvisJsonTbl;
+    }
+
+    public Integer getVehsIdx() {
+        return vehsIdx;
+    }
+
+    public void setVehsIdx(Integer vehsIdx) {
+        this.vehsIdx = vehsIdx;
     }
 }

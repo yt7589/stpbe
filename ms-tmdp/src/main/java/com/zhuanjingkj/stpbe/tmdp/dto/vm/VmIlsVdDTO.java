@@ -71,14 +71,35 @@ public class VmIlsVdDTO extends BaseDTO {
     private double hphm_rlblt; //车牌可信度
     @JSONField(name = "ehphm_rlblt")
     private String ehphm_rlblt; //每位号牌可信度
+    @JSONField(name = "dcjqs")
+    private String dcjqs; //倒车镜缺失
+    @JSONField(name = "ccztw")
+    private Integer ccztw; //车窗粘贴物
+    @JSONField(name = "gj")
+    private Integer gj; //挂件
+    @JSONField(name = "cszt")
+    private Integer cszt; //车身张贴
+    @JSONField(name = "xlj")
+    private String xlj; //行李架
+    @JSONField(name = "bj")
+    private Integer bj; //摆件
+    @JSONField(name = "csch")
+    private Integer csch; //车身彩绘
+    @JSONField(name = "csps")
+    private Integer csps; //车身破损
+    @JSONField(name = "csgh")
+    private Integer csgh; //车身刮痕
+    @JSONField(name = "tc")
+    private Integer tc; //天窗
 
-    public VmIlsVdDTO(long imageId, String imageUrl, String ilsTime, String ilsAddr, String category,
-                      String hphm, String ilsType, String vlType, String vsType, String direction,
-                      Integer md_isPhone, Integer md_isWPhone, Integer md_isSafetyBelt, Integer md_isSmoke,
-                      Integer md_isSunVisor, Integer ct_isSafetyBelt, Integer ct_isSunVisor,
-                      Integer mc_isHelmet, String color, String logo, String vModel, String yModel,
-                      double rlblt, Integer hphm_state, String hphm_color, String word_Style, String hphm_type,
-                      Integer hphm_tps, double hphm_rlblt, String ehphm_rlblt) {
+    public VmIlsVdDTO(long imageId, String imageUrl, String ilsTime, String ilsAddr, String category, String hphm,
+                      String ilsType, String vlType, String vsType, String direction, Integer md_isPhone,
+                      Integer md_isWPhone, Integer md_isSafetyBelt, Integer md_isSmoke, Integer md_isSunVisor,
+                      Integer ct_isSafetyBelt, Integer ct_isSunVisor, Integer mc_isHelmet, String color, String logo,
+                      String vModel, String yModel, double rlblt, Integer hphm_state, String hphm_color, String word_Style,
+                      String hphm_type, Integer hphm_tps, double hphm_rlblt, String ehphm_rlblt, String dcjqs,
+                      Integer ccztw, Integer gj, Integer cszt, String xlj, Integer bj, Integer csch, Integer csps,
+                      Integer csgh, Integer tc) {
         this.imageId = imageId;
         this.imageUrl = imageUrl;
         this.ilsTime = ilsTime;
@@ -109,6 +130,16 @@ public class VmIlsVdDTO extends BaseDTO {
         this.hphm_tps = hphm_tps;
         this.hphm_rlblt = hphm_rlblt;
         this.ehphm_rlblt = ehphm_rlblt;
+        this.dcjqs = dcjqs;
+        this.ccztw = ccztw;
+        this.gj = gj;
+        this.cszt = cszt;
+        this.xlj = xlj;
+        this.bj = bj;
+        this.csch = csch;
+        this.csps = csps;
+        this.csgh = csgh;
+        this.tc = tc;
     }
 
     public long getImageId() {
@@ -349,5 +380,85 @@ public class VmIlsVdDTO extends BaseDTO {
 
     public void setEhphm_rlblt(String ehphm_rlblt) {
         this.ehphm_rlblt = ehphm_rlblt;
+    }
+
+    public String getDcjqs() {
+        return dcjqs;
+    }
+
+    public void setDcjqs(String dcjqs) {
+        this.dcjqs = dcjqs;
+    }
+
+    public Integer getCcztw() {
+        return ccztw;
+    }
+
+    public void setCcztw(Integer ccztw) {
+        this.ccztw = ccztw;
+    }
+
+    public Integer getGj() {
+        return gj;
+    }
+
+    public void setGj(Integer gj) {
+        this.gj = gj;
+    }
+
+    public Integer getCszt() {
+        return cszt;
+    }
+
+    public void setCszt(Integer cszt) {
+        this.cszt = cszt;
+    }
+
+    public String getXlj() {
+        return xlj;
+    }
+
+    public void setXlj(String xlj) {
+        this.xlj = xlj;
+    }
+
+    public Integer getBj() {
+        return bj;
+    }
+
+    public void setBj(Integer bj) {
+        this.bj = bj;
+    }
+
+    public Integer getCsch() {
+        return csch;
+    }
+
+    public void setCsch(Integer csch) {
+        this.csch = csch;
+    }
+
+    public Integer getCsps() {
+        return csps;
+    }
+
+    public void setCsps(Integer csps) {
+        this.csps = csps;
+    }
+
+    public Integer getCsgh() {
+        return csgh;
+    }
+
+    public void setCsgh(Integer csgh) {
+        this.csgh = csgh;
+    }
+
+    public Integer getTc() {
+        return tc;
+    }
+
+    public void setTc(Integer tc) {
+        this.tc = tc;
     }
 }

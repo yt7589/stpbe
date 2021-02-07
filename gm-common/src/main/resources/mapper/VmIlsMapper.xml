@@ -4,6 +4,7 @@
     <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsDTO"  id ="illDTO" >
         <result column="tvis_json_id" property="tvisJsonId" jdbcType="INTEGER"/>
         <result column="violation_id" property="ilId" jdbcType="INTEGER"/>
+        <result column="vehs_idx" property="vehsIdx" jdbcType="INTEGER"/>
         <result column="create_time" property="ilTime" jdbcType="VARCHAR"/>
         <result column="site_name" property="ilAddr" jdbcType="VARCHAR"/>
         <result column="hphm" property="hmhp" jdbcType="VARCHAR"/>
@@ -63,7 +64,8 @@
     </resultMap>
 
     <select id ="getIllegalVehicle" resultMap="illDTO">
-        SELECT tv.tvis_json_id, tv.violation_id, tv.create_time, ts.site_name, tv.hphm, tv.wzlx, sv.vehicle_type_name, tv.tvis_json_tbl,
+        SELECT tv.tvis_json_id, tv.violation_id, tv.create_time, tv.vehs_idx,
+               ts.site_name, tv.hphm, tv.wzlx, sv.vehicle_type_name, tv.tvis_json_tbl,
                IF(tv.category = 0, '本市', '外埠') AS category, tv.create_time
           FROM t_violation tv
 <!--     LEFT JOIN #{tblName} tj-->

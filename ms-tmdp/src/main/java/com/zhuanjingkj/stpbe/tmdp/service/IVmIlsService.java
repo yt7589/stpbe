@@ -15,7 +15,7 @@ public interface IVmIlsService {
 
     ResultDTO<List<VmIlsTypeDTO>> queryIlsTypes_exp();
 
-    ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvId);
+    ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx);
 
     ResultDTO<DbQrsDTO> queryIllegalVehicle_epx(String hphm, Integer startIndex, Integer amount, Integer direction);
 

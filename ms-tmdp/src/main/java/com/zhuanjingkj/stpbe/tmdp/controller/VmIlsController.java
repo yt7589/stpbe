@@ -83,16 +83,16 @@ public class VmIlsController {
      * 违章车辆详情
      * @param platform
      * @param version
-     * @param ilId
      * @return
      */
     @GetMapping(value = "/ils/queryIlsDat")
     public ResultDTO<VmIlsVdDTO> queryIlsDat(
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
-            @RequestParam(name = "ilId", required = false) Integer ilId
+            @RequestParam(name = "tvisJsonId", required = false) Integer tvisJsonId,
+            @RequestParam(name = "vehsIdx", required = false) Integer vehsIdx
     ) {
-        return queryIlsDat_exp(ilId);
+        return queryIlsDat_exp(tvisJsonId, vehsIdx);
     }
     /**
      * 车辆违章历史
@@ -343,7 +343,7 @@ public class VmIlsController {
         return vmIlsService.queryIlsVsInfo_exp(hphm);
     }
 
-    private ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvId) {
-        return vmIlsService.queryIlsDat_exp(tvId);
+    private ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx) {
+        return vmIlsService.queryIlsDat_exp(tvisJsonId, vehsIdx);
     }
 }

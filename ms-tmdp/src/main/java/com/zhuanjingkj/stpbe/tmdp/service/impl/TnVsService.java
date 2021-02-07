@@ -32,6 +32,7 @@ public class TnVsService implements ITnVsService {
         Iterator<ZSetOperations.TypedTuple<Object>> iterator = typedTupleSet.iterator();
         while (iterator.hasNext()){
             ZSetOperations.TypedTuple<Object>  typedTuple = iterator.next();
+            System.out.println(typedTuple.getValue());
             tvts.add(new TnVsTopSiteDTO("" + dcStService.siteNameMap.get("" + typedTuple.getValue()),
                     Double.parseDouble(("" + dcStService.siteMap.get("" + typedTuple.getValue())).split("\\|")[0] == null ? "0" : ("" + dcStService.siteMap.get("" + typedTuple.getValue())).split("\\|")[0]),
                     Double.parseDouble(("" + dcStService.siteMap.get("" + typedTuple.getValue())).split("\\|")[1] == null ? "0" : ("" + dcStService.siteMap.get("" + typedTuple.getValue())).split("\\|")[1]),
