@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.zjc_saas;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
@@ -9,6 +10,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.nio.charset.StandardCharsets;
+
 @SpringBootApplication
 //@EnableFeignClients(basePackages = "com.zhuanjingkj.zjcbe.zjc_saas.fcc")
 @EnableHystrix
@@ -17,6 +20,8 @@ public class AgZjcSaasApplication {
     public static void main(String[] args) {
         System.out.println("Eureka Server v0.0.1");
         SpringApplication.run(AgZjcSaasApplication.class, args);
+        String d123456 = DigestUtils.sha1Hex("123456".getBytes());
+        System.out.println("########## 123456摘要：" + d123456 + "!");
     }
 
     @Bean
