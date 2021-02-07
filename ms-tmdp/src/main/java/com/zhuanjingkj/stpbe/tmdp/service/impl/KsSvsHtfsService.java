@@ -38,7 +38,7 @@ public class KsSvsHtfsService implements IKsSvsHtfsService {
         Integer kakvNum = 0;
         if(kc != null && kc.size() > 0) {
             for(int i = 0; i < kc.size(); i++) {
-                if(redisTemplate.hasKey(redisTemplate.opsForHash().get("ks_svs_area", kc.get(i)))) {
+                if(redisTemplate.opsForHash().get("ks_svs_area", kc.get(i)) != null) {
                     Integer tl = (int) redisTemplate.opsForHash().get("ks_svs_area", kc.get(i));
                     kakvNum = kakvNum + tl;
                 }
