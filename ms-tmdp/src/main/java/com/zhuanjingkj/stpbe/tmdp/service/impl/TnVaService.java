@@ -62,6 +62,8 @@ public class TnVaService implements ITnVaService {
         List<TnVaSdInfoDTO> recs = tnVaMapper.getSiteInfo(startIndex, amount, siteId);
         ts.setRecs(recs);
         List<Map<String, Object>> devCount = tnVaMapper.getDevCount(siteId);
+        ts.setCamera(0);
+        ts.setSnapshot(0);
         if(devCount != null && devCount.size() > 0) {
             for(int i = 0; i < devCount.size(); i++) {
                 if("1".equals("" + devCount.get(i).get("camera_type_id"))) {

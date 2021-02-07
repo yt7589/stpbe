@@ -13,7 +13,7 @@ public class PropUtil {
 
     private static final Logger log = LoggerFactory.getLogger(PropUtil.class);
 
-    private static String HPHM_PRE = null;
+    public static String HPHM_PRE = null;
 
     /** 从配置文件中，获取单个属性值*/
     public static String getValue(String name) {
