@@ -90,9 +90,9 @@ public class VmIlsController {
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
             @RequestParam(name = "tvisJsonId", required = false) Integer tvisJsonId,
-            @RequestParam(name = "vehsIdx", required = false) Integer vehsIdx
+            @RequestParam(name = "vehIdx", required = false) Integer vehIdx
     ) {
-        return queryIlsDat_exp(tvisJsonId, vehsIdx);
+        return queryIlsDat_exp(tvisJsonId, vehIdx);
     }
     /**
      * 车辆违章历史
