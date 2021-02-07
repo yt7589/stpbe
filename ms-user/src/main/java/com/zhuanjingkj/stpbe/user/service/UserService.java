@@ -39,21 +39,18 @@ public class UserService implements IUserService {
         };
         DaoEngine dao = new DaoEngine();
         List<LoginDTO> recs = dao.query(systemId, opsName, sql, params, rowMapper);
-        System.out.println("recs:" + recs.size() + "条记录!");
-        for (LoginDTO item : recs) {
-            System.out.println("记录：" + item.getUserId() + ", " + item.getUserName() + "!");
-        }
-
-
         ResultDTO<LoginDTO> dto = new ResultDTO<>();
-        dto.setCode(0);
-        dto.setMsg("");
-        LoginDTO data = recs.get(0); /*new LoginDTO();
-        data.setUserId(1001L);
-        data.setUserName("用户1001");*/
-        data.setRoleId(2001);
-        data.setRoleName("普通用户");
-        dto.setData(data);
+        if (recs.size() < 1) {
+            dto.setCode(1);
+            dto.setMsg("用户名或密码错误");
+        } else {
+            dto.setCode(0);
+            dto.setMsg("");
+            LoginDTO data = recs.get(0);
+            data.setRoleId(2001);
+            data.setRoleName("普通用户");
+            dto.setData(data);
+        }
         return dto;
     }
 }
