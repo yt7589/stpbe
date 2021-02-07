@@ -2,6 +2,8 @@ package com.zhuanjingkj.stpbe.db;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -9,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataSourceRegistry {
+    private final static Logger logger = LoggerFactory.getLogger(DataSourceRegistry.class);
     public final static String JDBC_TEMPLATE_TYPE_USER = "u";
     public final static String JDBC_TEMPLATE_TYPE_GLOBAL = "g";
     public final static String JDBC_TEMPLATE_MODE_READ = "r";
@@ -28,9 +31,9 @@ public class DataSourceRegistry {
 
     private DataSourceRegistry() {
         DataSource ds = null;
-        String dbUrl = "jdbc:mysql://192.168.2.68:3306/vehicle?useSSL=false";
-        String dbUser = "root";
-        String dbPwd = "Zhang.1986";
+        String dbUrl = "jdbc:mysql://192.168.2.68:3306/StpDb?useSSL=false";
+        String dbUser = "stp";
+        String dbPwd = "Stp2020";
         long systemId = 1;
         ds = DataSourceFactory.createDataSource(DataSourceFactory.DB_MYSQL, dbUrl, dbUser, dbPwd);
         JdbcTemplate jt = new JdbcTemplate(ds);
@@ -56,6 +59,7 @@ public class DataSourceRegistry {
         } else {
             key = type + "_" + mode;
         }
+        logger.info("###### jt key=" + key + "!");
         return jdbcTemplates.get(key);
     }
 }

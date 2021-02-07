@@ -1,6 +1,8 @@
 package com.zhuanjingkj.stpbe.db;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DaoEngine<T extends Object> {
+    private final static Logger logger = LoggerFactory.getLogger(DaoEngine.class);
     //@Autowired
     //private DataSourceRegistry dataSourceRegistry;
     private static List<String> globalDsOprns = null;
@@ -40,6 +43,7 @@ public class DaoEngine<T extends Object> {
         } else {
             type = DataSourceRegistry.JDBC_TEMPLATE_TYPE_USER;
         }
+        logger.info("##### login type=" + type + "!");
         return DataSourceRegistry.getInstance().getJdbcTemplate(type, systemId, mode);
     }
 }

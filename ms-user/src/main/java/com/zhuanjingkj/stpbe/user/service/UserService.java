@@ -27,6 +27,7 @@ public class UserService implements IUserService {
         String currentMethodName = Thread.currentThread().getStackTrace()[1].getMethodName();
         String currentClassName = Thread.currentThread().getStackTrace()[1].getClassName();
         String opsName = currentClassName + "." + currentMethodName;
+        System.out.println("loginName=" + rto.getLoginName() + "; " + rto.getLoginPwd() + "!");
         String sql = "select user_id, user_name from t_user where login_name=? and login_pwd=?";
         Object[] params = new Object[2];
         params[0] = rto.getLoginName();
