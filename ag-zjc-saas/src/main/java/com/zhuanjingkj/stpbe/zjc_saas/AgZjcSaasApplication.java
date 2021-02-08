@@ -32,7 +32,7 @@ public class AgZjcSaasApplication {
         SpringApplication.run(AgZjcSaasApplication.class, args);
     }
 
-    /*@Bean
+    @Bean
     public CorsFilter corsFilter() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
@@ -48,11 +48,11 @@ public class AgZjcSaasApplication {
         config.addAllowedMethod("PATCH");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
-    }*/
+    }
 
     private static final String MAX_AGE = "18000L";
     @Bean
-    public WebFilter corsFilter() {
+    public WebFilter webFilter() {
         return (ServerWebExchange ctx, WebFilterChain chain) -> {
             ServerHttpRequest request = ctx.getRequest();
             if (!CorsUtils.isCorsRequest(request)) {
