@@ -171,6 +171,10 @@
             <!-- <version>20201115</version> -->
             <version>20190722</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+        </dependency>
 
     </dependencies>
     <dependencyManagement>
