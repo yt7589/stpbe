@@ -72,6 +72,7 @@ public class AuthFilter  extends ZuulFilter {
         if (isInWhiteList) {
             logger.info("AuthFilter.run 5");
             ctx.set(ZjcSaasConst.ZUUL_FILTER_IS_SUCCESS, ZjcSaasConst.ZULL_FILTER_IS_SUCCESS_TRUE);
+            return true;
         } else {
             logger.info("AuthFilter.run 6");
             // 获取Authorization头
@@ -107,6 +108,5 @@ public class AuthFilter  extends ZuulFilter {
             logger.info("AuthFilter.run 10");
             return null;
         }
-        return null;
     }
 }
