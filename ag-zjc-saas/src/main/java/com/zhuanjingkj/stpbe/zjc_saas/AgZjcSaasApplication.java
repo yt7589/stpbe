@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -32,25 +33,7 @@ public class AgZjcSaasApplication {
         SpringApplication.run(AgZjcSaasApplication.class, args);
     }
 
-    @Bean
-    public CorsFilter corsFilter() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        final CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("OPTIONS");
-        config.addAllowedMethod("HEAD");
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("DELETE");
-        config.addAllowedMethod("PATCH");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
-
-    private static final String MAX_AGE = "18000L";
+    /*private static final String MAX_AGE = "18000L";
     @Bean
     public WebFilter webFilter() {
         return (ServerWebExchange ctx, WebFilterChain chain) -> {
@@ -76,5 +59,5 @@ public class AgZjcSaasApplication {
             }
             return chain.filter(ctx);
         };
-    }
+    }*/
 }
