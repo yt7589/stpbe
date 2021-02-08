@@ -29,7 +29,7 @@ public class Wxs2102Service implements IWxs2102Service {
         Map<String, Object> params = new HashMap<>();
         params.put("apiName", "truckRecog");
         params.put("TP", tp);
-        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "truckRecog", params);
+        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "truckRecog-list", params);
         Map<String, Object> rst = new HashMap<>();
         JSONObject joRst = new JSONObject(jsonResp);
         rst.put("CODE", "1");
@@ -48,7 +48,7 @@ public class Wxs2102Service implements IWxs2102Service {
         Map<String, Object> params = new HashMap<>();
         params.put("apiName", "carryPerson");
         params.put("TP", tp);
-        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "carryPerson", params);
+        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "carryPerson-list", params);
         Map<String, Object> rst = new HashMap<>();
         JSONObject joRst = new JSONObject(jsonResp);
         rst.put("CODE", "1");
@@ -64,7 +64,7 @@ public class Wxs2102Service implements IWxs2102Service {
         Map<String, Object> params = new HashMap<>();
         params.put("apiName", "bigPlate");
         params.put("TP", tp);
-        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "bigPlate", params);
+        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "bigPlate-list", params);
         Map<String, Object> rst = new HashMap<>();
         JSONObject joRst = new JSONObject(jsonResp);
         rst.put("CODE", "1");
@@ -81,7 +81,7 @@ public class Wxs2102Service implements IWxs2102Service {
         Map<String, Object> params = new HashMap<>();
         params.put("apiName", "motorClassify");
         params.put("TP", tp);
-        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "motorClassify", params);
+        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "motorClassify-list", params);
         Map<String, Object> rst = new HashMap<>();
         JSONObject joRst = new JSONObject(jsonResp);
         rst.put("CODE", "1");

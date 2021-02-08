@@ -90,7 +90,7 @@ public class AuthFilter  extends ZuulFilter {
                 ctx.set(ZjcSaasConst.ZUUL_FILTER_IS_SUCCESS, ZjcSaasConst.ZULL_FILTER_IS_SUCCESS_TRUE);
                 ctx.addZuulRequestHeader(AppConst.AUTH_USER_HEADER, "" + userId);
                 Object userIdStr = redisTemplate.opsForValue().get(AppConst.AUTH_REDIS_USER_PREFIX + userId);
-                return null;
+                return true;
             }
             logger.info("AuthFilter.run 8");
             ctx.set(ZjcSaasConst.ZUUL_FILTER_IS_SUCCESS, ZjcSaasConst.ZULL_FILTER_IS_SUCCESS_FALSE);
