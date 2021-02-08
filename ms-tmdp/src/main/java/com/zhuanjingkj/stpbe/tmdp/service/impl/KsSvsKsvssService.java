@@ -36,30 +36,31 @@ public class KsSvsKsvssService implements IKsSvsKsvssService {
         Map<String, Object> dctf = redisTemplate.opsForHash().entries("ks_ksvrp_site"); //取出cameraId 和 对应的 count
         /**
          * 1.根据cameraId 取出点位名称
-         * 2.
          */
-        List<String> camera = new ArrayList<>();
-        for(String key : dctf.keySet()) {
-            camera.add(key);
-        }
-        List<Map<String, Object>> ksvss = ksSvsKsvssMapper.getKsvss(camera);
-        KsSvsKsvssDTO ksSvsKsvssDTO = null;
-        if(ksvss != null && ksvss.size() > 0){
-            for(int i = 0; i < ksvss.size(); i++) {
-                for(String key : dctf.keySet()) {
-                    if(ksvss.get(i).get("camera_code").equals(key)) {
-                        ksSvsKsvssDTO = new KsSvsKsvssDTO(Integer.parseInt("" + ksvss.get(i).get("site_id")), "" + ksvss.get(i).get("site_name"), Integer.parseInt("" + dctf.get(key)));
-                        ksvsss.add(ksSvsKsvssDTO);
+        List<KsSvsKsvssDTO> dklist = new ArrayList<>();
+        if(dctf != null) {
+            List<String> camera = new ArrayList<>();
+            for(String key : dctf.keySet()) {
+                camera.add(key);
+            }
+            KsSvsKsvssDTO ksSvsKsvssDTO = null;
+            List<Map<String, Object>> ksvss = ksSvsKsvssMapper.getKsvss(camera);
+            if(ksvss != null && ksvss.size() > 0){
+                for(int i = 0; i < ksvss.size(); i++) {
+                    for(String key : dctf.keySet()) {
+                        if(ksvss.get(i).get("camera_code").equals(key)) {
+                            ksSvsKsvssDTO = new KsSvsKsvssDTO(Integer.parseInt("" + ksvss.get(i).get("site_id")), "" + ksvss.get(i).get("site_name"), Integer.parseInt("" + dctf.get(key)));
+                            ksvsss.add(ksSvsKsvssDTO);
+                        }
                     }
                 }
             }
+            /** 合并同一个路段下的camera拍照数量 */
+            ksvsss.parallelStream().collect(Collectors.groupingBy(o ->(o.getSiteName()),Collectors.toList())).forEach(
+                    (id, transfer) -> {
+                        transfer.stream().reduce((a,b) -> new KsSvsKsvssDTO(a.getSiteId(), a.getSiteName(), a.getCount() + b.getCount())).ifPresent(dklist :: add);
+                    });
         }
-        /** 合并同一个路段下的camera拍照数量 */
-        List<KsSvsKsvssDTO> dklist = new ArrayList<>();
-        ksvsss.parallelStream().collect(Collectors.groupingBy(o ->(o.getSiteName()),Collectors.toList())).forEach(
-                (id, transfer) -> {
-                    transfer.stream().reduce((a,b) -> new KsSvsKsvssDTO(a.getSiteId(), a.getSiteName(), a.getCount() + b.getCount())).ifPresent(dklist :: add);
-                });
         return dklist;
     }
 }

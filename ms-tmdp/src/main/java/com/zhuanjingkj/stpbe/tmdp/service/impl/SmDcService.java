@@ -179,6 +179,31 @@ public class SmDcService implements ISmDcService {
             redisTemplate.delete("ks_rss_lsvs_time");
         }
 
+        if(redisTemplate.hasKey("ks_vs_dyn_total")) {
+            redisTemplate.delete("ks_vs_dyn_total"); //车辆布控动态次数删除
+        }
+
+        if(redisTemplate.hasKey("ks_vs_dyn_time")) {
+            redisTemplate.delete("ks_vs_dyn_time"); //车辆布控动态时间删除
+        }
+
+        if(redisTemplate.hasKey("ks_vs_dyn_list")) {
+            redisTemplate.delete("ks_vs_dyn_list"); //车辆布控动态列表删除
+        }
+
+        if(redisTemplate.hasKey("ks_vs_ill_list")) {
+            redisTemplate.delete("ks_vs_ill_list"); //车辆报警列表删除
+        }
+
+        if(redisTemplate.hasKey("ks_vs_ill_time")) {
+            redisTemplate.delete("ks_vs_ill_time"); //车辆报警时间删除
+        }
+
+        if(redisTemplate.hasKey("ks_vs_ill_total")) {
+            redisTemplate.delete("ks_vs_ill_total"); //车辆报警次数删除
+        }
+
+
         //zset
         String date = DateUtil.countMonthYm1(-1);
         if(redisTemplate.hasKey("dcst_top7_site_" + date)) { //重点车辆点位排名TOP7
