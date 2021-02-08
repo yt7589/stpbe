@@ -23,7 +23,7 @@ public class AgCorsConfig {
         //config.addAllowedMethod("POST");
         //config.addAllowedMethod("DELETE");
         //config.addAllowedMethod("PATCH");
-        config.addExposedHeader(org.springframework.web.cors.CorsConfiguration.ALL);
+        //config.addExposedHeader(org.springframework.web.cors.CorsConfiguration.ALL);
         source.registerCorsConfiguration("/**", config);
         //return new CorsFilter(source);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
