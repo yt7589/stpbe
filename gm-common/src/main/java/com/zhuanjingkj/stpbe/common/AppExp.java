@@ -1,6 +1,8 @@
 package com.zhuanjingkj.stpbe.common;
 
 
+import com.zhuanjingkj.stpbe.common.util.ImageBase64Converter;
+
 import java.text.NumberFormat;
 
 public class AppExp {
