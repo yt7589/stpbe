@@ -52,7 +52,7 @@ public class Wxs2102Service implements IWxs2102Service {
     public Map<String, Object> carryPerson(String tp) {
         byte[] data = ImageBase64Converter.convertBase64ToBytes(tp);
         System.out.println("data:" + data + "!");
-        for (int i=0; i<10; i++) {
+        for (int i=0; i<50; i++) {
             System.out.println("#_" + i + ": " + Integer.toHexString(data[i]) + "!");
         }
         Map<String, Object> params = new HashMap<>();

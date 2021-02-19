@@ -207,7 +207,7 @@ public class TvisImageDataController {
                 result.put("MSG", "无法读取图片");
                 return result;
             }
-            for (int i=0; i<10; i++) {
+            for (int i=0; i<50; i++) {
                 System.out.println("@_" + i + ":" + Integer.toHexString(data[i]) + "!");
             }
             logger.info("before recognition");
