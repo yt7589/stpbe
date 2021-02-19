@@ -40,19 +40,21 @@ public class FacadeService implements IFacadeService {
         logger.info("ms-facade: step 2");
         LoginDTO data = (LoginDTO)dto.getData();
         logger.info("ms-facade: step 3");
-        data.setJwtToken(generateJwtToken(data));
-        logger.info("ms-facade: step 4");
-        UserVO userVo = new UserVO();
-        logger.info("ms-facade: step 5");
-        userVo.setUserId(data.getUserId());
-        userVo.setUserName(data.getUserName());
-        userVo.setRoleId(data.getRoleId());
-        userVo.setRoleName(data.getRoleName());
-        logger.info("### Yt ###: save userVo to Redis");
-        redisTemplate.opsForValue().set(
-                AppConst.AUTH_REDIS_USER_PREFIX + userVo.getUserId(),
-                userVo, AppConst.REDIS_USER_DURATION, TimeUnit.MILLISECONDS);
-        logger.info("### Yt ###: save userVo to Redis Done");
+        if (data != null) {
+            data.setJwtToken(generateJwtToken(data));
+            logger.info("ms-facade: step 4");
+            UserVO userVo = new UserVO();
+            logger.info("ms-facade: step 5");
+            userVo.setUserId(data.getUserId());
+            userVo.setUserName(data.getUserName());
+            userVo.setRoleId(data.getRoleId());
+            userVo.setRoleName(data.getRoleName());
+            logger.info("### Yt ###: save userVo to Redis");
+            redisTemplate.opsForValue().set(
+                    AppConst.AUTH_REDIS_USER_PREFIX + userVo.getUserId(),
+                    userVo, AppConst.REDIS_USER_DURATION, TimeUnit.MILLISECONDS);
+            logger.info("### Yt ###: save userVo to Redis Done");
+        }
         return dto;
     }
 
