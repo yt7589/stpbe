@@ -47,6 +47,8 @@ public class UserService implements IUserService {
             dto.setCode(0);
             dto.setMsg("");
             LoginDTO data = recs.get(0);
+            data.setUserId(recs.get(0).getUserId());
+            data.setUserName(recs.get(0).getUserName());
             data.setRoleId(2001);
             data.setRoleName("普通用户");
             dto.setData(data);
