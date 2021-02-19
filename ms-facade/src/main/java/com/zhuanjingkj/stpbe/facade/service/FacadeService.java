@@ -65,6 +65,7 @@ public class FacadeService implements IFacadeService {
 
     public String generateJwtToken(LoginDTO data) {
         Map<String, Object> claims = new HashMap<>();
+        System.out.println("generateJwtToken: data=" + data + "!");
         claims.put("userId", "" + data.getUserId());
         Long endTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 15;
         String token = Jwts.builder().setSubject("zjc").setExpiration(new Date(endTime))

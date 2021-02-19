@@ -31,6 +31,7 @@ public class UserService implements IUserService {
         Object[] params = new Object[2];
         params[0] = rto.getLoginName();
         params[1] = rto.getLoginPwd();
+        System.out.println("loginName=" + rto.getLoginName() + "; pwd=" + rto.getLoginPwd() + "!");
         RowMapper<LoginDTO> rowMapper = (rs, num) -> {
             LoginDTO dto = new LoginDTO();
             dto.setUserId(rs.getLong(1));
@@ -41,9 +42,11 @@ public class UserService implements IUserService {
         List<LoginDTO> recs = dao.query(systemId, opsName, sql, params, rowMapper);
         ResultDTO<LoginDTO> dto = new ResultDTO<>();
         if (recs.size() < 1) {
+            System.out.println("ms-user.log case 1");
             dto.setCode(1);
             dto.setMsg("用户名或密码错误");
         } else {
+            System.out.println("ms-user.log case 2");
             dto.setCode(0);
             dto.setMsg("");
             LoginDTO data = recs.get(0);
