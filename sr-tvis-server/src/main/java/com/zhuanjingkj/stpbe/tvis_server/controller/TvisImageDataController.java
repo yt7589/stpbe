@@ -207,6 +207,9 @@ public class TvisImageDataController {
                 result.put("MSG", "无法读取图片");
                 return result;
             }
+            for (int i=0; i<10; i++) {
+                System.out.println("@_" + i + ":" + Integer.toHexString(data[i]) + "!");
+            }
             logger.info("before recognition");
             return tvisImageRecogService.recognition(cameraId, gcxh, mrhpt, hphm, data);
 
