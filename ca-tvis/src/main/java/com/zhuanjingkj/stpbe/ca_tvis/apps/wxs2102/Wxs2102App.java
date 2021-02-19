@@ -37,13 +37,7 @@ public class Wxs2102App {
     public void testTruckRecog() {
         System.out.println("测试货车类型识别接口");
         String imageFile = testImage;
-        //String tp = ImageBase64Converter.convertFileToBase64(imageFile);
-        String tp = null;
-        try {
-            tp = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(new File(imageFile)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String tp = ImageBase64Converter.convertFileToBase64(imageFile);
         Map<String, Object> params = new HashMap<>();
         params.put("TP", tp);
         String response = null;
@@ -58,13 +52,7 @@ public class Wxs2102App {
     public void testCarryPerson() {
         System.out.println("测试是否载人接口");
         String imageFile = testImage;
-        //String tp = ImageBase64Converter.convertFileToBase64(imageFile);
-        String tp = null;
-        try {
-            tp = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(new File(imageFile)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String tp = ImageBase64Converter.convertFileToBase64(imageFile);
         Map<String, Object> params = new HashMap<>();
         params.put("TP", tp);
         String response = null;
@@ -79,13 +67,7 @@ public class Wxs2102App {
     public void testBigPlate() {
         System.out.println("测试放大号识别接口");
         String imageFile = testImage;
-        //String tp = ImageBase64Converter.convertFileToBase64(imageFile);
-        String tp = null;
-        try {
-            tp = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(new File(imageFile)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String tp = ImageBase64Converter.convertFileToBase64(imageFile);
         Map<String, Object> params = new HashMap<>();
         params.put("TP", tp);
         String response = null;
@@ -100,13 +82,7 @@ public class Wxs2102App {
     public void testMotorClassify() {
         System.out.println("测试外卖快递识别接口");
         String imageFile = testImage;
-        //String tp = ImageBase64Converter.convertFileToBase64(imageFile);
-        String tp = null;
-        try {
-            tp = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(new File(imageFile)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String tp = ImageBase64Converter.convertFileToBase64(imageFile);
         Map<String, Object> params = new HashMap<>();
         params.put("TP", tp);
         String response = null;

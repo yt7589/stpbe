@@ -59,6 +59,7 @@ public class Wxs2102Service implements IWxs2102Service {
         params.put("apiName", "carryPerson");
         params.put("TP", tp);
         String jsonResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, "carryPerson-list", data);
+        System.out.println("resp:" + jsonResp + "!##############");
         Map<String, Object> rst = new HashMap<>();
         JSONObject joRst = new JSONObject(jsonResp);
         rst.put("CODE", "1");

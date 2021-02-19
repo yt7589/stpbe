@@ -24,7 +24,7 @@ public class ImageBase64Converter {
             e.printStackTrace();
         }
         for (int i=0; i<50; i++) {
-            System.out.println("raw_" + i + ": " + data[i] + "!");
+            System.out.println("raw_" + i + ": " + Integer.toHexString(data[i]) + "!");
         }
         // 对字节数组进行Base64编码，得到Base64编码的字符串
         BASE64Encoder encoder = new BASE64Encoder();
