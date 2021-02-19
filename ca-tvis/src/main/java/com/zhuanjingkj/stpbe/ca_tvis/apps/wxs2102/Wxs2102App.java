@@ -2,10 +2,13 @@ package com.zhuanjingkj.stpbe.ca_tvis.apps.wxs2102;
 
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.common.util.ImageBase64Converter;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +37,13 @@ public class Wxs2102App {
     public void testTruckRecog() {
         System.out.println("测试货车类型识别接口");
         String imageFile = testImage;
-        String tp = ImageBase64Converter.convertFileToBase64(imageFile);
+        //String tp = ImageBase64Converter.convertFileToBase64(imageFile);
+        String tp = null;
+        try {
+            tp = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(new File(imageFile)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Map<String, Object> params = new HashMap<>();
         params.put("TP", tp);
         String response = null;
@@ -49,7 +58,13 @@ public class Wxs2102App {
     public void testCarryPerson() {
         System.out.println("测试是否载人接口");
         String imageFile = testImage;
-        String tp = ImageBase64Converter.convertFileToBase64(imageFile);
+        //String tp = ImageBase64Converter.convertFileToBase64(imageFile);
+        String tp = null;
+        try {
+            tp = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(new File(imageFile)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Map<String, Object> params = new HashMap<>();
         params.put("TP", tp);
         String response = null;
@@ -64,7 +79,13 @@ public class Wxs2102App {
     public void testBigPlate() {
         System.out.println("测试放大号识别接口");
         String imageFile = testImage;
-        String tp = ImageBase64Converter.convertFileToBase64(imageFile);
+        //String tp = ImageBase64Converter.convertFileToBase64(imageFile);
+        String tp = null;
+        try {
+            tp = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(new File(imageFile)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Map<String, Object> params = new HashMap<>();
         params.put("TP", tp);
         String response = null;
@@ -79,7 +100,13 @@ public class Wxs2102App {
     public void testMotorClassify() {
         System.out.println("测试外卖快递识别接口");
         String imageFile = testImage;
-        String tp = ImageBase64Converter.convertFileToBase64(imageFile);
+        //String tp = ImageBase64Converter.convertFileToBase64(imageFile);
+        String tp = null;
+        try {
+            tp = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(new File(imageFile)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Map<String, Object> params = new HashMap<>();
         params.put("TP", tp);
         String response = null;

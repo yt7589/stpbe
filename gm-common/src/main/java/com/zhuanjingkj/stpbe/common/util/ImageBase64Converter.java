@@ -38,6 +38,18 @@ public class ImageBase64Converter {
         return base64Str.toString();
     }
 
+    public static byte[] convertBase64ToBytes(String rawB64) {
+        String fileBase64String = rawB64.substring("data:image/jpg;base64,".length());
+        byte[] bfile = null;
+        BASE64Decoder decoder = new BASE64Decoder();
+        try {
+            bfile = decoder.decodeBuffer(fileBase64String);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bfile;
+    }
+
     /**
      * 将base64字符串，生成文件
      */
@@ -51,10 +63,9 @@ public class ImageBase64Converter {
             if (!dir.exists() && dir.isDirectory()) {//判断文件目录是否存在
                 dir.mkdirs();
             }
-
             BASE64Decoder decoder = new BASE64Decoder();
-            byte[] bfile = decoder.decodeBuffer(fileBase64String);
-
+            //byte[] bfile = decoder.decodeBuffer(fileBase64String);
+            byte[] bfile = convertBase64ToBytes(fileBase64String);
             file = new File(filePath + File.separator + fileName);
             fos = new FileOutputStream(file);
             bos = new BufferedOutputStream(fos);

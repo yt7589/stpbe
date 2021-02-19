@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tvis_server.service.impl;
 
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.common.util.ImageBase64Converter;
 import com.zhuanjingkj.stpbe.tvis_server.service.IWxs2102Service;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class Wxs2102Service implements IWxs2102Service {
@@ -26,10 +29,12 @@ public class Wxs2102Service implements IWxs2102Service {
      */
     @Override
     public Map<String, Object> truckRecog(String tp) {
+        byte[] data = ImageBase64Converter.convertBase64ToBytes(tp);
         Map<String, Object> params = new HashMap<>();
         params.put("apiName", "truckRecog");
         params.put("TP", tp);
-        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "truckRecog-list", params);
+        //String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "truckRecog-list", params);
+        String jsonResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, "truckRecog-list", data);
         Map<String, Object> rst = new HashMap<>();
         JSONObject joRst = new JSONObject(jsonResp);
         rst.put("CODE", "1");
@@ -45,10 +50,12 @@ public class Wxs2102Service implements IWxs2102Service {
 
     @Override
     public Map<String, Object> carryPerson(String tp) {
+        byte[] data = ImageBase64Converter.convertBase64ToBytes(tp);
+        System.out.println("data:" + data + "!");
         Map<String, Object> params = new HashMap<>();
         params.put("apiName", "carryPerson");
         params.put("TP", tp);
-        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "carryPerson-list", params);
+        String jsonResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, "carryPerson-list", data);
         Map<String, Object> rst = new HashMap<>();
         JSONObject joRst = new JSONObject(jsonResp);
         rst.put("CODE", "1");
@@ -61,11 +68,17 @@ public class Wxs2102Service implements IWxs2102Service {
 
     @Override
     public Map<String, Object> bigPlate(String tp) {
+        byte[] data = ImageBase64Converter.convertBase64ToBytes(tp);
         Map<String, Object> params = new HashMap<>();
         params.put("apiName", "bigPlate");
         params.put("TP", tp);
-        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "bigPlate-list", params);
+        //tp = tp.substring("data:image/jpg;base64,".length());
+        String requestId = UUID.randomUUID().toString();
+        //String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "truckRecog-list", params);
+        String jsonResp = TvisUtil.sendStringRequest(redisTemplate, redisTemplate2, "bigPlate-list", tp);
+        //String jsonResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, "bigPlate-list", data);
         Map<String, Object> rst = new HashMap<>();
+        System.out.println("##### json: " + jsonResp + "!!!!!!!!!!");
         JSONObject joRst = new JSONObject(jsonResp);
         rst.put("CODE", "1");
         rst.put("MSG", "");
@@ -78,10 +91,12 @@ public class Wxs2102Service implements IWxs2102Service {
 
     @Override
     public Map<String, Object> motorClassify(String tp) {
+        byte[] data = ImageBase64Converter.convertBase64ToBytes(tp);
         Map<String, Object> params = new HashMap<>();
         params.put("apiName", "motorClassify");
         params.put("TP", tp);
-        String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "motorClassify-list", params);
+        String jsonResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, "motorClassify-list", data);
+        System.out.println("##### resp: " + jsonResp + "!");
         Map<String, Object> rst = new HashMap<>();
         JSONObject joRst = new JSONObject(jsonResp);
         rst.put("CODE", "1");
