@@ -51,10 +51,6 @@ public class Wxs2102Service implements IWxs2102Service {
     @Override
     public Map<String, Object> carryPerson(String tp) {
         byte[] data = ImageBase64Converter.convertBase64ToBytes(tp);
-        System.out.println("data:" + data + "!");
-        for (int i=0; i<50; i++) {
-            System.out.println("#_" + i + ": " + Integer.toHexString(data[i]) + "!");
-        }
         Map<String, Object> params = new HashMap<>();
         params.put("apiName", "carryPerson");
         params.put("TP", tp);
@@ -73,16 +69,13 @@ public class Wxs2102Service implements IWxs2102Service {
     @Override
     public Map<String, Object> bigPlate(String tp) {
         byte[] data = ImageBase64Converter.convertBase64ToBytes(tp);
-        Map<String, Object> params = new HashMap<>();
-        params.put("apiName", "bigPlate");
-        params.put("TP", tp);
-        //tp = tp.substring("data:image/jpg;base64,".length());
-        String requestId = UUID.randomUUID().toString();
-        //String jsonResp = TvisUtil.sendMapRequest(redisTemplate, redisTemplate2, "truckRecog-list", params);
-        String jsonResp = TvisUtil.sendStringRequest(redisTemplate, redisTemplate2, "bigPlate-list", tp);
-        //String jsonResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, "bigPlate-list", data);
+        System.out.println("bigPlate data:" + data.length + "!");
+        for (int i=0; i<50; i++) {
+            System.out.println("#_" + i + ": " + Integer.toHexString(data[i]) + "!");
+        }
+        String jsonResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, "bigPlate-list", data);
         Map<String, Object> rst = new HashMap<>();
-        System.out.println("##### json: " + jsonResp + "!!!!!!!!!!");
+        System.out.println("##### BigPlate json: " + jsonResp + "!!!!!!!!!!");
         JSONObject joRst = new JSONObject(jsonResp);
         rst.put("CODE", "1");
         rst.put("MSG", "");
