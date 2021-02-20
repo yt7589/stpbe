@@ -271,4 +271,8 @@ public class DkRtvrObserver implements ITvisStpObserver {
                 psfx, vo.getVehicleWztzVo().getClwz(), wzlx, vType, category, tblName, date);
     }
 
+    public static void main(String[] args) {
+        System.out.println("80".compareTo("80") == -1);
+    }
+
 }
