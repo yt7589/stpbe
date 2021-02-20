@@ -1,7 +1,9 @@
 package com.zhuanjingkj.stpbe.common.tvis.obs;
 
+import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,10 +18,25 @@ public class KsSvsObserver implements ITvisStpObserver {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private DeviceMapper deviceMapper;
+
     @Override
     public void notifyObserver(VehicleVo vo) {
         System.out.println("KsSvsObserver...");
         String vType = vo.getVehicleCxtzVo().getCllxzflCode();
+        /**
+         * cameraId = -1 时需要根据streamId查找正确的cameraId
+         */
+        long cameraId = vo.getCameraId();
+        if(cameraId == -1) {
+            long streamId = vo.getStreamId();
+            String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
+            if(StringUtils.isNotBlank(newCameraId)) {
+                cameraId = Long.parseLong(newCameraId);
+            }
+        }
+
         //本日重点监控车辆车型构成
         if("131".equals(vType)) {  //轿车
             redisTemplate.opsForValue().increment("ks_svs_car");
@@ -45,7 +62,7 @@ public class KsSvsObserver implements ITvisStpObserver {
             redisTemplate.opsForValue().increment("ks_svs_others");
         }
         //本日重点监控车辆区域分布图
-        redisTemplate.opsForHash().increment("ks_svs_area", vo.getCameraId(), 1);
+        redisTemplate.opsForHash().increment("ks_svs_area", cameraId, 1);
 //        redisTemplate.opsForHash().increment("ks_svs_area", "C0000001", 1);
 //        redisTemplate.opsForHash().increment("ks_svs_area", "C0000002", 2);
 //        redisTemplate.opsForHash().increment("ks_svs_area", "C0000003", 3);

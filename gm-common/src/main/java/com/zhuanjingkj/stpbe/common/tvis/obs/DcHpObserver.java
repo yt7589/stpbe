@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.common.tvis.obs;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.DcHpMapper;
+import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.dto.DcHpDTO;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
@@ -27,6 +28,9 @@ public class DcHpObserver implements ITvisStpObserver {
     @Autowired
     private DcHpMapper dcHpMapper;
 
+    @Autowired
+    private DeviceMapper deviceMapper;
+
     @Override
     public void notifyObserver(VehicleVo vo) {
         /**
@@ -48,6 +52,16 @@ public class DcHpObserver implements ITvisStpObserver {
             category = "1";
         }
 
+        /**
+         * cameraId = -1 时需要根据streamId查找正确的cameraId
+         */
+        if(cameraId == -1) {
+            long streamId = vo.getStreamId();
+            String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
+            if(StringUtils.isNotBlank(newCameraId)) {
+                cameraId = Long.parseLong(newCameraId);
+            }
+        }
         if(isViolation(vo.getVehicleJsxwtzVO().getZjsddh())) {
             ilType = "ZJSDDH";
             isIl = "1";

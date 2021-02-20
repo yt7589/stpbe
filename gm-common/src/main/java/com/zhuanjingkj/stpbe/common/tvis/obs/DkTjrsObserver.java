@@ -1,7 +1,9 @@
 package com.zhuanjingkj.stpbe.common.tvis.obs;
 
+import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,10 +18,24 @@ public class DkTjrsObserver implements ITvisStpObserver {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private DeviceMapper deviceMapper;
+
     @Override
     public void notifyObserver(VehicleVo vo) {
         System.out.println("DkTjrsObserver...");
-        redisTemplate.opsForHash().increment("dk_tjrs_road", vo.getCameraId(), 1);
+        /**
+         * cameraId = -1 时需要根据streamId查找正确的cameraId
+         */
+        long cameraId = vo.getCameraId();
+        if(cameraId == -1) {
+            long streamId = vo.getStreamId();
+            String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
+            if(StringUtils.isNotBlank(newCameraId)) {
+                cameraId = Long.parseLong(newCameraId);
+            }
+        }
+        redisTemplate.opsForHash().increment("dk_tjrs_road", cameraId, 1);
 //        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000001", 1);
 //        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000002", 2);
 //        redisTemplate.opsForHash().increment("dk_tjrs_road", "C0000003", 3);

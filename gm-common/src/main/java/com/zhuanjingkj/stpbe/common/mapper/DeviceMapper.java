@@ -26,4 +26,6 @@ public interface DeviceMapper {
     List<DmDeviceNodeDTO> queryDeviceNode();
 
     Integer updateDeviceInfo(@Param("rto") UpdateDeviceInfoRTO rto);
+
+    String getCameraIdByStreamId(@Param("streamId") long streamId);
 }

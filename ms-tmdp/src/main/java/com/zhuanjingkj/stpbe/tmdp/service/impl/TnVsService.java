@@ -1,7 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.zhuanjingkj.stpbe.data.dto.TnVsVehicleDTO;
-import com.zhuanjingkj.stpbe.tmdp.dto.tn.TnVsSiteDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.tn.TnVsTopSiteDTO;
 import com.zhuanjingkj.stpbe.data.dto.TnVsTopVehicleDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.ITnVsService;
