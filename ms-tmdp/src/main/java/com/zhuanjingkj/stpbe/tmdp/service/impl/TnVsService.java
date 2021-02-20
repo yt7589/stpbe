@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.zhuanjingkj.stpbe.data.dto.TnVsVehicleDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.DkDctfItemDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.tn.TnVsTopSiteDTO;
 import com.zhuanjingkj.stpbe.data.dto.TnVsTopVehicleDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.ITnVsService;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class TnVsService implements ITnVsService {
@@ -47,7 +49,13 @@ public class TnVsService implements ITnVsService {
 //        tvts.add(new TnVsTopSiteDTO("海淀区龙泽", 722658240));
 //        tvts.add(new TnVsTopSiteDTO("海淀区魏公村", 813123300));
 //        tvts.add(new TnVsTopSiteDTO("海淀区大钟寺", 322100110));
-        return tvts;
+        /** 合并同一个路段下的camera拍照数量 */
+        List<TnVsTopSiteDTO> dklist = new ArrayList<>();
+        tvts.parallelStream().collect(Collectors.groupingBy(o ->(o.getName()),Collectors.toList())).forEach(
+                (id, transfer) -> {
+                    transfer.stream().reduce((a,b) -> new TnVsTopSiteDTO(a.getName(), a.getLng(), b.getLat(), a.getCount() + b.getCount())).ifPresent(dklist :: add);
+                });
+        return dklist;
     }
 
     @Override
@@ -70,8 +78,12 @@ public class TnVsService implements ITnVsService {
             for(int i = 0; i < ysfvs.size(); i++) {
                 tvtv.add(new TnVsTopVehicleDTO("" + (i+1), ysfvs.get(i)));
             }
-            tv.setYsfvs(tvtv);
+        } else {
+            for(int i = 0; i < ysfvs.size(); i++) {
+                tvtv.add(new TnVsTopVehicleDTO("" + (i+1), 0));
+            }
         }
+        tv.setYsfvs(tvtv);
         return tv;
     }
 //    @Override
