@@ -293,6 +293,8 @@ public class TvisUtil {
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
         TvisJsonVO tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, streamId);
+        System.out.println("##### tbl=" + AppRegistry.tvisJsonTblName + "; stream=" + streamId + "!");
+        System.out.println("##### tvisJsonVo=" + tvisJsonVO + "!!!!!!!!!!");
         if (null == tvisJsonVO) {
             return null;
         }
