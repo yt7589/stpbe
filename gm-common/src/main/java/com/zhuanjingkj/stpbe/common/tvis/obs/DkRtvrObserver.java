@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.common.tvis.obs;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
+import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
 import com.zhuanjingkj.stpbe.common.mapper.KsVcMapper;
 import com.zhuanjingkj.stpbe.common.mapper.KsvssKsvrpMapper;
@@ -37,6 +38,9 @@ public class DkRtvrObserver implements ITvisStpObserver {
 
     @Autowired
     private KsVcMapper ksVcMapper;
+
+    @Autowired
+    private DeviceMapper deviceMapper;
 
     private final static Logger logger = LoggerFactory.getLogger(DkRtvrObserver.class);
 
@@ -208,8 +212,17 @@ public class DkRtvrObserver implements ITvisStpObserver {
 //            if(vNum.contains(vo.getVehicleCxtzVo().getCllxzflCode())) {
 //                redisTemplate.opsForList().rightPush("ks_ksvtvrps_images", imageHash); //重点监控车辆实时图片
 //            }
-
+            /**
+             * cameraId = -1 时需要根据streamId查找正确的cameraId
+             */
             long cameraId = vo.getCameraId();
+            if(cameraId == -1) {
+                long streamId = vo.getStreamId();
+                String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
+                if(StringUtils.isNotBlank(newCameraId)) {
+                    cameraId = Long.parseLong(newCameraId);
+                }
+            }
             List<String> ksvcHphm = ksVcMapper.getKsvcHphm();
 //            if(random == 0) {
 //                random = 4;

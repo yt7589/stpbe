@@ -1,8 +1,10 @@
 package com.zhuanjingkj.stpbe.common.tvis.obs;
 
+import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -19,6 +21,9 @@ public class KsLpsObserver implements ITvisStpObserver {
     @Autowired
     private DkRtvrMapper dkRtvrMapper;
 
+    @Autowired
+    private DeviceMapper deviceMapper;
+
     @Override
     public void notifyObserver(VehicleVo vo) {
         System.out.println("KsLpsObserver...");
@@ -29,6 +34,18 @@ public class KsLpsObserver implements ITvisStpObserver {
 //        } else {
 //            index = (hour + 1)/2 - 1;
 //        }
+        /**
+         * cameraId = -1 时需要根据streamId查找正确的cameraId
+         */
+        long cameraId = vo.getCameraId();
+        if(cameraId == -1) {
+            long streamId = vo.getStreamId();
+            String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
+            if(StringUtils.isNotBlank(newCameraId)) {
+                cameraId = Long.parseLong(newCameraId);
+            }
+        }
+
         index = hour + 1;
         String hType = vo.getVehicleHptzVO().getHpzt(); //牌照异常
         if(!"1".equals(hType)) {
@@ -43,7 +60,7 @@ public class KsLpsObserver implements ITvisStpObserver {
 //            map.put("image", imageHash);
 //            redisTemplate.opsForList().rightPush("ks_lps", map);
             //分区域统计
-            redisTemplate.opsForHash().increment("ks_lps_area", vo.getCameraId(), 1);
+            redisTemplate.opsForHash().increment("ks_lps_area", cameraId, 1);
 //            redisTemplate.opsForHash().increment("ks_lps_area", "C0000001", 1);
 //            redisTemplate.opsForHash().increment("ks_lps_area", "C0000002", 2);
 //            redisTemplate.opsForHash().increment("ks_lps_area", "C0000003", 3);

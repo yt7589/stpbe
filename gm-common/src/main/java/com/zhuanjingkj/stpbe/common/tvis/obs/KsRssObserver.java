@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.common.tvis.obs;
 
+import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import org.apache.commons.lang.StringUtils;
@@ -17,10 +18,23 @@ public class KsRssObserver implements ITvisStpObserver {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private DeviceMapper deviceMapper;
+
     @Override
     public void notifyObserver(VehicleVo vo) {
         System.out.println("KsRssObserver...");
+        /**
+         * cameraId = -1 时需要根据streamId查找正确的cameraId
+         */
         long cameraId = vo.getCameraId();
+        if(cameraId == -1) {
+            long streamId = vo.getStreamId();
+            String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
+            if(StringUtils.isNotBlank(newCameraId)) {
+                cameraId = Long.parseLong(newCameraId);
+            }
+        }
         String hphm = vo.getVehicleHptzVO().getHphm();
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         //统计同一辆车在同一个设备下通过的次数

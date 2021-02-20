@@ -1,10 +1,12 @@
 package com.zhuanjingkj.stpbe.common.tvis.obs;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
+import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
 import com.zhuanjingkj.stpbe.common.mapper.KsvssKsvrpMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,6 +29,9 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
     @Autowired
     private DkRtvrMapper dkRtvrMapper;
 
+    @Autowired
+    private DeviceMapper deviceMapper;
+
     @Override
     public void notifyObserver(VehicleVo vo) {
         System.out.println("KsSvsKsvrpObserver...");
@@ -36,6 +41,17 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
         String tblName = AppRegistry.tvisJsonTblName;
         if (tblName == null) {
             return ;
+        }
+        /**
+         * cameraId = -1 时需要根据streamId查找正确的cameraId
+         */
+        long cameraId = vo.getCameraId();
+        if(cameraId == -1) {
+            long streamId = vo.getStreamId();
+            String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
+            if(StringUtils.isNotBlank(newCameraId)) {
+                cameraId = Long.parseLong(newCameraId);
+            }
         }
 //        Map<String, Object> dtMap = dkRtvrMapper.getImageHash(vo.getTvisJsonId(), tblName);
 //        String imageHash = "" + dtMap.get("image_hash");
@@ -57,7 +73,7 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
 //            redisTemplate.opsForList().rightPush("ks_ksvrp_images", imageHash); //重点监控车辆实时图片
             redisTemplate.opsForList().set("ks_ksvrp_vehicle", index, count + 1);  //重点监控车辆小时分布图
             //重点监控车辆点位分布图
-          redisTemplate.opsForHash().increment("ks_ksvrp_site", vo.getCameraId(),1);
+          redisTemplate.opsForHash().increment("ks_ksvrp_site", cameraId,1);
 //            redisTemplate.opsForHash().increment("ks_ksvrp_site", "C0000001", 1);
 //            redisTemplate.opsForHash().increment("ks_ksvrp_site", "C0000002", 2);
 //            redisTemplate.opsForHash().increment("ks_ksvrp_site", "C0000003", 3);
@@ -77,7 +93,7 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
             //重点监管车辆数量统计
             redisTemplate.opsForValue().increment("dcst_key_vehicle", 1);
             //重点车辆点位排名TOP7
-            redisTemplate.opsForZSet().incrementScore("dcst_top7_site_" + ym, vo.getCameraId(), 1);
+            redisTemplate.opsForZSet().incrementScore("dcst_top7_site_" + ym, cameraId, 1);
 //            redisTemplate.opsForZSet().incrementScore("dcst_top7_site_" + ym, "C0000012", 12);
 //            redisTemplate.opsForZSet().incrementScore("dcst_top7_site_" + ym, "C0000013", 13);
 //            redisTemplate.opsForZSet().incrementScore("dcst_top7_site_" + ym, "C0000014", 14);
@@ -96,7 +112,7 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
             redisTemplate.opsForValue().increment("dcst_key_truck", 1);
 
             //大货车点位统计
-            redisTemplate.opsForZSet().incrementScore("dc_st_truck",vo.getCameraId(),1);
+            redisTemplate.opsForZSet().incrementScore("dc_st_truck",cameraId,1);
 //            redisTemplate.opsForZSet().incrementScore("dc_st_truck","C0000005",1);
 //            redisTemplate.opsForZSet().incrementScore("dc_st_truck","C0000006", 10);
 //            redisTemplate.opsForZSet().incrementScore("dc_st_truck","C0000007",100);
