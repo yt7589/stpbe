@@ -1,5 +1,8 @@
 package com.zhuanjingkj.stpbe.tvis_server;
 
+import com.mysql.cj.util.StringUtils;
+import com.zhuanjingkj.stpbe.common.AppRegistry;
+import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.mgq.GrqEngine;
 import com.zhuanjingkj.stpbe.tvis_server.task.TasScheduledTask;
 import org.mybatis.spring.annotation.MapperScan;
@@ -23,6 +26,8 @@ import javax.annotation.PostConstruct;
 public class SrTvisServerApplication {
     @Autowired
     private TasScheduledTask tasScheduledTask;
+    @Autowired
+    private TvisJsonMapper tvisJsonMapper;
     @Value("${app.run-mode}")
     private String appRunMode;
 
@@ -38,6 +43,9 @@ public class SrTvisServerApplication {
 
     @PostConstruct
     public void startScheduledTask() {
+        if (StringUtils.isNullOrEmpty(AppRegistry.tvisJsonTblName)) {
+            AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
+        }
         System.out.println("appRunMode=" + appRunMode + "!");
         if (appRunMode.equals("1")) {
             Thread thd = new Thread(tasScheduledTask);
