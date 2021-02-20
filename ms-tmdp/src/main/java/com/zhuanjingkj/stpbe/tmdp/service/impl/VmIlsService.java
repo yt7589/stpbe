@@ -222,7 +222,7 @@ public class VmIlsService implements IVmIlsService {
                     ilsName, category, hphm, "","" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
                     "" + VEH_TYPE.get("C" + cxtzJson.get("CLLXZFL")), direction, md_isPhone,md_isWPhone, md_isSafetyBelt,
                     md_isSmoke,md_isSunVisor,ct_isSafetyBelt,ct_isSunVisor,0,"" + VEH_COLOR_CSYS.get(cxtzJson.getString("CSYS")),
-                    cxtzJson.getString("PPXHMS"), "小型车",cxtzJson.getString("CXNK"),Integer.parseInt(StringUtils.isBlank(cxtzJson.getString("PPXHKXD")) ? "0" : hptzJson.getString("PPXHKXD")),
+                    cxtzJson.getString("PPXHMS"), "小型车",cxtzJson.getString("CXNK"),Integer.parseInt(StringUtils.isBlank(cxtzJson.getString("PPXHKXD")) ? "0" : cxtzJson.getString("PPXHKXD")),
                     Integer.parseInt(StringUtils.isBlank(hptzJson.getString("HPZT")) ? "0" : hptzJson.getString("HPZT")),"" + VEH_COLOR_HPYS.get(hptzJson.getString("HPYS")),
                     "" + VEH_HPHM_HPZT.get("C" + hptzJson.get("HPZL")),"" + VEH_HPHM_HPZL.get("C" + hptzJson.get("HPZL")),
                     Integer.parseInt(StringUtils.isBlank(hptzJson.getString("YWLSHP")) ? "0" : hptzJson.getString("YWLSHP")),
