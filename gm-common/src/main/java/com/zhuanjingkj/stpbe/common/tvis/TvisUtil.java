@@ -447,7 +447,7 @@ public class TvisUtil {
             return data;
         }
         if (isFirstRun) {
-            TvisUtil.rotateTvisJsonTbl(tvisJsonMapper);
+            //TvisUtil.rotateTvisJsonTbl(tvisJsonMapper);
             tvisStpOberverManager.initialize(observers, environment);
             isFirstRun = false;
         }
