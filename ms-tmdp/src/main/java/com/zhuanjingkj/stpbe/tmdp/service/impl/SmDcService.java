@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -73,6 +74,11 @@ public class SmDcService implements ISmDcService {
             redisTemplate.opsForList().rightPop("dk_htfs_week");
         }
         redisTemplate.opsForValue().set("dk_htfs_today", 0); //首页本日过车量
+
+        String tnVsTrend = "tn_vs_trend_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        if(!redisTemplate.hasKey("tn_vs_trend_" + tnVsTrend)) {
+            redisTemplate.opsForList().rightPushAll(tnVsTrend, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+        }
     }
 
     /**

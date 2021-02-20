@@ -156,7 +156,7 @@ public class KsVcService implements IKsVcService {
                 recs.add(illLsvs);
             }
         }
-        DbQrsDTO data = new DbQrsDTO(4,4,0,4,1,recs);
+        DbQrsDTO data = new DbQrsDTO(3,recs.size(),0,3,1,recs);
 //        recs.add(new KsVcSfvsDTO(101, "北京市海淀区西二旗街道19号",116.0185,40.0495, 1,"鲁KL9687"));
 //        recs.add(new KsVcSfvsDTO(101, "北京市海淀区上地街道39号",116.0285,40.1495, 2,"贵Q817S2"));
 //        recs.add(new KsVcSfvsDTO(101, "北京市海淀区西直门街道29号",116.0385,40.24295, 4,"赣Q817S2"));
