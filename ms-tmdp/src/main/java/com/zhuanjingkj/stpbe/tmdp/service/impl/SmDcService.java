@@ -150,6 +150,16 @@ public class SmDcService implements ISmDcService {
             redisTemplate.opsForList().rightPushAll("dk_rtvr_violation", 0,0,0,0,0,0,0,0,0,0,0,0);
         }
 
+        if(redisTemplate.hasKey("ks_vs_dyn_list")) {
+            redisTemplate.delete("ks_vs_dyn_list"); //车辆布控动态列表删除
+            redisTemplate.opsForList().rightPushAll("ks_vs_dyn_list", 0 + "|" + 0);
+        }
+
+        if(redisTemplate.hasKey("ks_vs_ill_list")) {
+            redisTemplate.delete("ks_vs_ill_list"); //车辆报警列表删除
+            redisTemplate.opsForList().rightPushAll("ks_vs_ill_list", 0 + "|" + 0);
+        }
+
         //hash
         if(redisTemplate.hasKey("ks_rss_lsvs_total")) { //路段监管动态车辆通过次数
             redisTemplate.delete("ks_rss_lsvs_total");
@@ -185,14 +195,6 @@ public class SmDcService implements ISmDcService {
 
         if(redisTemplate.hasKey("ks_vs_dyn_time")) {
             redisTemplate.delete("ks_vs_dyn_time"); //车辆布控动态时间删除
-        }
-
-        if(redisTemplate.hasKey("ks_vs_dyn_list")) {
-            redisTemplate.delete("ks_vs_dyn_list"); //车辆布控动态列表删除
-        }
-
-        if(redisTemplate.hasKey("ks_vs_ill_list")) {
-            redisTemplate.delete("ks_vs_ill_list"); //车辆报警列表删除
         }
 
         if(redisTemplate.hasKey("ks_vs_ill_time")) {
