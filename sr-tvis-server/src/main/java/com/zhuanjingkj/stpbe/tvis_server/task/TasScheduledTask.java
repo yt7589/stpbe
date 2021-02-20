@@ -21,10 +21,6 @@ public class TasScheduledTask implements Runnable {
     private final static long TST_INTERVAL = 1000; // 每*毫秒运行一次
 
     public void run() {
-        int iDebug = 1;
-        if (1 == iDebug) {
-            return ;
-        }
         while (true) {
             runTasScheduledTask();
             try {
