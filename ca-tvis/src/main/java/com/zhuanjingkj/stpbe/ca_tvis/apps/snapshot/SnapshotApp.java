@@ -9,7 +9,7 @@ public class SnapshotApp implements ITvisClient {
 
     @Override
     public void startup(String[] args) {
-        long cameraId = 100;
+        long cameraId = 101;
         for (String imageFolder : imageFolders) {
             System.out.println("### imageFolder=" + imageFolder + "!");
             Thread thd = new Thread(new SnapshotTask(new SnapshotCameraSimulator(cameraId++, imageFolder)));
