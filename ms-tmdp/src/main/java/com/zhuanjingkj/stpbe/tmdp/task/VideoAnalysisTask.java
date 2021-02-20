@@ -49,7 +49,6 @@ public class VideoAnalysisTask implements Runnable {
     //
     private static long prevTime = 0;
     public void runVideoAnalysisTask() {
-        logger.info("### 视频分析定时任务1 time=" + (System.currentTimeMillis() - prevTime) + "!");
         prevTime = System.currentTimeMillis();
         WsmVideoFrameDTO vfv = null;
         for (String streamId : streamIds) {
@@ -58,7 +57,6 @@ public class VideoAnalysisTask implements Runnable {
             for (WebSocketSession wss : wsss) {
                 if (wss.isOpen()) {
                     try {
-                        logger.info("step 5.5 send websocket message");
                         wss.sendMessage(new TextMessage(JSONObject.toJSONString(vfv)));
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -81,7 +79,6 @@ public class VideoAnalysisTask implements Runnable {
      * @param wss
      */
     public static void addStream(long streamId, WebSocketSession wss) {
-        System.out.println("加入到视频列表中...streamId=" + streamId + "!");
         String streamIdKey = "" + streamId;
         if (!streamIds.contains(streamIdKey)) {
             streamIds.add(streamIdKey);

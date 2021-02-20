@@ -293,8 +293,6 @@ public class TvisUtil {
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
         TvisJsonVO tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, streamId);
-        System.out.println("##### tbl=" + AppRegistry.tvisJsonTblName + "; stream=" + streamId + "!");
-        System.out.println("##### tvisJsonVo=" + tvisJsonVO + "!!!!!!!!!!");
         if (null == tvisJsonVO) {
             return null;
         }
@@ -309,16 +307,21 @@ public class TvisUtil {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
+        System.out.println("##### tbl=" + AppRegistry.tvisJsonTblName + "; baseTvisJsonId=" + baseTvisJsonId + "!");
         TvisJsonVO tvisJsonVO = null;
         if (baseTvisJsonId<0 || 0 == direction) {
+            System.out.println("##### get current snapshot...");
             tvisJsonVO = tvisJsonMapper.getLatestCameraFrame(AppRegistry.tvisJsonTblName, cameraId);
         } else {
             if (1 == direction) {
+                System.out.println("##### get previous snapshot...");
                 tvisJsonVO = tvisJsonMapper.getPrevCameraFrame(AppRegistry.tvisJsonTblName, cameraId, baseTvisJsonId);
             } else if (2 == direction) {
+                System.out.println("##### get next snapshot...");
                 tvisJsonVO = tvisJsonMapper.getNextCameraFrame(AppRegistry.tvisJsonTblName, cameraId, baseTvisJsonId);
             }
         }
+        System.out.println("##### vo=" + tvisJsonVO + "!!!!!!!!!!!!!!!");
         Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
         WsmVideoFrameDTO vfv = getTvisFrameAnalysisResult(tvisJsonVO, cutVehs);
         // 转变为图像识别结果模式
