@@ -145,10 +145,12 @@ public class KsVcService implements IKsVcService {
                 String val = ill.get(i);
                 String hphm = val.split("\\|")[0];
                 String cameraId = val.split("\\|")[1];
-                if(StringUtils.isBlank(hphm) || StringUtils.isBlank(cameraId) ) {
+                String coordinate = "" + KsAsService.areaSiteMap.get(cameraId);
+                if(StringUtils.isBlank(hphm) || StringUtils.isBlank(cameraId)
+                        || StringUtils.isBlank(coordinate)
+                        || "null".equals(coordinate)) {
                     continue;
                 }
-                String coordinate = "" + KsAsService.areaSiteMap.get(cameraId);
                 KsVcSfvsDTO illLsvs = new KsVcSfvsDTO(0,"" + KsAsService.areaMap.get(cameraId),Double.parseDouble("" + coordinate.split("\\|")[0]), Double.parseDouble("" + coordinate.split("\\|")[1]),
                         Integer.parseInt("" + redisTemplate.opsForHash().get("ks_vs_ill_total", val)), hphm);
                 recs.add(illLsvs);
