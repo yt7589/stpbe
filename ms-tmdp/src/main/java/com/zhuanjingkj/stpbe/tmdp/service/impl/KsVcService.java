@@ -82,11 +82,16 @@ public class KsVcService implements IKsVcService {
         if(ill != null && ill.size() > 0) {
             for(int i = 0; i < ill.size(); i++) {
                 String val = ill.get(i);
-                String hphm = val.split("\\|")[0];
-                String cameraId = val.split("\\|")[1];
-                KsVcLsvsDTO illLsvs = new KsVcLsvsDTO(0,0,101,"" + KsAsService.areaMap.get(cameraId),
-                        "" + redisTemplate.opsForHash().get("ks_vs_ill_time", val),hphm,Integer.parseInt("" + redisTemplate.opsForHash().get("ks_vs_ill_total", val)));
-                recs.add(illLsvs);
+                if(StringUtils.isNotBlank(val) && val.split("\\|").length == 2) {
+                    String hphm = val.split("\\|")[0];
+                    String cameraId = val.split("\\|")[1];
+                    KsVcLsvsDTO illLsvs = new KsVcLsvsDTO(0,0,101,"" + KsAsService.areaMap.get(cameraId),
+                            "" + redisTemplate.opsForHash().get("ks_vs_ill_time", val),hphm,Integer.parseInt("" + (redisTemplate.opsForHash().get("ks_vs_ill_total", val) == null ? "0" : redisTemplate.opsForHash().get("ks_vs_ill_total", val))));
+                    recs.add(illLsvs);
+                    if(recs.size() == 3) {
+                        break;
+                    }
+                }
             }
         }
         DbQrsDTO data = new DbQrsDTO(4,4,0,4,1,recs);
@@ -102,11 +107,11 @@ public class KsVcService implements IKsVcService {
     public ResultDTO<DbQrsDTO> queryVcDynLsvs_exp() {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         List<KsVcLsvsDTO> recs = new ArrayList<>();
-        List<String> ill = redisTemplate.opsForList().range("ks_vs_dyn_list", 0, 10);
-        if(ill != null && ill.size() > 0) {
-            for(int i = 0; i < ill.size(); i++) {
-                String val = ill.get(i);
-                if(StringUtils.isNotBlank(val)) {
+        List<String> dyn = redisTemplate.opsForList().range("ks_vs_dyn_list", 0, 10);
+        if(dyn != null && dyn.size() > 0) {
+            for(int i = 0; i < dyn.size(); i++) {
+                String val = dyn.get(i);
+                if(StringUtils.isNotBlank(val) && val.split("\\|").length == 2) {
                     String hphm = val.split("\\|")[0];
                     String cameraId = val.split("\\|")[1];
                     if(StringUtils.isBlank(hphm) || StringUtils.isBlank(cameraId) ) {
