@@ -38,12 +38,15 @@ public class KsLpsObserver implements ITvisStpObserver {
          * cameraId = -1 时需要根据streamId查找正确的cameraId
          */
         long cameraId = vo.getCameraId();
+        String code = "";
         if(cameraId == -1) {
             long streamId = vo.getStreamId();
             String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
             if(StringUtils.isNotBlank(newCameraId)) {
-                cameraId = Long.parseLong(newCameraId);
+                code = newCameraId;
             }
+        } else {
+            code = cameraId + "";
         }
 
         index = hour + 1;
@@ -60,7 +63,7 @@ public class KsLpsObserver implements ITvisStpObserver {
 //            map.put("image", imageHash);
 //            redisTemplate.opsForList().rightPush("ks_lps", map);
             //分区域统计
-            redisTemplate.opsForHash().increment("ks_lps_area", cameraId, 1);
+            redisTemplate.opsForHash().increment("ks_lps_area", code, 1);
 //            redisTemplate.opsForHash().increment("ks_lps_area", "C0000001", 1);
 //            redisTemplate.opsForHash().increment("ks_lps_area", "C0000002", 2);
 //            redisTemplate.opsForHash().increment("ks_lps_area", "C0000003", 3);

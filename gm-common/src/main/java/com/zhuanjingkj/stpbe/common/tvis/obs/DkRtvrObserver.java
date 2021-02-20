@@ -220,8 +220,10 @@ public class DkRtvrObserver implements ITvisStpObserver {
                 long streamId = vo.getStreamId();
                 String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
                 if(StringUtils.isNotBlank(newCameraId)) {
-                    cameraId = Long.parseLong(newCameraId);
+                    code = newCameraId;
                 }
+            } else {
+                code = cameraId + "";
             }
             List<String> ksvcHphm = ksVcMapper.getKsvcHphm();
 //            if(random == 0) {
@@ -232,7 +234,6 @@ public class DkRtvrObserver implements ITvisStpObserver {
 //            } else {
 //                code = "C00000" + random;
 //            }
-            code = "" +cameraId;
             if(ksvcHphm.contains(hphm)) {
                 //布控违章记录统计同一辆车在同一个设备下通过的次数
                 redisTemplate.opsForHash().increment("ks_vs_ill_total",  hphm + "|" + code, 1);

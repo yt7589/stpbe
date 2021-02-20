@@ -28,28 +28,22 @@ public class KsAsObserver implements ITvisStpObserver {
          * cameraId = -1 时需要根据streamId查找正确的cameraId
          */
         long cameraId = vo.getCameraId();
+        String code = "";
         if(cameraId == -1) {
             long streamId = vo.getStreamId();
             String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
             if(StringUtils.isNotBlank(newCameraId)) {
-                cameraId = Long.parseLong(newCameraId);
+                code = newCameraId;
             }
+        } else {
+            code = cameraId + "";
         }
         String hphm = vo.getVehicleHptzVO().getHphm();
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         //统计同一辆车在同一个设备下通过的次数
-        int random = (int)(Math.random()*15) + 1;
-        String code ="";
-//        if(random < 10) {
-//            code = "C000000" + random;
-//        } else {
-//            code = "C00000" + random;
-//        }
-
         if(StringUtils.isBlank(hphm)) {
             hphm = "豫A888888";
         }
-        code = "" + cameraId;
         redisTemplate.opsForHash().increment("ks_as_lsvs_total",  hphm + "|" + code, 1);
         redisTemplate.opsForHash().put("ks_as_lsvs_time", hphm + "|" + code, date);
         redisTemplate.opsForList().leftPush("ks_as_lsvs_list", hphm + "|" + code);
