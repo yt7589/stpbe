@@ -252,11 +252,11 @@ public class DkRtvrObserver implements ITvisStpObserver {
         }
         //布控报告
         if(!redisTemplate.hasKey("ks_vs_ill_list")) {
-            redisTemplate.opsForList().rightPushAll("ks_vs_ill_list",0);
+            redisTemplate.opsForList().rightPushAll("ks_vs_ill_list",0 + "|" + 0);
         }
         //布控动态
         if(!redisTemplate.hasKey("ks_vs_dny_list")) {
-            redisTemplate.opsForList().rightPushAll("ks_vs_dyn_list",0);
+            redisTemplate.opsForList().rightPushAll("ks_vs_dyn_list",0 + "|" + 0);
         }
     }
 
