@@ -13,6 +13,7 @@
         <result column="direction_name" property="direction" jdbcType="DOUBLE"/>
         <result column="camera_type_name" property="category" jdbcType="DOUBLE"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="stream_id" property="streamId" jdbcType="INTEGER"/>
     </resultMap>
     <select id ="getSite" resultMap ="tvDTO">
         SELECT ts.site_id, ts.site_name, ts.lng, ts.lat
