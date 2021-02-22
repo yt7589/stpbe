@@ -11,15 +11,15 @@ public class TnVaSdInfoDTO extends BaseDTO {
     @JSONField(name = "diAddr")
     private String diAddr; //设备位置
     @JSONField(name = "direction")
-    private int direction; //设备方向
+    private String direction; //设备方向
     @JSONField(name = "category")
-    private int category; //设备类别
+    private String category; //设备类别
     @JSONField(name = "status")
-    private int status; //设备状态
+    private String status; //设备状态
     @JSONField(name = "streamId")
     private long streamId;
 
-    public TnVaSdInfoDTO(long diId, String diAddr, int direction, int category, int status, long streamId) {
+    public TnVaSdInfoDTO(long diId, String diAddr, String direction, String category, String status, long streamId) {
         this.diId = diId;
         this.diAddr = diAddr;
         this.direction = direction;
@@ -44,27 +44,27 @@ public class TnVaSdInfoDTO extends BaseDTO {
         this.diAddr = diAddr;
     }
 
-    public int getDirection() {
+    public String getDirection() {
         return direction;
     }
 
-    public void setDirection(int direction) {
+    public void setDirection(String direction) {
         this.direction = direction;
     }
 
-    public int getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

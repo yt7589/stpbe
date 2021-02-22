@@ -10,9 +10,9 @@
     <resultMap  type="com.zhuanjingkj.stpbe.data.dto.TnVaSdInfoDTO" id="sdInfoDTO">
         <result column="camera_id" property="diId" jdbcType="INTEGER"/>
         <result column="position" property="diAddr" jdbcType="VARCHAR"/>
-        <result column="direction_name" property="direction" jdbcType="INTEGER"/>
-        <result column="camera_type_name" property="category" jdbcType="INTEGER"/>
-        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="direction_name" property="direction" jdbcType="VARCHAR"/>
+        <result column="camera_type_name" property="category" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="stream_id" property="streamId" jdbcType="INTEGER"/>
     </resultMap>
     <select id ="getSite" resultMap ="tvDTO">
