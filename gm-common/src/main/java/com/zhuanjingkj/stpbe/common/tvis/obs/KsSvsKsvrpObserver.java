@@ -39,7 +39,7 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
         String vZtype = vo.getVehicleCxtzVo().getCllxzflCode(); //车辆类型子分类
         String vType = vo.getVehicleCxtzVo().getCllxflCode(); //车辆类型分类
         String tblName = AppRegistry.tvisJsonTblName;
-        if (tblName == null) {
+        if (StringUtils.isBlank(tblName)) {
             return ;
         }
         /**

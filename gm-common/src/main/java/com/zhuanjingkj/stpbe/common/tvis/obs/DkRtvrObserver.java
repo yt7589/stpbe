@@ -56,7 +56,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         List<String> vNum = ksvssKsvrpMapper.getVTypeNum();
         String  vType = vo.getVehicleCxtzVo().getCllxzflCode();
         String tblName = AppRegistry.tvisJsonTblName;
-        if (tblName == null) {
+        if (StringUtils.isBlank(tblName)) {
             return ;
         }
 
