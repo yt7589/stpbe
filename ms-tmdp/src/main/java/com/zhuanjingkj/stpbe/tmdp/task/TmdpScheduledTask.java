@@ -30,7 +30,7 @@ public class TmdpScheduledTask {
     @Autowired
     private RedisTemplate redisTemplate;
     @Async("tmdpPool")
-    @Scheduled(cron = "*/1 10 * * * ?")
+    @Scheduled(cron = "*/1 * * * * ?")
     public void runTmdpScheduledTask() {
         // 处理重点监管区域监管点位频繁经过车辆列表
         pushKsAsSfvsMsg();
