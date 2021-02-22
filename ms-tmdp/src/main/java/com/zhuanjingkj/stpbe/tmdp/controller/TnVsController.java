@@ -8,6 +8,7 @@ import com.zhuanjingkj.stpbe.tmdp.dto.tn.TnVsTopSiteDTO;
 import com.zhuanjingkj.stpbe.data.dto.TnVsTopVehicleDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.TnVsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public class TnVsController {
 
     @Autowired
     private TnVsService tnVsService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 路网过车统计
@@ -54,8 +58,4 @@ public class TnVsController {
     private TnVsVehicleDTO getTvtvdDTO_exp() {
         return tnVsService.getTvtvdDTO_exp();
     }
-
-//    private List<TnVsSiteDTO> getTvsdDTO_exp() {
-//        return tnVsService.getTvsdDTO_exp();
-//    }
 }
