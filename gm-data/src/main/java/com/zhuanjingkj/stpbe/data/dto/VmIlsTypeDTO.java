@@ -5,7 +5,7 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class VmIlsTypeDTO extends BaseDTO {
     @JSONField(name = "typeId")
-    private long typeId;
+    private String typeId;
     @JSONField(name = "typeName")
     private String typeName;
 
@@ -13,16 +13,16 @@ public class VmIlsTypeDTO extends BaseDTO {
         super();
     }
 
-    public VmIlsTypeDTO(long typeId, String typeName) {
+    public VmIlsTypeDTO(String typeId, String typeName) {
         this.typeId = typeId;
         this.typeName = typeName;
     }
 
-    public long getTypeId() {
+    public String getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(long typeId) {
+    public void setTypeId(String typeId) {
         this.typeId = typeId;
     }
 
