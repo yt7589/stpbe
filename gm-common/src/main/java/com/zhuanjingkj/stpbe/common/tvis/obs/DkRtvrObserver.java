@@ -86,7 +86,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             category = 1;
         }
         if(StringUtils.isBlank(hphm)) {
-            hphm = "NaN";
+            hphm = "NULL";
         }
         String zjsddh = vo.getVehicleJsxwtzVO().getZjsddh();
         String date = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());

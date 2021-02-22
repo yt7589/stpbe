@@ -131,7 +131,7 @@ public class DcHpObserver implements ITvisStpObserver {
         redisTemplate.opsForZSet().incrementScore("tn_vs_site_vehicle", code, 1);
         Integer index = LocalDateTime.now().getHour();
         String tnVsTrend = "tn_vs_trend_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        if(!redisTemplate.hasKey("tn_vs_trend_" + tnVsTrend)) {
+        if(!redisTemplate.hasKey(tnVsTrend)) {
             redisTemplate.opsForList().rightPushAll(tnVsTrend, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         }
         Integer count = (int)(redisTemplate.opsForList().index(tnVsTrend,index));

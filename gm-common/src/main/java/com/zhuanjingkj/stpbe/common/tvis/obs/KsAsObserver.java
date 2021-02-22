@@ -42,7 +42,7 @@ public class KsAsObserver implements ITvisStpObserver {
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         //统计同一辆车在同一个设备下通过的次数
         if(StringUtils.isBlank(hphm)) {
-            hphm = "NaN";
+            hphm = "NULL";
         }
         redisTemplate.opsForHash().increment("ks_as_lsvs_total",  hphm + "|" + code, 1);
         redisTemplate.opsForHash().put("ks_as_lsvs_time", hphm + "|" + code, date);
