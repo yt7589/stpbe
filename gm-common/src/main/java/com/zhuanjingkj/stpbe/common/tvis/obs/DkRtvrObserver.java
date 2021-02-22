@@ -280,7 +280,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if (null == psfx || psfx.equals("")) {
             psfx = "3";
         }
-        dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx() == 0 ? 1 : vo.getVehsIdx() ,cameraId, hphm,
+        dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(),cameraId, hphm,
                 vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
                 psfx, vo.getVehicleWztzVo().getClwz(), wzlx, vType, category, tblName, date);
     }
