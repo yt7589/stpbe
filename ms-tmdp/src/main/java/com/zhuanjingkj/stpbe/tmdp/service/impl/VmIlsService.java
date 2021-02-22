@@ -175,60 +175,59 @@ public class VmIlsService implements IVmIlsService {
         String ilsName = "" + KsAsService.areaMap.get(cameraId);
         JSONObject rstJson = JSONObject.parseObject(dataJson.getString("json"));
         JSONArray vehs = rstJson.getJSONArray("VEH");
-        JSONObject vehJson = null;
         VmIlsVdDTO vmIlsVdDTO = null;
         String timeStamp = DateUtil.timeStamp2Date(rstJson.getString("TimeStamp"));
         String hphm_pre = PropUtil.getValue("hphm.native.prefix");
-        for (Object veh :vehs) {
-            vehJson  = (JSONObject) veh;
-            System.out.println(vehJson);
-            if(!vehJson.get("SXH").equals("" + vehsIdx)) {
-                continue;
-            }
-            JSONObject hptzJson = vehJson.getJSONObject("HPTZ");
-            JSONObject wztzJson = vehJson.getJSONObject("WZTZ");
-            JSONObject jsxwtzJson = vehJson.getJSONObject("JSXWTZ");
-            JSONObject cxtzJson = vehJson.getJSONObject("CXTZ");
-            JSONObject gxhtz = vehJson.getJSONObject("GXHTZ");
+//        for (Object veh :vehs) {
+        JSONObject vehJson  = (JSONObject) vehs.getJSONObject(vehsIdx);
+        System.out.println(vehJson);
+//        if(!vehJson.get("SXH").equals("" + vehsIdx)) {
+//            continue;
+//        }
+        JSONObject hptzJson = vehJson.getJSONObject("HPTZ");
+        JSONObject wztzJson = vehJson.getJSONObject("WZTZ");
+        JSONObject jsxwtzJson = vehJson.getJSONObject("JSXWTZ");
+        JSONObject cxtzJson = vehJson.getJSONObject("CXTZ");
+        JSONObject gxhtz = vehJson.getJSONObject("GXHTZ");
 
-            Integer ccztw = StringUtils.isNotBlank(gxhtz.getString("CCZTW")) ? 0 : gxhtz.getString("CCZTW").split("#").length; //车窗粘贴物
-            Integer bj = StringUtils.isBlank(gxhtz.getString("BJ")) ? 0 : gxhtz.getString("BJ").split("#").length; //摆件
-            Integer gj = StringUtils.isBlank(gxhtz.getString("GJ")) ? 0 : gxhtz.getString("GJ").split("#").length; //挂件
-            Integer tc = StringUtils.isBlank(gxhtz.getString("TC")) ? 0 : 1; //天窗
-            String xlj = StringUtils.isBlank(gxhtz.getString("XLJ")) ? "无" : "有"; //行李架
-            String dcjqs = Integer.parseInt(gxhtz.getString("DCJQS").replace("_", "")) >= 180 ? "有" : "无"; //倒车镜缺失
-            Integer cszt = StringUtils.isBlank(gxhtz.getString("CSZT")) ? 0 : gxhtz.getString("CSZT").split("#").length; //车身张贴
-            Integer csps = StringUtils.isBlank(gxhtz.getString("CSPS")) ? 0 : gxhtz.getString("CSPS").split("#").length; //车身破损
-            Integer csgh = StringUtils.isBlank(gxhtz.getString("CSGH")) ? 0 : gxhtz.getString("CSGH").split("#").length; //车身刮痕
-            Integer csch = StringUtils.isBlank(gxhtz.getString("CSCH")) ? 0 : gxhtz.getString("CSCH").split("#").length; //车身彩绘
+        Integer ccztw = StringUtils.isNotBlank(gxhtz.getString("CCZTW")) ? 0 : gxhtz.getString("CCZTW").split("#").length; //车窗粘贴物
+        Integer bj = StringUtils.isBlank(gxhtz.getString("BJ")) ? 0 : gxhtz.getString("BJ").split("#").length; //摆件
+        Integer gj = StringUtils.isBlank(gxhtz.getString("GJ")) ? 0 : gxhtz.getString("GJ").split("#").length; //挂件
+        Integer tc = StringUtils.isBlank(gxhtz.getString("TC")) ? 0 : 1; //天窗
+        String xlj = StringUtils.isBlank(gxhtz.getString("XLJ")) ? "无" : "有"; //行李架
+        String dcjqs = Integer.parseInt(gxhtz.getString("DCJQS").replace("_", "")) >= 180 ? "有" : "无"; //倒车镜缺失
+        Integer cszt = StringUtils.isBlank(gxhtz.getString("CSZT")) ? 0 : gxhtz.getString("CSZT").split("#").length; //车身张贴
+        Integer csps = StringUtils.isBlank(gxhtz.getString("CSPS")) ? 0 : gxhtz.getString("CSPS").split("#").length; //车身破损
+        Integer csgh = StringUtils.isBlank(gxhtz.getString("CSGH")) ? 0 : gxhtz.getString("CSGH").split("#").length; //车身刮痕
+        Integer csch = StringUtils.isBlank(gxhtz.getString("CSCH")) ? 0 : gxhtz.getString("CSCH").split("#").length; //车身彩绘
 
-            String hphm = hptzJson.getString("HPHM");
-            String category = "";
-            if(StringUtils.isNotBlank(hphm) && hphm.contains(hphm_pre)) {
-                category = "本市";
-            } else {
-                category = "外埠";
-            }
-            String direction = Integer.parseInt(wztzJson.getString("PSFX")) == 1 ? "车头" : "车尾";
-            Integer md_isPhone = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSDDH").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-            Integer md_isWPhone = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSKSJ").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-            Integer md_isSafetyBelt = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSBJAQD").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-            Integer md_isSmoke = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSCY").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-            Integer md_isSunVisor = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSZYB").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-            Integer ct_isSafetyBelt = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("FJSBJAQD").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-            Integer ct_isSunVisor = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("FJSZYB").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-            //Integer mc_isHelmet = Integer.parseInt(jsxwtzJson.getString("MTCBDTK").replace("_", "")) >= 180 ? 1:0;
-            vmIlsVdDTO = new VmIlsVdDTO(0,IpfsClient.getIpfsUrl("" + vo.getImageHash()),timeStamp,
-                    ilsName, category, hphm, "","" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
-                    "" + VEH_TYPE.get("C" + cxtzJson.get("CLLXZFL")), direction, md_isPhone,md_isWPhone, md_isSafetyBelt,
-                    md_isSmoke,md_isSunVisor,ct_isSafetyBelt,ct_isSunVisor,0,"" + VEH_COLOR_CSYS.get(cxtzJson.getString("CSYS")),
-                    cxtzJson.getString("PPXHMS"), "小型车",cxtzJson.getString("CXNK"),Integer.parseInt(StringUtils.isBlank(cxtzJson.getString("PPXHKXD")) ? "0" : cxtzJson.getString("PPXHKXD")),
-                    Integer.parseInt(StringUtils.isBlank(hptzJson.getString("HPZT")) ? "0" : hptzJson.getString("HPZT")),"" + VEH_COLOR_HPYS.get(hptzJson.getString("HPYS")),
-                    "" + VEH_HPHM_HPZT.get("C" + hptzJson.get("HPZL")),"" + VEH_HPHM_HPZL.get("C" + hptzJson.get("HPZL")),
-                    Integer.parseInt(StringUtils.isBlank(hptzJson.getString("YWLSHP")) ? "0" : hptzJson.getString("YWLSHP")),
-                    Integer.parseInt(StringUtils.isBlank(hptzJson.getString("HPKXD")) ? "0" : hptzJson.getString("HPKXD")),
-                    hptzJson.getString("MWHPKXD"),dcjqs,ccztw,gj,cszt,xlj,bj,csch,csps,csgh,tc);
+        String hphm = hptzJson.getString("HPHM");
+        String category = "";
+        if(StringUtils.isNotBlank(hphm) && hphm.contains(hphm_pre)) {
+            category = "本市";
+        } else {
+            category = "外埠";
         }
+        String direction = Integer.parseInt(wztzJson.getString("PSFX")) == 1 ? "车头" : "车尾";
+        Integer md_isPhone = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSDDH").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+        Integer md_isWPhone = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSKSJ").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+        Integer md_isSafetyBelt = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSBJAQD").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+        Integer md_isSmoke = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSCY").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+        Integer md_isSunVisor = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSZYB").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+        Integer ct_isSafetyBelt = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("FJSBJAQD").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+        Integer ct_isSunVisor = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("FJSZYB").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+        //Integer mc_isHelmet = Integer.parseInt(jsxwtzJson.getString("MTCBDTK").replace("_", "")) >= 180 ? 1:0;
+        vmIlsVdDTO = new VmIlsVdDTO(0,IpfsClient.getIpfsUrl("" + vo.getImageHash()),timeStamp,
+                ilsName, category, hphm, "","" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
+                "" + VEH_TYPE.get("C" + cxtzJson.get("CLLXZFL")), direction, md_isPhone,md_isWPhone, md_isSafetyBelt,
+                md_isSmoke,md_isSunVisor,ct_isSafetyBelt,ct_isSunVisor,0,"" + VEH_COLOR_CSYS.get(cxtzJson.getString("CSYS")),
+                cxtzJson.getString("PPXHMS"), "小型车",cxtzJson.getString("CXNK"),Integer.parseInt(StringUtils.isBlank(cxtzJson.getString("PPXHKXD")) ? "0" : cxtzJson.getString("PPXHKXD")),
+                Integer.parseInt(StringUtils.isBlank(hptzJson.getString("HPZT")) ? "0" : hptzJson.getString("HPZT")),"" + VEH_COLOR_HPYS.get(hptzJson.getString("HPYS")),
+                "" + VEH_HPHM_HPZT.get("C" + hptzJson.get("HPZL")),"" + VEH_HPHM_HPZL.get("C" + hptzJson.get("HPZL")),
+                Integer.parseInt(StringUtils.isBlank(hptzJson.getString("YWLSHP")) ? "0" : hptzJson.getString("YWLSHP")),
+                Integer.parseInt(StringUtils.isBlank(hptzJson.getString("HPKXD")) ? "0" : hptzJson.getString("HPKXD")),
+                hptzJson.getString("MWHPKXD"),dcjqs,ccztw,gj,cszt,xlj,bj,csch,csps,csgh,tc);
+//        }
 
 //        VmIlsVdDTO vmIlsVdDTO = new VmIlsVdDTO(98,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg","2020-12-28 15:26:30",
 //                "北京市海淀区上地三街123号", "本市",
