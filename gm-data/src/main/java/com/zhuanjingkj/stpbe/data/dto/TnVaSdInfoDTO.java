@@ -16,13 +16,16 @@ public class TnVaSdInfoDTO extends BaseDTO {
     private String category; //设备类别
     @JSONField(name = "status")
     private String status; //设备状态
+    @JSONField(name = "streamId")
+    private long streamId;
 
-    public TnVaSdInfoDTO(long diId, String diAddr, String direction, String category, String status) {
+    public TnVaSdInfoDTO(long diId, String diAddr, String direction, String category, String status, long streamId) {
         this.diId = diId;
         this.diAddr = diAddr;
         this.direction = direction;
         this.category = category;
         this.status = status;
+        this.streamId = streamId;
     }
 
     public long getDiId() {
@@ -63,5 +66,13 @@ public class TnVaSdInfoDTO extends BaseDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public long getStreamId() {
+        return streamId;
+    }
+
+    public void setStreamId(long streamId) {
+        this.streamId = streamId;
     }
 }

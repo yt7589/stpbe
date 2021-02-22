@@ -44,7 +44,8 @@
                ELSE ''
                END 'direction_name',
                tct.camera_type_name,
-               IF(tc.`status` = 1,'正常','异常') AS `status`
+               IF(tc.`status` = 1,'正常','异常') AS `status`,
+               tct.stream_id
           FROM t_camera tc
      LEFT JOIN t_site ts ON tc.site_id = ts.site_id
      LEFT JOIN t_direction td ON tc.direction_id = td.direction_id
