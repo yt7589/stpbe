@@ -210,20 +210,20 @@ public class VmIlsService implements IVmIlsService {
                 category = "外埠";
             }
             String direction = Integer.parseInt(wztzJson.getString("PSFX")) == 1 ? "车头" : "车尾";
-            Integer md_isPhone = Integer.parseInt(jsxwtzJson.getString("ZJSDDH").replace("_", "")) >= 180 ? 1:0;
-            Integer md_isWPhone = Integer.parseInt(jsxwtzJson.getString("ZJSKSJ").replace("_", "")) >= 180 ? 1:0;
-            Integer md_isSafetyBelt = Integer.parseInt(jsxwtzJson.getString("ZJSBJAQD").replace("_", "")) >= 180 ? 1:0;
-            Integer md_isSmoke = Integer.parseInt(jsxwtzJson.getString("ZJSCY").replace("_", "")) >= 180 ? 1:0;
-            Integer md_isSunVisor = Integer.parseInt(jsxwtzJson.getString("ZJSZYB").replace("_", "")) >= 180 ? 1:0;
-            Integer ct_isSafetyBelt = Integer.parseInt(jsxwtzJson.getString("FJSBJAQD").replace("_", "")) >= 180 ? 1:0;
-            Integer ct_isSunVisor = Integer.parseInt(jsxwtzJson.getString("FJSZYB").replace("_", "")) >= 180 ? 1:0;
+            Integer md_isPhone = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSDDH").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+            Integer md_isWPhone = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSKSJ").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+            Integer md_isSafetyBelt = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSBJAQD").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+            Integer md_isSmoke = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSCY").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+            Integer md_isSunVisor = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSZYB").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+            Integer ct_isSafetyBelt = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("FJSBJAQD").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+            Integer ct_isSunVisor = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("FJSZYB").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
             //Integer mc_isHelmet = Integer.parseInt(jsxwtzJson.getString("MTCBDTK").replace("_", "")) >= 180 ? 1:0;
             vmIlsVdDTO = new VmIlsVdDTO(0,IpfsClient.getIpfsUrl("" + vo.getImageHash()),timeStamp,
                     ilsName, category, hphm, "","" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
                     "" + VEH_TYPE.get("C" + cxtzJson.get("CLLXZFL")), direction, md_isPhone,md_isWPhone, md_isSafetyBelt,
                     md_isSmoke,md_isSunVisor,ct_isSafetyBelt,ct_isSunVisor,0,"" + VEH_COLOR_CSYS.get(cxtzJson.getString("CSYS")),
-                    cxtzJson.getString("PPXHMS"), "小型车",cxtzJson.getString("CXNK"),Integer.parseInt(cxtzJson.getString("PPXHKXD")),
-                    Integer.parseInt(hptzJson.getString("HPZT")),"" + VEH_COLOR_HPYS.get(hptzJson.getString("HPYS")),
+                    cxtzJson.getString("PPXHMS"), "小型车",cxtzJson.getString("CXNK"),Integer.parseInt(StringUtils.isBlank(cxtzJson.getString("PPXHKXD")) ? "0" : cxtzJson.getString("PPXHKXD")),
+                    Integer.parseInt(StringUtils.isBlank(hptzJson.getString("HPZT")) ? "0" : hptzJson.getString("HPZT")),"" + VEH_COLOR_HPYS.get(hptzJson.getString("HPYS")),
                     "" + VEH_HPHM_HPZT.get("C" + hptzJson.get("HPZL")),"" + VEH_HPHM_HPZL.get("C" + hptzJson.get("HPZL")),
                     Integer.parseInt(StringUtils.isBlank(hptzJson.getString("YWLSHP")) ? "0" : hptzJson.getString("YWLSHP")),
                     Integer.parseInt(StringUtils.isBlank(hptzJson.getString("HPKXD")) ? "0" : hptzJson.getString("HPKXD")),

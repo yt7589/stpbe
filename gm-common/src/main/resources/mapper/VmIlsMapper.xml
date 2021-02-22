@@ -103,6 +103,7 @@
             <if test="endTime != null and endTime != ''">
                 AND #{endTime} >= tv.create_time
             </if>
+     ORDER BY tv.create_time DESC
         LIMIT #{startIndex}, #{amount}
     </select>
 

@@ -27,12 +27,12 @@ public class DkDctfService implements IDkDctfService {
         List<DkDctfItemDTO> dctfs = new ArrayList<>();
         DkDctfItemDTO item = null;
         Map<String, Object> dctf = redisTemplate.opsForHash().entries("dk_dctf_area");
-        List<DkDctfItemDTO> dklist = new ArrayList<>();
         for (String key : dctf.keySet()) {
             item = new DkDctfItemDTO(""+dctfMap.get(key), Integer.parseInt(dctf.get(key) == null ? "0" : "" + dctf.get(key)));
             dctfs.add(item);
         }
         /** 合并同一个路段下的camera拍照数量 */
+        List<DkDctfItemDTO> dklist = new ArrayList<>();
         dctfs.parallelStream().collect(Collectors.groupingBy(o ->(o.getName()),Collectors.toList())).forEach(
                 (id, transfer) -> {
                     transfer.stream().reduce((a,b) -> new DkDctfItemDTO(a.getName(), a.getCount() + b.getCount())).ifPresent(dklist :: add);

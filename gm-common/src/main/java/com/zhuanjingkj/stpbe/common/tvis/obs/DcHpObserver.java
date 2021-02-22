@@ -55,77 +55,80 @@ public class DcHpObserver implements ITvisStpObserver {
         /**
          * cameraId = -1 时需要根据streamId查找正确的cameraId
          */
+        String code = "";
         if(cameraId == -1) {
             long streamId = vo.getStreamId();
             String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
             if(StringUtils.isNotBlank(newCameraId)) {
-                cameraId = Long.parseLong(newCameraId);
+                code = newCameraId;
             }
+        } else {
+            code = cameraId +"";
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getZjsddh())) {
             ilType = "ZJSDDH";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + cameraId,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getFjsbjaqd())) {
             ilType = "FJSBJAQD";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + cameraId,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getFjszyb())) {
             ilType = "FJSZYB";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + cameraId,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getZjsbjaqd())) {
             ilType = "ZJSBJAQD";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + cameraId,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getZjscy())) {
             ilType = "ZJSCY";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + cameraId,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getZjsksj())) {
             ilType = "ZJSKSJ";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + cameraId,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getZjszyb())) {
             ilType = "ZJSZYB";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + cameraId,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getMtcbdtk())) {
             ilType = "MTCBDTK";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + cameraId,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
 
         if("0".equals(isIl)) {
-            dcHpDTO = new DcHpDTO(0,time,"" + cameraId,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
         }
 
         redisTemplate.opsForValue().increment("dchp_vehicle_identification"); //车辆识别数量
-        redisTemplate.opsForZSet().incrementScore("tn_vs_site_vehicle", cameraId, 1);
+        redisTemplate.opsForZSet().incrementScore("tn_vs_site_vehicle", code, 1);
         Integer index = LocalDateTime.now().getHour() + 1;
         String tnVsTrend = "tn_vs_trend_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         if(!redisTemplate.hasKey("tn_vs_trend_" + tnVsTrend)) {

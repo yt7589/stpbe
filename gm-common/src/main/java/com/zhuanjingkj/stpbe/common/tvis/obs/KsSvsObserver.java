@@ -29,12 +29,15 @@ public class KsSvsObserver implements ITvisStpObserver {
          * cameraId = -1 时需要根据streamId查找正确的cameraId
          */
         long cameraId = vo.getCameraId();
+        String code = "";
         if(cameraId == -1) {
             long streamId = vo.getStreamId();
             String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
             if(StringUtils.isNotBlank(newCameraId)) {
-                cameraId = Long.parseLong(newCameraId);
+                code = newCameraId;
             }
+        } else {
+            code = cameraId + "";
         }
 
         //本日重点监控车辆车型构成
@@ -62,7 +65,7 @@ public class KsSvsObserver implements ITvisStpObserver {
             redisTemplate.opsForValue().increment("ks_svs_others");
         }
         //本日重点监控车辆区域分布图
-        redisTemplate.opsForHash().increment("ks_svs_area", cameraId, 1);
+        redisTemplate.opsForHash().increment("ks_svs_area", code, 1);
 //        redisTemplate.opsForHash().increment("ks_svs_area", "C0000001", 1);
 //        redisTemplate.opsForHash().increment("ks_svs_area", "C0000002", 2);
 //        redisTemplate.opsForHash().increment("ks_svs_area", "C0000003", 3);

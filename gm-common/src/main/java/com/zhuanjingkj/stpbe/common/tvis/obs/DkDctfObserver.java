@@ -28,14 +28,17 @@ public class DkDctfObserver implements ITvisStpObserver {
          * cameraId = -1 时需要根据streamId查找正确的cameraId
          */
         long cameraId = vo.getCameraId();
+        String code = "";
         if(cameraId == -1) {
             long streamId = vo.getStreamId();
             String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
             if(StringUtils.isNotBlank(newCameraId)) {
-                cameraId = Long.parseLong(newCameraId);
+                code = newCameraId + "";
             }
+        } else {
+            code = cameraId + "";
         }
-        redisTemplate.opsForHash().increment("dk_dctf_area", cameraId, 1);
+        redisTemplate.opsForHash().increment("dk_dctf_area", code, 1);
 //        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000001", 1);
 //        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000002", 2);
 //        redisTemplate.opsForHash().increment("dk_dctf_area", "C0000003", 3);
