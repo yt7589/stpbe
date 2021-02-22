@@ -81,7 +81,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
 //            jsonHash = dtMap.get("json_hash") +"";
 //        }
         Integer category = 0;
-        String hphm_pre = PropUtil.getValue("hphm.native.prefix");
+        String hphm_pre = PropUtil.getHphmPre();
         if(!hphm.contains(hphm_pre)) {
             category = 1;
         }
