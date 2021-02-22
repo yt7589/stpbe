@@ -177,7 +177,7 @@ public class VmIlsService implements IVmIlsService {
         JSONArray vehs = rstJson.getJSONArray("VEH");
         VmIlsVdDTO vmIlsVdDTO = null;
         String timeStamp = DateUtil.timeStamp2Date(rstJson.getString("TimeStamp"));
-        String hphm_pre = PropUtil.getValue("hphm.native.prefix");
+        String hphm_pre = PropUtil.getHphmPre();
 //        for (Object veh :vehs) {
         JSONObject vehJson  = (JSONObject) vehs.getJSONObject(vehsIdx);
         System.out.println(vehJson);

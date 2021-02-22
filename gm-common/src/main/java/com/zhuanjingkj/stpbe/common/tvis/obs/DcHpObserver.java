@@ -135,7 +135,7 @@ public class DcHpObserver implements ITvisStpObserver {
             redisTemplate.opsForList().rightPushAll(tnVsTrend, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         }
         Integer count = (int)(redisTemplate.opsForList().index(tnVsTrend,index + 1));
-        redisTemplate.opsForList().set(tnVsTrend, index + 1, count);
+        redisTemplate.opsForList().set(tnVsTrend, index, count + 1);
     }
 
     @Override
