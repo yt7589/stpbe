@@ -47,7 +47,7 @@ public class DcHpObserver implements ITvisStpObserver {
         String tblName = AppRegistry.tvisJsonTblName;
         DcHpDTO dcHpDTO = null;
         String category = "0";
-        String hphm_pre = PropUtil.getValue("hphm.native.prefix");
+        String hphm_pre = PropUtil.getHphmPre();
         if(!hphm.contains(hphm_pre)) {
             category = "1";
         }
