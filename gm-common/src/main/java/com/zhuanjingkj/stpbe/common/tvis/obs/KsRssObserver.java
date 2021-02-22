@@ -42,7 +42,7 @@ public class KsRssObserver implements ITvisStpObserver {
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         //统计同一辆车在同一个设备下通过的次数
         if(StringUtils.isBlank(hphm)) {
-            hphm = "豫A888888";
+            hphm = "NaN";
         }
         /**
          * 1.ks_rss_lsvs_total 路段监管动态车辆通过次数

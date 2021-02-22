@@ -86,7 +86,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             category = 1;
         }
         if(StringUtils.isBlank(hphm)) {
-            hphm = "豫A888888";
+            hphm = "NaN";
         }
         String zjsddh = vo.getVehicleJsxwtzVO().getZjsddh();
         String date = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
@@ -280,13 +280,9 @@ public class DkRtvrObserver implements ITvisStpObserver {
         if (null == psfx || psfx.equals("")) {
             psfx = "3";
         }
-        dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(),cameraId, hphm,
+        dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx() == 0 ? 1 : vo.getVehsIdx() ,cameraId, hphm,
                 vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
                 psfx, vo.getVehicleWztzVo().getClwz(), wzlx, vType, category, tblName, date);
-    }
-
-    public static void main(String[] args) {
-        System.out.println("80".compareTo("80") == -1);
     }
 
 }
