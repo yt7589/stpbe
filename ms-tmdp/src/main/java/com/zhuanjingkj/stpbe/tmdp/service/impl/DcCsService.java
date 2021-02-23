@@ -45,11 +45,15 @@ public class DcCsService implements IDcCsService {
         TvisJsonVO tvisJsonVO = null;
         System.out.println("queryVehicleByGraph 2");
         int num = 1;
+        int tn = 1;
         for (TvisGrqRstVo result : results) {
             System.out.println("queryVehicleByGraph 3 rst=" + (num++) + "              !!!!!!!!!");
             tvisJsonVO = TvisUtil.getTvisJsonVOById(tvisJsonMapper, result.getTvisJsonId());
             if (tvisJsonVO != null) {
-                System.out.println("queryVehicleByGraph 4");
+                System.out.println("queryVehicleByGraph 4 recs=" + (tn++) + "!");
+                if (tn>20) {
+                    break;
+                }
                 rec = new DcCsDTO(tvisJsonVO.getTvisJsonId(), "北京市" + tvisJsonVO.getTvisJsonId(),
                         tvisJsonVO.getOccurTime(),
                         AppConst.IPFS_GW_URL + tvisJsonVO.getImageHash());
