@@ -39,9 +39,11 @@ public class DcCsController {
         @RequestParam(name = "startDate", required = false) String startDate,
         @RequestParam(name = "endDate", required = false) String endDate,
         @RequestParam(name = "startTime", required = false) String startTime,
-        @RequestParam(name = "endTime", required = false) String endTime
+        @RequestParam(name = "endTime", required = false) String endTime,
+        @RequestParam(name = "startIndex", required = false) int startIndex,
+        @RequestParam(name = "amount", required = false) int amount
     ) {
-        System.out.println("车辆特征向量：" + cltzxl + "!");
-        return dcCsService.queryVehicleByGraph(cltzxl, psfx, cllxfl, cllxzfl, startDate, endDate, startTime, endTime);
+        return dcCsService.queryVehicleByGraph(cltzxl, psfx, cllxfl, cllxzfl, startDate,
+                endDate, startTime, endTime, startIndex, amount);
     }
 }

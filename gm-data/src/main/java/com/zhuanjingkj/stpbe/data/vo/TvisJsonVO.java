@@ -11,6 +11,7 @@ import java.util.Date;
 public class TvisJsonVO {
     private String tblName;
     private long tvisJsonId;
+    private long vehIdx;
     private String occurTime;
     private long cameraId;
     private long streamId;
@@ -57,6 +58,14 @@ public class TvisJsonVO {
 
     public void setTvisJsonId(long tvisJsonId) {
         this.tvisJsonId = tvisJsonId;
+    }
+
+    public long getVehIdx() {
+        return vehIdx;
+    }
+
+    public void setVehIdx(long vehIdx) {
+        this.vehIdx = vehIdx;
     }
 
     public String getOccurTime() {
