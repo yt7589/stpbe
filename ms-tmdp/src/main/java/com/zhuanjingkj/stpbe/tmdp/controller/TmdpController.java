@@ -98,8 +98,8 @@ public class TmdpController {
      * @return
      */
     @PostMapping("/recognizeTvisImage")
-    public ResultDTO<RecognizeTvisImageDTO> recognizeTvisImage(@RequestParam("GCXH") String gcxh,
-                                                               @RequestParam("TPLX") String tplx,
+    public ResultDTO<RecognizeTvisImageDTO> recognizeTvisImage(@RequestParam(name = "GCXH", required = false) String gcxh,
+                                                               @RequestParam(name = "TPLX", required = false) String tplx,
                                                                @RequestParam(name = "MRHPT", required = false) String mrhpt,
                                                                @RequestParam(name = "HPHM", required = false) String hphm,
                                                                @RequestParam(name = "cameraId", required = true) String cameraId,

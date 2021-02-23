@@ -22,7 +22,7 @@
     </resultMap>
 
     <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsTypeDTO"  id ="ilsTypeDTO" >
-        <result column="violation_type_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="violation_type_code" property="typeId" jdbcType="VARCHAR"/>
         <result column="violation_type_name" property="typeName" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -155,7 +155,7 @@
     </select>
 
     <select id ="getIlsType" resultMap="ilsTypeDTO">
-        SELECT tv.violation_type_id, tv.violation_type_name
+        SELECT tv.violation_type_code, tv.violation_type_name
           FROM t_violation_type tv
     </select>
 
@@ -316,7 +316,7 @@
     </select>
 
     <select id ="getIlsSite" resultMap="ilSiteDTO">
-        SELECT ts.site_name, IFNULL(p.count1,0) AS `count`
+        SELECT distinct ts.site_name, IFNULL(p.count1,0) AS `count`
           FROM t_site ts
      LEFT JOIN t_camera tc
             ON ts.site_id = tc.site_id
