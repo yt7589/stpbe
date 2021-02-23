@@ -25,7 +25,8 @@ public class DcCsService implements IDcCsService {
     public ResultDTO<DbQrsDTO> queryVehicleByGraph(String cltzxl, String psfx,
                                                    String cllxfl, String cllxzfl,
                                                    String startDate, String endDate,
-                                                   String startTime, String endTime) {
+                                                   String startTime, String endTime,
+                                                   int startIndex, int amount) {
         // 生成查询条件
         List<List<Float>> embeddinbs = new ArrayList<>();
         List<Float> embedding = new ArrayList<>();
@@ -44,20 +45,22 @@ public class DcCsService implements IDcCsService {
         DcCsDTO rec = null;
         TvisJsonVO tvisJsonVO = null;
         System.out.println("queryVehicleByGraph 2");
-        int num = 1;
-        int tn = 1;
+        int idx = 0;
         for (TvisGrqRstVo result : results) {
-            System.out.println("queryVehicleByGraph 3 rst=" + (num++) + "              !!!!!!!!!");
             tvisJsonVO = TvisUtil.getTvisJsonVOById(tvisJsonMapper, result.getTvisJsonId());
             if (tvisJsonVO != null) {
-                System.out.println("queryVehicleByGraph 4 recs=" + (tn++) + "!");
-                if (tn>20) {
+                if (idx<startIndex) {
+                    continue;
+                }
+                if (idx >= startIndex + amount) {
                     break;
                 }
+                tvisJsonVO.setVehIdx(result.getVehsIdx());
                 rec = new DcCsDTO(tvisJsonVO.getTvisJsonId(), "北京市" + tvisJsonVO.getTvisJsonId(),
                         tvisJsonVO.getOccurTime(),
                         AppConst.IPFS_GW_URL + tvisJsonVO.getImageHash());
                 recs.add(rec);
+                idx++;
             }
         }
         System.out.println("queryVehicleByGraph 5");

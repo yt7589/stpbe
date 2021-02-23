@@ -11,6 +11,7 @@ import java.util.Date;
 public class TvisJsonVO {
     private String tblName;
     private long tvisJsonId;
+    private long vehIdx;
     private String occurTime;
     private long cameraId;
     private long streamId;
@@ -18,11 +19,12 @@ public class TvisJsonVO {
     private String imageHash;
     private String jsonHash;
 
-    public TvisJsonVO(String tblName, long tvisJsonId, String occurTime, long cameraId,
+    public TvisJsonVO(String tblName, long tvisJsonId, long vehIdx, String occurTime, long cameraId,
                       long streamId, long pts, String imageHash,
                       String jsonHash) {
         this.tblName = tblName;
         this.tvisJsonId = tvisJsonId;
+        this.vehIdx = vehIdx;
         this.occurTime = occurTime;
         this.cameraId = cameraId;
         this.streamId = streamId;
@@ -31,7 +33,7 @@ public class TvisJsonVO {
         this.jsonHash = jsonHash;
     }
 
-    public TvisJsonVO(long tvisJsonId, Timestamp occurTime, long cameraId, String imageHash, String jsonHash, long pts) {
+    public TvisJsonVO(long tvisJsonId, int vehIdx, Timestamp occurTime, long cameraId, String imageHash, String jsonHash, long pts) {
         this.tvisJsonId = tvisJsonId;
         Date d = new Date();
         d.setTime(occurTime.getTime());
@@ -57,6 +59,14 @@ public class TvisJsonVO {
 
     public void setTvisJsonId(long tvisJsonId) {
         this.tvisJsonId = tvisJsonId;
+    }
+
+    public long getVehIdx() {
+        return vehIdx;
+    }
+
+    public void setVehIdx(long vehIdx) {
+        this.vehIdx = vehIdx;
     }
 
     public String getOccurTime() {
