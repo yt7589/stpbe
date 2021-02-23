@@ -44,10 +44,12 @@ public class DcCsService implements IDcCsService {
         TvisJsonVO tvisJsonVO = null;
         for (TvisGrqRstVo result : results) {
             tvisJsonVO = TvisUtil.getTvisJsonVOById(tvisJsonMapper, result.getTvisJsonId());
-            rec = new DcCsDTO(tvisJsonVO.getTvisJsonId(),"北京市" + tvisJsonVO.getTvisJsonId(),
-                    tvisJsonVO.getOccurTime(),
-                    AppConst.IPFS_GW_URL + tvisJsonVO.getImageHash());
-            recs.add(rec);
+            if (tvisJsonVO != null) {
+                rec = new DcCsDTO(tvisJsonVO.getTvisJsonId(), "北京市" + tvisJsonVO.getTvisJsonId(),
+                        tvisJsonVO.getOccurTime(),
+                        AppConst.IPFS_GW_URL + tvisJsonVO.getImageHash());
+                recs.add(rec);
+            }
         }
         data.setRecs(recs);
         dto.setData(data);
