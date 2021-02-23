@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.SmDcMapper">
+    <resultMap  type="com.zhuanjingkj.stpbe.data.dto.SmUserDTO" id ="userDTO">
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="tright" property="tright" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap  type="com.zhuanjingkj.stpbe.data.dto.SmRoleDTO" id ="roleDTO">
+        <result column="role_id" property="roleId" jdbcType="INTEGER"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id ="getUsers" resultMap ="userDTO">
+        SELECT u.user_id, u.role_id, u.user_name, u.login_name, u.phone, GROUP_CONCAT(tt.tr_name) AS tright
+          FROM t_user u
+     LEFT JOIN t_role r
+            ON u.role_id = r.role_id
+     LEFT JOIN t_role_tright tr
+            ON u.role_id = tr.role_id
+     LEFT JOIN t_tright tt
+            ON tr.tr_id = tt.tr_id
+         WHERE 1 = 1
+            <if test="loginName != null and loginName !=''">
+                AND u.login_name =#{loginName}
+            </if>
+            <if test="userName != null and userName !='' ">
+                AND u.user_name =#{userName}
+            </if>
+            <if test ="phone != null and phone != ''">
+                AND u.phone =#{phone}
+            </if>
+      GROUP BY u.user_id
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getUserCount" resultType ="Integer">
+        SELECT COUNT(1)
+          FROM t_user
+    </select>
+
+    <delete id ="delUser">
+        DELETE
+          FROM t_user
+         WHERE user_id =#{userId}
+    </delete>
+
+    <insert id ="addUser" useGeneratedKeys ="true" keyProperty ="rto.userId">
+        INSERT INTO t_user(role_id, user_name, login_name, login_pwd, phone)
+                    VALUES(#{rto.roleId}, #{rto.userName}, #{rto.loginName}, #{rto.pwd}, #{rto.phone})
+    </insert>
+
+    <update id ="uptUserInfo">
+        UPDATE t_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="rto.loginName != null and rto.loginName != ''">
+                login_name =#{rto.loginName},
+            </if>
+            <if test="rto.userName != null and rto.userName != ''">
+                user_name =#{rto.userName},
+            </if>
+            <if test="rto.phone != null and rto.phone != ''">
+                phone =#{rto.phone},
+            </if>
+            <if test="rto.pwd != null and rto.pwd != ''">
+                login_pwd =#{rto.pwd},
+            </if>
+            <if test="rto.roleId != null and rto.roleId != ''">
+                role_id =#{rto.roleId},
+            </if>
+        </trim>
+         WHERE user_id =#{rto.userId}
+    </update>
+
+    <select id ="getRoles" resultMap ="roleDTO">
+        SELECT role_id, role_name
+          FROM t_role
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getRoleCount" resultType ="Integer">
+        SELECT COUNT(1)
+          FROM t_role
+    </select>
+
+    <select id ="getUserInfo" resultMap="userDTO">
+        SELECT u.user_id, u.role_id, u.user_name, u.login_name, u.phone, GROUP_CONCAT(tt.tr_name) AS tright
+          FROM t_user u
+     LEFT JOIN t_role r
+            ON u.role_id = r.role_id
+     LEFT JOIN t_role_tright tr
+            ON u.role_id = tr.role_id
+     LEFT JOIN t_tright tt
+            ON tr.tr_id = tt.tr_id
+         WHERE u.user_id =#{userId}
+    </select>
+</mapper>
