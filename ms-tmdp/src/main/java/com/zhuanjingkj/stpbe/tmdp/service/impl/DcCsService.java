@@ -35,10 +35,8 @@ public class DcCsService implements IDcCsService {
             embedding.add(Float.valueOf(feat));
         }
         embeddinbs.add(embedding);
-        System.out.println("queryVehicleByGraph 1 startIndex=" + startIndex + "; amount=" + amount + "!");
         String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
         List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, 9999);
-        System.out.println("results:" + results.size() + "!");
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
         List<DcCsDTO> recs = new ArrayList<>();
@@ -48,7 +46,6 @@ public class DcCsService implements IDcCsService {
         for (TvisGrqRstVo result : results) {
             tvisJsonVO = TvisUtil.getTvisJsonVOById(tvisJsonMapper, result.getTvisJsonId());
             if (tvisJsonVO != null) {
-                System.out.println("################## idx=" + idx + "!");
                 if (idx<startIndex) {
                     continue;
                 }
@@ -63,11 +60,8 @@ public class DcCsService implements IDcCsService {
                 }
             }
         }
-        System.out.println("queryVehicleByGraph 5");
         data.setRecs(recs);
-        System.out.println("queryVehicleByGraph 6");
         dto.setData(data);
-        System.out.println("queryVehicleByGraph 7");
         return dto;
     }
 }
