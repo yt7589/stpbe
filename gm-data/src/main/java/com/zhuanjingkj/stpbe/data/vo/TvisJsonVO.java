@@ -19,12 +19,11 @@ public class TvisJsonVO {
     private String imageHash;
     private String jsonHash;
 
-    public TvisJsonVO(String tblName, long tvisJsonId, long vehIdx, String occurTime, long cameraId,
+    public TvisJsonVO(String tblName, long tvisJsonId, String occurTime, long cameraId,
                       long streamId, long pts, String imageHash,
                       String jsonHash) {
         this.tblName = tblName;
         this.tvisJsonId = tvisJsonId;
-        this.vehIdx = vehIdx;
         this.occurTime = occurTime;
         this.cameraId = cameraId;
         this.streamId = streamId;
@@ -33,7 +32,7 @@ public class TvisJsonVO {
         this.jsonHash = jsonHash;
     }
 
-    public TvisJsonVO(long tvisJsonId, int vehIdx, Timestamp occurTime, long cameraId, String imageHash, String jsonHash, long pts) {
+    public TvisJsonVO(long tvisJsonId, Timestamp occurTime, long cameraId, String imageHash, String jsonHash, long pts) {
         this.tvisJsonId = tvisJsonId;
         Date d = new Date();
         d.setTime(occurTime.getTime());

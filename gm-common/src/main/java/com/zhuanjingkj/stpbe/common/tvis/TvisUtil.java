@@ -166,7 +166,7 @@ public class TvisUtil {
         try {
             pts = Long.parseLong(ptsStr);
         } catch (Exception ex) {}
-        TvisJsonVO vo = new TvisJsonVO(AppRegistry.tvisJsonTblName, tvisJsonId, -1, occurTime,
+        TvisJsonVO vo = new TvisJsonVO(AppRegistry.tvisJsonTblName, tvisJsonId, occurTime,
                 cameraId, streamId, pts, imageHash.toString(), jsonHash.toString());
         tvisJsonMapper.insertTvisJson(vo);
         AppRegistry.tvisJsonTblRecs++;
