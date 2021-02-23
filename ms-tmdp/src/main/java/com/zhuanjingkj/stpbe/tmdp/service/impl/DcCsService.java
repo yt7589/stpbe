@@ -48,7 +48,7 @@ public class DcCsService implements IDcCsService {
         for (TvisGrqRstVo result : results) {
             tvisJsonVO = TvisUtil.getTvisJsonVOById(tvisJsonMapper, result.getTvisJsonId());
             if (tvisJsonVO != null) {
-                System.out.println("################## idx=" + idx + "!")
+                System.out.println("################## idx=" + idx + "!");
                 if (idx<startIndex) {
                     continue;
                 }
