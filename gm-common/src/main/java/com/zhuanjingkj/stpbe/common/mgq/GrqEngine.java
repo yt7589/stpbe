@@ -89,7 +89,6 @@ public class GrqEngine {
                                 "\"type\": \"float\", \"query\": %s"
                                 + "    }}}]}}",
                         topK, queryEmbedding.toString());
-        System.out.println("dsl: " + dsl + "!");
         // Only specified fields in `setParamsInJson` will be returned from search request.
         // If not set, all fields will be returned.
         SearchParam searchParam =
@@ -103,7 +102,6 @@ public class GrqEngine {
         TvisGrqRstVo vo = null;
         long grpId = 0;
         double dist = 0.0;
-        System.out.println("GrqEngine.findTopK 1 size=" + searchResult.getResultIdsList().size() + "!");
         if (searchResult.getResultIdsList().size() <= 0) {
             return rst;
         }
