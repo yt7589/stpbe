@@ -43,6 +43,7 @@ public class DcCsController {
         @RequestParam(name = "startIndex", required = false) int startIndex,
         @RequestParam(name = "amount", required = false) int amount
     ) {
+        System.out.println("DcCsController startIndex=" + startIndex + "; amount=" + amount + "!");
         return dcCsService.queryVehicleByGraph(cltzxl, psfx, cllxfl, cllxzfl, startDate,
                 endDate, startTime, endTime, startIndex, amount);
     }
