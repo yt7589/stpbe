@@ -52,7 +52,7 @@ public class DcCsService implements IDcCsService {
                 if (idx<startIndex) {
                     continue;
                 }
-                if (idx >= startIndex + amount) {
+                if (idx + 1 >= startIndex + amount) {
                     break;
                 }
                 tvisJsonVO.setVehIdx(result.getVehsIdx());
