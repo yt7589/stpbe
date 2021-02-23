@@ -52,15 +52,15 @@ public class DcCsService implements IDcCsService {
                 if (idx<startIndex) {
                     continue;
                 }
-                if (idx + 1 >= startIndex + amount) {
-                    break;
-                }
                 tvisJsonVO.setVehIdx(result.getVehsIdx());
                 rec = new DcCsDTO(tvisJsonVO.getTvisJsonId(), "北京市" + tvisJsonVO.getTvisJsonId(),
                         tvisJsonVO.getOccurTime(),
                         AppConst.IPFS_GW_URL + tvisJsonVO.getImageHash());
                 recs.add(rec);
                 idx++;
+                if (idx >= startIndex + amount) {
+                    break;
+                }
             }
         }
         System.out.println("queryVehicleByGraph 5");

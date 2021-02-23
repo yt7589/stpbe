@@ -40,9 +40,11 @@ public class DcCsController {
         @RequestParam(name = "endDate", required = false) String endDate,
         @RequestParam(name = "startTime", required = false) String startTime,
         @RequestParam(name = "endTime", required = false) String endTime,
-        @RequestParam(name = "startIndex", required = false) int startIndex,
-        @RequestParam(name = "amount", required = false) int amount
+        @RequestParam(name = "page", required = false) int page,
+        @RequestParam(name = "pageSize", required = false) int pageSize
     ) {
+        int startIndex = (page - 1) * pageSize;
+        int amount = pageSize;
         System.out.println("DcCsController startIndex=" + startIndex + "; amount=" + amount + "!");
         return dcCsService.queryVehicleByGraph(cltzxl, psfx, cllxfl, cllxzfl, startDate,
                 endDate, startTime, endTime, startIndex, amount);
