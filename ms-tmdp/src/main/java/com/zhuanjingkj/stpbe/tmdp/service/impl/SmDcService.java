@@ -1,15 +1,23 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.zhuanjingkj.stpbe.common.mapper.DcStMapper;
+import com.zhuanjingkj.stpbe.common.mapper.SmDcMapper;
+import com.zhuanjingkj.stpbe.data.dto.*;
+import com.zhuanjingkj.stpbe.data.rto.sm.AddUserToSmRTO;
+import com.zhuanjingkj.stpbe.data.rto.sm.DeleteUserFromSmRTO;
+import com.zhuanjingkj.stpbe.data.dto.SmRoleDTO;
+import com.zhuanjingkj.stpbe.data.rto.sm.UpdateUserInfoRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.ISmDcService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
+import com.zhuanjingkj.stpbe.tmdp.util.SHA1;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 public class SmDcService implements ISmDcService {
@@ -19,6 +27,75 @@ public class SmDcService implements ISmDcService {
 
     @Autowired
     private DcStMapper dcStMapper;
+
+    @Autowired
+    private SmDcMapper smDcMapper;
+
+    @Override
+    public ResultDTO<DbQrsDTO> getUsers_exp(Integer startIndex, Integer amount, Integer direction,
+                                            String loginName, String userName, String phone) {
+        ResultDTO dto = new ResultDTO();
+        if(direction == 0) {
+            startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
+        }
+        List<SmUserDTO> recs = smDcMapper.getUsers(startIndex, amount, loginName, userName, phone);
+        Integer count = smDcMapper.getUserCount();
+        DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
+        dto.setData(data);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<DbDeleteResultDTO> delUser_exp(DeleteUserFromSmRTO rto) {
+        ResultDTO dto = new ResultDTO();
+        Integer affectedRows = smDcMapper.delUser(rto.getUserId());
+        DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);
+        dto.setData(data);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<DbInsertResultDTO> addUser_exp(AddUserToSmRTO rto) {
+        ResultDTO dto = new ResultDTO();
+        rto.setPwd(SHA1.getStr2Sha1(rto.getPwd()));
+        Integer affectedRows = smDcMapper.addUser(rto);
+        DbInsertResultDTO data = new DbInsertResultDTO(rto.getUserId(),affectedRows);
+        dto.setData(data);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<DbDeleteResultDTO> uptUserInfo(UpdateUserInfoRTO rto) {
+        ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
+        if(StringUtils.isNotBlank(rto.getPwd())) {
+            rto.setPwd(SHA1.getStr2Sha1(rto.getPwd()));
+        }
+        Integer affectedRows = smDcMapper.uptUserInfo(rto);
+        DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);
+        dto.setData(data);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<DbQrsDTO> getRoles_exp(Integer startIndex, Integer amount, Integer direction) {
+        ResultDTO dto = new ResultDTO();
+        if(direction == 0) {
+            startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
+        }
+        List<SmRoleDTO> recs = smDcMapper.getRoles(startIndex, amount);
+        Integer count = smDcMapper.getRoleCount();
+        DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
+        dto.setData(data);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<SmUserDTO> getUserInfo_exp(long userId) {
+        ResultDTO dto = new ResultDTO();
+        SmUserDTO smUserDTO = smDcMapper.getUserInfo(userId);
+        dto.setData(smUserDTO);
+        return dto;
+    }
 
     /**
      * 每日0点需要清除的数据
@@ -223,4 +300,5 @@ public class SmDcService implements ISmDcService {
         }
         dcStMapper.deleteTifData();
     }
+
 }
