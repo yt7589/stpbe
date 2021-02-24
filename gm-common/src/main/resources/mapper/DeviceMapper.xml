@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DeviceMapper">
     <resultMap id="deviceDTO" type="com.zhuanjingkj.stpbe.data.dto.DmDeviceDTO">
-        <result column="camera_id" property="deviceNo" jdbcType="INTEGER"/>
+        <result column="camera_id" property="deviceId" jdbcType="INTEGER"/>
+        <result column="camera_code" property="deviceNo" jdbcType="INTEGER"/>
         <result column="area_name" property="cityName" jdbcType="VARCHAR"/>
         <result column="camera_type_name" property="deviceType" jdbcType="VARCHAR"/>
         <result column="site_name" property="deviceNode" jdbcType="VARCHAR"/>
@@ -20,7 +21,7 @@
         <result column="site_name" property="deviceNodeName" jdbcType="VARCHAR"/>
     </resultMap>
     <select id ="getDmDevice" resultMap ="deviceDTO">
-        SELECT tc.camera_id, ta.area_name, tct.camera_type_name, ts.site_name, ts.site_id,
+        SELECT tc.camera_id, camera_code, ta.area_name, tct.camera_type_name, ts.site_name, ts.site_id,
                case td.direction_name
                when 'east' then '东'
                when 'esatsouth' then '东南'

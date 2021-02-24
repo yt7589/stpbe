@@ -4,6 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class DmDeviceDTO extends BaseDTO {
+    @JSONField(name = "deviceId")
+    private long deviceId;
     @JSONField(name = "deviceNo")
     private String deviceNo; //设备编号
     @JSONField(name = "cityCode")
@@ -27,7 +29,7 @@ public class DmDeviceDTO extends BaseDTO {
         super();
     }
 
-    public DmDeviceDTO(String deviceNo, String cityCode, String cityName, String deviceType,
+    public DmDeviceDTO(long deviceId, String deviceNo, String cityCode, String cityName, String deviceType,
                        String deviceNode, String deviceDirection, String vehicleDirection,
                        long siteId, String videoUrl) {
         this.deviceNo = deviceNo;
@@ -39,6 +41,7 @@ public class DmDeviceDTO extends BaseDTO {
         this.vehicleDirection = vehicleDirection;
         this.videoUrl = videoUrl;
         this.siteId = siteId;
+        this.deviceId = deviceId;
     }
 
     public String getDeviceNo() {
@@ -111,5 +114,13 @@ public class DmDeviceDTO extends BaseDTO {
 
     public void setSiteId(long siteId) {
         this.siteId = siteId;
+    }
+
+    public long getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(long deviceId) {
+        this.deviceId = deviceId;
     }
 }
