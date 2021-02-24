@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DeviceMapper">
-    <resultMap id="deviceDTO" type="com.zhuanjingkj.stpbe.data.dto.DmDeviceDTO">
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.DmDeviceDTO" id="deviceDTO" >
         <result column="camera_id" property="deviceId" jdbcType="INTEGER"/>
         <result column="camera_code" property="deviceNo" jdbcType="INTEGER"/>
         <result column="area_name" property="cityName" jdbcType="VARCHAR"/>
@@ -11,6 +11,9 @@
         <result column="dname" property="deviceDirection" jdbcType="VARCHAR"/>
         <result column="sc_type_name" property="vehicleDirection" jdbcType="VARCHAR"/>
         <result column="rtsp_url" property="videoUrl" jdbcType="VARCHAR"/>
+        <result column="camera_type" property="cameraTypeId" jdbcType="INTEGER"/>
+        <result column="direction_id" property="directionId" jdbcType="INTEGER"/>
+        <result column="sc_type_id" property="scTypeId" jdbcType="INTEGER"/>
     </resultMap>
     <resultMap type="com.zhuanjingkj.stpbe.data.dto.DmDeviceTypeDTO" id="deviceTypeDTO" >
         <result column="camera_type" property="dtId" jdbcType="INTEGER"/>
@@ -21,7 +24,7 @@
         <result column="site_name" property="deviceNodeName" jdbcType="VARCHAR"/>
     </resultMap>
     <select id ="getDmDevice" resultMap ="deviceDTO">
-        SELECT tc.camera_id, camera_code, ta.area_name, tct.camera_type_name, ts.site_name, ts.site_id,
+        SELECT tc.camera_id, tc.camera_code, tct.camera_type, ta.area_name, tct.camera_type_name, ts.site_name, ts.site_id, td.direction_id,
                case td.direction_name
                when 'east' then '东'
                when 'esatsouth' then '东南'
@@ -32,7 +35,7 @@
                when 'north' then '北'
                when 'south' then '南'
                else '无'
-               end 'dname', tst.sc_type_name, tc.rtsp_url
+               end 'dname', tst.sc_type_id, tst.sc_type_name, tc.rtsp_url
           FROM t_camera tc
      LEFT JOIN t_site ts
             ON tc.site_id = ts.site_id
