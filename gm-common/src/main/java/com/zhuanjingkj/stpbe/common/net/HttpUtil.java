@@ -11,8 +11,10 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import java.io.File;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -67,5 +69,37 @@ public class HttpUtil {
                 response.close();
             }
         }
+    }
+
+    public static byte[] downloadImage(String imageUrl) {
+        URL url = null;
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        //从网络上下载一张图片
+        InputStream inputStream = null;
+        //建立一个网络链接
+        HttpURLConnection con = null;
+        try {
+            url = new URL(imageUrl);
+            con = (HttpURLConnection) url.openConnection();
+            inputStream = con.getInputStream();
+            int n = -1;
+            byte b [] = new byte[1024];
+            while ((n = inputStream.read(b)) != -1) {
+                //outputStream.write(b, 0, n);
+                output.write(b, 0, n);
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }finally {
+            try {
+                inputStream.close();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        }
+        return output.toByteArray();
     }
 }
