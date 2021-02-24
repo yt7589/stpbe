@@ -14,6 +14,8 @@ public class DmDeviceDTO extends BaseDTO {
     private String deviceType; //设备类型
     @JSONField(name = "deviceNode")
     private String deviceNode; //所属节点
+    @JSONField(name = "siteId")
+    private long siteId; //所属节点
     @JSONField(name = "deviceDirection")
     private String deviceDirection; //朝向
     @JSONField(name = "vehicleDirection")
@@ -26,7 +28,8 @@ public class DmDeviceDTO extends BaseDTO {
     }
 
     public DmDeviceDTO(String deviceNo, String cityCode, String cityName, String deviceType,
-                       String deviceNode, String deviceDirection, String vehicleDirection, String videoUrl) {
+                       String deviceNode, String deviceDirection, String vehicleDirection,
+                       long siteId, String videoUrl) {
         this.deviceNo = deviceNo;
         this.cityCode = cityCode;
         this.cityName = cityName;
@@ -35,6 +38,7 @@ public class DmDeviceDTO extends BaseDTO {
         this.deviceDirection = deviceDirection;
         this.vehicleDirection = vehicleDirection;
         this.videoUrl = videoUrl;
+        this.siteId = siteId;
     }
 
     public String getDeviceNo() {
@@ -99,5 +103,13 @@ public class DmDeviceDTO extends BaseDTO {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
     }
 }

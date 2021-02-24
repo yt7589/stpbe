@@ -6,6 +6,7 @@
         <result column="area_name" property="cityName" jdbcType="VARCHAR"/>
         <result column="camera_type_name" property="deviceType" jdbcType="VARCHAR"/>
         <result column="site_name" property="deviceNode" jdbcType="VARCHAR"/>
+        <result column="site_id" property="siteId" jdbcType="INTEGER"/>
         <result column="dname" property="deviceDirection" jdbcType="VARCHAR"/>
         <result column="sc_type_name" property="vehicleDirection" jdbcType="VARCHAR"/>
         <result column="rtsp_url" property="videoUrl" jdbcType="VARCHAR"/>
@@ -19,7 +20,7 @@
         <result column="site_name" property="deviceNodeName" jdbcType="VARCHAR"/>
     </resultMap>
     <select id ="getDmDevice" resultMap ="deviceDTO">
-        SELECT tc.camera_id, ta.area_name, tct.camera_type_name, ts.site_name,
+        SELECT tc.camera_id, ta.area_name, tct.camera_type_name, ts.site_name, ts.site_id,
                case td.direction_name
                when 'east' then '东'
                when 'esatsouth' then '东南'
