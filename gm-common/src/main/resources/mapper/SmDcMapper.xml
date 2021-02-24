@@ -57,19 +57,19 @@
     <update id ="uptUserInfo">
         UPDATE t_user
         <trim prefix="set" suffixOverrides=",">
-            <if test="loginName != null and loginName != ''">
+            <if test="rto.loginName != null and rto.loginName != ''">
                 login_name =#{rto.loginName},
             </if>
-            <if test="userName != null and userName != ''">
+            <if test="rto.userName != null and rto.userName != ''">
                 user_name =#{rto.userName},
             </if>
-            <if test="phone != null and phone != ''">
+            <if test="rto.phone != null and rto.phone != ''">
                 phone =#{rto.phone},
             </if>
-            <if test="pwd != null and pwd != ''">
+            <if test="rto.pwd != null and rto.pwd != ''">
                 login_pwd =#{rto.pwd},
             </if>
-            <if test="roleId != null and roleId != ''">
+            <if test="rto.roleId != null and rto.roleId != ''">
                 role_id =#{rto.roleId},
             </if>
         </trim>
