@@ -84,7 +84,7 @@
 
     <insert id="addDevice" useGeneratedKeys="true" keyProperty="rto.deviceId">
         INSERT INTO t_camera(camera_code, camera_type_id, site_id, direction_id, sc_type_id, rtsp_url)
-                      VALUES(#{rto.deviceNo}, #{rto.deviceType}, #{rto.deviceNode}, #{rto.deviceDirection}, #{rto.vehicleDirection}, #{rto.dtUrl})
+                      VALUES(#{rto.deviceNo}, #{rto.deviceType}, #{rto.siteId}, #{rto.deviceDirection}, #{rto.vehicleDirection}, #{rto.dtUrl})
     </insert>
 
     <select id ="getDmDeviceType" resultMap="deviceTypeDTO">
@@ -103,8 +103,8 @@
                 <if test="rto.deviceNo != null and rto.deviceNo != ''">
                     tc.camera_code =#{rto.deviceNo},
                 </if>
-                <if test="rto.deviceNode != null and rto.deviceNode != ''">
-                    tc.site_id =#{rto.deviceNode},
+                <if test="rto.siteId != null and rto.siteId != ''">
+                    tc.site_id =#{rto.siteId},
                 </if>
                 <if test="rto.deviceDirection != null and rto.deviceDirection != ''">
                     tc.direction_id =#{rto.deviceDirection},

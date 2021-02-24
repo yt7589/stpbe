@@ -16,6 +16,8 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
     private String deviceType; //设备类型
     @JSONField(name = "deviceNode")
     private String deviceNode; //所属节点
+    @JSONField(name = "siteId")
+    private long siteId;
     @JSONField(name = "deviceDirection")
     private String deviceDirection; //朝向
     @JSONField(name = "vehicleDirection")
@@ -27,7 +29,7 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
         super();
     }
 
-    public UpdateDeviceInfoRTO(String deviceNo, String cityCode, String cityName,
+    public UpdateDeviceInfoRTO(long siteId, String deviceNo, String cityCode, String cityName,
                                String deviceType, String deviceNode, String deviceDirection, String vehicleDirection, String videoUrl) {
         this.deviceNo = deviceNo;
         this.cityCode = cityCode;
@@ -37,6 +39,7 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
         this.deviceDirection = deviceDirection;
         this.vehicleDirection = vehicleDirection;
         this.videoUrl = videoUrl;
+        this.siteId = siteId;
     }
 
     public String getDeviceNo() {
@@ -109,5 +112,13 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
     }
 }
