@@ -64,38 +64,38 @@ public class DmDeviceController {
     public void export(HttpServletResponse response) {
         String[] columns = {"设备编号", "城市编号", "城市名称", "设备类型", "所属节点", "设备朝向", "车辆方向", "视频流地址"};
         List<DmDeviceDTO> recs = new ArrayList<>();
-        recs.add(new DmDeviceDTO("JHSD0001","JHS0001","北京市海淀区","视频监控",
-                "北京市海淀区西二旗街道19号","东南","车尾","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0002","JHS0001","北京市海淀区","卡口相机",
-                "北京市海淀区上地街道39号","东北","车头","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0003","JHS0001","北京市海淀区","卡口相机",
-                "北京市海淀区西直门街道29号","东南","车尾","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0004","JHS0001","北京市海淀区","卡口相机",
-                "北京市海淀区知春路街道109号","北","车头","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0005","JHS0001","北京市朝阳区","视频监控",
-                "北京市朝阳区东湖区99号","南","车尾","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0006","JHS0001","北京市昌平区","视频监控",
-                "北京市昌平区北七家街道21号","东","车头","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0007","JHS0001","北京市朝阳区","视频监控",
-                "北京市望京街道59号","西","车尾","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0008","JHS0001","北京市海淀区","卡口相机",
-                "北京市海淀区回龙观39号","东南","车头","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0009","JHS0001","北京市海淀区","视频监控",
-                "北京市海淀区上龙泽23号","东北","车尾","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0010","JHS0001","北京市海淀区","卡口相机",
-                "北京市海淀区上龙泽29号","东南","车尾","http://192.168.11.117:8080/resf"));
-
-        recs.add(new DmDeviceDTO("JHSD0011","JHS0001","北京市海淀区","视频监控",
-                "北京市海淀区上龙泽29号","西南","车尾","http://192.168.11.117:8080/resf"));
+//        recs.add(new DmDeviceDTO("JHSD0001","JHS0001","北京市海淀区","视频监控",
+//                "北京市海淀区西二旗街道19号","东南","车尾","http://192.168.11.117:8080/resf"));
+//
+//        recs.add(new DmDeviceDTO("JHSD0002","JHS0001","北京市海淀区","卡口相机",
+//                "北京市海淀区上地街道39号","东北","车头","http://192.168.11.117:8080/resf"));
+//
+//        recs.add(new DmDeviceDTO("JHSD0003","JHS0001","北京市海淀区","卡口相机",
+//                "北京市海淀区西直门街道29号","东南","车尾","http://192.168.11.117:8080/resf"));
+//
+//        recs.add(new DmDeviceDTO("JHSD0004","JHS0001","北京市海淀区","卡口相机",
+//                "北京市海淀区知春路街道109号","北","车头","http://192.168.11.117:8080/resf"));
+//
+//        recs.add(new DmDeviceDTO("JHSD0005","JHS0001","北京市朝阳区","视频监控",
+//                "北京市朝阳区东湖区99号","南","车尾","http://192.168.11.117:8080/resf"));
+//
+//        recs.add(new DmDeviceDTO("JHSD0006","JHS0001","北京市昌平区","视频监控",
+//                "北京市昌平区北七家街道21号","东","车头","http://192.168.11.117:8080/resf"));
+//
+//        recs.add(new DmDeviceDTO("JHSD0007","JHS0001","北京市朝阳区","视频监控",
+//                "北京市望京街道59号","西","车尾","http://192.168.11.117:8080/resf"));
+//
+//        recs.add(new DmDeviceDTO("JHSD0008","JHS0001","北京市海淀区","卡口相机",
+//                "北京市海淀区回龙观39号","东南","车头","http://192.168.11.117:8080/resf"));
+//
+//        recs.add(new DmDeviceDTO("JHSD0009","JHS0001","北京市海淀区","视频监控",
+//                "北京市海淀区上龙泽23号","东北","车尾","http://192.168.11.117:8080/resf"));
+//
+//        recs.add(new DmDeviceDTO("JHSD0010","JHS0001","北京市海淀区","卡口相机",
+//                "北京市海淀区上龙泽29号","东南","车尾","http://192.168.11.117:8080/resf"));
+//
+//        recs.add(new DmDeviceDTO("JHSD0011","JHS0001","北京市海淀区","视频监控",
+//                "北京市海淀区上龙泽29号","西南","车尾","http://192.168.11.117:8080/resf"));
 
         FileExpDTO fed = new FileExpDTO("设备列表" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
 

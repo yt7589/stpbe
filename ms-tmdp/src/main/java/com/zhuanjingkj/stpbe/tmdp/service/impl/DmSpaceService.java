@@ -3,6 +3,7 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 import com.zhuanjingkj.stpbe.common.mapper.DmSpaceMapper;
 import com.zhuanjingkj.stpbe.data.dto.*;
 import com.zhuanjingkj.stpbe.data.rto.dm.AddAreaToSpaceRTO;
+import com.zhuanjingkj.stpbe.data.rto.dm.UpdateSpaceAreaRTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.dm.DeleteAreaFromSpaceRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IDmSpaceService;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
@@ -76,9 +77,9 @@ public class DmSpaceService implements IDmSpaceService {
     }
 
     @Override
-    public ResultDTO<DbDeleteResultDTO> updateArea_exp(long areaId, String areaName) {
+    public ResultDTO<DbDeleteResultDTO> updateArea_exp(UpdateSpaceAreaRTO rto) {
         ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
-        Integer affectedRows = dmSpaceMapper.updateAreaInfo(areaId, areaName);
+        Integer affectedRows = dmSpaceMapper.updateAreaInfo(rto);
         DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);
         dto.setData(data);
         return dto;

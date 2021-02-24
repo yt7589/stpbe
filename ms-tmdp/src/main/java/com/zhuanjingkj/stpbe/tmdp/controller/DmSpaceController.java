@@ -5,6 +5,7 @@ import com.zhuanjingkj.stpbe.data.dto.DbInsertResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.rto.dm.AddAreaToSpaceRTO;
+import com.zhuanjingkj.stpbe.data.rto.dm.UpdateSpaceAreaRTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.dm.DeleteAreaFromSpaceRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DmSpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,17 +59,16 @@ public class DmSpaceController {
      * 修改区域名称
      * @param platform
      * @param version
-     * @param areaId
+     * @param rto
      * @return
      */
     @PutMapping(value = "/sm/updateArea")
     public ResultDTO<DbDeleteResultDTO> updateArea (
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestParam(name = "areaId", required = false) long areaId,
-        @RequestParam(name = "areaName", required = false) String areaName
+        @RequestBody UpdateSpaceAreaRTO rto
     ) {
-        return updateArea_exp(areaId, areaName);
+        return updateArea_exp(rto);
     }
 
     /**
@@ -95,8 +95,8 @@ public class DmSpaceController {
         return dmSpaceService.addAreaToSpace_exp(rto);
     }
 
-    private ResultDTO<DbDeleteResultDTO> updateArea_exp(long areaId, String areaName) {
-        return dmSpaceService.updateArea_exp(areaId, areaName);
+    private ResultDTO<DbDeleteResultDTO> updateArea_exp(UpdateSpaceAreaRTO rto) {
+        return dmSpaceService.updateArea_exp(rto);
     }
 
     private ResultDTO<DbDeleteResultDTO> deleteAreaFromSpace_exp(DeleteAreaFromSpaceRTO rto) {

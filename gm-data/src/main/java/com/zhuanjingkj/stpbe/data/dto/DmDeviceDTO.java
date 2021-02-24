@@ -4,6 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class DmDeviceDTO extends BaseDTO {
+    @JSONField(name = "deviceId")
+    private long deviceId;
     @JSONField(name = "deviceNo")
     private String deviceNo; //设备编号
     @JSONField(name = "cityCode")
@@ -14,19 +16,29 @@ public class DmDeviceDTO extends BaseDTO {
     private String deviceType; //设备类型
     @JSONField(name = "deviceNode")
     private String deviceNode; //所属节点
+    @JSONField(name = "siteId")
+    private long siteId; //所属节点
     @JSONField(name = "deviceDirection")
     private String deviceDirection; //朝向
     @JSONField(name = "vehicleDirection")
     private String vehicleDirection; //车辆方向
     @JSONField(name = "videoUrl")
     private String videoUrl; //视频流地址
+    @JSONField(name = "cameraTypeId")
+    private Integer cameraTypeId; //设备类型id
+    @JSONField(name = "directionId")
+    private Integer directionId; //方向id
+    @JSONField(name = "scTypeId")
+    private Integer scTypeId; //车辆方向id
 
     public DmDeviceDTO() {
         super();
     }
 
-    public DmDeviceDTO(String deviceNo, String cityCode, String cityName, String deviceType,
-                       String deviceNode, String deviceDirection, String vehicleDirection, String videoUrl) {
+    public DmDeviceDTO(long deviceId, String deviceNo, String cityCode, String cityName, String deviceType,
+                       String deviceNode, String deviceDirection, String vehicleDirection,
+                       long siteId, String videoUrl, Integer cameraTypeId,
+                       Integer directionId, Integer scTypeId) {
         this.deviceNo = deviceNo;
         this.cityCode = cityCode;
         this.cityName = cityName;
@@ -35,6 +47,11 @@ public class DmDeviceDTO extends BaseDTO {
         this.deviceDirection = deviceDirection;
         this.vehicleDirection = vehicleDirection;
         this.videoUrl = videoUrl;
+        this.siteId = siteId;
+        this.deviceId = deviceId;
+        this.cameraTypeId = cameraTypeId;
+        this.directionId = directionId;
+        this.scTypeId = scTypeId;
     }
 
     public String getDeviceNo() {
@@ -99,5 +116,45 @@ public class DmDeviceDTO extends BaseDTO {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
+    }
+
+    public long getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(long deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public Integer getCameraTypeId() {
+        return cameraTypeId;
+    }
+
+    public void setCameraTypeId(Integer cameraTypeId) {
+        this.cameraTypeId = cameraTypeId;
+    }
+
+    public Integer getDirectionId() {
+        return directionId;
+    }
+
+    public void setDirectionId(Integer directionId) {
+        this.directionId = directionId;
+    }
+
+    public Integer getScTypeId() {
+        return scTypeId;
+    }
+
+    public void setScTypeId(Integer scTypeId) {
+        this.scTypeId = scTypeId;
     }
 }

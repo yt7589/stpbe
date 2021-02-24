@@ -16,19 +16,30 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
     private String deviceType; //设备类型
     @JSONField(name = "deviceNode")
     private String deviceNode; //所属节点
+    @JSONField(name = "siteId")
+    private long siteId;
     @JSONField(name = "deviceDirection")
     private String deviceDirection; //朝向
     @JSONField(name = "vehicleDirection")
     private String vehicleDirection; //车辆方向
     @JSONField(name = "videoUrl")
     private String videoUrl; //视频流地址
+    @JSONField(name = "cameraTypeId")
+    private Integer cameraTypeId; //设备类型id
+    @JSONField(name = "directionId")
+    private Integer directionId; //方向id
+    @JSONField(name = "scTypeId")
+    private Integer scTypeId; //车辆方向id
+
 
     public UpdateDeviceInfoRTO() {
         super();
     }
 
-    public UpdateDeviceInfoRTO(String deviceNo, String cityCode, String cityName,
-                               String deviceType, String deviceNode, String deviceDirection, String vehicleDirection, String videoUrl) {
+    public UpdateDeviceInfoRTO(long siteId, String deviceNo, String cityCode, String cityName,
+                               String deviceType, String deviceNode, String deviceDirection, String vehicleDirection,
+                               String videoUrl, Integer cameraTypeId,
+                               Integer directionId, Integer scTypeId) {
         this.deviceNo = deviceNo;
         this.cityCode = cityCode;
         this.cityName = cityName;
@@ -37,6 +48,10 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
         this.deviceDirection = deviceDirection;
         this.vehicleDirection = vehicleDirection;
         this.videoUrl = videoUrl;
+        this.siteId = siteId;
+        this.cameraTypeId = cameraTypeId;
+        this.directionId = directionId;
+        this.scTypeId = scTypeId;
     }
 
     public String getDeviceNo() {
@@ -109,5 +124,37 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
+    }
+
+    public Integer getCameraTypeId() {
+        return cameraTypeId;
+    }
+
+    public void setCameraTypeId(Integer cameraTypeId) {
+        this.cameraTypeId = cameraTypeId;
+    }
+
+    public Integer getDirectionId() {
+        return directionId;
+    }
+
+    public void setDirectionId(Integer directionId) {
+        this.directionId = directionId;
+    }
+
+    public Integer getScTypeId() {
+        return scTypeId;
+    }
+
+    public void setScTypeId(Integer scTypeId) {
+        this.scTypeId = scTypeId;
     }
 }

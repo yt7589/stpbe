@@ -5,6 +5,7 @@ import com.zhuanjingkj.stpbe.data.dto.DbInsertResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.rto.dm.AddAreaToSpaceRTO;
+import com.zhuanjingkj.stpbe.data.rto.dm.UpdateSpaceAreaRTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.dm.DeleteAreaFromSpaceRTO;
 
 public interface IDmSpaceService {
@@ -13,7 +14,7 @@ public interface IDmSpaceService {
 
     ResultDTO<DbInsertResultDTO> addAreaToSpace_exp(AddAreaToSpaceRTO rto);
 
-    ResultDTO<DbDeleteResultDTO> updateArea_exp(long areaId, String areaName);
+    ResultDTO<DbDeleteResultDTO> updateArea_exp(UpdateSpaceAreaRTO rto);
 
     ResultDTO<DbDeleteResultDTO> deleteAreaFromSpace_exp(DeleteAreaFromSpaceRTO rto);
 }

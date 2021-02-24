@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.common.mapper;
 
 import com.zhuanjingkj.stpbe.data.dto.DmAmAreaDTO;
 import com.zhuanjingkj.stpbe.data.rto.dm.AddAreaToSpaceRTO;
+import com.zhuanjingkj.stpbe.data.rto.dm.UpdateSpaceAreaRTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface DmSpaceMapper {
 
     Integer insertDmSpace(@Param("rto") AddAreaToSpaceRTO rto, @Param("newcode") String newcode, @Param("level") Integer level);
 
-    Integer updateAreaInfo(@Param("areaId") long areaId, @Param("areaName") String areaName);
+    Integer updateAreaInfo(@Param("rto") UpdateSpaceAreaRTO rto);
 
     Integer deleteSpaceArea(@Param("areaId") long areaId);
 }
