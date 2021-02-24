@@ -99,25 +99,26 @@
 
     <update id="updateDeviceInfo" parameterType="com.zhuanjingkj.stpbe.data.rto.dm.UpdateDeviceInfoRTO">
         UPDATE t_camera tc
-           SET
-            <if test="rto.deviceNo != null and rto.deviceNo != ''">
-                tc.camera_code =#{rto.deviceNo},
-            </if>
-            <if test="rto.deviceNode != null and rto.deviceNode != ''">
-                tc.site_id =#{rto.deviceNode},
-            </if>
-            <if test="rto.deviceDirection != null and rto.deviceDirection != ''">
-                tc.direction_id =#{rto.deviceDirection},
-            </if>
-            <if test="rto.vehicleDirection != null and rto.vehicleDirection != ''">
-                tc.sc_type_id =#{rto.vehicleDirection},
-            </if>
-            <if test="rto.deviceType != null and rto.deviceType != ''">
-                tc.camera_type_id =#{rto.deviceType},
-            </if>
-            <if test="rto.videoUrl != null and rto.videoUrl != ''">
-                tc.rtsp_url =#{rto.videoUrl}
-            </if>
+            <trim prefix="set" suffixOverrides=",">
+                <if test="rto.deviceNo != null and rto.deviceNo != ''">
+                    tc.camera_code =#{rto.deviceNo},
+                </if>
+                <if test="rto.deviceNode != null and rto.deviceNode != ''">
+                    tc.site_id =#{rto.deviceNode},
+                </if>
+                <if test="rto.deviceDirection != null and rto.deviceDirection != ''">
+                    tc.direction_id =#{rto.deviceDirection},
+                </if>
+                <if test="rto.vehicleDirection != null and rto.vehicleDirection != ''">
+                    tc.sc_type_id =#{rto.vehicleDirection},
+                </if>
+                <if test="rto.deviceType != null and rto.deviceType != ''">
+                    tc.camera_type_id =#{rto.deviceType},
+                </if>
+                <if test="rto.videoUrl != null and rto.videoUrl != ''">
+                    tc.rtsp_url =#{rto.videoUrl}
+                </if>
+            </trim>
          WHERE tc.camera_id = #{rto.deviceId}
     </update>
 
