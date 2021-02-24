@@ -19,7 +19,7 @@ public interface DmSpaceMapper {
 
     Integer insertDmSpace(@Param("rto") AddAreaToSpaceRTO rto, @Param("newcode") String newcode, @Param("level") Integer level);
 
-    Integer updateAreaInfo(@Param("areaId") long areaId, @Param("areaName") String areaName);
+    Integer updateAreaInfo(@Param("areaId") Long areaId, @Param("areaName") String areaName);
 
     Integer deleteSpaceArea(@Param("areaId") long areaId);
 }

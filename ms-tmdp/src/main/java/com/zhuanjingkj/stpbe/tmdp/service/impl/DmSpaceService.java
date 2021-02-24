@@ -76,7 +76,7 @@ public class DmSpaceService implements IDmSpaceService {
     }
 
     @Override
-    public ResultDTO<DbDeleteResultDTO> updateArea_exp(long areaId, String areaName) {
+    public ResultDTO<DbDeleteResultDTO> updateArea_exp(Long areaId, String areaName) {
         ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
         Integer affectedRows = dmSpaceMapper.updateAreaInfo(areaId, areaName);
         DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);

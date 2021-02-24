@@ -13,7 +13,7 @@ public interface IDmSpaceService {
 
     ResultDTO<DbInsertResultDTO> addAreaToSpace_exp(AddAreaToSpaceRTO rto);
 
-    ResultDTO<DbDeleteResultDTO> updateArea_exp(long areaId, String areaName);
+    ResultDTO<DbDeleteResultDTO> updateArea_exp(Long areaId, String areaName);
 
     ResultDTO<DbDeleteResultDTO> deleteAreaFromSpace_exp(DeleteAreaFromSpaceRTO rto);
 }

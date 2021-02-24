@@ -65,7 +65,7 @@ public class DmSpaceController {
     public ResultDTO<DbDeleteResultDTO> updateArea (
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
-        @RequestParam(name = "areaId", required = false) long areaId,
+        @RequestParam(name = "areaId", required = false) Long areaId,
         @RequestParam(name = "areaName", required = false) String areaName
     ) {
         return updateArea_exp(areaId, areaName);
@@ -95,7 +95,7 @@ public class DmSpaceController {
         return dmSpaceService.addAreaToSpace_exp(rto);
     }
 
-    private ResultDTO<DbDeleteResultDTO> updateArea_exp(long areaId, String areaName) {
+    private ResultDTO<DbDeleteResultDTO> updateArea_exp(Long areaId, String areaName) {
         return dmSpaceService.updateArea_exp(areaId, areaName);
     }
 
