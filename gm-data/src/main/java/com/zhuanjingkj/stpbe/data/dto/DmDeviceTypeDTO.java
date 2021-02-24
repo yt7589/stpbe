@@ -5,7 +5,7 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class DmDeviceTypeDTO extends BaseDTO {
     @JSONField(name = "dtId")
-    private String dtId; //设备类型id
+    private long dtId; //设备类型id
     @JSONField(name = "dtName")
     private String dtName; //设备类型名称
 
@@ -13,16 +13,16 @@ public class DmDeviceTypeDTO extends BaseDTO {
         super();
     }
 
-    public DmDeviceTypeDTO(String dtId, String dtName) {
+    public DmDeviceTypeDTO(long dtId, String dtName) {
         this.dtId = dtId;
         this.dtName = dtName;
     }
 
-    public String getDtId() {
+    public long getDtId() {
         return dtId;
     }
 
-    public void setDtId(String dtId) {
+    public void setDtId(long dtId) {
         this.dtId = dtId;
     }
 
