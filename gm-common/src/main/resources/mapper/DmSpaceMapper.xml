@@ -43,8 +43,8 @@
     </insert>
 
     <update id ="updateAreaInfo">
-        UPDATE t_area ta SET ta.area_name =#{areaName}
-         WHERE ta.area_id =#{areaId}
+        UPDATE t_area ta SET ta.area_name =#{rto.areaName}
+         WHERE ta.area_id =#{rto.areaId}
     </update>
 
     <delete id ="deleteSpaceArea">
