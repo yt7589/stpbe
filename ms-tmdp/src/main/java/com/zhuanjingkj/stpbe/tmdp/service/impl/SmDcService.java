@@ -119,6 +119,7 @@ public class SmDcService implements ISmDcService {
 
     @Override
     public ResultDTO<String> uploadImg_exp(MultipartFile file) {
+        System.out.println("图片上传file >>>" + file);
         ResultDTO dto = new ResultDTO();
         String fileName = "sys_logo_" + System.currentTimeMillis() + ".jpg";
         String imgUrl = "";
