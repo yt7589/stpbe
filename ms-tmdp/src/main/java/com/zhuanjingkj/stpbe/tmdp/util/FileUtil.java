@@ -151,8 +151,8 @@ public class FileUtil {
 
     public static boolean uploadImg(MultipartFile file, String fileName) {
         boolean flag = false;
-//        String path = PropUtil.getValue("stp.img.path");
-        String path = "D://";
+        String path = PropUtil.getValue("stp.img.path");
+//        String path = "D://";
         File file1 = new File(path + fileName);
         try {
             file.transferTo(file1);
