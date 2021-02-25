@@ -114,7 +114,7 @@ public class SmDcService implements ISmDcService {
     public ResultDTO<DbInsertResultDTO> uptSysInfo_exp(MultipartFile file, String qyName, String sysName,
                                                        String qyIcp, String ownership) {
         String qyImgUrl = "";
-        if(file.isEmpty()) {
+        if(file == null  ||  file.isEmpty()) {
             System.out.println("文件为空");
         } else {
             String fileName = "sys_" + System.currentTimeMillis() +".jpg"; //文件名
