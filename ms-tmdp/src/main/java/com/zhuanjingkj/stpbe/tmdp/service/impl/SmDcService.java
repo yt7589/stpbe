@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
@@ -337,7 +338,8 @@ public class SmDcService implements ISmDcService {
         try{
             CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
                     request.getSession().getServletContext());
-            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+            MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+            MultipartHttpServletRequest multiRequest = resolver.resolveMultipart(request) ;
             Iterator<String> iter = multiRequest.getFileNames();
             String path = PropUtil.getValue("sys.logo.path");
             File file1 = null;
