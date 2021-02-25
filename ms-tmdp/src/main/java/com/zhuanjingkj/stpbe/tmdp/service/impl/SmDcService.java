@@ -346,6 +346,7 @@ public class SmDcService implements ISmDcService {
                     List<MultipartFile> fileRows = multiRequest.getFiles(iter.next().toString());
                     if (fileRows != null && fileRows.size() != 0) {
                         for (MultipartFile file : fileRows) {
+                            System.out.println("file>>>" + file);
                             if (file != null && !file.isEmpty()) {
                                 file1 = new File(path + "sys_" + System.currentTimeMillis() +".jpg");
                                 file.transferTo(file1);
