@@ -24,7 +24,7 @@ public class AddDeviceToDsRTO extends BaseRTO {
     private Integer cameraTypeId; //设备类型id
     @JSONField(name = "directionId")
     private Integer directionId; //方向id
-        @JSONField(name = "scTypeId")
+    @JSONField(name = "scTypeId")
     private Integer scTypeId; //车辆方向id
 
     public AddDeviceToDsRTO() {

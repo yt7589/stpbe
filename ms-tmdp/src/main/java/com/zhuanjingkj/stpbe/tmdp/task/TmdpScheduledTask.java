@@ -1,13 +1,12 @@
 package com.zhuanjingkj.stpbe.tmdp.task;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.data.dto.KsAsLsvDTO;
 import com.zhuanjingkj.stpbe.tmdp.controller.TmdpWsHandler;
-import com.zhuanjingkj.stpbe.tmdp.dto.ks.*;
+import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsRssLsvsDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsRssSfvsDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.KsAsService;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.KsRssService;
 import org.apache.commons.lang.StringUtils;
-
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,8 +14,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -30,7 +27,7 @@ public class TmdpScheduledTask {
     @Autowired
     private RedisTemplate redisTemplate;
     @Async("tmdpPool")
-    @Scheduled(cron = "*/1 10 * * * ?")
+    @Scheduled(cron = "*/1 * * * * ?")
     public void runTmdpScheduledTask() {
         // 处理重点监管区域监管点位频繁经过车辆列表
         pushKsAsSfvsMsg();
