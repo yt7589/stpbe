@@ -397,7 +397,7 @@ public class TvisUtil {
             redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
         }
         // ！！！！！ 测试程序，正式环境下需保持注释掉状态 ！！！！！！
-        //prepareWxs2102TestRst(redisTemplate, requestList, requestId);
+        prepareXaidrRst(redisTemplate, requestList, requestId);
         long startTime = System.currentTimeMillis();
         String response = null;
         System.out.println("##### begin reading response...");
@@ -639,6 +639,28 @@ public class TvisUtil {
             }
         }
         return tzxl;
+    }
+
+    private static void prepareXaidrRst(RedisTemplate redisTemplate, String requestList, String requestId) {
+        JSONArray arr = new JSONArray();
+        JSONObject item = null;
+        //
+        item = new JSONObject();
+        item.put("SXH", 1);
+        item.put("MBWZ", "101,102,103,104");
+        item.put("MBKXD", "99");
+        arr.add(item);
+        //
+        item.put("SXH", 2);
+        item.put("MBWZ", "201,202,203,204");
+        item.put("MBKXD", "98");
+        arr.add(item);
+        //
+        item.put("SXH", 3);
+        item.put("MBWZ", "301,302,303,304");
+        item.put("MBKXD", "97");
+        arr.add(item);
+        redisTemplate.opsForValue().set(requestId, arr.toString());
     }
 
     /**
