@@ -116,6 +116,7 @@ public class SmDcService implements ISmDcService {
         String qyImgUrl = "";
         if(file == null  ||  file.isEmpty()) {
             System.out.println("文件为空");
+            System.out.println("file >>>>" + file);
         } else {
             String fileName = "sys_" + System.currentTimeMillis() +".jpg"; //文件名
 //            String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
