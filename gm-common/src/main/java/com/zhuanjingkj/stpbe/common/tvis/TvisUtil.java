@@ -397,7 +397,7 @@ public class TvisUtil {
             redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
         }
         // ！！！！！ 测试程序，正式环境下需保持注释掉状态 ！！！！！！
-        prepareXaidrRst(redisTemplate, requestList, requestId);
+        //prepareXaidrRst(redisTemplate, requestList, requestId);
         long startTime = System.currentTimeMillis();
         String response = null;
         System.out.println("##### begin reading response...");
