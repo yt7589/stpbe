@@ -47,6 +47,7 @@ public class StpImageController {
                                                         @RequestParam(name = "cameraId", required = true) String cameraId,
                                                         @RequestParam(name = "TPXX", required = false) MultipartFile file,
                                                         @RequestParam(name = "TPWJ", required = false) String tpwj) {
+        System.out.println("StpImageController 1");
         byte[] data = null;
         if ("1".equals(tplx)) {
             if (file != null) {
@@ -59,6 +60,7 @@ public class StpImageController {
         } else if ("2".equals(tplx)) {
             data = Base64.getDecoder().decode(tpwj);
         }
+        System.out.println("StpImageController 2");
         File imageFile = new File("c" + cameraId + "_" + System.currentTimeMillis() + ".jpg");
         try {
             FileOutputStream fos = new FileOutputStream(imageFile);
@@ -68,6 +70,7 @@ public class StpImageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("StpImageController 3");
         return stpImageService.submitImage(cameraId, "0", mrhpt, hphm, data, imageFile.getAbsolutePath());
     }
 
