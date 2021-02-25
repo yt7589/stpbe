@@ -119,8 +119,8 @@ public class SmDcService implements ISmDcService {
         } else {
             String fileName = "sys_" + System.currentTimeMillis() +".jpg"; //文件名
 //            String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
-//            String filePath = "/home/ps/yantao/stp/imgs/"; // 上传后的路径
-            String filePath = "D://"; // 上传后的路径
+            String filePath = "/home/ps/yantao/stp/imgs/"; // 上传后的路径
+//            String filePath = "D://"; // 上传后的路径
 //            fileName = UUID.randomUUID() + suffixName; // 新文件名
             File dest = new File(filePath + fileName);
             if (!dest.getParentFile().exists()) {
