@@ -54,6 +54,7 @@
             <if test="code != null and code != ''">
                 AND tc.camera_id =#{code}
             </if>
+      ORDER BY camera_id DESC
          LIMIT #{startIndex}, #{amount}
     </select>
 
@@ -87,7 +88,7 @@
 
     <insert id="addDevice" useGeneratedKeys="true" keyProperty="rto.deviceId">
         INSERT INTO t_camera(camera_code, camera_type_id, site_id, direction_id, sc_type_id, rtsp_url)
-                      VALUES(#{rto.deviceNo}, #{rto.cameraTypeId}, #{rto.siteId}, #{rto.directionId}, #{rto.scTypeId}, #{rto.dtUrl})
+                      VALUES(#{rto.deviceNo}, #{rto.cameraTypeId}, #{rto.siteId}, #{rto.directionId}, #{rto.scTypeId}, #{rto.videoUrl})
     </insert>
 
     <select id ="getDmDeviceType" resultMap="deviceTypeDTO">

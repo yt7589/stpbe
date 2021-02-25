@@ -5,7 +5,7 @@ import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 public class DmDeviceNodeDTO extends BaseDTO {
     @JSONField(name = "deviceNodeId")
-    private String deviceNodeId;
+    private long deviceNodeId;
     @JSONField(name = "deviceNodeName")
     private String deviceNodeName;
 
@@ -13,16 +13,16 @@ public class DmDeviceNodeDTO extends BaseDTO {
         super();
     }
 
-    public DmDeviceNodeDTO(String deviceNodeId, String deviceNodeName) {
+    public DmDeviceNodeDTO(long deviceNodeId, String deviceNodeName) {
         this.deviceNodeId = deviceNodeId;
         this.deviceNodeName = deviceNodeName;
     }
 
-    public String getDeviceNodeId() {
+    public long getDeviceNodeId() {
         return deviceNodeId;
     }
 
-    public void setDeviceNodeId(String deviceNodeId) {
+    public void setDeviceNodeId(long deviceNodeId) {
         this.deviceNodeId = deviceNodeId;
     }
 
