@@ -10,6 +10,7 @@ import com.zhuanjingkj.stpbe.data.dto.SmRoleDTO;
 import com.zhuanjingkj.stpbe.data.rto.sm.UpdateUserInfoRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.ISmDcService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
+import com.zhuanjingkj.stpbe.tmdp.util.FileUtil;
 import com.zhuanjingkj.stpbe.tmdp.util.SHA1;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,15 +120,13 @@ public class SmDcService implements ISmDcService {
     @Override
     public ResultDTO<String> uploadImg_exp(MultipartFile file) {
         ResultDTO dto = new ResultDTO();
-        String path = "D://";
         String fileName = "sys_logo_" + System.currentTimeMillis() + ".jpg";
-        File file1 = new File(path + fileName);
-        try {
-            file.transferTo(file1);
-        } catch (Exception e) {
-            e.printStackTrace();
+        String imgUrl = "";
+        if(FileUtil.uploadImg(file, fileName)) {
+            imgUrl = PropUtil.getValue("sys.logo.url") + fileName;
+        } else {
         }
-        dto.setData(PropUtil.getValue("sys.logo.url") + fileName);
+        dto.setData(imgUrl);
         return dto;
     }
 
