@@ -117,12 +117,23 @@ public class SmDcService implements ISmDcService {
     }
 
     @Override
-    public ResultDTO<DbInsertResultDTO> uptSysInfo_exp(MultipartFile file, String qyName, String sysName,
-                                                       String qyIcp, String ownership, HttpServletRequest request) {
-        uploadImg(request);
-        String fileName = "sys_" + System.currentTimeMillis() +".jpg"; //文件名
-        String qyImgUrl = PropUtil.getValue("sys.logo.url") + fileName; //logo存放路径
-//        qyImgUrl = "http://222.128.117.234:9003/imgs/" + fileName;
+    public ResultDTO<String> uploadImg_exp(MultipartFile file) {
+        ResultDTO dto = new ResultDTO();
+        String path = "D://";
+        String fileName = "sys_logo_" + System.currentTimeMillis() + ".jpg";
+        File file1 = new File(path + fileName);
+        try {
+            file.transferTo(file1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        dto.setData(PropUtil.getValue("sys.logo.url") + fileName);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<DbInsertResultDTO> uptSysInfo_exp(String qyImgUrl, String qyName, String sysName,
+                                                       String qyIcp, String ownership) {
         ResultDTO dto = new ResultDTO();
         Integer affectedRows =  smDcMapper.uptSysInfo(qyName, qyImgUrl, sysName, qyIcp, ownership);
         DbInsertResultDTO data = new DbInsertResultDTO(0,affectedRows);
@@ -332,53 +343,5 @@ public class SmDcService implements ISmDcService {
             redisTemplate.delete("dc_st_truck");
         }
         dcStMapper.deleteTifData();
-    }
-
-    private void uploadImg(HttpServletRequest request) {
-        try{
-            CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
-                    request.getSession().getServletContext());
-            MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-            MultipartHttpServletRequest multiRequest = resolver.resolveMultipart(request) ;
-            Iterator<String> iter = multiRequest.getFileNames();
-            String path = PropUtil.getValue("sys.logo.path");
-            File file1 = null;
-            if(multipartResolver.isMultipart(request) && iter.hasNext()) {
-                while (iter.hasNext()) {
-                    List<MultipartFile> fileRows = multiRequest.getFiles(iter.next().toString());
-                    if (fileRows != null && fileRows.size() != 0) {
-                        for (MultipartFile file : fileRows) {
-                            System.out.println("file>>>" + file);
-                            if (file != null && !file.isEmpty()) {
-                                file1 = new File(path + "sys_" + System.currentTimeMillis() +".jpg");
-                                file.transferTo(file1);
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        if(file == null  ||  file.isEmpty()) {
-//            System.out.println("文件为空");
-//            System.out.println("file >>>>" + file);
-//        } else {
-//            String fileName = "sys_" + System.currentTimeMillis() +".jpg"; //文件名
-//            String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
-//            String filePath = "/home/ps/yantao/stp/imgs/"; // 上传后的路径
-//           String filePath = "D://"; // 上传后的路径
-//           fileName = UUID.randomUUID() + suffixName; // 新文件名
-//            File dest = new File(filePath + fileName);
-//            if (!dest.getParentFile().exists()) {
-//                dest.getParentFile().mkdirs();
-//            }
-//            try {
-//                file.transferTo(dest);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
     }
 }

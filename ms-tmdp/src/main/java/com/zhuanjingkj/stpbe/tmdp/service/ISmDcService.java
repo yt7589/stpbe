@@ -28,8 +28,10 @@ public interface ISmDcService {
 
     ResultDTO<SmUserDTO> getUserInfo_exp(long loginName);
 
-    ResultDTO<DbInsertResultDTO> uptSysInfo_exp(MultipartFile file, String qyName, String sysName,
-                                                String qyIcp, String ownership, HttpServletRequest request);
+    ResultDTO<DbInsertResultDTO> uptSysInfo_exp(String qyImgUrl, String qyName, String sysName,
+                                                String qyIcp, String ownership);
 
     ResultDTO<SmSysInfoDTO> getSysInfo_exp();
+
+    ResultDTO<String> uploadImg_exp(MultipartFile file);
 }

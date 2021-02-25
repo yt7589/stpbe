@@ -146,14 +146,28 @@ public class SmDcController {
     public ResultDTO<DbInsertResultDTO> uptSysInfo(
         @RequestParam(name = "p", required = false) String platform,
         @RequestParam(name = "v", required = false) String version,
-        @RequestParam(name = "file", required = false) MultipartFile file,
+        @RequestParam(name = "qyImgUrl", required = false) String qyImgUrl,
         @RequestParam(name = "qyName", required = false) String qyName,
         @RequestParam(name = "sysName", required = false) String sysName,
         @RequestParam(name = "qyIcp", required = false) String qyIcp,
         @RequestParam(name = "ownership", required = false) String ownership,
         HttpServletRequest request
     ) {
-        return uptSysInfo_exp(file, qyName, sysName, qyIcp, ownership, request);
+        return uptSysInfo_exp(qyImgUrl, qyName, sysName, qyIcp, ownership, request);
+    }
+
+    /**
+     * 图片上传
+     * @param file
+     * @return
+     */
+    @PostMapping(value ="/uploadImg")
+    public ResultDTO<String> uploadImg(
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version,
+        @RequestParam(name = "file") MultipartFile file
+    ) {
+        return uploadImg_exp(file);
     }
 
     private ResultDTO<SmSysInfoDTO> getSysInfo_exp() {
@@ -185,9 +199,13 @@ public class SmDcController {
         return smDcService.getUserInfo_exp(userId);
     }
 
-    private ResultDTO<DbInsertResultDTO> uptSysInfo_exp(MultipartFile file, String qyName, String sysName,
+    private ResultDTO<DbInsertResultDTO> uptSysInfo_exp(String qyImgUrl, String qyName, String sysName,
                                                         String qyIcp, String ownership, HttpServletRequest request) {
-        return smDcService.uptSysInfo_exp(file, qyName, sysName, qyIcp, ownership, request);
+        return smDcService.uptSysInfo_exp(qyImgUrl, qyName, sysName, qyIcp, ownership);
+    }
+
+    private ResultDTO<String> uploadImg_exp(MultipartFile file) {
+        return smDcService.uploadImg_exp(file);
     }
     /**
      * 手动数据清空
