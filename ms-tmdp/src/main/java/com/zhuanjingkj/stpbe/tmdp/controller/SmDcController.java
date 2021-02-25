@@ -6,7 +6,9 @@ import com.zhuanjingkj.stpbe.data.rto.sm.DeleteUserFromSmRTO;
 import com.zhuanjingkj.stpbe.data.rto.sm.UpdateUserInfoRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.SmDcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * System data manager 系统管理
@@ -102,9 +104,56 @@ public class SmDcController {
         return getRoles_exp(startIndex, amount, direction);
     }
 
+    /**
+     * 获取用户信息
+     * @param platform
+     * @param version
+     * @param userId
+     * @return
+     */
     @GetMapping(value ="/getUserInfo")
-    public ResultDTO<SmUserDTO> getUserInfo(long userId) {
+    public ResultDTO<SmUserDTO> getUserInfo(
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version,
+        @RequestParam(name = "userId", required = false) long userId
+    ) {
         return getUserInfo_exp(userId);
+    }
+
+    /**
+     * 获取系统配置信息
+     * @param platform
+     * @param version
+     * @return
+     */
+    @GetMapping(value = "/getSysInfo")
+    public ResultDTO<SmSysInfoDTO> getSysInfo(
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version
+    ) {
+        return getSysInfo_exp();
+    }
+    /**
+     * 系统信息配置
+     * @param platform
+     * @param version
+     * @return
+     */
+    @PostMapping(value ="/uptSysInfo")
+    public ResultDTO<DbInsertResultDTO> uptSysInfo(
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version,
+        @RequestParam(name = "file", required = false) MultipartFile file,
+        @RequestParam(name = "qyName", required = false) String qyName,
+        @RequestParam(name = "sysName", required = false) String sysName,
+        @RequestParam(name = "qyIcp", required = false) String qyIcp,
+        @RequestParam(name = "ownership", required = false) String ownership
+    ) {
+        return uptSysInfo_exp(file, qyName, sysName, qyIcp, ownership);
+    }
+
+    private ResultDTO<SmSysInfoDTO> getSysInfo_exp() {
+        return smDcService.getSysInfo_exp();
     }
 
     private ResultDTO<DbQrsDTO> getUsers_exp(Integer startIndex, Integer amount, Integer direction,
@@ -132,6 +181,10 @@ public class SmDcController {
         return smDcService.getUserInfo_exp(userId);
     }
 
+    private ResultDTO<DbInsertResultDTO> uptSysInfo_exp(MultipartFile file, String qyName, String sysName,
+                                                        String qyIcp, String ownership) {
+        return smDcService.uptSysInfo_exp(file, qyName, sysName, qyIcp, ownership);
+    }
     /**
      * 手动数据清空
      */

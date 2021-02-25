@@ -14,10 +14,15 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SmDcService implements ISmDcService {
@@ -94,6 +99,44 @@ public class SmDcService implements ISmDcService {
         ResultDTO dto = new ResultDTO();
         SmUserDTO smUserDTO = smDcMapper.getUserInfo(userId);
         dto.setData(smUserDTO);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<SmSysInfoDTO> getSysInfo_exp() {
+        ResultDTO dto = new ResultDTO();
+        SmSysInfoDTO sysInfoDTO = smDcMapper.getSysInfo();
+        dto.setData(sysInfoDTO);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<DbInsertResultDTO> uptSysInfo_exp(MultipartFile file, String qyName, String sysName,
+                                                       String qyIcp, String ownership) {
+        String qyImgUrl = "";
+        if(file.isEmpty()) {
+            System.out.println("文件为空");
+        } else {
+            String fileName = "sys_" + System.currentTimeMillis() +".jpg"; //文件名
+//            String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
+//            String filePath = "/home/ps/yantao/stp/imgs/"; // 上传后的路径
+            String filePath = "D://"; // 上传后的路径
+//            fileName = UUID.randomUUID() + suffixName; // 新文件名
+            File dest = new File(filePath + fileName);
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();
+            }
+            try {
+                file.transferTo(dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            qyImgUrl = "http://222.128.117.234:9003/imgs/" + fileName;
+        }
+        ResultDTO dto = new ResultDTO();
+        Integer affectedRows =  smDcMapper.uptSysInfo(qyName, qyImgUrl, sysName, qyIcp, ownership);
+        DbInsertResultDTO data = new DbInsertResultDTO(0,affectedRows);
+        dto.setData(data);
         return dto;
     }
 

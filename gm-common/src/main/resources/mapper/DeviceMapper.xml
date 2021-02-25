@@ -128,7 +128,7 @@
 
     <select id="getCameraIdByStreamId" resultType="String">
         SELECT tc.camera_code
-        FROM t_camera tc
-        WHERE tc.stream_id = #{streamId}
+          FROM t_camera tc
+         WHERE tc.stream_id = #{streamId}
     </select>
 </mapper>

@@ -4,6 +4,8 @@ import com.zhuanjingkj.stpbe.data.dto.*;
 import com.zhuanjingkj.stpbe.data.rto.sm.AddUserToSmRTO;
 import com.zhuanjingkj.stpbe.data.rto.sm.DeleteUserFromSmRTO;
 import com.zhuanjingkj.stpbe.data.rto.sm.UpdateUserInfoRTO;
+import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ISmDcService {
 
@@ -23,4 +25,8 @@ public interface ISmDcService {
     ResultDTO<DbQrsDTO> getRoles_exp(Integer startIndex, Integer amount, Integer direction);
 
     ResultDTO<SmUserDTO> getUserInfo_exp(long loginName);
+
+    ResultDTO<DbInsertResultDTO> uptSysInfo_exp(MultipartFile file, String qyName, String sysName, String qyIcp, String ownership);
+
+    ResultDTO<SmSysInfoDTO> getSysInfo_exp();
 }
