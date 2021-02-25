@@ -7,6 +7,8 @@ import com.zhuanjingkj.stpbe.data.rto.sm.UpdateUserInfoRTO;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface ISmDcService {
 
     void trkc();
@@ -26,7 +28,8 @@ public interface ISmDcService {
 
     ResultDTO<SmUserDTO> getUserInfo_exp(long loginName);
 
-    ResultDTO<DbInsertResultDTO> uptSysInfo_exp(MultipartFile file, String qyName, String sysName, String qyIcp, String ownership);
+    ResultDTO<DbInsertResultDTO> uptSysInfo_exp(MultipartFile file, String qyName, String sysName,
+                                                String qyIcp, String ownership, HttpServletRequest request);
 
     ResultDTO<SmSysInfoDTO> getSysInfo_exp();
 }

@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * System data manager 系统管理
  */
@@ -147,9 +150,10 @@ public class SmDcController {
         @RequestParam(name = "qyName", required = false) String qyName,
         @RequestParam(name = "sysName", required = false) String sysName,
         @RequestParam(name = "qyIcp", required = false) String qyIcp,
-        @RequestParam(name = "ownership", required = false) String ownership
+        @RequestParam(name = "ownership", required = false) String ownership,
+        HttpServletRequest request
     ) {
-        return uptSysInfo_exp(file, qyName, sysName, qyIcp, ownership);
+        return uptSysInfo_exp(file, qyName, sysName, qyIcp, ownership, request);
     }
 
     private ResultDTO<SmSysInfoDTO> getSysInfo_exp() {
@@ -182,8 +186,8 @@ public class SmDcController {
     }
 
     private ResultDTO<DbInsertResultDTO> uptSysInfo_exp(MultipartFile file, String qyName, String sysName,
-                                                        String qyIcp, String ownership) {
-        return smDcService.uptSysInfo_exp(file, qyName, sysName, qyIcp, ownership);
+                                                        String qyIcp, String ownership, HttpServletRequest request) {
+        return smDcService.uptSysInfo_exp(file, qyName, sysName, qyIcp, ownership, request);
     }
     /**
      * 手动数据清空
