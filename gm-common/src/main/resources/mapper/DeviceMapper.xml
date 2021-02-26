@@ -128,7 +128,25 @@
 
     <select id="getCameraIdByStreamId" resultType="String">
         SELECT tc.camera_code
-        FROM t_camera tc
-        WHERE tc.stream_id = #{streamId}
+          FROM t_camera tc
+         WHERE tc.stream_id = #{streamId}
+    </select>
+
+    <select id ="getKeyArea" resultType ="hashmap">
+        SELECT tc.camera_code, ta.`status`
+          FROM t_camera tc
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta ON ts.area_id = ta.area_id
+         WHERE tc.camera_code =#{code}
+           AND ta.`status` = 1
+    </select>
+
+    <select id ="getKeyRss" resultType ="hashmap">
+        SELECT tc.camera_code, tr.`status`
+          FROM t_camera tc
+     LEFT JOIN t_road tr
+            ON tc.road_id = tr.road_id
+         WHERE tc.camera_code =#{code}
+           AND tr.`status` = 1
     </select>
 </mapper>

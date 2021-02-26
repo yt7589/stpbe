@@ -17,8 +17,10 @@
     <select id ="getKsRoad" resultMap="rssDTO">
         SELECT road_id, road_name
           FROM t_road
-         WHERE road_name like CONCAT(#{rssName}, "%")
-           AND `status` =#{type}
+         WHERE `status` =#{type}
+            <if test ="rssName != null and rssName !=''">
+                AND road_name like CONCAT("%", #{rssName}, "%")
+            </if>
          LIMIT #{startIndex}, #{amount}
     </select>
 

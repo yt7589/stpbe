@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface DeviceMapper {
@@ -28,4 +29,8 @@ public interface DeviceMapper {
     Integer updateDeviceInfo(@Param("rto") UpdateDeviceInfoRTO rto);
 
     String getCameraIdByStreamId(@Param("streamId") long streamId);
+
+    Map<String, Object> getKeyArea(@Param("code") String code);
+
+    Map<String, Object> getKeyRss(@Param("code") String code);
 }

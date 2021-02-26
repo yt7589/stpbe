@@ -6,8 +6,8 @@ import com.zhuanjingkj.stpbe.data.rto.BaseRTO;
 public class AddAreaToSpaceRTO extends BaseRTO {
     @JSONField(name = "areaId")
     private long areaId;
-    @JSONField(name = "parentCode")
-    private String parentCode;
+    @JSONField(name = "parentId")
+    private Integer parentId;
     @JSONField(name = "areaName")
     private String areaName;
 
@@ -15,24 +15,9 @@ public class AddAreaToSpaceRTO extends BaseRTO {
         super();
     }
 
-    public AddAreaToSpaceRTO(String parentCode, String areaName) {
-        this.parentCode = parentCode;
-        this.areaName = areaName;
-    }
-
-    public String getParentCode() {
-        return parentCode;
-    }
-
-    public void setParentCode(String parentCode) {
-        this.parentCode = parentCode;
-    }
-
-    public String getAreaName() {
-        return areaName;
-    }
-
-    public void setAreaName(String areaName) {
+    public AddAreaToSpaceRTO(long areaId, Integer parentId, String areaName) {
+        this.areaId = areaId;
+        this.parentId = parentId;
         this.areaName = areaName;
     }
 
@@ -42,5 +27,21 @@ public class AddAreaToSpaceRTO extends BaseRTO {
 
     public void setAreaId(long areaId) {
         this.areaId = areaId;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 }

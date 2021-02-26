@@ -39,7 +39,7 @@
 
     <insert id="insertDmSpace" keyProperty="rto.areaId" useGeneratedKeys="true">
         INSERT INTO t_area(area_name, parent_area_id, group_code, `level`)
-                    VALUES(#{rto.areaName}, #{rto.parentCode}, #{newcode}, #{level})
+                    VALUES(#{rto.areaName}, #{rto.parentId}, #{newcode}, #{level})
     </insert>
 
     <update id ="updateAreaInfo">

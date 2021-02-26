@@ -97,7 +97,7 @@
         SELECT COUNT(1)
           FROM t_itf_vehicle tif
          WHERE tif.occur_time
-          LIKE #{month}
+          LIKE #{month} "%"
     </select>
 
     <select id ="getDcstVmd" resultType ="hashmap">

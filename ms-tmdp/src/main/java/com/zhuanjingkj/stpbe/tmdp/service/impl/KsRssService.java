@@ -25,13 +25,16 @@ public class KsRssService implements IKsRssService {
 
     @Override
     public ResultDTO<DbQrsDTO> queryRsSupervision_exp(String rssName, Integer startIndex, Integer amount, Integer direction, Integer type) {
-        if(direction == 0) {
+        if(type == 1 && direction == 0) {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
+        }
+        if(type == 0) {
+            amount = 10000;
         }
         Integer count = ksRssMapper.getKsRoadCount(rssName, type);
         ResultDTO<DbQrsDTO> dto = new ResultDTO<DbQrsDTO>();
         List<KsRssDTO> recs = ksRssMapper.getKsRoad(rssName, startIndex, amount, type);
-        DbQrsDTO data = new DbQrsDTO(100,5,0,10,5,recs);
+        DbQrsDTO data = new DbQrsDTO(count,recs.size(),0,10,direction,recs);
 //        List<KsRssDTO> recs = new ArrayList<>();
 //        recs.add(new KsRssDTO(101, "北京市海淀区上龙泽23号", 0,  "10001"));
 //        recs.add(new KsRssDTO(102, "北京市海淀区回龙观39号", 1,  "100021"));

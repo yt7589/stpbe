@@ -1,11 +1,13 @@
 package com.zhuanjingkj.stpbe.tmdp.util;
 
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.tmdp.dto.FileExpDTO;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyDescriptor;
@@ -147,4 +149,24 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 图片上传
+     * @param file
+     * @param fileName
+     * @return
+     */
+    public static boolean uploadImg(MultipartFile file, String fileName) {
+        boolean flag = false;
+        String path = PropUtil.getValue("stp.img.path");
+        System.out.println("图片上传 path>>>" + path);
+//        String path = "D://";
+        File file1 = new File(path + fileName);
+        try {
+            file.transferTo(file1);
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
 }

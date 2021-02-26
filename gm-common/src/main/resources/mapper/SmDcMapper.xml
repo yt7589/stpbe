@@ -15,6 +15,15 @@
         <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap  type="com.zhuanjingkj.stpbe.data.dto.SmSysInfoDTO" id ="smSysInfoDTO">
+        <result column="sys_id" property="sysId" jdbcType="INTEGER"/>
+        <result column="qy_name" property="qyName" jdbcType="VARCHAR"/>
+        <result column="qy_img_url" property="qyImgUrl" jdbcType="VARCHAR"/>
+        <result column="sys_name" property="sysName" jdbcType="VARCHAR"/>
+        <result column="qy_icp" property="qyIcp" jdbcType="VARCHAR"/>
+        <result column="sys_ownership" property="ownership" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id ="getUsers" resultMap ="userDTO">
         SELECT u.user_id, u.role_id, u.user_name, u.login_name, u.phone, GROUP_CONCAT(tt.tr_name) AS tright
           FROM t_user u
@@ -87,7 +96,7 @@
           FROM t_role
     </select>
 
-    <select id ="getUserInfo" resultMap="userDTO">
+    <select id ="getUserInfo" resultMap ="userDTO">
         SELECT u.user_id, u.role_id, u.user_name, u.login_name, u.phone, GROUP_CONCAT(tt.tr_name) AS tright
           FROM t_user u
      LEFT JOIN t_role r
@@ -98,4 +107,31 @@
             ON tr.tr_id = tt.tr_id
          WHERE u.user_id =#{userId}
     </select>
+
+    <select id ="getSysInfo" resultMap ="smSysInfoDTO">
+        SELECT ts.sys_id, ts.qy_name, ts.qy_img_url, ts.sys_name, ts.qy_icp, ts.sys_ownership
+          FROM t_sys_setting ts
+    </select>
+
+    <update id ="uptSysInfo">
+        UPDATE t_sys_setting ts
+            <trim prefix="set" suffixOverrides=",">
+                <if test ="qyName != null and qyName != ''">
+                    ts.qy_name =#{qyName},
+                </if>
+                <if test ="qyImgUrl != null and qyImgUrl != ''">
+                    ts.qy_img_url =#{qyImgUrl},
+                </if>
+                <if test ="sysName != null and sysName != ''">
+                    ts.sys_name =#{sysName},
+                </if>
+                <if test ="qyIcp != null and qyIcp != ''">
+                    ts.qy_icp =#{qyIcp},
+                </if>
+                <if test="ownership != null and ownership != ''">
+                    ts.sys_ownership =#{ownership},
+                </if>
+            </trim>
+         WHERE ts.sys_id = 1
+    </update>
 </mapper>

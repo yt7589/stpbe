@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 @Component
 public class KsRssObserver implements ITvisStpObserver {
@@ -48,10 +49,14 @@ public class KsRssObserver implements ITvisStpObserver {
          * 1.ks_rss_lsvs_total 路段监管动态车辆通过次数
          * 2.ks_rss_lsvs_time 路段监管动态车辆最后一次通过时间
          * 3.ks_rss_lsvs_list 监控动态列表
+         * 4.只保存重点监控路段的车辆信息
          */
-        redisTemplate.opsForHash().increment("ks_rss_lsvs_total",  hphm + "|" + code, 1);
-        redisTemplate.opsForHash().put("ks_rss_lsvs_time", hphm + "|" + code, date);
-        redisTemplate.opsForList().leftPush("ks_rss_lsvs_list", hphm + "|" + code);
+        Map<String, Object> resMap = deviceMapper.getKeyRss(code);
+        if(resMap != null && resMap.size() > 0) {
+            redisTemplate.opsForHash().increment("ks_rss_lsvs_total",  hphm + "|" + code, 1);
+            redisTemplate.opsForHash().put("ks_rss_lsvs_time", hphm + "|" + code, date);
+            redisTemplate.opsForList().leftPush("ks_rss_lsvs_list", hphm + "|" + code);
+        }
     }
 
     @Override

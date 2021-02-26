@@ -70,7 +70,7 @@ public class DcHpController {
         data.setDit(dit);
         data.setDrt(drt);
         data.setTotal_recognition(redisTemplate.opsForValue().get("dchp_vehicle_identification") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_identification")));
-        data.setTotal_violation(redisTemplate.opsForValue().get("dchp_vehicle_violation") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_0_violation")));
+        data.setTotal_violation(redisTemplate.opsForValue().get("dchp_vehicle_violation") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_violation")));
         data.setTotal_violation_city(redisTemplate.opsForValue().get("dchp_vehicle_0_violation") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_0_violation")));
         data.setTotal_violation_town(redisTemplate.opsForValue().get("dchp_vehicle_1_violation") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_1_violation")));
         dto.setData(data);

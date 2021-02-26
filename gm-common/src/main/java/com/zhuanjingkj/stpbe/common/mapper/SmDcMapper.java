@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.common.mapper;
 
+import com.zhuanjingkj.stpbe.data.dto.SmSysInfoDTO;
 import com.zhuanjingkj.stpbe.data.dto.SmUserDTO;
 import com.zhuanjingkj.stpbe.data.rto.sm.AddUserToSmRTO;
 import com.zhuanjingkj.stpbe.data.dto.SmRoleDTO;
@@ -29,4 +30,9 @@ public interface SmDcMapper {
     Integer getRoleCount();
 
     SmUserDTO getUserInfo(@Param("userId") long userId);
+
+    SmSysInfoDTO getSysInfo();
+
+    Integer uptSysInfo(@Param("qyName") String qyName, @Param("qyImgUrl") String qyImgUrl, @Param("sysName") String sysName,
+                       @Param("qyIcp") String qyIcp, @Param("ownership") String ownership);
 }

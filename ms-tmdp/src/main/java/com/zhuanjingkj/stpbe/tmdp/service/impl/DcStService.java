@@ -51,7 +51,7 @@ public class DcStService implements IDcStService {
         Double vcact = 100.0 * vc /vehicle;
         Integer device = dcStMapper.getDeviceCount(); //设备总数
         Integer dv = dcStMapper.getDvCount(); //异常设备
-        Double dvOnline = 100.0 * dv / device;
+        Double dvOnline = (device - dv) / device * 100.0;
         DcStTodayDTO dcStTodayDTO = new DcStTodayDTO(vehicle,vc,vt,vcact.intValue(),dvOnline.intValue());
         return dcStTodayDTO;
     }

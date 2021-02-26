@@ -49,10 +49,10 @@ public class DmSpaceService implements IDmSpaceService {
     @Override
     public ResultDTO<DbInsertResultDTO> addAreaToSpace_exp(AddAreaToSpaceRTO rto) {
         System.out.println(rto.getAreaName());
-        String parentId = rto.getParentCode();
+        Integer parentId = rto.getParentId();
         Map<String, Object> parentInfo = dmSpaceMapper.getSpaceAreaInfo(parentId);
         Integer level = Integer.parseInt(parentInfo.get("level") + "") + 1;
-        String code = (parentInfo.get("group_code") + "");
+        String code = parentInfo.get("group_code") + "";
         String maxCode = dmSpaceMapper.getSpaceMaxCode(code  + "#_");
         String newcode = "";
         if(StringUtils.isNotBlank(maxCode)) {

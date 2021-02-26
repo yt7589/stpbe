@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.zhuanjingkj.stpbe.common.mapper.DcStMapper;
 import com.zhuanjingkj.stpbe.common.mapper.SmDcMapper;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.*;
 import com.zhuanjingkj.stpbe.data.rto.sm.AddUserToSmRTO;
 import com.zhuanjingkj.stpbe.data.rto.sm.DeleteUserFromSmRTO;
@@ -9,15 +10,26 @@ import com.zhuanjingkj.stpbe.data.dto.SmRoleDTO;
 import com.zhuanjingkj.stpbe.data.rto.sm.UpdateUserInfoRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.ISmDcService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
+import com.zhuanjingkj.stpbe.tmdp.util.FileUtil;
 import com.zhuanjingkj.stpbe.tmdp.util.SHA1;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SmDcService implements ISmDcService {
@@ -94,6 +106,38 @@ public class SmDcService implements ISmDcService {
         ResultDTO dto = new ResultDTO();
         SmUserDTO smUserDTO = smDcMapper.getUserInfo(userId);
         dto.setData(smUserDTO);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<SmSysInfoDTO> getSysInfo_exp() {
+        ResultDTO dto = new ResultDTO();
+        SmSysInfoDTO sysInfoDTO = smDcMapper.getSysInfo();
+        dto.setData(sysInfoDTO);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<String> uploadImg_exp(MultipartFile file) {
+        System.out.println("图片上传file >>>" + file);
+        ResultDTO dto = new ResultDTO();
+        String fileName = "sys_logo_" + System.currentTimeMillis() + ".jpg";
+        String imgUrl = "";
+        if(FileUtil.uploadImg(file, fileName)) {
+            imgUrl = PropUtil.getValue("sys.logo.url") + fileName;
+        } else {
+        }
+        dto.setData(imgUrl);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<DbInsertResultDTO> uptSysInfo_exp(String qyImgUrl, String qyName, String sysName,
+                                                       String qyIcp, String ownership) {
+        ResultDTO dto = new ResultDTO();
+        Integer affectedRows =  smDcMapper.uptSysInfo(qyName, qyImgUrl, sysName, qyIcp, ownership);
+        DbInsertResultDTO data = new DbInsertResultDTO(0,affectedRows);
+        dto.setData(data);
         return dto;
     }
 
@@ -300,5 +344,4 @@ public class SmDcService implements ISmDcService {
         }
         dcStMapper.deleteTifData();
     }
-
 }
