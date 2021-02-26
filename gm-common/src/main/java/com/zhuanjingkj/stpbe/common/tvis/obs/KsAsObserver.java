@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 @Component
 public class KsAsObserver implements ITvisStpObserver {
@@ -44,9 +45,16 @@ public class KsAsObserver implements ITvisStpObserver {
         if(StringUtils.isBlank(hphm)) {
             hphm = "NULL";
         }
-        redisTemplate.opsForHash().increment("ks_as_lsvs_total",  hphm + "|" + code, 1);
-        redisTemplate.opsForHash().put("ks_as_lsvs_time", hphm + "|" + code, date);
-        redisTemplate.opsForList().leftPush("ks_as_lsvs_list", hphm + "|" + code);
+        /**
+         * 只保存重点区域监控到的车辆信息
+         */
+        Map<String, Object> resMap = deviceMapper.getKeyArea(code);
+        if(resMap != null && resMap.size() > 0) {
+            redisTemplate.opsForHash().increment("ks_as_lsvs_total",  hphm + "|" + code, 1);
+            redisTemplate.opsForHash().put("ks_as_lsvs_time", hphm + "|" + code, date);
+            redisTemplate.opsForList().leftPush("ks_as_lsvs_list", hphm + "|" + code);
+        }
+
     }
 
     @Override
