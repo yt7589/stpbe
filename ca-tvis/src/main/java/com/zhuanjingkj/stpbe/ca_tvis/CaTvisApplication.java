@@ -12,6 +12,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
+import javax.annotation.PostConstruct;
+
 @SpringBootApplication
 public class CaTvisApplication implements CommandLineRunner {
 	public final static String MODE_MGQS = "mgqs"; // 图搜系统客户端
@@ -24,7 +26,6 @@ public class CaTvisApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
 		System.out.println("Client Application Tvis v0.0.1");
-		MgqEngine.initialize();
 		ConfigurableApplicationContext ctx = SpringApplication.run(CaTvisApplication.class, args);
     }
 
@@ -51,6 +52,7 @@ public class CaTvisApplication implements CommandLineRunner {
 		}
     	String cmd = args[0];
     	if (cmd.equals("mgqs")) {
+    		MgqEngine.initialize();
 			getMgqsClient().startup(args);
 		} else if (cmd.equals(MODE_SNAPSHOT)) {
     		getSnapshotApp().startup(args);
