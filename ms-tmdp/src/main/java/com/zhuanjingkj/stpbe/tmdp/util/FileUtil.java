@@ -149,6 +149,12 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 图片上传
+     * @param file
+     * @param fileName
+     * @return
+     */
     public static boolean uploadImg(MultipartFile file, String fileName) {
         boolean flag = false;
         String path = PropUtil.getValue("stp.img.path");
