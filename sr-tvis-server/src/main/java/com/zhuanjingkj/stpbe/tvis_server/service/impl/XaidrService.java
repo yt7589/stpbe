@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Service
 public class XaidrService implements IXaidrService {
-    private final static String LIST_XAIDR_FUNCTION_DETECT = "xaidr-function-detect";
+    private final static String LIST_XAIDR_FUNCTION_DETECT = "dcls-recognition-list";
     private final static String MSG = "图片无法识别";
     private volatile int num = 0;
     @Autowired
@@ -32,6 +32,7 @@ public class XaidrService implements IXaidrService {
         if(StringUtils.equals(response,"0")){
             return null;
         }
+        System.out.println("Yantao resp: " + response + "!");
         return JSON.parseArray(response);
     }
 }

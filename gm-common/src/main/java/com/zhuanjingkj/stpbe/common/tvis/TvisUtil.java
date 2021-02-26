@@ -411,7 +411,7 @@ public class TvisUtil {
                 break;
             }
         } while (System.currentTimeMillis() - startTime < TVIS_RST_TIMEOUT);
-        System.out.println("##### after reading response:" + response + "!");
+        System.out.println("##### after reading response:" + response + "! key=" + requestId + "!");
         if (response == null) {
             //throw new RuntimeException("等待执行结果超时");
             response = "{\"timestamp\":\"2020-11-26T08:29:34.273+0000\",\"status\":404,\"error\":\"Not Found\",\"message\":\"No message available TvisImageRecogService Ln227\",\"path\":\"/vehicle/function/recognition\"}";
