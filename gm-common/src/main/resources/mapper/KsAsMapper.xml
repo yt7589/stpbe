@@ -21,7 +21,9 @@
         SELECT area_id, area_name, parent_area_id, `level`, group_code
           FROM t_area
          WHERE `status` =#{type}
-           AND area_name like CONCAT(#{areaName}, "%")
+            <if test ="areaName != null and areaName !=''">
+                AND area_name like CONCAT("%", #{areaName}, "%")
+            </if>
          LIMIT #{startIndex}, #{amount}
     </select>
 

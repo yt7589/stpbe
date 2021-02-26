@@ -265,7 +265,7 @@ public class TmdpScheduledTask {
 //
 //        ksRssLsvsDTO = new KsRssLsvsDTO(1, 1, 106, "B上地10街",
 //                "2020-12-19 16:50:39", "京A-XA001", 11);
-        tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_RSS_SFVS, data.toString());
+        tmdpWsHandler.pushWsMsg(TmdpWsHandler.KS_RSS_LSVS, data.toString());
     }
 
 }

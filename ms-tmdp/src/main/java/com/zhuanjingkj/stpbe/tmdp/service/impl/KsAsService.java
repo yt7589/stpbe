@@ -27,8 +27,11 @@ public class KsAsService implements IKsAsService {
     public ResultDTO<DbQrsDTO> queryKeyAreas_exp(String areaName, Integer startIndex, Integer amount, Integer direction, Integer type) {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         Integer count = ksAsMapper.getAreaCount(areaName, type);
-        if(direction == 0) {
+        if(type == 1 && direction == 0) {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
+        }
+        if(type == 0) {
+            amount = 10000;
         }
         List<AreaDTO> recs = ksAsMapper.getKsArea(areaName, startIndex, amount, type);
         DbQrsDTO data = new DbQrsDTO(count, recs.size(), startIndex, amount, direction,recs);
