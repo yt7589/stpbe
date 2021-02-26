@@ -48,8 +48,8 @@ public class DmSpaceController {
      */
     @PostMapping(value = "/sm/addArea2Space")
     public ResultDTO<DbInsertResultDTO> addAreaToSpace (
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version,
         @RequestBody AddAreaToSpaceRTO rto
     ) {
         return addAreaToSpace_exp(rto);
