@@ -14,7 +14,7 @@ public interface DmSpaceMapper {
 
     Integer getSpaceAreaCount();
 
-    Map<String, Object> getSpaceAreaInfo(@Param("parentId") String parentId);
+    Map<String, Object> getSpaceAreaInfo(@Param("parentId") Integer parentId);
 
     String getSpaceMaxCode(@Param("code") String code);
 
