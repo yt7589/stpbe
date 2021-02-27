@@ -31,6 +31,7 @@ public class AuthFilter  extends ZuulFilter {
         mssWhiteList = new ArrayList<>();
         mssWhiteList.add("ms-facade/facade/login");
         mssWhiteList.add("ms-facade/facade/register");
+        mssWhiteList.add("ms-tmdp/sm/getSysInfo");
     }
 
     @Override
