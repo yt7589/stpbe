@@ -94,7 +94,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             String state = zjsddh.split("_")[0];
             String rb = zjsddh.split("_")[1];
             if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
-                insertViolation(vo,3, hphm,"主驾驶打电话", vType, tblName, category, date);
+                insertViolation(vo,3, hphm,"ZJSDDH", vType, tblName, category, date);
                 flag = true;
             }
         }
@@ -103,7 +103,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             String state = fjsbjaqd.split("_")[0];
             String rb = fjsbjaqd.split("_")[1];
             if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
-                insertViolation(vo,4, hphm,"副驾驶不系安全带", vType, tblName, category, date);
+                insertViolation(vo,4, hphm,"FJSBJAQD", vType, tblName, category, date);
                 flag = true;
             }
         }
@@ -112,7 +112,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             String state = fjszyb.split("_")[0];
             String rb = fjszyb.split("_")[1];
             if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
-                insertViolation(vo,5, hphm,"副驾驶放下遮阳板", vType, tblName, category, date);
+                insertViolation(vo,5, hphm,"FJSZYB", vType, tblName, category, date);
                 flag = true;
             }
         }
@@ -121,7 +121,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             String state = zjsbjaqd.split("_")[0];
             String rb = zjsbjaqd.split("_")[1];
             if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
-                insertViolation(vo,6, hphm,"主驾驶不系安全带", vType, tblName, category, date);
+                insertViolation(vo,6, hphm,"ZJSBJAQD", vType, tblName, category, date);
                 flag = true;
             }
         }
@@ -130,7 +130,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             String state = zjscy.split("_")[0];
             String rb = zjscy.split("_")[1];
             if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
-                insertViolation(vo,7, hphm,"主驾驶抽烟", vType, tblName, category, date);
+                insertViolation(vo,7, hphm,"ZJSCY", vType, tblName, category, date);
                 flag = true;
             }
         }
@@ -139,7 +139,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             String state = zjsksj.split("_")[0];
             String rb = zjsksj.split("_")[1];
             if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
-                insertViolation(vo,8, hphm,"主驾驶看手机", vType, tblName, category, date);
+                insertViolation(vo,8, hphm,"ZJSKSJ", vType, tblName, category, date);
                 flag = true;
             }
         }
@@ -148,7 +148,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             String state = zjszyb.split("_")[0];
             String rb = zjszyb.split("_")[1];
             if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
-                insertViolation(vo,9, hphm,"主驾驶放下遮阳板", vType, tblName, category, date);
+                insertViolation(vo,9, hphm,"ZJSZYB", vType, tblName, category, date);
                 flag = true;
             }
         }
@@ -157,13 +157,13 @@ public class DkRtvrObserver implements ITvisStpObserver {
             String state = mtcbdtk.split("_")[0];
             String rb = mtcbdtk.split("_")[1];
             if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
-                insertViolation(vo,10, hphm,"摩托车不戴头盔", vType, tblName, category, date);
+                insertViolation(vo,10, hphm,"MTCBDTK", vType, tblName, category, date);
                 flag = true;
             }
         }
         String hType = vo.getVehicleHptzVO().getHpzt(); //牌照异常
         if(!"1".equals(hType)) {
-            insertViolation(vo,11, hphm,"号牌异常", vType, tblName, category, date);
+            insertViolation(vo,11, hphm,"HPYC", vType, tblName, category, date);
             flag = true;
         }
         //统计时段违章到redis
