@@ -25,7 +25,7 @@
           FROM t_violation tv
      LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
      LEFT JOIN t_site ts ON tc.site_id = ts.site_id
-         WHERE wzlx ='号牌异常'
+         WHERE wzlx ='HPYC'
       ORDER BY tv.create_time DESC
          LIMIT 1
     </select>
@@ -37,7 +37,7 @@
      LEFT JOIN t_site ts ON tc.site_id = ts.site_id
          WHERE tv.hphm =#{hphm}
            AND ts.site_id =#{siteId}
-           AND tv.wzlx ='号牌异常'
+           AND tv.wzlx ='HPYC'
     </select>
 
     <select id ="getLpsLalp" resultMap="lpsLalpDTO">
@@ -46,7 +46,7 @@
      LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
      LEFT JOIN t_site ts ON tc.site_id = ts.site_id
 <!--     LEFT JOIN ${tblName} tj ON tj.tvis_json_id = tv.tvis_json_id-->
-         WHERE tv.wzlx ='号牌异常'
+         WHERE tv.wzlx ='HPYC'
       ORDER BY tv.create_time DESC
          LIMIT 4
     </select>
