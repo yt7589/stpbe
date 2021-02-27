@@ -3,6 +3,7 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
+import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.mapper.VmIlsMapper;
@@ -48,6 +49,9 @@ public class VmIlsService implements IVmIlsService {
 
     @Autowired
     private TvisJsonMapper tvisJsonMapper;
+
+    @Autowired
+    private DeviceMapper deviceMapper;
 
     private static Map<String, Object> VEH_TYPE = new HashMap<>(); //车辆类型
 
@@ -172,7 +176,17 @@ public class VmIlsService implements IVmIlsService {
         String data = IpfsClient.getTextFile("" + vo.getJsonHash());
         JSONObject dataJson = JSONObject.parseObject(data);
         long cameraId = dataJson.getLong("cameraId");
-        String ilsName = "" + KsAsService.areaMap.get(cameraId);
+        String code = "";
+        if(cameraId == -1) {
+            long streamId = vo.getStreamId();
+            String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
+            if(StringUtils.isNotBlank(newCameraId)) {
+                code = newCameraId + "";
+            }
+        } else {
+            code = cameraId + "";
+        }
+        String ilsName = "" + KsAsService.areaMap.get(code);
         JSONObject rstJson = JSONObject.parseObject(dataJson.getString("json"));
         JSONArray vehs = rstJson.getJSONArray("VEH");
         VmIlsVdDTO vmIlsVdDTO = null;
@@ -209,13 +223,13 @@ public class VmIlsService implements IVmIlsService {
             category = "外埠";
         }
         String direction = Integer.parseInt(wztzJson.getString("PSFX")) == 1 ? "车头" : "车尾";
-        Integer md_isPhone = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSDDH").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-        Integer md_isWPhone = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSKSJ").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-        Integer md_isSafetyBelt = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSBJAQD").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-        Integer md_isSmoke = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSCY").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-        Integer md_isSunVisor = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("ZJSZYB").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-        Integer ct_isSafetyBelt = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("FJSBJAQD").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
-        Integer ct_isSunVisor = Integer.parseInt(StringUtils.isNotBlank(jsxwtzJson.getString("FJSZYB").replace("_", "")) ? jsxwtzJson.getString("ZJSDDH").replace("_", "") : "0") >= 180 ? 1:0;
+        Integer md_isPhone = isViolation(jsxwtzJson.getString("ZJSDDH"));  //主驾驶打电话
+        Integer md_isWPhone = isViolation(jsxwtzJson.getString("ZJSKSJ")); //主驾驶看手机
+        Integer md_isSafetyBelt = isViolation(jsxwtzJson.getString("ZJSBJAQD")); //主驾驶不系安全带
+        Integer md_isSmoke = isViolation(jsxwtzJson.getString("ZJSCY")); //主驾驶抽烟
+        Integer md_isSunVisor = isViolation(jsxwtzJson.getString("ZJSZYB")); //主驾驶遮阳板
+        Integer ct_isSafetyBelt = isViolation(jsxwtzJson.getString("FJSBJAQD")); //副驾驶不系安全带
+        Integer ct_isSunVisor = isViolation(jsxwtzJson.getString("FJSZYB")); //副驾驶遮阳板
         //Integer mc_isHelmet = Integer.parseInt(jsxwtzJson.getString("MTCBDTK").replace("_", "")) >= 180 ? 1:0;
         vmIlsVdDTO = new VmIlsVdDTO(0,IpfsClient.getIpfsUrl("" + vo.getImageHash()),timeStamp,
                 ilsName, category, hphm, "","" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
@@ -474,9 +488,12 @@ public class VmIlsService implements IVmIlsService {
             }
         }
     }
-
-    public static void main(String[] args) {
-        System.out.println(PropUtil.HPHM_PRE);
+    /**
+     * 驾驶行为
+     * @param jsxw
+     * @return
+     */
+    private static Integer isViolation(String jsxw) {
+        return Integer.parseInt(StringUtils.isNotBlank(jsxw.replace("_", "")) ? jsxw.replace("_", "") : "0") >= 180 ? 1 : 0;
     }
-
 }
