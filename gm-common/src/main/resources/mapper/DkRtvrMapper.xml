@@ -15,7 +15,7 @@
 
     <insert id ="insertViolation">
         INSERT INTO t_violation (tvis_json_id, vehs_idx, camera_id, hphm, csys, clpp, ppcx, cxnk, psfx, clwz, wzlx, cllxzfl, category, tvis_json_tbl, create_time)
-                         VALUES (#{tvisJsonId}, #{vehsIdx}, #{CameraId}, #{hphm}, #{csysName}, #{clppName}, #{ppcxName},
+                         VALUES (#{tvisJsonId}, #{vehsIdx}, #{cameraId}, #{hphm}, #{csysName}, #{clppName}, #{ppcxName},
                                  #{cxnkName}, #{psfx}, #{clwz}, #{wzlx}, #{vtype}, #{category}, #{tblName}, #{date})
     </insert>
 

@@ -9,7 +9,7 @@
         <result column="site_name" property="ilAddr" jdbcType="VARCHAR"/>
         <result column="hphm" property="hmhp" jdbcType="VARCHAR"/>
         <result column="vehicle_type_name" property="types" jdbcType="VARCHAR"/>
-        <result column="wzlx" property="ilTypes" jdbcType="VARCHAR"/>
+        <result column="violation_type_name" property="ilTypes" jdbcType="VARCHAR"/>
 <!--        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>-->
         <result column="tvis_json_tbl" property="tvisJsonTbl" jdbcType="VARCHAR"/>
         <result column="category" property="category" jdbcType="VARCHAR"/>
@@ -31,7 +31,7 @@
         <result column="violation_id" property="ilId" jdbcType="INTEGER"/>
         <result column="create_time" property="ilTime" jdbcType="VARCHAR"/>
         <result column="road_name" property="ilAddr" jdbcType="VARCHAR"/>
-        <result column="wzlx" property="ilType" jdbcType="VARCHAR"/>
+        <result column="violation_type_name" property="ilType" jdbcType="VARCHAR"/>
         <result column="tvis_json_tbl" property="tvisJsonTbl" jdbcType="VARCHAR"/>
 <!--        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>-->
     </resultMap>
@@ -65,7 +65,7 @@
 
     <select id ="getIllegalVehicle" resultMap="illDTO">
         SELECT tv.tvis_json_id, tv.violation_id, tv.create_time, tv.vehs_idx,
-               ts.site_name, tv.hphm, tv.wzlx, sv.vehicle_type_name, tv.tvis_json_tbl,
+               ts.site_name, tv.hphm, tv.wzlx, tvt.violation_type_name, sv.vehicle_type_name, tv.tvis_json_tbl,
                IF(tv.category = 0, '本市', '外埠') AS category, tv.create_time
           FROM t_violation tv
 <!--     LEFT JOIN #{tblName} tj-->
@@ -78,6 +78,8 @@
             ON ta.area_id = ts.area_id
      LEFT JOIN t_special_vehicle_type sv
             ON sv.vehicle_type_num = tv.cllxzfl
+     LEFT JOIN t_violation_type tvt
+            ON tv.wzlx = tvt.violation_type_code
          WHERE 1 = 1
             <if test="hphm != null and hphm != ''">
                 AND tv.hphm like CONCAT(#{hphm}, '%')
@@ -398,7 +400,7 @@
     </select>
 
     <select id ="getIlsPart" resultMap="illDTO">
-        SELECT tv.tvis_json_id, tv.violation_id, tv.create_time, ts.site_name, tv.hphm, tv.wzlx, sv.vehicle_type_name, tv.tvis_json_tbl, tv.create_time
+        SELECT tv.tvis_json_id, tv.violation_id, tv.create_time, ts.site_name, tv.hphm, tv.wzlx, tvt.violation_type_name, sv.vehicle_type_name, tv.tvis_json_tbl, tv.create_time
           FROM t_violation tv
      LEFT JOIN t_camera tc
             ON tc.camera_id = tv.camera_id
@@ -408,6 +410,8 @@
             ON ta.area_id = ts.area_id
      LEFT JOIN t_special_vehicle_type sv
             ON sv.vehicle_type_num = tv.cllxzfl
+     LEFT JOIN t_violation_type tvt
+            ON tv.wzlx = tvt.violation_type_code
 <!--     LEFT JOIN #{tblName} tj-->
 <!--            ON tv.tvis_json_id = tj.tvis_json_id-->
          WHERE 1 = 1

@@ -133,9 +133,9 @@ public class SmDcService implements ISmDcService {
 
     @Override
     public ResultDTO<DbInsertResultDTO> uptSysInfo_exp(String qyImgUrl, String qyName, String sysName,
-                                                       String qyIcp, String ownership) {
+                                                       String qyIcp, String ownership, String city) {
         ResultDTO dto = new ResultDTO();
-        Integer affectedRows =  smDcMapper.uptSysInfo(qyName, qyImgUrl, sysName, qyIcp, ownership);
+        Integer affectedRows =  smDcMapper.uptSysInfo(qyName, qyImgUrl, sysName, qyIcp, ownership, city);
         DbInsertResultDTO data = new DbInsertResultDTO(0,affectedRows);
         dto.setData(data);
         return dto;
