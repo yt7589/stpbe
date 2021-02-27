@@ -27,6 +27,7 @@ public class DkRtvrservice implements IDkRtvrservice {
                 Map<String, Object> map = dkRtvrMapper.getImageHash(jsonId, tblName);
                 if(map != null && map.size() > 0) {
                     rtvrs.get(i).setImgUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
+                    rtvrs.get(i).setTvisJsonTbl("");
                 }
             }
         }
