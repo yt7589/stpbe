@@ -15,14 +15,18 @@ public class SmSysInfoDTO extends BaseDTO {
     private String qyIcp;
     @JSONField(name = "ownership")
     private String ownership;
+    @JSONField(name = "city")
+    private String city;
 
-    public SmSysInfoDTO(Integer sysId, String qyName, String qyImgUrl, String sysName, String qyIcp, String ownership) {
+    public SmSysInfoDTO(Integer sysId, String qyName, String qyImgUrl, String sysName, String qyIcp,
+                        String ownership, String city) {
         this.sysId = sysId;
         this.qyName = qyName;
         this.qyImgUrl = qyImgUrl;
         this.sysName = sysName;
         this.qyIcp = qyIcp;
         this.ownership = ownership;
+        this.city = city;
     }
 
     public Integer getSysId() {
@@ -71,5 +75,13 @@ public class SmSysInfoDTO extends BaseDTO {
 
     public void setOwnership(String ownership) {
         this.ownership = ownership;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

@@ -22,6 +22,7 @@
         <result column="sys_name" property="sysName" jdbcType="VARCHAR"/>
         <result column="qy_icp" property="qyIcp" jdbcType="VARCHAR"/>
         <result column="sys_ownership" property="ownership" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id ="getUsers" resultMap ="userDTO">
@@ -109,7 +110,7 @@
     </select>
 
     <select id ="getSysInfo" resultMap ="smSysInfoDTO">
-        SELECT ts.sys_id, ts.qy_name, ts.qy_img_url, ts.sys_name, ts.qy_icp, ts.sys_ownership
+        SELECT ts.sys_id, ts.qy_name, ts.qy_img_url, ts.sys_name, ts.qy_icp, ts.sys_ownership, ts.city
           FROM t_sys_setting ts
     </select>
 
@@ -130,6 +131,9 @@
                 </if>
                 <if test="ownership != null and ownership != ''">
                     ts.sys_ownership =#{ownership},
+                </if>
+                <if test="city != null and city != ''">
+                    ts.city =#{city},
                 </if>
             </trim>
          WHERE ts.sys_id = 1

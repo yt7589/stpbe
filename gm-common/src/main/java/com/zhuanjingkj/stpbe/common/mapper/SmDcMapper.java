@@ -34,5 +34,5 @@ public interface SmDcMapper {
     SmSysInfoDTO getSysInfo();
 
     Integer uptSysInfo(@Param("qyName") String qyName, @Param("qyImgUrl") String qyImgUrl, @Param("sysName") String sysName,
-                       @Param("qyIcp") String qyIcp, @Param("ownership") String ownership);
+                       @Param("qyIcp") String qyIcp, @Param("ownership") String ownership, @Param("city") String city);
 }

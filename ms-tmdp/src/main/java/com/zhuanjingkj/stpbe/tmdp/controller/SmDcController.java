@@ -151,9 +151,9 @@ public class SmDcController {
         @RequestParam(name = "sysName", required = false) String sysName,
         @RequestParam(name = "qyIcp", required = false) String qyIcp,
         @RequestParam(name = "ownership", required = false) String ownership,
-        HttpServletRequest request
+        @RequestParam(name = "city", required = false) String city
     ) {
-        return uptSysInfo_exp(qyImgUrl, qyName, sysName, qyIcp, ownership, request);
+        return uptSysInfo_exp(qyImgUrl, qyName, sysName, qyIcp, ownership, city);
     }
 
     /**
@@ -200,8 +200,8 @@ public class SmDcController {
     }
 
     private ResultDTO<DbInsertResultDTO> uptSysInfo_exp(String qyImgUrl, String qyName, String sysName,
-                                                        String qyIcp, String ownership, HttpServletRequest request) {
-        return smDcService.uptSysInfo_exp(qyImgUrl, qyName, sysName, qyIcp, ownership);
+                                                        String qyIcp, String ownership, String city) {
+        return smDcService.uptSysInfo_exp(qyImgUrl, qyName, sysName, qyIcp, ownership, city);
     }
 
     private ResultDTO<String> uploadImg_exp(MultipartFile file) {

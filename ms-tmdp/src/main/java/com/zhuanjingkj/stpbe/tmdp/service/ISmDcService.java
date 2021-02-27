@@ -29,7 +29,7 @@ public interface ISmDcService {
     ResultDTO<SmUserDTO> getUserInfo_exp(long loginName);
 
     ResultDTO<DbInsertResultDTO> uptSysInfo_exp(String qyImgUrl, String qyName, String sysName,
-                                                String qyIcp, String ownership);
+                                                String qyIcp, String ownership, String city);
 
     ResultDTO<SmSysInfoDTO> getSysInfo_exp();
 
