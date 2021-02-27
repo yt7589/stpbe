@@ -92,7 +92,6 @@ public class TmdpWsHandler extends TextWebSocketHandler {
         for (String key : keys) {
             sess = sessions.get(key);
             try {
-                System.out.println(key + ":" + msg);
                 sess.sendMessage(new TextMessage(msg));
             } catch (IOException e) {
                 System.out.println("TmdpWsHandler.pushWsMsg exception1: " + e.getMessage() + "!");
