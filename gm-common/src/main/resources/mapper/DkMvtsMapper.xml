@@ -9,7 +9,8 @@
     <select id ="getMvtss" resultMap ="mvtsDTO">
         SELECT tvt.violation_type_name, COUNT(violation_id) AS COUNT
           FROM t_violation tv
-     LEFT JOIN t_violation_type tvt ON tv.wzlx = tvt.violation_type_code
+     LEFT JOIN t_violation_type tvt
+            ON tv.wzlx = tvt.violation_type_code
       GROUP BY tvt.violation_type_name
     </select>
 </mapper>
