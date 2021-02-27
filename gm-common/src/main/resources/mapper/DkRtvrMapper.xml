@@ -7,7 +7,7 @@
         <result column="clpp" property="clpp" jdbcType="VARCHAR"/>
         <result column="ppcx" property="ppcx" jdbcType="VARCHAR"/>
         <result column="hphm" property="hphm" jdbcType="VARCHAR"/>
-        <result column="wzlx" property="violationTypeName" jdbcType="VARCHAR"/>
+        <result column="violation_type_name" property="violationTypeName" jdbcType="VARCHAR"/>
         <result column="tvis_json_tbl" property="tvisJsonTbl" jdbcType="VARCHAR"/>
 <!--        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>-->
         <result column="create_time" property="occurTime" jdbcType="VARCHAR"/>
@@ -26,12 +26,14 @@
     </select>
 
     <select id ="getTop2Violation" resultMap ="rtvrDTO">
-        SELECT tv.tvis_json_id, ts.site_name, tv.clpp, tv.ppcx, tv.hphm, tv.wzlx, tv.create_time, tv.tvis_json_tbl
+        SELECT tv.tvis_json_id, ts.site_name, tv.clpp, tv.ppcx, tv.hphm, tv.wzlx, tvt.violation_type_name, tv.create_time, tv.tvis_json_tbl
           FROM t_violation tv
      LEFT JOIN t_camera tc
             ON tv.camera_id = tc.camera_id
      LEFT JOIN t_site ts
             ON tc.site_id = ts.site_id
+     LEFT JOIN t_violation_type tvt
+            ON tv.wzlx = tvt.violation_type_code
       ORDER BY tv.create_time DESC
          LIMIT 2
     </select>
