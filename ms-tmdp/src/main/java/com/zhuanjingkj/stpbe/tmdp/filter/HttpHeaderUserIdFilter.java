@@ -22,12 +22,12 @@ public class HttpHeaderUserIdFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
-        System.out.println("请求为：" + request.getRequestURI() + "!");
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
+        System.out.println("MS-TMDP.HttpHeaderUserIdFilter 1 请求为：" + request.getRequestURI() + "!");
+        //request.setCharacterEncoding("UTF-8");
+        //response.setContentType("application/json; charset=utf-8");
         String uidStr = request.getHeader(AppConst.AUTH_USER_HEADER);
         String sessionId = request.getSession().getId();
-        System.out.println("filter: sessionId=" + sessionId + "!");
+        System.out.println("MS-TMDP.HttpHeaderUserIdFilter 2: sessionId=" + sessionId + "!");
         redisTemplate.opsForValue().set(sessionId, uidStr + "");
         filterChain.doFilter(request, response);
     }
