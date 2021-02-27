@@ -49,7 +49,7 @@ public class TasScheduledTask implements Runnable {
                     + tvisJsonId + ", \"json\": " + response + "}");
         }
         kafkaTemplate.send("tvis", 0, msg.toString());
-        logger.info("### Yantao ###: send to Kafka: tvisJsonId=" + tvisJsonId + "!");
+        logger.info("### Yantao ###: send to Kafka: json=" + msg.toString() + "!");
         kafkaTemplate.flush();
     }
 }
