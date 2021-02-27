@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DkMvtsMapper">
     <resultMap type ="com.zhuanjingkj.stpbe.data.dto.DkMvtsDTO" id ="mvtsDTO">
-        <result column="wzlx" property="name" jdbcType="VARCHAR"/>
+        <result column="violation_type_name" property="name" jdbcType="VARCHAR"/>
         <result column="count" property="count" jdbcType="INTEGER"/>
     </resultMap>
 
