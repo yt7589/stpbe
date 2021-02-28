@@ -105,6 +105,7 @@ public class TmdpController {
                                                                @RequestParam(name = "cameraId", required = true) String cameraId,
                                                                @RequestParam(name = "TPXX", required = false) MultipartFile file,
                                                                @RequestParam(name = "TPWJ", required = false) String tpwj) {
+        System.out.println("############### recognizeTvisImage step 1");
         byte[] data = null;
         if ("1".equals(tplx)) {
             if (file != null) {
@@ -117,15 +118,27 @@ public class TmdpController {
         } else if ("2".equals(tplx)) {
             data = Base64.getDecoder().decode(tpwj);
         }
+        System.out.println("############### recognizeTvisImage step 2");
         File imageFile = new File("c" + cameraId + "_" + System.currentTimeMillis() + ".jpg");
+        FileOutputStream fos = null;
         try {
-            FileOutputStream fos = new FileOutputStream(imageFile);
+            fos = new FileOutputStream(imageFile);
             fos.write(data);
+            fos.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+        System.out.println("############### recognizeTvisImage step 3");
         return tmdpService.recognizeTvisImage(cameraId, "0", mrhpt, hphm, data, imageFile.getAbsolutePath());
     }
 
