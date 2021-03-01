@@ -23,35 +23,55 @@ public class KsSvsKsvssService implements IKsSvsKsvssService {
     @Autowired
     private KsSvsKsvssMapper ksSvsKsvssMapper;
 
+    @Autowired
+    private DcStService dcStService;
+
     @Override
     public List<KsSvsKsvssDTO> getKsSvsKsvssDTOs_exp() {
         List<KsSvsKsvssDTO> ksvsss = new ArrayList<>();
-//        ksvsss.add(new KsSvsKsvssDTO(101, "上地三街", 1231));
-//        ksvsss.add(new KsSvsKsvssDTO(102, "西三旗", 2345));
-//        ksvsss.add(new KsSvsKsvssDTO(103,"西二旗", 1102));
-//        ksvsss.add(new KsSvsKsvssDTO(104, "王道口", 12345));
-//        ksvsss.add(new KsSvsKsvssDTO(105, "西直门", 19321));
-//        ksvsss.add(new KsSvsKsvssDTO(106, "六里桥", 15335));
-//        ksvsss.add(new KsSvsKsvssDTO(107, "王府井", 18221));
         Map<String, Object> dctf = redisTemplate.opsForHash().entries("ks_ksvrp_site"); //取出cameraId 和 对应的 count
         /**
          * 1.根据cameraId 取出点位名称
          */
         List<KsSvsKsvssDTO> dklist = new ArrayList<>();
-        if(dctf != null) {
+        if (dctf != null) {
             List<String> camera = new ArrayList<>();
-            for(String key : dctf.keySet()) {
+            for (String key : dctf.keySet()) {
                 camera.add(key);
             }
             KsSvsKsvssDTO ksSvsKsvssDTO = null;
             List<Map<String, Object>> ksvss = ksSvsKsvssMapper.getKsvss(camera);
-            if(ksvss != null && ksvss.size() > 0){
-                for(int i = 0; i < ksvss.size(); i++) {
+            StringBuffer sb = new StringBuffer();
+            Map<String, Object> siteMap = dcStService.siteNameMap;
+            if (ksvss != null && ksvss.size() > 0){
+                for (int i = 0; i < ksvss.size(); i++) {
                     for(String key : dctf.keySet()) {
-                        if(ksvss.get(i).get("camera_code").equals(key)) {
+                        sb.append(ksvss.get(i).get("site_name"));
+                        if (ksvss.get(i).get("camera_code").equals(key)) {
                             ksSvsKsvssDTO = new KsSvsKsvssDTO(Integer.parseInt("" + ksvss.get(i).get("site_id")), "" + ksvss.get(i).get("site_name"), Integer.parseInt("" + dctf.get(key)));
                             ksvsss.add(ksSvsKsvssDTO);
                         }
+                    }
+                }
+                if (ksvsss.size() < 10) {
+                    for (String key : siteMap.keySet()) {
+                        if (!sb.toString().contains("" + siteMap.get(key))) {
+                            ksvsss.add(new KsSvsKsvssDTO(0, "" + siteMap.get(key), 0));
+                            sb.append(siteMap.get(key));
+                        }
+                        if (ksvsss.size() == 10) {
+                            break;
+                        }
+                    }
+                }
+            } else {
+                for (String key : siteMap.keySet()) {
+                    if (!sb.toString().contains("" + siteMap.get(key))) {
+                        ksvsss.add(new KsSvsKsvssDTO(0, "" + siteMap.get(key), 0));
+                        sb.append(siteMap.get(key));
+                    }
+                    if (ksvsss.size() == 10) {
+                        break;
                     }
                 }
             }

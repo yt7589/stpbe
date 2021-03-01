@@ -28,9 +28,10 @@ public class DkTjrsService implements IDkTjrsService {
         DkTjrsItemDTO item = null;
         Map<String, Object> tjrs = redisTemplate.opsForHash().entries("dk_tjrs_road");
         List<DkTjrsItemDTO> dklist = new ArrayList<>();
-        for (String key : tjrs.keySet()) {
-            item = new DkTjrsItemDTO(""+tjrsMap.get(key), Integer.parseInt(tjrs.get(key) == null ? "0" : "" + tjrs.get(key)));
-            items.add(item);
+        if (tjrs != null && tjrs.size() > 0) {
+            for (String key : tjrs.keySet()) {
+                items.add(new DkTjrsItemDTO("" + tjrsMap.get(key), Integer.parseInt(tjrs.get(key) == null ? "0" : "" + tjrs.get(key))));
+            }
         }
         /** 合并同一个路段下的camera拍照数量 */
         items.parallelStream().collect(Collectors.groupingBy(o ->(o.getName()),Collectors.toList())).forEach(
@@ -44,6 +45,41 @@ public class DkTjrsService implements IDkTjrsService {
                 return new Double(o2.getCount()).compareTo(new Double(o1.getCount()));
             }
         });
+        /***
+         * 初始化拥堵路段数据
+         */
+        StringBuffer sb = new StringBuffer();
+        if (dklist == null) {
+            for (String key : tjrsMap.keySet()) {
+                if (sb.toString().contains(tjrsMap.get(key) +"")) {
+                    continue;
+                } else {
+                    item = new DkTjrsItemDTO(""+tjrsMap.get(key), 0);
+                    dklist.add(item);
+                    sb.append(tjrsMap.get(key));
+                }
+                if (items.size() == 10) {
+                    break;
+                }
+            }
+        } else if (dklist != null && dklist.size() < 10) {
+            for (int i = 0; i < dklist.size(); i++) {
+                sb.append(dklist.get(i).getName());
+            }
+            for (String key : tjrsMap.keySet()) {
+                if (sb.toString().contains(tjrsMap.get(key) +"")) {
+                    continue;
+                } else {
+                    item = new DkTjrsItemDTO(""+tjrsMap.get(key), 0);
+                    dklist.add(item);
+                    sb.append(tjrsMap.get(key));
+                }
+                if (dklist.size() == 10) {
+                    break;
+                }
+            }
+        }
+        /********/
         Integer rt = 0;
         if(dklist.size() < 10) {
             rt = dklist.size();

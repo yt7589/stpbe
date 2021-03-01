@@ -66,20 +66,25 @@ public class TnVsService implements ITnVsService {
         String yesterday = DateUtil.plusDays(-1);
         List<Integer> tsfvs = redisTemplate.opsForList().range("tn_vs_trend_" + today, 0, 23);
         List<Integer> ysfvs = redisTemplate.opsForList().range("tn_vs_trend_" + yesterday, 0, 23);
+        tvtv = new ArrayList<>();
         if(tsfvs != null && tsfvs.size() > 0) {
-            tvtv = new ArrayList<>();
             for(int i = 0; i < tsfvs.size(); i++) {
                 tvtv.add(new TnVsTopVehicleDTO("" + (i+1), tsfvs.get(i)));
             }
             tv.setTsfvs(tvtv);
+        } else {
+            for(int i = 0; i < 24; i++) {
+                tvtv.add(new TnVsTopVehicleDTO("" + (i+1), 0));
+            }
         }
+        tv.setTsfvs(tvtv);
+        tvtv = new ArrayList<>();
         if(ysfvs != null && ysfvs.size() > 0) {
-            tvtv = new ArrayList<>();
             for(int i = 0; i < ysfvs.size(); i++) {
                 tvtv.add(new TnVsTopVehicleDTO("" + (i+1), ysfvs.get(i)));
             }
         } else {
-            for(int i = 0; i < ysfvs.size(); i++) {
+            for(int i = 0; i < 24; i++) {
                 tvtv.add(new TnVsTopVehicleDTO("" + (i+1), 0));
             }
         }

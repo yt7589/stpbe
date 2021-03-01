@@ -30,11 +30,13 @@ public class KsSvsKsvadsService implements IKsSvsKsvadsService {
         KsSvsKsvadDTO ksSvsKsvadDTO = null;
         if(kc != null && kc.size() > 0) {
             for(int i = 0; i < kc.size(); i++) {
+                Integer count = 0;
                 if(redisTemplate.opsForHash().get("ks_svs_area", kc.get(i).get("camera_code")) != null) {
-                    Integer count = (int)redisTemplate.opsForHash().get("ks_svs_area", kc.get(i).get("camera_code"));
-                    ksSvsKsvadDTO = new KsSvsKsvadDTO("" + kc.get(i).get("area_name"),count);
-                    list.add(ksSvsKsvadDTO);
+                    count = (int)redisTemplate.opsForHash().get("ks_svs_area", kc.get(i).get("camera_code"));
+
                 }
+                ksSvsKsvadDTO = new KsSvsKsvadDTO("" + kc.get(i).get("area_name"),count);
+                list.add(ksSvsKsvadDTO);
             }
         }
         List<KsSvsKsvadDTO> dklist = new ArrayList<>();

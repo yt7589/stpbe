@@ -264,7 +264,12 @@
 
     <select id ="getIllTopArea" resultMap="ilAreaDTO">
         SELECT ta.area_name, COUNT(p.violation_id) AS `count`
-          FROM (
+          FROM t_area ta
+     LEFT JOIN t_site ts
+            ON ta.area_id = ts.area_id
+     LEFT JOIN t_camera tc
+            ON tc.site_id = ts.site_id
+     LEFT JOIN (
         SELECT tv.violation_id, tv.camera_id
           FROM t_violation tv
          WHERE 1 = 1
@@ -281,13 +286,9 @@
                 AND category = 1
             </if>
                 ) p
-     LEFT JOIN t_camera tc
             ON p.camera_id = tc.camera_id
-     LEFT JOIN t_site ts
-            ON tc.site_id = ts.site_id
-     LEFT JOIN t_area ta
-            ON ta.area_id = ts.area_id
       GROUP BY ta.area_id
+      ORDER BY COUNT(p.violation_id) DESC
          LIMIT 10
     </select>
 

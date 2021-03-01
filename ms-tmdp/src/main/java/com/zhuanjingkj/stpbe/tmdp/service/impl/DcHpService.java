@@ -88,7 +88,7 @@ public class DcHpService implements IDcHpService {
     public List<DcHpRgTrendDTO> getDrt_exp() {
         List<DcHpRgTrendDTO> drt = new ArrayList<>();
         Map<String, Integer> res30Map = DateUtil.dayFor30Map(30, DateUtil.DTF_NYR);
-        String endTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String endTime = LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String startTime = DateUtil.plusDaysForDate(endTime, -29);
         List<Map<String, Object>> recs = dcHpMapper.getVmDrtCount(startTime, endTime);
         if(recs != null && recs.size() > 0) {

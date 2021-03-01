@@ -58,24 +58,12 @@ public class DcStService implements IDcStService {
 
     @Override
     public List<DcStVAreaDTO> getVarea_exp() {
-//        List<DcStVAreaDTO> recs = new ArrayList<>();
-//        recs.add(new DcStVAreaDTO(102,"西二旗",200000));
-//        recs.add(new DcStVAreaDTO(103,"上地",300000));
-//        recs.add(new DcStVAreaDTO(104,"西直门",400000));
-//        recs.add(new DcStVAreaDTO(105,"知春路",500000));
-//        recs.add(new DcStVAreaDTO(105,"北七家",600000));
         List<DcStVAreaDTO> recs = dcStMapper.getTop5Varea(); //过车量排行前5点位
         return recs;
     }
 
     @Override
     public List<DcStVSiteDTO> getVSite_exp() {
-//        List<DcStVSiteDTO> recs = new ArrayList<>();
-//        recs.add(new DcStVSiteDTO(107,"上地四街",116.0854321,40.823654,100000));
-//        recs.add(new DcStVSiteDTO(107,"上地五街",116.0754321,40.723654,200000));
-//        recs.add(new DcStVSiteDTO(107,"上地六街",116.0654321,40.623654,300000));
-//        recs.add(new DcStVSiteDTO(107,"上地七街",116.0554321,40.523654,400000));
-//        recs.add(new DcStVSiteDTO(107,"上地八街",116.0454321,40.423654,500000));
         List<DcStVSiteDTO> recs = dcStMapper.getTop5VSite();
         return recs;
     }
@@ -84,7 +72,7 @@ public class DcStService implements IDcStService {
     public List<DcStVTrendDTO> getVTr_exp() {
         List<DcStVTrendDTO> recs = new ArrayList<>();
         Map<String, Integer> res30Map = DateUtil.dayFor30Map(7, DateUtil.DTF_NYR); //生成7日过车集合
-        String endTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String endTime = LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String startTime = DateUtil.plusDaysForDate(endTime, -6);
         List<Map<String, Object>> res = dcStMapper.getWeekVehicle(endTime, startTime);
         if(res != null && res.size() > 0) {
@@ -95,14 +83,6 @@ public class DcStService implements IDcStService {
         for (String key : res30Map.keySet()) {
             recs.add(new DcStVTrendDTO(DateUtil.timeForMdStr(key),res30Map.get(key)));
         }
-//        List<DcStVTrendDTO> recs = new ArrayList<>();
-//        recs.add(new DcStVTrendDTO("12-20", 100000));
-//        recs.add(new DcStVTrendDTO("12-21", 220000));
-//        recs.add(new DcStVTrendDTO("12-22", 240000));
-//        recs.add(new DcStVTrendDTO("12-23", 250000));
-//        recs.add(new DcStVTrendDTO("12-24", 240000));
-//        recs.add(new DcStVTrendDTO("12-25", 220000));
-//        recs.add(new DcStVTrendDTO("12-26", 210000));
         return recs;
     }
 
@@ -151,14 +131,6 @@ public class DcStService implements IDcStService {
 
     @Override
     public List<DcStKvSiteDTO> getDcKvs_exp() {
-//        List<DcStKvSiteDTO> recs = new ArrayList<>();
-//        recs.add(new DcStKvSiteDTO(107,"海淀区上龙泽",116.1454321,40.553654,140000));
-//        recs.add(new DcStKvSiteDTO(108,"海淀区回龙观",116.2454321,40.653654,100000));
-//        recs.add(new DcStKvSiteDTO(109,"昌平区北七家",116.3454321,40.753654,110000));
-//        recs.add(new DcStKvSiteDTO(101,"海淀区西直门",116.4454321,40.853654,200000));
-//        recs.add(new DcStKvSiteDTO(102,"朝阳区东湖区",116.5454321,40.953654,300000));
-//        recs.add(new DcStKvSiteDTO(103,"海淀区上地",116.6454321,40.353654,200000));
-//        recs.add(new DcStKvSiteDTO(104,"海淀区西二旗",116.7454321,40.573654,100000));
         List<DcStKvSiteDTO> recs = new ArrayList<>();
         String ym = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
         Set<ZSetOperations.TypedTuple<Object>> typedTupleSet = redisTemplate.opsForZSet().reverseRangeWithScores("dcst_top7_site_" + ym,0,6);
@@ -166,9 +138,33 @@ public class DcStService implements IDcStService {
         while (iterator.hasNext()){
             ZSetOperations.TypedTuple<Object>  typedTuple = iterator.next();
             recs.add(new DcStKvSiteDTO(0, "" + siteNameMap.get(typedTuple.getValue()),0,0,typedTuple.getScore().intValue()));
-//            Object value = typedTuple.getValue();
-//            double score1 = typedTuple.getScore();
-//            System.out.println("通过reverseRangeWithScores(K key, long start, long end)方法索引倒序排列区间值:" + value + "----->" + score1);
+        }
+        StringBuffer sb = new StringBuffer();
+        if (recs == null) {
+            for (String key : siteNameMap.keySet()) {
+                if (!sb.toString().contains(siteNameMap.get(key) +"")) {
+                    recs.add(new DcStKvSiteDTO(0, "" + siteNameMap.get(key),0,0,0));
+                    sb.append(siteNameMap.get(key));
+                }
+                if (recs.size() == 10) {
+                    break;
+                }
+            }
+        } else if (recs != null && recs.size() < 10) {
+            if (recs.size() > 0) {
+                for (int i = 0; i < recs.size(); i++) {
+                    sb.append(recs.get(i).getSiteName());
+                }
+            }
+            for (String key : siteNameMap.keySet()) {
+                if (!sb.toString().contains(siteNameMap.get(key) +"")) {
+                    recs.add(new DcStKvSiteDTO(0, "" + siteNameMap.get(key),0,0,0));
+                    sb.append(siteNameMap.get(key));
+                }
+                if (recs.size() == 10) {
+                    break;
+                }
+            }
         }
         return recs;
     }
@@ -181,9 +177,33 @@ public class DcStService implements IDcStService {
         while (iterator.hasNext()){
             ZSetOperations.TypedTuple<Object>  typedTuple = iterator.next();
             recs.add(new DcStTruckSiteDTO(0, "" + siteNameMap.get(typedTuple.getValue()),0,0,typedTuple.getScore().intValue()));
-//            Object value = typedTuple.getValue();
-//            double score1 = typedTuple.getScore();
-//            System.out.println("通过reverseRangeWithScores(K key, long start, long end)方法索引倒序排列区间值:" + value + "----->" + score1);
+        }
+        StringBuffer sb = new StringBuffer();
+        if (recs == null) {
+            for (String key : siteNameMap.keySet()) {
+                if (!sb.toString().contains(siteNameMap.get(key) +"")) {
+                    recs.add(new DcStTruckSiteDTO(0, "" + siteNameMap.get(key),0,0,0));
+                    sb.append(siteNameMap.get(key));
+                }
+                if (recs.size() == 10) {
+                    break;
+                }
+            }
+        } else if (recs != null && recs.size() < 10) {
+            if (recs.size() > 0) {
+                for (int i = 0; i < recs.size(); i++) {
+                    sb.append(recs.get(i).getSiteName());
+                }
+            }
+            for (String key : siteNameMap.keySet()) {
+                if (!sb.toString().contains(siteNameMap.get(key) +"")) {
+                    recs.add(new DcStTruckSiteDTO(0, "" + siteNameMap.get(key),0,0,0));
+                    sb.append(siteNameMap.get(key));
+                }
+                if (recs.size() == 10) {
+                    break;
+                }
+            }
         }
         return recs;
     }
