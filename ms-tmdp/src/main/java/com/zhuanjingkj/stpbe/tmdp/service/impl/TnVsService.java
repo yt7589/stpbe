@@ -33,22 +33,11 @@ public class TnVsService implements ITnVsService {
         Iterator<ZSetOperations.TypedTuple<Object>> iterator = typedTupleSet.iterator();
         while (iterator.hasNext()){
             ZSetOperations.TypedTuple<Object>  typedTuple = iterator.next();
-            System.out.println(typedTuple.getValue());
             tvts.add(new TnVsTopSiteDTO("" + dcStService.siteNameMap.get("" + typedTuple.getValue()),
                     Double.parseDouble(("" + dcStService.siteMap.get("" + typedTuple.getValue())).split("\\|")[0] == null ? "0" : ("" + dcStService.siteMap.get("" + typedTuple.getValue())).split("\\|")[0]),
                     Double.parseDouble(("" + dcStService.siteMap.get("" + typedTuple.getValue())).split("\\|")[1] == null ? "0" : ("" + dcStService.siteMap.get("" + typedTuple.getValue())).split("\\|")[1]),
                     typedTuple.getScore().intValue()));
         }
-//        tvts.add(new TnVsTopSiteDTO("海淀区西二旗", 311000020));
-//        tvts.add(new TnVsTopSiteDTO("海淀区上地", 1200000000));
-//        tvts.add(new TnVsTopSiteDTO("海淀区西直门", 2120000000));
-//        tvts.add(new TnVsTopSiteDTO("海淀区知春路", 310000002));
-//        tvts.add(new TnVsTopSiteDTO("朝阳区东湖渠", 410000002));
-//        tvts.add(new TnVsTopSiteDTO("昌平区北七家", 510000002));
-//        tvts.add(new TnVsTopSiteDTO("海淀区回龙观", 611200002));
-//        tvts.add(new TnVsTopSiteDTO("海淀区龙泽", 722658240));
-//        tvts.add(new TnVsTopSiteDTO("海淀区魏公村", 813123300));
-//        tvts.add(new TnVsTopSiteDTO("海淀区大钟寺", 322100110));
         /** 合并同一个路段下的camera拍照数量 */
         List<TnVsTopSiteDTO> dklist = new ArrayList<>();
         tvts.parallelStream().collect(Collectors.groupingBy(o ->(o.getName()),Collectors.toList())).forEach(
@@ -91,14 +80,4 @@ public class TnVsService implements ITnVsService {
         tv.setYsfvs(tvtv);
         return tv;
     }
-//    @Override
-//    public List<TnVsSiteDTO> getTvsdDTO_exp() {
-//        List<TnVsSiteDTO> tvsd = new ArrayList<>();
-//        tvsd.add(new TnVsSiteDTO(105,"上地街道78号",116.1987,40.9365));
-//        tvsd.add(new TnVsSiteDTO(105,"上地街道78号",116.2987,40.8365));
-//        tvsd.add(new TnVsSiteDTO(105,"上地街道178号",116.3987,40.7365));
-//        tvsd.add(new TnVsSiteDTO(105,"上地街道728号",116.4987,40.6365));
-//        tvsd.add(new TnVsSiteDTO(105,"上地街道278号",116.5987,40.5365));
-//        return tvsd;
-//    }
 }
