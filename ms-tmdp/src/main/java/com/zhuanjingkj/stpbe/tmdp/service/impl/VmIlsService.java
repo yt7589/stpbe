@@ -165,14 +165,7 @@ public class VmIlsService implements IVmIlsService {
     public ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx) {
         TvisJsonVO vo = TvisUtil.getTvisJsonVOById(tvisJsonMapper, tvisJsonId);
         ResultDTO<VmIlsVdDTO> dto = new ResultDTO<>();
-//        Map<String, Object> prMap = vmIlsMapper.getFileHash(tvId);
-//        Map<String, Object> dtMap = new HashMap<>();
-//        if(prMap != null && prMap.size() > 0) {
-//            long tvisJsonId = Long.parseLong(prMap.get("tvis_json_id") + "");
-//            String tvisJsonTbl = prMap.get("tvis_json_tbl") + "" ;
-//            dtMap = dkRtvrMapper.getImageHash(tvisJsonId, tvisJsonTbl);
-//        }
-//        String vehsIdx = prMap.get("vehs_idx") + "";
+        String imgUrl = "http://222.128.117.234:9003/images/n_" + tvisJsonId + ".jpg";
         String data = IpfsClient.getTextFile("" + vo.getJsonHash());
         JSONObject dataJson = JSONObject.parseObject(data);
         long cameraId = dataJson.getLong("cameraId");
@@ -231,7 +224,7 @@ public class VmIlsService implements IVmIlsService {
         Integer ct_isSafetyBelt = isViolation(jsxwtzJson.getString("FJSBJAQD")); //副驾驶不系安全带
         Integer ct_isSunVisor = isViolation(jsxwtzJson.getString("FJSZYB")); //副驾驶遮阳板
         //Integer mc_isHelmet = Integer.parseInt(jsxwtzJson.getString("MTCBDTK").replace("_", "")) >= 180 ? 1:0;
-        vmIlsVdDTO = new VmIlsVdDTO(0,IpfsClient.getIpfsUrl("" + vo.getImageHash()),timeStamp,
+        vmIlsVdDTO = new VmIlsVdDTO(0, imgUrl,timeStamp,
                 ilsName, category, hphm, "","" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
                 "" + VEH_TYPE.get("C" + cxtzJson.get("CLLXZFL")), direction, md_isPhone,md_isWPhone, md_isSafetyBelt,
                 md_isSmoke,md_isSunVisor,ct_isSafetyBelt,ct_isSunVisor,0,"" + VEH_COLOR_CSYS.get(cxtzJson.getString("CSYS")),
