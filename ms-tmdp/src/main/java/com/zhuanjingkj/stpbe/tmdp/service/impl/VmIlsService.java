@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
@@ -148,15 +149,6 @@ public class VmIlsService implements IVmIlsService {
     public ResultDTO<List<VmIlsTypeDTO>> queryIlsTypes_exp() {
         ResultDTO<List<VmIlsTypeDTO>> dto = new ResultDTO<>();
         List<VmIlsTypeDTO> ilsType = vmIlsMapper.getIlsType();
-//        ilsType.add(new VmIlsTypeDTO(104,"闯红灯"));
-//        ilsType.add(new VmIlsTypeDTO(105,"行车打电话"));
-//        ilsType.add(new VmIlsTypeDTO(106,"副驾驶不系安全带"));
-//        ilsType.add(new VmIlsTypeDTO(107,"违反限行"));
-//        ilsType.add(new VmIlsTypeDTO(108,"逆行"));
-//        ilsType.add(new VmIlsTypeDTO(109,"未随车携带行驶证"));
-//        ilsType.add(new VmIlsTypeDTO(110,"未随车携带驾驶证"));
-//        ilsType.add(new VmIlsTypeDTO(111,"使用汽车吊车牵引车辆"));
-//        ilsType.add(new VmIlsTypeDTO(112,"牵引摩托车"));
         dto.setData(ilsType);
         return dto;
     }
@@ -165,7 +157,7 @@ public class VmIlsService implements IVmIlsService {
     public ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx) {
         TvisJsonVO vo = TvisUtil.getTvisJsonVOById(tvisJsonMapper, tvisJsonId);
         ResultDTO<VmIlsVdDTO> dto = new ResultDTO<>();
-        String imgUrl = "http://222.128.117.234:9003/images/n_" + tvisJsonId + ".jpg";
+        String imgUrl = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=n_" + tvisJsonId + ".jpg";
         String data = IpfsClient.getTextFile("" + vo.getJsonHash());
         JSONObject dataJson = JSONObject.parseObject(data);
         long cameraId = dataJson.getLong("cameraId");
@@ -224,7 +216,7 @@ public class VmIlsService implements IVmIlsService {
         Integer ct_isSafetyBelt = isViolation(jsxwtzJson.getString("FJSBJAQD")); //副驾驶不系安全带
         Integer ct_isSunVisor = isViolation(jsxwtzJson.getString("FJSZYB")); //副驾驶遮阳板
         //Integer mc_isHelmet = Integer.parseInt(jsxwtzJson.getString("MTCBDTK").replace("_", "")) >= 180 ? 1:0;
-        vmIlsVdDTO = new VmIlsVdDTO(0, imgUrl,timeStamp,
+        vmIlsVdDTO = new VmIlsVdDTO(0, imgUrl, timeStamp,
                 ilsName, category, hphm, "","" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
                 "" + VEH_TYPE.get("C" + cxtzJson.get("CLLXZFL")), direction, md_isPhone,md_isWPhone, md_isSafetyBelt,
                 md_isSmoke,md_isSunVisor,ct_isSafetyBelt,ct_isSunVisor,0,"" + VEH_COLOR_CSYS.get(cxtzJson.getString("CSYS")),
