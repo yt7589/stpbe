@@ -6,13 +6,13 @@
         <result column="violation_id" property="seq" jdbcType="VARCHAR"/>
         <result column="hphm" property="hphm" jdbcType="VARCHAR"/>
         <result column="ppcx" property="ppcx" jdbcType="VARCHAR"/>
-        <result column="wzlx" property="trafficViolationTypeName" jdbcType="VARCHAR"/>
+        <result column="violation_type_name" property="trafficViolationTypeName" jdbcType="VARCHAR"/>
         <result column="site_name" property="siteName" jdbcType="VARCHAR"/>
         <result column="occur_time" property="shotTime" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id ="getKsSvsSvtv" resultMap="svtvDTO">
-        SELECT tv.violation_id, tv.hphm,tv.ppcx, tv.clpp, tv.wzlx, tj.occur_time, tsi.site_name, tsi.lng, tsi.lat
+        SELECT tv.violation_id, tv.hphm,tv.ppcx, tv.clpp, tv.wzlx, tvt.violation_type_name, tj.occur_time, tsi.site_name, tsi.lng, tsi.lat
           FROM t_violation tv
      LEFT JOIN t_special_vehicle_type ts
             ON tv.cllxzfl = ts.vehicle_type_num
@@ -22,6 +22,8 @@
             ON tv.camera_id = tc.camera_id
      LEFT JOIN t_site tsi
             ON tsi.site_id = tc.site_id
+     LEFT JOIN t_violation_type tvt
+            ON tvt.violation_type_code = tv.wzlx
          WHERE ts.`status` = 1
       ORDER BY tj.occur_time DESC
          LIMIT 5
