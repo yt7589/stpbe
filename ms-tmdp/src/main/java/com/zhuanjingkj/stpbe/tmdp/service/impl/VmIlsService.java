@@ -11,13 +11,22 @@ import com.zhuanjingkj.stpbe.common.mapper.VmIlsMapper;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
-import com.zhuanjingkj.stpbe.data.dto.*;
-import com.zhuanjingkj.stpbe.data.vo.CameraVehicleRecordVO;
+import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
+import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlsDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlsVehicleTypesDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlsTypeDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlsTopAreaDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlsTopSiteDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlsSiteDTO;
 import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tmdp.dto.vm.VmIlsVdDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlsVhsDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vm.VmIlsVsInfoDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlsVsTrendDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vm.VmIlsVsTypeDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlssDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IVmIlsService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
@@ -146,12 +155,8 @@ public class VmIlsService implements IVmIlsService {
 
     @Override
     public ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx) {
-        Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
         TvisJsonVO vo = TvisUtil.getTvisJsonVOById(tvisJsonMapper, tvisJsonId);
         ResultDTO<VmIlsVdDTO> dto = new ResultDTO<>();
-        WsmVideoFrameDTO vfv = TvisUtil.getTvisFrameAnalysisResult(vo, cutVehs);
-        List<WsmVideoFrameVehicleDTO> wfv = vfv.getData();
-
         String data = IpfsClient.getTextFile("" + vo.getJsonHash());
         JSONObject dataJson = JSONObject.parseObject(data);
         long cameraId = dataJson.getLong("cameraId");
@@ -210,7 +215,7 @@ public class VmIlsService implements IVmIlsService {
         Integer ct_isSafetyBelt = isViolation(jsxwtzJson.getString("FJSBJAQD")); //副驾驶不系安全带
         Integer ct_isSunVisor = isViolation(jsxwtzJson.getString("FJSZYB")); //副驾驶遮阳板
         //Integer mc_isHelmet = Integer.parseInt(jsxwtzJson.getString("MTCBDTK").replace("_", "")) >= 180 ? 1:0;
-        vmIlsVdDTO = new VmIlsVdDTO(0, "imgUrl", timeStamp,
+        vmIlsVdDTO = new VmIlsVdDTO(0,IpfsClient.getIpfsUrl("" + vo.getImageHash()),timeStamp,
                 ilsName, category, hphm, "","" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
                 "" + VEH_TYPE.get("C" + cxtzJson.get("CLLXZFL")), direction, md_isPhone,md_isWPhone, md_isSafetyBelt,
                 md_isSmoke,md_isSunVisor,ct_isSafetyBelt,ct_isSunVisor,0,"" + VEH_COLOR_CSYS.get(cxtzJson.getString("CSYS")),
