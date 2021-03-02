@@ -48,7 +48,7 @@ public class DcHpService implements IDcHpService {
                 if(map != null && map.size() > 0) {
                     recs.get(i).setImageUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
                 }
-
+                recs.get(i).setTvisJsonTbl("");
             }
         }
         DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);

@@ -3,6 +3,7 @@
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DcHpMapper">
     <resultMap  type="com.zhuanjingkj.stpbe.data.dto.DcHpDTO" id="dchpDTO">
         <result column="tvis_json_id" property="tvisJsonId" jdbcType="INTEGER"/>
+        <result column="tvis_json_tbl" property="tvisJsonTbl" jdbcType="VARCHAR"/>
         <result column="vehs_idx" property="vehsIdx" jdbcType="INTEGER"/>
         <result column="occur_time" property="dcTime" jdbcType="VARCHAR"/>
         <result column="site_name" property="dcAddr" jdbcType="VARCHAR"/>

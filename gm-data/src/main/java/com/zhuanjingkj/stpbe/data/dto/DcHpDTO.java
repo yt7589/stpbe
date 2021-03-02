@@ -29,6 +29,10 @@ public class DcHpDTO extends BaseDTO {
     @JSONField(name = "vehsIdx")
     private long vehsIdx;
 
+    public DcHpDTO() {
+        super();
+    }
+
     public DcHpDTO(long dcId, String dcTime, String dcAddr, String hphm, String category, String isIl, String ilType, String imageUrl, long vehsIdx) {
         this.dcId = dcId;
         this.dcTime = dcTime;
