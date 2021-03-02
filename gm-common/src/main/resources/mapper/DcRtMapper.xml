@@ -80,62 +80,86 @@
         LIMIT 10
     </select>
 
+<!--    <select id ="getRrjForDay" resultType ="hashmap">-->
+<!--        SELECT T.road_name AS roadName, (T.mcount + Q.mcount) AS mcount, T.srcLng, T.srcLat, Q.dstLng, Q.dstLat,-->
+<!--               IFNULL((T.mcount + Q.mcount - T.pcount - Q.pcount)/(Q.pcount + T.pcount),0) As rg-->
+<!--          FROM (-->
+<!--        SELECT tr.road_name, st.siteId, st.mcount, st.pcount,st.srcLng, st.srcLat, trs.road_id-->
+<!--          FROM t_road_seg trs-->
+<!--     LEFT JOIN (-->
+<!--        SELECT M.siteId, M.`count` AS mcount, P.`count` AS pcount, M.srcLng, M.srcLat-->
+<!--          FROM (-->
+<!--        SELECT tiv.camera_id AS cameraId, COUNT(1) AS `count`, tc.site_id AS siteId, ts.lng AS srcLng, ts.lat AS srcLat-->
+<!--          FROM t_itf_vehicle tiv-->
+<!--     LEFT JOIN t_camera tc ON tiv.camera_id = tc.camera_id-->
+<!--     LEFT JOIN t_site ts on tc.site_id = ts.site_id-->
+<!--         WHERE tiv.occur_time > #{startTime}-->
+<!--           AND #{endTime} > tiv.occur_time-->
+<!--      GROUP BY tiv.camera_id) M-->
+<!--     LEFT JOIN (-->
+<!--        SELECT tiv.camera_id AS cameraId, COUNT(1) AS `count`, tc.site_id AS siteId, ts.lng AS srcLng, ts.lat AS srcLat-->
+<!--          FROM t_itf_vehicle tiv-->
+<!--     LEFT JOIN t_camera tc ON tiv.camera_id = tc.camera_id-->
+<!--     LEFT JOIN t_site ts on tc.site_id = ts.site_id-->
+<!--         WHERE tiv.occur_time > #{pStartTime}-->
+<!--           AND #{startTime} > tiv.occur_time-->
+<!--      GROUP BY tiv.camera_id) P-->
+<!--            ON M.siteId = P.siteId) st ON trs.src_site_id = st.siteId-->
+<!--     LEFT JOIN t_road tr ON trs.road_id = tr.road_id-->
+<!--         WHERE st.siteId IS NOT NULL) T-->
+<!--     LEFT JOIN (-->
+<!--        SELECT tr.road_name, st.siteId, st.mcount, st.pcount, st.dstLng, st.dstLat, trs.road_id-->
+<!--          FROM t_road_seg trs-->
+<!--     LEFT JOIN (-->
+<!--        SELECT M.siteId, M.`count` AS mcount, P.`count` AS pcount, M.dstLng, M.dstLat-->
+<!--          FROM (-->
+<!--        SELECT tiv.camera_id AS cameraId, COUNT(1) AS `count`, tc.site_id AS siteId, ts.lng AS dstLng, ts.lat AS dstLat-->
+<!--          FROM t_itf_vehicle tiv-->
+<!--     LEFT JOIN t_camera tc ON tiv.camera_id = tc.camera_id-->
+<!--     LEFT JOIN t_site ts on tc.site_id = ts.site_id-->
+<!--         WHERE tiv.occur_time > #{startTime}-->
+<!--           AND #{endTime} > tiv.occur_time-->
+<!--      GROUP BY tiv.camera_id) M-->
+<!--     LEFT JOIN (-->
+<!--        SELECT tiv.camera_id AS cameraId, COUNT(1) AS `count`, tc.site_id AS siteId, ts.lng AS dstLng, ts.lat AS dstLat-->
+<!--          FROM t_itf_vehicle tiv-->
+<!--     LEFT JOIN t_camera tc ON tiv.camera_id = tc.camera_id-->
+<!--     LEFT JOIN t_site ts on tc.site_id = ts.site_id-->
+<!--         WHERE tiv.occur_time > #{pStartTime}-->
+<!--           AND #{startTime} > tiv.occur_time-->
+<!--      GROUP BY tiv.camera_id) P ON M.siteId = P.siteId) st ON trs.dst_site_id = st.siteId-->
+<!--     LEFT JOIN t_road tr ON trs.road_id = tr.road_id-->
+<!--         WHERE st.siteId IS NOT NULL) Q-->
+<!--            ON T.road_id = Q.road_id-->
+<!--         LIMIT 10-->
+<!--    </select>-->
     <select id ="getRrjForDay" resultType ="hashmap">
-        SELECT T.road_name AS roadName, (T.mcount + Q.mcount) AS mcount, T.srcLng, T.srcLat, Q.dstLng, Q.dstLat,
-               IFNULL((T.mcount + Q.mcount - T.pcount - Q.pcount)/(Q.pcount + T.pcount),0) As rg
+        SELECT M.siteId, M.`count` AS mcount, P.`count` AS pcount, M.srcLng, M.srcLat, M.road_name,
+               (IFNULL(M.`count`/(M.`count` + P.`count`), 0)* 100) AS rg
           FROM (
-        SELECT tr.road_name, st.siteId, st.mcount, st.pcount,st.srcLng, st.srcLat, trs.road_id
-          FROM t_road_seg trs
-     LEFT JOIN (
-        SELECT M.siteId, M.`count` AS mcount, P.`count` AS pcount, M.srcLng, M.srcLat
-          FROM (
-        SELECT tiv.camera_id AS cameraId, COUNT(1) AS `count`, tc.site_id AS siteId, ts.lng AS srcLng, ts.lat AS srcLat
+        SELECT tiv.camera_id AS cameraId, COUNT(1) AS `count`, tc.site_id AS siteId, ts.lng AS srcLng, ts.lat AS srcLat, tr.road_name
           FROM t_itf_vehicle tiv
      LEFT JOIN t_camera tc ON tiv.camera_id = tc.camera_id
      LEFT JOIN t_site ts on tc.site_id = ts.site_id
+     LEFT JOIN t_road tr ON tc.road_id = tr.road_id
          WHERE tiv.occur_time > #{startTime}
            AND #{endTime} > tiv.occur_time
       GROUP BY tiv.camera_id) M
      LEFT JOIN (
-        SELECT tiv.camera_id AS cameraId, COUNT(1) AS `count`, tc.site_id AS siteId, ts.lng AS srcLng, ts.lat AS srcLat
+        SELECT tiv.camera_id AS cameraId, COUNT(1) AS `count`, tc.site_id AS siteId, ts.lng AS srcLng, ts.lat AS srcLat, tr.road_name
           FROM t_itf_vehicle tiv
      LEFT JOIN t_camera tc ON tiv.camera_id = tc.camera_id
      LEFT JOIN t_site ts on tc.site_id = ts.site_id
+     LEFT JOIN t_road tr ON tc.road_id = tr.road_id
          WHERE tiv.occur_time > #{pStartTime}
            AND #{startTime} > tiv.occur_time
       GROUP BY tiv.camera_id) P
-            ON M.siteId = P.siteId) st ON trs.src_site_id = st.siteId
-     LEFT JOIN t_road tr ON trs.road_id = tr.road_id
-         WHERE st.siteId IS NOT NULL) T
-     LEFT JOIN (
-        SELECT tr.road_name, st.siteId, st.mcount, st.pcount, st.dstLng, st.dstLat, trs.road_id
-          FROM t_road_seg trs
-     LEFT JOIN (
-        SELECT M.siteId, M.`count` AS mcount, P.`count` AS pcount, M.dstLng, M.dstLat
-          FROM (
-        SELECT tiv.camera_id AS cameraId, COUNT(1) AS `count`, tc.site_id AS siteId, ts.lng AS dstLng, ts.lat AS dstLat
-          FROM t_itf_vehicle tiv
-     LEFT JOIN t_camera tc ON tiv.camera_id = tc.camera_id
-     LEFT JOIN t_site ts on tc.site_id = ts.site_id
-         WHERE tiv.occur_time > #{startTime}
-           AND #{endTime} > tiv.occur_time
-      GROUP BY tiv.camera_id) M
-     LEFT JOIN (
-        SELECT tiv.camera_id AS cameraId, COUNT(1) AS `count`, tc.site_id AS siteId, ts.lng AS dstLng, ts.lat AS dstLat
-          FROM t_itf_vehicle tiv
-     LEFT JOIN t_camera tc ON tiv.camera_id = tc.camera_id
-     LEFT JOIN t_site ts on tc.site_id = ts.site_id
-         WHERE tiv.occur_time > #{pStartTime}
-           AND #{startTime} > tiv.occur_time
-      GROUP BY tiv.camera_id) P ON M.siteId = P.siteId) st ON trs.dst_site_id = st.siteId
-     LEFT JOIN t_road tr ON trs.road_id = tr.road_id
-         WHERE st.siteId IS NOT NULL) Q
-            ON T.road_id = Q.road_id
-         LIMIT 10
+            ON M.siteId = P.siteId;
     </select>
-
     <select id ="getTivTotal" resultType ="Integer">
         SELECT COUNT(1)
-          FROM t_itf_vehicle
+          FROM t_itf_vehicle tiv
+         WHERE tiv.occur_time > #{startTime}
+           AND #{endTime} > tiv.occur_time
     </select>
 </mapper>

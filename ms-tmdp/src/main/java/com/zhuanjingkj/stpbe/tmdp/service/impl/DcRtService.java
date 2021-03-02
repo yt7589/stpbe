@@ -24,10 +24,10 @@ public class DcRtService implements IDcRtService {
         List<DcRtTimeJamDTO> recs = new ArrayList<>();
         String endTime = DateUtil.countDays(0); //当前时间 2020-02-02
         String pEndTime = DateUtil.countDays(1); //结束时间
-        Integer total = dcRtMapper.getTivTotal();;
         if("week".equals(tp)) {  //近7天
             String startTime = DateUtil.plusDays(endTime, -6, DateUtil.DTF_NYR);
             List<Map<String, Object>> rtj = dcRtMapper.getDcForWeek(startTime, pEndTime);
+            Integer total = dcRtMapper.getTivTotal(startTime, pEndTime); //7天总过车量
             Map<String, Integer> rtjForWeek = DateUtil.dayFor30Map(6, DateUtil.DTF_MD);
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i < rtj.size(); i++) {
@@ -41,6 +41,7 @@ public class DcRtService implements IDcRtService {
         } else if("month".equals(tp)) { //近30天
             String startTime = DateUtil.plusDays(endTime, -29, DateUtil.DTF_NYR);
             List<Map<String, Object>> rtj = dcRtMapper.getDcForWeek(startTime, pEndTime);
+            Integer total = dcRtMapper.getTivTotal(startTime, pEndTime); //30天总过车量
             Map<String, Integer> rtjFor4W = DateUtil.dayFor30Map(-29, DateUtil.DTF_MD);
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i <rtj.size(); i++) {
@@ -56,6 +57,7 @@ public class DcRtService implements IDcRtService {
         } else if("quarter".equals(tp)) { //近90天
             String startTime = DateUtil.plusDays(endTime, -89, DateUtil.DTF_NYR);
             List<Map<String, Object>> rtj = dcRtMapper.getDcFor3m(startTime, pEndTime);
+            Integer total = dcRtMapper.getTivTotal(startTime, pEndTime); //90天总过车量
             Map<String, Integer> rtjFor3m = DateUtil.monthFor3Map(4, false);
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i < rtj.size(); i++) {
@@ -71,6 +73,7 @@ public class DcRtService implements IDcRtService {
         } else if("half" .equals(tp)) { //近半年
             String startTime = DateUtil.plusDays(endTime, -180, DateUtil.DTF_NYR);
             List<Map<String, Object>> rtj = dcRtMapper.getDcFor3m(startTime, pEndTime);
+            Integer total = dcRtMapper.getTivTotal(startTime, pEndTime); //180天总过车量
             Map<String, Integer> rtjFor3m = DateUtil.monthFor3Map(7, false);
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i < rtj.size(); i++) {
@@ -86,6 +89,7 @@ public class DcRtService implements IDcRtService {
         } else if("year".equals(tp)) { //近一年
             String startTime = DateUtil.plusDays(endTime, -365, DateUtil.DTF_NYR);
             List<Map<String, Object>> rtj = dcRtMapper.getDcFor3m(startTime, pEndTime);
+            Integer total = dcRtMapper.getTivTotal(startTime, pEndTime); //365天总过车量
             Map<String, Integer> rtjFor3m = DateUtil.monthFor3Map(12, false);
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i < rtj.size(); i++) {
@@ -100,10 +104,11 @@ public class DcRtService implements IDcRtService {
             }
         } else {
             List<Map<String, Object>> rtj = dcRtMapper.getDcForDay(endTime, pEndTime);
+            Integer total = dcRtMapper.getTivTotal(endTime, pEndTime); //当天过车量
             Map<String, Integer> rtjFor24Map = DateUtil.timeFor24Map();
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i < rtj.size(); i ++) {
-                    Integer count = Integer.parseInt(rtj.get(i).get("rj") == null ? "0" : "" + rtj.get(i).get("rj"));
+                    Integer count = Integer.parseInt(rtj.get(i).get("count") == null ? "0" : "" + rtj.get(i).get("count"));
                     rtjFor24Map.put("" + rtj.get(i).get("rj"), count);
                 }
             }
@@ -116,38 +121,44 @@ public class DcRtService implements IDcRtService {
 
     @Override
     public List<DcRtAreaJamDTO> getRaj_exp(String tp) {
-        Integer total = dcRtMapper.getTivTotal();
         List<DcRtAreaJamDTO> recs = new ArrayList<>();
         String endTime = DateUtil.countDays(1);
         List<Map<String, Object>> raj = new ArrayList<>();
+        Integer total = 0;
         if("week".equals(tp)) { //一周
             String startTime = DateUtil.countDays(-6);
             String pStartTime = DateUtil.countDays(-13);
             raj = dcRtMapper.getRajForDay(startTime, endTime, pStartTime);
+            total = dcRtMapper.getTivTotal(startTime, endTime); //一周总过车量
         } else if("month".equals(tp)) { //一月
             String startTime = DateUtil.countDays(-29);
             String pStartTime = DateUtil.countDays(-59);
             raj = dcRtMapper.getRajForDay(startTime, endTime, pStartTime);
+            total = dcRtMapper.getTivTotal(startTime, endTime); //一月总过车量
         } else if("quarter".equals(tp)) { //三月
             String startTime = DateUtil.countDays(-89);
             String pStartTime = DateUtil.countDays(-179);
             raj = dcRtMapper.getRajForDay(startTime, endTime, pStartTime);
+            total = dcRtMapper.getTivTotal(startTime, endTime); //三月总过车量
         } else if("half".equals(tp)) { //半年
             String startTime = DateUtil.countDays(-179);
             String pStartTime = DateUtil.countDays(-359);
             raj = dcRtMapper.getRajForDay(startTime, endTime, pStartTime);
+            total = dcRtMapper.getTivTotal(startTime, endTime); //半年总过车量
         } else if("year".equals(tp)) { //一年
             String startTime = DateUtil.countDays(-364);
             String pStartTime = DateUtil.countDays(-729);
             raj = dcRtMapper.getRajForDay(startTime, endTime, pStartTime);
+            total = dcRtMapper.getTivTotal(startTime, endTime); //一年总过车量
         } else { //当天
             String startTime = DateUtil.countDays(0);
             String pStartTime = DateUtil.countDays(-1);
             raj = dcRtMapper.getRajForDay(startTime, endTime, pStartTime);
+            total = dcRtMapper.getTivTotal(startTime, endTime); //当天总过车量
         }
         if(raj != null && raj.size() > 0) {
             for(int i = 0; i < raj.size(); i++) {
-                Integer count = Integer.parseInt(raj.get(i).get("count") == null ? "0" : "" + raj.get(i).get("count"));
+                Integer count = Integer.parseInt(raj.get(i).get("mcount") == null ? "0" : "" + raj.get(i).get("mcount"));
                 recs.add(new DcRtAreaJamDTO(0,"" + raj.get(i).get("area_name"),
                         str2Double(Double.parseDouble(raj.get(i).get("lng") == null ? "0" : "" + raj.get(i).get("lng"))),
                         str2Double(Double.parseDouble(raj.get(i).get("lat") == null ? "0" : "" + "" + raj.get(i).get("lat"))),
@@ -264,34 +275,40 @@ public class DcRtService implements IDcRtService {
 
     @Override
     public List<DcRtRoadJamDTO> getRrj_exp(String tp) {
-        Integer count = dcRtMapper.getTivTotal();
         List<DcRtRoadJamDTO> recs = new ArrayList<>();
         String endTime = DateUtil.countDays(1); //结束时间
         List<Map<String, Object>> rrj = new ArrayList<>();
+        Integer count = 0;
         if("week".equals(tp)) { //一周
             String startTime = DateUtil.countDays(-6);
             String pStartTime = DateUtil.countDays(-13);
             rrj = dcRtMapper.getRrjForDay(startTime, endTime, pStartTime);
+            count = dcRtMapper.getTivTotal(startTime, endTime);
         } else if("month".equals(tp)) { //一月
             String startTime = DateUtil.countDays(-29);
             String pStartTime = DateUtil.countDays(-59);
             rrj = dcRtMapper.getRrjForDay(startTime, endTime, pStartTime);
+            count = dcRtMapper.getTivTotal(startTime, endTime);
         } else if("quarter".equals(tp)) { //三月
             String startTime = DateUtil.countDays(-89);
             String pStartTime = DateUtil.countDays(-179);
             rrj = dcRtMapper.getRrjForDay(startTime, endTime, pStartTime);
+            count = dcRtMapper.getTivTotal(startTime, endTime);
         } else if("half".equals(tp)) { //半年
             String startTime = DateUtil.countDays(-179);
             String pStartTime = DateUtil.countDays(-359);
             rrj = dcRtMapper.getRrjForDay(startTime, endTime, pStartTime);
+            count = dcRtMapper.getTivTotal(startTime, endTime);
         } else if("year".equals(tp)) { //一年
             String startTime = DateUtil.countDays(-364);
             String pStartTime = DateUtil.countDays(-729);
             rrj = dcRtMapper.getRrjForDay(startTime, endTime, pStartTime);
+            count = dcRtMapper.getTivTotal(startTime, endTime);
         } else { //当天
             String startTime = DateUtil.countDays(0);
             String pStartTime = DateUtil.countDays(-1);
             rrj = dcRtMapper.getRrjForDay(startTime, endTime, pStartTime);
+            count = dcRtMapper.getTivTotal(startTime, endTime);
         }
         if(rrj != null && rrj.size() > 0) {
             for(int i = 0; i < rrj.size(); i++) {

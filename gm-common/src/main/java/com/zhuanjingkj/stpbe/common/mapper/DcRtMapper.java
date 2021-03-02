@@ -19,5 +19,5 @@ public interface DcRtMapper {
 
     List<Map<String, Object>> getRrjForDay(@Param("startTime") String startTime, @Param("endTime") String endTime, @Param("pStartTime") String pStartTime);
 
-    Integer getTivTotal();
+    Integer getTivTotal(@Param("startTime") String startTime, @Param("endTime") String endTime);
 }
