@@ -167,7 +167,7 @@ public class VmIlsService implements IVmIlsService {
 //        System.out.println("vfv.originImage:" + vfv.getOriginImage());
 //        System.out.println("vfv.data:" + vfv.getData().toString());
 //        String imgUrl = vfv.getOriginImage();
-        String imgUrl = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=n_" + tvisJsonId + "_" + vehsIdx + ".jpg";
+        String imgUrl = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=c_" + tvisJsonId + "_" + vehsIdx + ".jpg";
         String ilsName = "" + KsAsService.areaMap.get(code);
         JSONObject rstJson = JSONObject.parseObject(dataJson.getString("json"));
         JSONArray vehs = rstJson.getJSONArray("VEH");
