@@ -146,8 +146,9 @@ public class VmIlsService implements IVmIlsService {
 
     @Override
     public ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx) {
-
         TvisJsonVO vo = TvisUtil.getTvisJsonVOById(tvisJsonMapper, tvisJsonId);
+        System.out.println("imageHash:" + vo.getImageHash());
+        System.out.println("jsonHash:" + vo.getJsonHash());
         ResultDTO<VmIlsVdDTO> dto = new ResultDTO<>();
         String data = IpfsClient.getTextFile("" + vo.getJsonHash());
         JSONObject dataJson = JSONObject.parseObject(data);
@@ -218,7 +219,7 @@ public class VmIlsService implements IVmIlsService {
                 "" + VEH_HPHM_HPZT.get("C" + hptzJson.get("HPZL")),"" + VEH_HPHM_HPZL.get("C" + hptzJson.get("HPZL")),
                 Integer.parseInt(StringUtils.isBlank(hptzJson.getString("YWLSHP")) ? "0" : hptzJson.getString("YWLSHP")),
                 Integer.parseInt(StringUtils.isBlank(hptzJson.getString("HPKXD")) ? "0" : hptzJson.getString("HPKXD")),
-                hptzJson.getString("MWHPKXD"),dcjqs,ccztw,gj,cszt,xlj,bj,csch,csps,csgh,tc);
+                hptzJson.getString("MWHPKXD"),dcjqs,ccztw,gj,cszt,xlj,bj,csch,csps,csgh,tc, jsxwtzJson.getString("CLTZXL"));
 //        }
 
 //        VmIlsVdDTO vmIlsVdDTO = new VmIlsVdDTO(98,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg","2020-12-28 15:26:30",

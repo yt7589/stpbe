@@ -91,6 +91,8 @@ public class VmIlsVdDTO extends BaseDTO {
     private Integer csgh; //车身刮痕
     @JSONField(name = "tc")
     private Integer tc; //天窗
+    @JSONField(name = "cltzxl")
+    private String cltzxl;
 
     public VmIlsVdDTO(long imageId, String imageUrl, String ilsTime, String ilsAddr, String category, String hphm,
                       String ilsType, String vlType, String vsType, String direction, Integer md_isPhone,
@@ -99,7 +101,7 @@ public class VmIlsVdDTO extends BaseDTO {
                       String vModel, String yModel, double rlblt, Integer hphm_state, String hphm_color, String word_Style,
                       String hphm_type, Integer hphm_tps, double hphm_rlblt, String ehphm_rlblt, String dcjqs,
                       Integer ccztw, Integer gj, Integer cszt, String xlj, Integer bj, Integer csch, Integer csps,
-                      Integer csgh, Integer tc) {
+                      Integer csgh, Integer tc, String cltzxl) {
         this.imageId = imageId;
         this.imageUrl = imageUrl;
         this.ilsTime = ilsTime;
@@ -140,6 +142,7 @@ public class VmIlsVdDTO extends BaseDTO {
         this.csps = csps;
         this.csgh = csgh;
         this.tc = tc;
+        this.cltzxl = cltzxl;
     }
 
     public long getImageId() {
@@ -460,5 +463,13 @@ public class VmIlsVdDTO extends BaseDTO {
 
     public void setTc(Integer tc) {
         this.tc = tc;
+    }
+
+    public String getCltzxl() {
+        return cltzxl;
+    }
+
+    public void setCltzxl(String cltzxl) {
+        this.cltzxl = cltzxl;
     }
 }
