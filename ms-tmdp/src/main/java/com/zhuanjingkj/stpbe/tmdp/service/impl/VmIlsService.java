@@ -11,22 +11,13 @@ import com.zhuanjingkj.stpbe.common.mapper.VmIlsMapper;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
-import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
-import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.dto.VmIlsDTO;
-import com.zhuanjingkj.stpbe.data.dto.VmIlsVehicleTypesDTO;
-import com.zhuanjingkj.stpbe.data.dto.VmIlsTypeDTO;
-import com.zhuanjingkj.stpbe.data.dto.VmIlsTopAreaDTO;
-import com.zhuanjingkj.stpbe.data.dto.VmIlsTopSiteDTO;
-import com.zhuanjingkj.stpbe.data.dto.VmIlsSiteDTO;
+import com.zhuanjingkj.stpbe.data.dto.*;
+import com.zhuanjingkj.stpbe.data.vo.CameraVehicleRecordVO;
 import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tmdp.dto.vm.VmIlsVdDTO;
-import com.zhuanjingkj.stpbe.data.dto.VmIlsVhsDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vm.VmIlsVsInfoDTO;
-import com.zhuanjingkj.stpbe.data.dto.VmIlsVsTrendDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vm.VmIlsVsTypeDTO;
-import com.zhuanjingkj.stpbe.data.dto.VmIlssDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IVmIlsService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
@@ -155,14 +146,15 @@ public class VmIlsService implements IVmIlsService {
 
     @Override
     public ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx) {
+
         TvisJsonVO vo = TvisUtil.getTvisJsonVOById(tvisJsonMapper, tvisJsonId);
         ResultDTO<VmIlsVdDTO> dto = new ResultDTO<>();
         String data = IpfsClient.getTextFile("" + vo.getJsonHash());
         JSONObject dataJson = JSONObject.parseObject(data);
         long cameraId = dataJson.getLong("cameraId");
         String code = "";
+        long streamId = vo.getStreamId();
         if(cameraId == -1) {
-            long streamId = vo.getStreamId();
             String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
             if(StringUtils.isNotBlank(newCameraId)) {
                 code = newCameraId + "";
@@ -170,6 +162,9 @@ public class VmIlsService implements IVmIlsService {
         } else {
             code = cameraId + "";
         }
+        Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
+        WsmVideoFrameDTO vfv = TvisUtil.getTvisVideoAnalysisResult(tvisJsonMapper, null, cutVehs, streamId);
+        System.out.println("vfv:" + vfv);
         String ilsName = "" + KsAsService.areaMap.get(code);
         JSONObject rstJson = JSONObject.parseObject(dataJson.getString("json"));
         JSONArray vehs = rstJson.getJSONArray("VEH");
