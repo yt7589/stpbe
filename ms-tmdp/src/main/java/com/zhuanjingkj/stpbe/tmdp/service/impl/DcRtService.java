@@ -312,7 +312,7 @@ public class DcRtService implements IDcRtService {
         }
         if(rrj != null && rrj.size() > 0) {
             for(int i = 0; i < rrj.size(); i++) {
-                recs.add(new DcRtRoadJamDTO(0,""+rrj.get(i).get("roadName"),
+                recs.add(new DcRtRoadJamDTO(0,""+rrj.get(i).get("road_name"),
                         str2Double(Double.parseDouble(rrj.get(i).get("srcLng") == null ? "0" : "" + rrj.get(i).get("srcLng"))),
                         str2Double(Double.parseDouble(rrj.get(i).get("srcLat") == null ? "0" : "" + rrj.get(i).get("srcLat"))),
                         str2Double(Double.parseDouble(rrj.get(i).get("dstLng") == null ? "0" : "" + rrj.get(i).get("dstLng"))),
