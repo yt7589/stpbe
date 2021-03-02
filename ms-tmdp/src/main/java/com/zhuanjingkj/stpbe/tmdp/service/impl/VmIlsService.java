@@ -163,7 +163,7 @@ public class VmIlsService implements IVmIlsService {
             code = cameraId + "";
         }
         Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
-        WsmVideoFrameDTO vfv = TvisUtil.getTvisVideoAnalysisResult(tvisJsonMapper, null, cutVehs, streamId);
+        WsmVideoFrameDTO vfv = TvisUtil.getTvisFrameAnalysisResult(vo, cutVehs);
         System.out.println("vfv.originImage:" + vfv.getOriginImage());
         System.out.println("vfv.data:" + vfv.getData().toString());
         String imgUrl = vfv.getOriginImage();
