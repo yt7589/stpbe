@@ -26,7 +26,7 @@
     </select>
 
     <select id ="getRajForDay" resultType ="hashmap">
-        SELECT M.area_name, M.`count` AS mcount, M.lng, M.lat, IFNULL((M.`count` - P.`count`)/P.`count`, 0) AS rg
+        SELECT M.area_name, M.`count` AS mcount, M.lng, M.lat, IFNULL((M.`count` - P.`count`)/P.`count` * 100 , 0) AS rg
           FROM (
         SELECT ta.area_name, COUNT(1) AS `count`, ts.lng, ts.lat, ta.area_id
           FROM t_itf_vehicle tiv
@@ -135,7 +135,7 @@
 <!--    </select>-->
     <select id ="getRrjForDay" resultType ="hashmap">
         SELECT M.siteId, M.`count` AS mcount, P.`count` AS pcount, M.srcLng, M.srcLat, M.road_name,
-               (IFNULL(M.`count`/(M.`count` + P.`count`), 0)* 100) AS rg
+               IFNULL((M.`count` - P.`count`)/P.`count` * 100, 0) AS rg
           FROM (
         SELECT tiv.camera_id AS cameraId, COUNT(1) AS `count`, tc.site_id AS siteId, ts.lng AS srcLng, ts.lat AS srcLat, tr.road_name
           FROM t_itf_vehicle tiv
