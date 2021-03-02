@@ -256,10 +256,12 @@ public class TvisUtil {
                 BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
                 try {
                     cutFileFn = "c_" + tvisJsonId + "_" + idx + ".jpg";
+                    System.out.println("cutFileFn:" + cutFileFn);
                     cutFileObj = new File(imgBaseFolder + cutFileFn);
                     ImageIO.write(vehImg, "jpg", cutFileObj);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    System.out.println("cutFileFn:" + e);
                 }
                 vo.setX(x);
                 vo.setY(y);

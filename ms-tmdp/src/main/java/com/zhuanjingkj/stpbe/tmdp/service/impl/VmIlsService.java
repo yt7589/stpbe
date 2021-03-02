@@ -122,16 +122,6 @@ public class VmIlsService implements IVmIlsService {
     public ResultDTO<List<VmIlsVehicleTypesDTO>> queryVehicleType_exp() {
         ResultDTO<List<VmIlsVehicleTypesDTO>> dto = new ResultDTO<>();
         List<VmIlsVehicleTypesDTO> recs = vmIlsMapper.getVType(2);
-//        recs.add(new VmIlsVehicleTypesDTO(101,"小轿车"));
-//        recs.add(new VmIlsVehicleTypesDTO(102,"平板车"));
-//        recs.add(new VmIlsVehicleTypesDTO(103,"大型客车"));
-//        recs.add(new VmIlsVehicleTypesDTO(104,"重型货车"));
-//        recs.add(new VmIlsVehicleTypesDTO(105,"摩托车"));
-//        recs.add(new VmIlsVehicleTypesDTO(106,"挂车"));
-//        recs.add(new VmIlsVehicleTypesDTO(107,"SUV"));
-//        recs.add(new VmIlsVehicleTypesDTO(108,"普通货车"));
-//        recs.add(new VmIlsVehicleTypesDTO(109,"MPV"));
-//        recs.add(new VmIlsVehicleTypesDTO(110,"面包车"));
         dto.setData(recs);
         return dto;
     }
@@ -164,6 +154,7 @@ public class VmIlsService implements IVmIlsService {
             code = cameraId + "";
         }
         Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
+        TvisUtil.getTvisFrameAnalysisResult(vo, cutVehs);
         String imgUrl = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=c_" + tvisJsonId + "_" + vehsIdx + ".jpg";
         String ilsName = "" + KsAsService.areaMap.get(code);
         JSONObject rstJson = JSONObject.parseObject(dataJson.getString("json"));
@@ -219,15 +210,7 @@ public class VmIlsService implements IVmIlsService {
                 "" + VEH_HPHM_HPZT.get("C" + hptzJson.get("HPZL")),"" + VEH_HPHM_HPZL.get("C" + hptzJson.get("HPZL")),
                 Integer.parseInt(StringUtils.isBlank(hptzJson.getString("YWLSHP")) ? "0" : hptzJson.getString("YWLSHP")),
                 Integer.parseInt(StringUtils.isBlank(hptzJson.getString("HPKXD")) ? "0" : hptzJson.getString("HPKXD")),
-                hptzJson.getString("MWHPKXD"),dcjqs,ccztw,gj,cszt,xlj,bj,csch,csps,csgh,tc, jsxwtzJson.getString("CLTZXL"));
-//        }
-
-//        VmIlsVdDTO vmIlsVdDTO = new VmIlsVdDTO(98,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg","2020-12-28 15:26:30",
-//                "北京市海淀区上地三街123号", "本市",
-//                "京A48520", "未系安全带","大货车", "挂车","车头", 0,0,
-//                0,0,0,0,0,0,"白色", "大众",
-//                "小型车", "2020",99,1,"白色","蓝底白字","民用车牌",0,
-//                98,"京98 A97...");
+                hptzJson.getString("MWHPKXD"),dcjqs,ccztw,gj,cszt,xlj,bj,csch,csps,csgh,tc, vehJson.getString("CLTZXL"));
         dto.setData(vmIlsVdDTO);
         return dto;
     }
