@@ -164,7 +164,8 @@ public class VmIlsService implements IVmIlsService {
         }
         Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
         WsmVideoFrameDTO vfv = TvisUtil.getTvisVideoAnalysisResult(tvisJsonMapper, null, cutVehs, streamId);
-        System.out.println("vfv:" + vfv);
+        System.out.println("vfv.originImage:" + vfv.getOriginImage());
+        System.out.println("vfv.data:" + vfv.getData().toString());
         String ilsName = "" + KsAsService.areaMap.get(code);
         JSONObject rstJson = JSONObject.parseObject(dataJson.getString("json"));
         JSONArray vehs = rstJson.getJSONArray("VEH");
