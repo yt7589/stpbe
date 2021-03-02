@@ -52,6 +52,7 @@ public class DcHpDTO extends BaseDTO {
             obj.put("isIl", isIl);
             obj.put("ilType", ilType);
             obj.put("imageUrl", imageUrl);
+            obj.put("vehsIdx", vehsIdx);
         } catch (JSONException ex) {
         }
         return obj;
