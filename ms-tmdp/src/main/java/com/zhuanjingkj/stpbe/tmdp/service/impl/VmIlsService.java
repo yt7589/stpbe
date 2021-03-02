@@ -166,6 +166,7 @@ public class VmIlsService implements IVmIlsService {
         WsmVideoFrameDTO vfv = TvisUtil.getTvisVideoAnalysisResult(tvisJsonMapper, null, cutVehs, streamId);
         System.out.println("vfv.originImage:" + vfv.getOriginImage());
         System.out.println("vfv.data:" + vfv.getData().toString());
+        String imgUrl = vfv.getOriginImage();
         String ilsName = "" + KsAsService.areaMap.get(code);
         JSONObject rstJson = JSONObject.parseObject(dataJson.getString("json"));
         JSONArray vehs = rstJson.getJSONArray("VEH");
@@ -211,7 +212,7 @@ public class VmIlsService implements IVmIlsService {
         Integer ct_isSafetyBelt = isViolation(jsxwtzJson.getString("FJSBJAQD")); //副驾驶不系安全带
         Integer ct_isSunVisor = isViolation(jsxwtzJson.getString("FJSZYB")); //副驾驶遮阳板
         //Integer mc_isHelmet = Integer.parseInt(jsxwtzJson.getString("MTCBDTK").replace("_", "")) >= 180 ? 1:0;
-        vmIlsVdDTO = new VmIlsVdDTO(0,IpfsClient.getIpfsUrl("" + vo.getImageHash()),timeStamp,
+        vmIlsVdDTO = new VmIlsVdDTO(0,imgUrl,timeStamp,
                 ilsName, category, hphm, "","" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
                 "" + VEH_TYPE.get("C" + cxtzJson.get("CLLXZFL")), direction, md_isPhone,md_isWPhone, md_isSafetyBelt,
                 md_isSmoke,md_isSunVisor,ct_isSafetyBelt,ct_isSunVisor,0,"" + VEH_COLOR_CSYS.get(cxtzJson.getString("CSYS")),
