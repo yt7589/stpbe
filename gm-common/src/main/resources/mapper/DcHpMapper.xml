@@ -3,7 +3,8 @@
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DcHpMapper">
     <resultMap  type="com.zhuanjingkj.stpbe.data.dto.DcHpDTO" id="dchpDTO">
         <result column="tvis_json_id" property="tvisJsonId" jdbcType="INTEGER"/>
-        <result column="tvis_json_tbl" property="tvisJsonTbl" jdbcType="VARCHAR"/>
+        <result column="" property="tvisJsonTbl" jdbcType="VARCHAR"/>
+        <result column="vehs_idx" property="vehsIdx" jdbcType="VARCHAR"/>
         <result column="occur_time" property="dcTime" jdbcType="VARCHAR"/>
         <result column="site_name" property="dcAddr" jdbcType="VARCHAR"/>
         <result column="hphm" property="hphm" jdbcType="VARCHAR"/>
@@ -12,12 +13,12 @@
         <result column="ilType" property="ilType" jdbcType="VARCHAR"/>
     </resultMap>
     <insert id="insertItfVehicle">
-        INSERT INTO t_itf_vehicle(hphm, tvis_json_id, occur_time, camera_id, category, il_type, tvis_json_tbl)
-                           VALUES(#{dcHpDTO.hphm}, #{tvisJsonId}, #{dcHpDTO.dcTime}, #{dcHpDTO.dcAddr}, #{dcHpDTO.category}, #{dcHpDTO.ilType}, #{tvisJsonTbl})
+        INSERT INTO t_itf_vehicle(hphm, tvis_json_id, occur_time, camera_id, category, il_type, tvis_json_tbl, vehs_idx)
+                           VALUES(#{dcHpDTO.hphm}, #{tvisJsonId}, #{dcHpDTO.dcTime}, #{dcHpDTO.dcAddr}, #{dcHpDTO.category}, #{dcHpDTO.ilType}, #{tvisJsonTbl}, #{dcHpDTO.vehsIdx})
     </insert>
 
     <select id ="getVehicleData" resultMap="dchpDTO">
-        SELECT tif.tvis_json_id, tif.tvis_json_tbl, tif.occur_time, ts.site_name, tif.hphm, IF(tif.category = 0, '本市', '外埠') AS category,
+        SELECT tif.tvis_json_id, tif.vehs_idx, tif.tvis_json_tbl, tif.occur_time, ts.site_name, tif.hphm, IF(tif.category = 0, '本市', '外埠') AS category,
                IF(tif.il_type ='','否', '是') AS isIl,
                CASE tif.il_type
                WHEN 'ZJSDDH' THEN '主驾驶打电话' WHEN 'ZJSKSJ' THEN '主驾驶看手机' WHEN 'ZJSBJAQD' THEN '主驾驶不系安全带'

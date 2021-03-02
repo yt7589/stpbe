@@ -26,8 +26,10 @@ public class DcHpDTO extends BaseDTO {
     private String ilType;
     @JSONField(name = "imageUrl")
     private String imageUrl;
+    @JSONField(name = "vehsIdx")
+    private long vehsIdx;
 
-    public DcHpDTO(long dcId, String dcTime, String dcAddr, String hphm, String category, String isIl, String ilType, String imageUrl) {
+    public DcHpDTO(long dcId, String dcTime, String dcAddr, String hphm, String category, String isIl, String ilType, String imageUrl, long vehsIdx) {
         this.dcId = dcId;
         this.dcTime = dcTime;
         this.dcAddr = dcAddr;
@@ -36,6 +38,7 @@ public class DcHpDTO extends BaseDTO {
         this.isIl = isIl;
         this.ilType = ilType;
         this.imageUrl = imageUrl;
+        this.vehsIdx = vehsIdx;
     }
 
     public JSONObject toJsonObject() {
@@ -131,5 +134,13 @@ public class DcHpDTO extends BaseDTO {
 
     public void setTvisJsonTbl(String tvisJsonTbl) {
         this.tvisJsonTbl = tvisJsonTbl;
+    }
+
+    public long getVehsIdx() {
+        return vehsIdx;
+    }
+
+    public void setVehsIdx(long vehsIdx) {
+        this.vehsIdx = vehsIdx;
     }
 }

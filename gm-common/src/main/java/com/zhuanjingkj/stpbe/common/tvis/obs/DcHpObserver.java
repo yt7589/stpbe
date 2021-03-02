@@ -47,6 +47,7 @@ public class DcHpObserver implements ITvisStpObserver {
         String tblName = AppRegistry.tvisJsonTblName;
         DcHpDTO dcHpDTO = null;
         String category = "0";
+        long vehIdx = vo.getVehsIdx();
         String hphm_pre = PropUtil.getHphmPre();
         if(!hphm.contains(hphm_pre)) {
             category = "1";
@@ -68,62 +69,62 @@ public class DcHpObserver implements ITvisStpObserver {
         if(isViolation(vo.getVehicleJsxwtzVO().getZjsddh())) {
             ilType = "ZJSDDH";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getFjsbjaqd())) {
             ilType = "FJSBJAQD";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getFjszyb())) {
             ilType = "FJSZYB";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getZjsbjaqd())) {
             ilType = "ZJSBJAQD";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getZjscy())) {
             ilType = "ZJSCY";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getZjsksj())) {
             ilType = "ZJSKSJ";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getZjszyb())) {
             ilType = "ZJSZYB";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         if(isViolation(vo.getVehicleJsxwtzVO().getMtcbdtk())) {
             ilType = "MTCBDTK";
             isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
 
         if("0".equals(isIl)) {
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"");
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
         }
 
