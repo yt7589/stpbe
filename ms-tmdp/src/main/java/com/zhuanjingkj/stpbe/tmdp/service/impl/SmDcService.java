@@ -47,7 +47,7 @@ public class SmDcService implements ISmDcService {
     public ResultDTO<DbQrsDTO> getUsers_exp(Integer startIndex, Integer amount, Integer direction,
                                             String loginName, String userName, String phone) {
         ResultDTO dto = new ResultDTO();
-        if(direction == 0) {
+        if (direction == 0) {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
         }
         List<SmUserDTO> recs = smDcMapper.getUsers(startIndex, amount, loginName, userName, phone);
@@ -69,7 +69,7 @@ public class SmDcService implements ISmDcService {
     @Override
     public ResultDTO<DbInsertResultDTO> addUser_exp(AddUserToSmRTO rto) {
         ResultDTO dto = new ResultDTO();
-        rto.setPwd(SHA1.getStr2Sha1(rto.getPwd()));
+        rto.setPwd(rto.getPwd());
         Integer affectedRows = smDcMapper.addUser(rto);
         DbInsertResultDTO data = new DbInsertResultDTO(rto.getUserId(),affectedRows);
         dto.setData(data);
@@ -79,8 +79,8 @@ public class SmDcService implements ISmDcService {
     @Override
     public ResultDTO<DbDeleteResultDTO> uptUserInfo(UpdateUserInfoRTO rto) {
         ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
-        if(StringUtils.isNotBlank(rto.getPwd())) {
-            rto.setPwd(SHA1.getStr2Sha1(rto.getPwd()));
+        if (StringUtils.isNotBlank(rto.getPwd())) {
+            rto.setPwd(rto.getPwd());
         }
         Integer affectedRows = smDcMapper.uptUserInfo(rto);
         DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);
@@ -91,7 +91,7 @@ public class SmDcService implements ISmDcService {
     @Override
     public ResultDTO<DbQrsDTO> getRoles_exp(Integer startIndex, Integer amount, Integer direction) {
         ResultDTO dto = new ResultDTO();
-        if(direction == 0) {
+        if (direction == 0) {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
         }
         List<SmRoleDTO> recs = smDcMapper.getRoles(startIndex, amount);
@@ -123,7 +123,7 @@ public class SmDcService implements ISmDcService {
         ResultDTO dto = new ResultDTO();
         String fileName = "sys_logo_" + System.currentTimeMillis() + ".jpg";
         String imgUrl = "";
-        if(FileUtil.uploadImg(file, fileName)) {
+        if (FileUtil.uploadImg(file, fileName)) {
             imgUrl = PropUtil.getValue("sys.logo.url") + fileName;
         } else {
         }
@@ -158,28 +158,28 @@ public class SmDcService implements ISmDcService {
         redisTemplate.opsForValue().set("ks_svs_grate_truck", 0); //仓栅式货车
         redisTemplate.opsForValue().set("ks_svs_others", 0); //其他
 
-        if(redisTemplate.hasKey("ks_svs_area")) { //大货车点位统计
+        if (redisTemplate.hasKey("ks_svs_area")) { //大货车点位统计
             redisTemplate.delete("ks_svs_area");
         }
 
-        if(redisTemplate.hasKey("ks_ksvrp_site")) { //大货车点位统计
+        if (redisTemplate.hasKey("ks_ksvrp_site")) { //大货车点位统计
             redisTemplate.delete("ks_ksvrp_site");
         }
 
-        if(redisTemplate.hasKey("ks_ksvrp_vehicle")) {
+        if (redisTemplate.hasKey("ks_ksvrp_vehicle")) {
             redisTemplate.delete("ks_ksvrp_vehicle");
             redisTemplate.opsForList().rightPushAll("ks_ksvrp_vehicle", 0,0,0,0,0,0,0,0,0,0,0,0);
         }
 
-        if(redisTemplate.hasKey("ks_svs_area")){
+        if (redisTemplate.hasKey("ks_svs_area")){
             redisTemplate.delete("ks_svs_area");
         }
 
-        if(redisTemplate.hasKey("ks_ksvrp_site")){
+        if (redisTemplate.hasKey("ks_ksvrp_site")){
             redisTemplate.delete("ks_ksvrp_site");
         }
 
-        if(redisTemplate.hasKey("ks_ksvrp_truck")) {
+        if (redisTemplate.hasKey("ks_ksvrp_truck")) {
             redisTemplate.delete("ks_ksvrp_truck");
             redisTemplate.opsForList().rightPushAll("ks_ksvrp_truck", 0,0,0,0,0,0,0,0,0,0,0,0);
         }
@@ -191,13 +191,13 @@ public class SmDcService implements ISmDcService {
          */
         Integer vToday = (int)(redisTemplate.opsForValue().get("dk_htfs_today") == null ? 0 : redisTemplate.opsForValue().get("dk_htfs_today"));
         redisTemplate.opsForList().leftPush("dk_htfs_week", vToday);
-        if(redisTemplate.opsForList().size("dk_htfs_week") > 6) {
+        if (redisTemplate.opsForList().size("dk_htfs_week") > 6) {
             redisTemplate.opsForList().rightPop("dk_htfs_week");
         }
         redisTemplate.opsForValue().set("dk_htfs_today", 0); //首页本日过车量
 
         String tnVsTrend = "tn_vs_trend_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        if(!redisTemplate.hasKey("tn_vs_trend_" + tnVsTrend)) {
+        if (!redisTemplate.hasKey(tnVsTrend)) {
             redisTemplate.opsForList().rightPushAll(tnVsTrend, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         }
     }
@@ -237,110 +237,114 @@ public class SmDcService implements ISmDcService {
          * list 类型的需要删除，然后重新初始化
          */
 
-        if(redisTemplate.hasKey("dk_htfs_week")) {
+        if (redisTemplate.hasKey("dk_htfs_week")) {
             redisTemplate.delete("dk_htfs_week");
             redisTemplate.opsForList().rightPushAll("dk_htfs_week",0,0,0,0,0,0);
         }
 
-        if(redisTemplate.hasKey("ks_rss_lsvs_list")) {  //路段监管监控动态列表
+        if (redisTemplate.hasKey("ks_rss_lsvs_list")) {  //路段监管监控动态列表
             redisTemplate.delete("ks_rss_lsvs_list");
             redisTemplate.opsForList().rightPushAll("ks_rss_lsvs_list","0");
         }
 
-        if(redisTemplate.hasKey("ks_lps_time")) { // 车牌异常分时段统计
+        if (redisTemplate.hasKey("ks_lps_time")) { // 车牌异常分时段统计
             redisTemplate.delete("ks_lps_time");
             redisTemplate.opsForList().rightPushAll("ks_lps_time", 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         }
 
-        if(redisTemplate.hasKey("ks_as_lsvs_list")) { //区域监管监控动态列表
+        if (redisTemplate.hasKey("ks_as_lsvs_list")) { //区域监管监控动态列表
             redisTemplate.delete("ks_as_lsvs_list");
             redisTemplate.opsForList().rightPushAll("ks_as_lsvs_list","0");
         }
 
-        if(redisTemplate.hasKey("dk_vttf_lcar")) { //车辆类型流量(大型车)
+        if (redisTemplate.hasKey("dk_vttf_lcar")) { //车辆类型流量(大型车)
             redisTemplate.delete("dk_vttf_lcar");
             redisTemplate.opsForList().rightPushAll("dk_vttf_lcar", 0,0,0,0,0,0,0,0,0,0,0,0);
         }
 
-        if(redisTemplate.hasKey("dk_vttf_car")) { //车辆类型流量(中型车)
+        if (redisTemplate.hasKey("dk_vttf_car")) { //车辆类型流量(中型车)
             redisTemplate.delete("dk_vttf_car");
             redisTemplate.opsForList().rightPushAll("dk_vttf_car", 0,0,0,0,0,0,0,0,0,0,0,0);
         }
 
-        if(redisTemplate.hasKey("dk_vttf_scar")) { //车辆类型流量(小型车)
+        if (redisTemplate.hasKey("dk_vttf_scar")) { //车辆类型流量(小型车)
             redisTemplate.delete("dk_vttf_scar");
             redisTemplate.opsForList().rightPushAll("dk_vttf_scar", 0,0,0,0,0,0,0,0,0,0,0,0);
         }
 
-        if(redisTemplate.hasKey("dk_rtvr_violation")) { //统计时段违章
+        if (redisTemplate.hasKey("dk_rtvr_violation")) { //统计时段违章
             redisTemplate.delete("dk_rtvr_violation");
             redisTemplate.opsForList().rightPushAll("dk_rtvr_violation", 0,0,0,0,0,0,0,0,0,0,0,0);
         }
 
-        if(redisTemplate.hasKey("ks_vs_dyn_list")) {
+        if (redisTemplate.hasKey("ks_vs_dyn_list")) {
             redisTemplate.delete("ks_vs_dyn_list"); //车辆布控动态列表删除
             redisTemplate.opsForList().rightPushAll("ks_vs_dyn_list", 0 + "|" + 0);
         }
 
-        if(redisTemplate.hasKey("ks_vs_ill_list")) {
+        if (redisTemplate.hasKey("ks_vs_ill_list")) {
             redisTemplate.delete("ks_vs_ill_list"); //车辆报警列表删除
             redisTemplate.opsForList().rightPushAll("ks_vs_ill_list", 0 + "|" + 0);
         }
 
         //hash
-        if(redisTemplate.hasKey("ks_rss_lsvs_total")) { //路段监管动态车辆通过次数
+        if (redisTemplate.hasKey("ks_rss_lsvs_total")) { //路段监管动态车辆通过次数
             redisTemplate.delete("ks_rss_lsvs_total");
         }
 
-        if(redisTemplate.hasKey("ks_lps_area")) { //车牌异常分区域统计
+        if (redisTemplate.hasKey("ks_lps_area")) { //车牌异常分区域统计
             redisTemplate.delete("ks_lps_area");
         }
 
-        if(redisTemplate.hasKey("ks_as_lsvs_total")) { //区域监管动态车辆通过次数
+        if (redisTemplate.hasKey("ks_as_lsvs_total")) { //区域监管动态车辆通过次数
             redisTemplate.delete("ks_as_lsvs_total");
         }
 
-        if(redisTemplate.hasKey("ks_as_lsvs_time")) { //区域监管动态车辆最后一次通过时间
+        if (redisTemplate.hasKey("ks_as_lsvs_time")) { //区域监管动态车辆最后一次通过时间
             redisTemplate.delete("ks_as_lsvs_time");
         }
 
-        if(redisTemplate.hasKey("dk_tjrs_road")) { //首页拥堵路段过车统计
+        if (redisTemplate.hasKey("dk_tjrs_road")) { //首页拥堵路段过车统计
             redisTemplate.delete("dk_tjrs_road");
         }
 
-        if(redisTemplate.hasKey("dk_dctf_area")) { //首页区县过车量
+        if (redisTemplate.hasKey("dk_dctf_area")) { //首页区县过车量
             redisTemplate.delete("dk_dctf_area");
         }
 
-        if(redisTemplate.hasKey("ks_rss_lsvs_time")) {  //路段监管动态车辆最后一次通过时间
+        if (redisTemplate.hasKey("ks_rss_lsvs_time")) {  //路段监管动态车辆最后一次通过时间
             redisTemplate.delete("ks_rss_lsvs_time");
         }
 
-        if(redisTemplate.hasKey("ks_vs_dyn_total")) {
+        if (redisTemplate.hasKey("ks_vs_dyn_total")) {
             redisTemplate.delete("ks_vs_dyn_total"); //车辆布控动态次数删除
         }
 
-        if(redisTemplate.hasKey("ks_vs_dyn_time")) {
+        if (redisTemplate.hasKey("ks_vs_dyn_time")) {
             redisTemplate.delete("ks_vs_dyn_time"); //车辆布控动态时间删除
         }
 
-        if(redisTemplate.hasKey("ks_vs_ill_time")) {
+        if (redisTemplate.hasKey("ks_vs_ill_time")) {
             redisTemplate.delete("ks_vs_ill_time"); //车辆报警时间删除
         }
 
-        if(redisTemplate.hasKey("ks_vs_ill_total")) {
+        if (redisTemplate.hasKey("ks_vs_ill_total")) {
             redisTemplate.delete("ks_vs_ill_total"); //车辆报警次数删除
         }
 
 
         //zset
-        String date = DateUtil.countMonthYm1(-1);
-        if(redisTemplate.hasKey("dcst_top7_site_" + date)) { //重点车辆点位排名TOP7
+        String date = DateUtil.countMonthYm1(0);
+        if (redisTemplate.hasKey("dcst_top7_site_" + date)) { //重点车辆点位排名TOP7
             redisTemplate.delete("dcst_top7_site_" + date);
         }
 
-        if(redisTemplate.hasKey("dc_st_truck")) { //大货车点位统计
+        if (redisTemplate.hasKey("dc_st_truck")) { //大货车点位统计
             redisTemplate.delete("dc_st_truck");
+        }
+
+        if (redisTemplate.hasKey("tn_vs_site_vehicle")) { //路网过车点位过车前10
+            redisTemplate.delete("tn_vs_site_vehicle");
         }
         dcStMapper.deleteTifData();
     }

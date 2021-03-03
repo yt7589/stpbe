@@ -137,8 +137,6 @@ public class VmIlsService implements IVmIlsService {
     @Override
     public ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx) {
         TvisJsonVO vo = TvisUtil.getTvisJsonVOById(tvisJsonMapper, tvisJsonId);
-        System.out.println("imageHash:" + vo.getImageHash());
-        System.out.println("jsonHash:" + vo.getJsonHash());
         ResultDTO<VmIlsVdDTO> dto = new ResultDTO<>();
         String data = IpfsClient.getTextFile("" + vo.getJsonHash());
         JSONObject dataJson = JSONObject.parseObject(data);
@@ -258,7 +256,11 @@ public class VmIlsService implements IVmIlsService {
     }
 
     @Override
-    public ResultDTO<VmIlsVsInfoDTO> queryIlsVsInfo_exp(String hphm) {
+    public ResultDTO<VmIlsVsInfoDTO> queryIlsVsInfo_exp(String hphm, long tvisJsonId, Integer vehsIdx) {
+        TvisJsonVO vo = TvisUtil.getTvisJsonVOById(tvisJsonMapper, tvisJsonId);
+        Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
+        TvisUtil.getTvisFrameAnalysisResult(vo, cutVehs);
+        String imgUrl = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=c_" + tvisJsonId + "_" + vehsIdx + ".jpg";
         ResultDTO<VmIlsVsInfoDTO> dto = new ResultDTO<>();
         VmIlsVsInfoDTO vmIlsVsInfoDTO = new VmIlsVsInfoDTO();
         vmIlsVsInfoDTO.setHphm(hphm);
@@ -285,14 +287,7 @@ public class VmIlsService implements IVmIlsService {
         }
         vmIlsVsInfoDTO.setIlsCount(ilTotal);
         vmIlsVsInfoDTO.setAvCount(avCount);
-//        trend.add(new VmIlsVsTrendDTO("" + 2013,35));
-//        trend.add(new VmIlsVsTrendDTO("" + 2014,35));
-//        trend.add(new VmIlsVsTrendDTO("" + 2015,35));
-//        trend.add(new VmIlsVsTrendDTO("" + 2016,35));
-//        trend.add(new VmIlsVsTrendDTO("" + 2017,35));
-//        trend.add(new VmIlsVsTrendDTO("" + 2018,35));
-//        trend.add(new VmIlsVsTrendDTO("" + 2019,35));
-//        trend.add(new VmIlsVsTrendDTO("" + 2020,35));
+        vmIlsVsInfoDTO.setImgUrl(imgUrl);
         vmIlsVsInfoDTO.setIlsVsTrend(trend);
         dto.setData(vmIlsVsInfoDTO);
         return dto;

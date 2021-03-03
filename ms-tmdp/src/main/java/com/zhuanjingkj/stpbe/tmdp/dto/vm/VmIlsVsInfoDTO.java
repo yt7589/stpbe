@@ -15,6 +15,8 @@ public class VmIlsVsInfoDTO {
     private Integer ilsCount; //累计违章次数
     @JSONField(name = "avCount")
     private Integer avCount; // Annual violation 年度违章
+    @JSONField(name = "imgUrl")
+    private String imgUrl; //图片路径
     @JSONField(name = "ilsVstype")
     List<VmIlsVsTypeDTO> ilsVstype; //违章类别统计
     @JSONField(name = "ilsVsTrend")
@@ -58,5 +60,13 @@ public class VmIlsVsInfoDTO {
 
     public void setIlsVsTrend(List<VmIlsVsTrendDTO> ilsVsTrend) {
         this.ilsVsTrend = ilsVsTrend;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

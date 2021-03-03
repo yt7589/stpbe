@@ -11,10 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +41,31 @@ public class TnVsService implements ITnVsService {
                 (id, transfer) -> {
                     transfer.stream().reduce((a,b) -> new TnVsTopSiteDTO(a.getName(), a.getLng(), b.getLat(), a.getCount() + b.getCount())).ifPresent(dklist :: add);
                 });
+        /**
+         * 如果点位不足10个要补充
+         */
+        StringBuffer sb = new StringBuffer();
+        Map<String, Object> siteNameMap = DcStService.siteNameMap;
+        if (dklist == null || dklist.size() == 0) {
+            for (String key : siteNameMap.keySet()) {
+                dklist.add(new TnVsTopSiteDTO("" + siteNameMap.get(key),0.0,0.0,0));
+                if (dklist.size() == 10) {
+                    break;
+                }
+            }
+        } else if (dklist != null && dklist.size() < 10) {
+            for (int i = 0; i < dklist.size(); i++) {
+                sb.append(dklist.get(i).getName());
+            }
+            for (String key : siteNameMap.keySet()) {
+                if (!sb.toString().contains("" + siteNameMap.get(key))) {
+                    dklist.add(new TnVsTopSiteDTO("" + siteNameMap.get(key),0.0,0.0,0));
+                    if (dklist.size() == 10) {
+                        break;
+                    }
+                }
+            }
+        }
         return dklist;
     }
 

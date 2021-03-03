@@ -130,9 +130,11 @@ public class VmIlsController {
     public ResultDTO<VmIlsVsInfoDTO> queryIlsVsInfo(
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
-            @RequestParam(name = "hphm", required = false) String hphm
+            @RequestParam(name = "hphm", required = false) String hphm,
+            @RequestParam(name = "tvisJsonId", required = false) long tvisJsonId,
+            @RequestParam(name = "vehsIdx", required = false) Integer vehsIdx
     ) {
-        return queryIlsVsInfo_exp(hphm);
+        return queryIlsVsInfo_exp(hphm, tvisJsonId, vehsIdx);
     }
     /**
      * 违章数据导出
@@ -340,8 +342,8 @@ public class VmIlsController {
         return vmIlsService.queryIllegalVehicle_epx(hphm, startIndex, amount, direction);
     }
 
-    private ResultDTO<VmIlsVsInfoDTO> queryIlsVsInfo_exp(String hphm) {
-        return vmIlsService.queryIlsVsInfo_exp(hphm);
+    private ResultDTO<VmIlsVsInfoDTO> queryIlsVsInfo_exp(String hphm, long tvisJsonId, Integer vehsIdx) {
+        return vmIlsService.queryIlsVsInfo_exp(hphm, tvisJsonId, vehsIdx);
     }
 
     private ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx) {

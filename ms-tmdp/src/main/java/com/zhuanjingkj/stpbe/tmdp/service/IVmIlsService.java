@@ -19,7 +19,7 @@ public interface IVmIlsService {
 
     ResultDTO<DbQrsDTO> queryIllegalVehicle_epx(String hphm, Integer startIndex, Integer amount, Integer direction);
 
-    ResultDTO<VmIlsVsInfoDTO> queryIlsVsInfo_exp(String hphm);
+    ResultDTO<VmIlsVsInfoDTO> queryIlsVsInfo_exp(String hphm, long tvisJsonId, Integer vehsIdx);
 
     List<VmIlsTopAreaDTO> queryIllArea(String startTime, String endTime, Integer category);
 
