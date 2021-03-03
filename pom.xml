@@ -24,6 +24,9 @@
         <module>ag-zjc-saas</module>
         <module>ca-tvis</module>
         <module>sr-idr</module>
+        <module>sr-ts-xaidr</module>
+        <module>sr-ts-wxs2102</module>
+        <module>sr-ts-wxsgq</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

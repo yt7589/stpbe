@@ -1,10 +1,10 @@
-package com.zhuanjingkj.stpbe.tvis_server.controller;
+package com.zhuanjingkj.stpbe.tvis_server.wxsgq.controller;
+
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zhuanjingkj.stpbe.tvis_server.service.impl.TvisImageRecogService;
-import com.zhuanjingkj.stpbe.tvis_server.service.impl.Wxs2102Service;
+import com.zhuanjingkj.stpbe.tvis_server.wxsgq.service.impl.TsWxsgqService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * 西安工业检测机器人项目控制器
+ */
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/vehicle")
-public class TvisImageDataController {
-    private final static Logger logger = LoggerFactory.getLogger(TvisImageDataController.class);
+public class TsWxsgqController {
+    private final static Logger logger = LoggerFactory.getLogger(TsWxsgqController.class);
     private final static String VEHICLE_ANALYSER_HEART = "VEHICLE_ANALYSER_ALIVE";
     // 配置信息
     @Value("${app.version}")
@@ -42,7 +46,7 @@ public class TvisImageDataController {
     private String vbmySampleFolder;
 
     @Autowired
-    private TvisImageRecogService tvisImageRecogService;
+    private TsWxsgqService tsWxsgqService;
 
     @GetMapping("/maintain/getVersion")
     public Map<String, String> getVersion() {
@@ -61,12 +65,12 @@ public class TvisImageDataController {
     @GetMapping("/maintain/createLib")
     public Map<String, Object> createLib(@RequestParam("NAME") String name) {
         // 所里测试临时方案，返回固定的成功信息
-        if (TvisImageDataController.RM_MOCK == apiMode) {
+        if (TsWxsgqController.RM_MOCK == apiMode) {
             return createLibMock(name);
         }
         try {
             checkImageEngine();
-            return tvisImageRecogService.createLib(name);
+            return tsWxsgqService.createLib(name);
         } catch (Exception e) {
             logger.error("特征库创建异常, name={}", name, e);
             Map<String, Object> result = new HashMap<>();
@@ -79,12 +83,12 @@ public class TvisImageDataController {
     @GetMapping("/maintain/queryLib")
     public Map<String, Object> queryLib(@RequestParam("ID") String id) {
         // 所里测试临时方案，返回固定的成功信息
-        if (TvisImageDataController.RM_MOCK == apiMode) {
+        if (TsWxsgqController.RM_MOCK == apiMode) {
             return queryLibMock(id);
         }
         try {
             checkImageEngine();
-            return tvisImageRecogService.queryLib(id);
+            return tsWxsgqService.queryLib(id);
         } catch (Exception e) {
             logger.error("特征库查询异常, id={}", id, e);
             Map<String, Object> result = new HashMap<>();
@@ -97,12 +101,12 @@ public class TvisImageDataController {
     @PostMapping("/maintain/updateLib")
     public Map<String, Object> updateLib(@RequestBody Map<String, Object> params) {
         // 所里测试临时方案，返回固定的成功信息
-        if (TvisImageDataController.RM_MOCK == apiMode) {
+        if (TsWxsgqController.RM_MOCK == apiMode) {
             return updateLibMock(params);
         }
         try {
             checkImageEngine();
-            return tvisImageRecogService.updateLib(params);
+            return tsWxsgqService.updateLib(params);
         } catch (Exception e) {
             logger.error("特征库更新异常", e);
             Map<String, Object> result = new HashMap<>();
@@ -160,7 +164,7 @@ public class TvisImageDataController {
                 System.out.println("vr@_" + i + ":" + Integer.toHexString(data[i]) + "!");
             }
             logger.info("before recognition");
-            return tvisImageRecogService.recognition(cameraId, gcxh, mrhpt, hphm, data);
+            return tsWxsgqService.recognition(cameraId, gcxh, mrhpt, hphm, data);
 
         } catch (Exception e) {
             logger.error("车辆识别异常, gcxh={}, tplx={}", gcxh, tplx, e);
@@ -175,14 +179,14 @@ public class TvisImageDataController {
 
     @PostMapping("/function/compare")
     public Map<String, Object> compareVehicle(@RequestBody Map<String, String> params) {// 所里测试临时方案，返回固定的成功信息
-        if (TvisImageDataController.RM_MOCK == apiMode) {
+        if (TsWxsgqController.RM_MOCK == apiMode) {
             return compareVehicleMock(params);
         }
         try {
             checkImageEngine();
             String cltzxx1 = params.get("CLTZXX1");
             String cltzxx2 = params.get("CLTZXX2");
-            return tvisImageRecogService.compareVehicle(cltzxx1, cltzxx2);
+            return tsWxsgqService.compareVehicle(cltzxx1, cltzxx2);
         } catch (Exception e) {
             logger.error("车辆特征比对异常, params={}", JSON.toJSONString(params), e);
 
@@ -195,7 +199,7 @@ public class TvisImageDataController {
 
     @PostMapping("/function/compareInLib")
     public Map<String, Object> compareInLib(@RequestBody Map<String, String> params) {
-        if (TvisImageDataController.RM_MOCK == apiMode) {
+        if (TsWxsgqController.RM_MOCK == apiMode) {
             return compareInLibMock(params);
         }
         try {
@@ -205,7 +209,7 @@ public class TvisImageDataController {
             String xsdyz = params.get("XSDYZ");
             String fydx = params.get("FYDX");
             String ys = params.get("YS");
-            return tvisImageRecogService.compareInLib(cltzxx, kid, xsdyz, fydx, ys);
+            return tsWxsgqService.compareInLib(cltzxx, kid, xsdyz, fydx, ys);
         } catch (Exception e) {
             logger.error("特征库特征比对异常, params={}", JSON.toJSONString(params), e);
 
