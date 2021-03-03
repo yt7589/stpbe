@@ -66,6 +66,7 @@ public class DcHpObserver implements ITvisStpObserver {
         } else {
             code = cameraId +"";
         }
+        System.out.println("识别车辆子分类cllxzfl：" + cllxzfl);
         if(isViolation(vo.getVehicleJsxwtzVO().getZjsddh())) {
             ilType = "ZJSDDH";
             isIl = "1";
