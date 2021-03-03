@@ -36,37 +36,39 @@
     </select>
 
     <select id ="getTop5Varea" resultMap ="vareaDTO">
-        SELECT ta.area_name, IFNULL(p.`count`, 0) AS pcount
+        SELECT ta.area_name, SUM(IFNULL(p.`count`, 0)) AS pcount
           FROM t_camera tc
      LEFT JOIN
              (
         SELECT camera_id, COUNT(1) AS `count`
           FROM t_itf_vehicle tif
          WHERE tif.category =1
-      GROUP BY tif.camera_id) p
-            ON tc.camera_id = p.camera_id
-     LEFT JOIN t_site ts
-            ON ts.site_id = tc.site_id
-     LEFT JOIN t_area ta
-            ON ta.area_id = ts.area_id
-      ORDER BY p.`count` DESC
-         LIMIT 5
-    </select>
-
-    <select id ="getTop5VSite" resultMap ="siteDTO">
-        SELECT ts.site_name, IFNULL(p.`count`, 0) AS pcount
-          FROM t_camera tc
-     LEFT JOIN
-             (
-        SELECT camera_id, COUNT(1) AS `count`
-          FROM t_itf_vehicle tif
-<!--         WHERE tif.category =1-->
       GROUP BY tif.camera_id
              ) p
             ON tc.camera_id = p.camera_id
      LEFT JOIN t_site ts
             ON ts.site_id = tc.site_id
-      ORDER BY p.`count` DESC
+     LEFT JOIN t_area ta
+            ON ta.area_id = ts.area_id
+      GROUP BY ta.area_id
+      ORDER BY SUM(IFNULL(p.`count`, 0)) DESC
+         LIMIT 5
+    </select>
+
+    <select id ="getTop5VSite" resultMap ="siteDTO">
+        SELECT ts.site_name, SUM(IFNULL(p.`count`, 0)) AS pcount
+          FROM t_camera tc
+     LEFT JOIN
+             (
+        SELECT camera_id, COUNT(1) AS `count`
+          FROM t_itf_vehicle tif
+      GROUP BY tif.camera_id
+             ) p
+            ON tc.camera_id = p.camera_id
+     LEFT JOIN t_site ts
+            ON ts.site_id = tc.site_id
+      GROUP BY ts.site_id
+      ORDER BY SUM(IFNULL(p.`count`, 0)) DESC
          LIMIT 5
     </select>
 

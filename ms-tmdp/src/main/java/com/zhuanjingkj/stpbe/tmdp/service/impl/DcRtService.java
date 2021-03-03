@@ -338,6 +338,7 @@ public class DcRtService implements IDcRtService {
     }
 
     private static Double str2Double(double num) {
+        System.out.println("num:" + num);
         DecimalFormat df = new DecimalFormat("#.##");
         return Double.parseDouble(df.format(num));
     }
