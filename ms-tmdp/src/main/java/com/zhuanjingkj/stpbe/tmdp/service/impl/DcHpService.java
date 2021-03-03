@@ -40,26 +40,18 @@ public class DcHpService implements IDcHpService {
         }
         List<DcHpDTO> recs = dcHpMapper.getVehicleData(startIndex, amount, startTime, endTime, category, vType, ilType, hphm, vAddr);
         Integer count = dcHpMapper.getVehicleCount(startTime, endTime, category, vType, ilType, hphm, vAddr);
-        if(recs != null && recs.size() > 0) {
-            for(int i = 0; i < recs.size(); i++) {
-                String tblName = recs.get(i).getTvisJsonTbl().replace("StpDb.", "");
-                long jsonId = recs.get(i).getTvisJsonId();
-                Map<String, Object> map = dkRtvrMapper.getImageHash(jsonId, tblName);
-                if(map != null && map.size() > 0) {
-                    recs.get(i).setImageUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
-                }
-                recs.get(i).setTvisJsonTbl("");
-            }
-        }
-        DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
-//        List<DcHpDTO> recs = new ArrayList<>();
- //        for (int i=0; i<amount; i++) {
-//            recs.add(new DcHpDTO(startIndex+i,"2020-12-29 14:50:03",
-//                    "北京" + startIndex + "-" + i,"京A-"+ startIndex + "-" + i,
-//                    "外埠","是","违章",
-//                    "http://222.128.117.234:8090/cloud/images/a002.jpg"));
+//        if(recs != null && recs.size() > 0) {
+//            for(int i = 0; i < recs.size(); i++) {
+//                String tblName = recs.get(i).getTvisJsonTbl().replace("StpDb.", "");
+//                long jsonId = recs.get(i).getTvisJsonId();
+//                Map<String, Object> map = dkRtvrMapper.getImageHash(jsonId, tblName);
+//                if(map != null && map.size() > 0) {
+//                    recs.get(i).setImageUrl(IpfsClient.getIpfsUrl("" + map.get("image_hash")));
+//                }
+//                recs.get(i).setTvisJsonTbl("");
+//            }
 //        }
-//        data.setRecs(recs);
+        DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
         dto.setData(data);
         return dto;
     }

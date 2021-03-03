@@ -30,7 +30,7 @@
      LEFT JOIN t_camera tc
             ON tc.camera_id = tif.camera_id
      LEFT JOIN t_site ts
-            ON tc.site_id = tc.site_id
+            ON tc.site_id = ts.site_id
          WHERE 1 = 1
             <if test="startTime != null and startTime != ''">
                 AND occur_time > #{startTime}
@@ -66,8 +66,8 @@
      LEFT JOIN t_camera tc
             ON tc.camera_id = tif.camera_id
      LEFT JOIN t_site ts
-            ON tc.site_id = tc.site_id
-         WHERE  1 = 1
+            ON tc.site_id = ts.site_id
+         WHERE 1 = 1
             <if test="startTime != null and startTime != ''">
                 AND occur_time > #{startTime}
             </if>
