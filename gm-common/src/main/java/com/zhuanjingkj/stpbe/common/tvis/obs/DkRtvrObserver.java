@@ -82,20 +82,10 @@ public class DkRtvrObserver implements ITvisStpObserver {
         } else {
             return;
         }
-//        long vehsIdx = vo.getVehsIdx();
-//        String imageHash = "";
-//        String jsonHash ="";
-
-//        if(StringUtils.isBlank(dtMap.get("image_hash") +"")) {
-//            imageHash = "QmR89Qr8aA4wjBh64TpL1z7Y59G7s4RexTWjkQzD5LehbV";
-//        } else {
-//            imageHash = dtMap.get("image_hash") +"";
-//        }
-//        if(StringUtils.isBlank(dtMap.get("json_hash") +"")) {
-//            jsonHash = "QmPC254a9zCN76wZhcANFSk14dLfDu3EiF2pVrYDuYRo77";
-//        } else {
-//            jsonHash = dtMap.get("json_hash") +"";
-//        }
+        String imageHash = "";
+        if(StringUtils.isNotBlank(dtMap.get("image_hash") +"")) {
+            imageHash = dtMap.get("image_hash") +"";
+        }
         Integer category = 0;
         String hphm_pre = PropUtil.getHphmPre();
         if(!hphm.contains(hphm_pre)) {
@@ -167,7 +157,6 @@ public class DkRtvrObserver implements ITvisStpObserver {
             flag = true;
         }
         //统计时段违章到redis
-        int random = (int)(Math.random()*15) + 1;
         if(flag) {
             Integer hour = LocalDateTime.now().getHour();
             if(hour >= 0 && hour < 2) {
@@ -208,18 +197,10 @@ public class DkRtvrObserver implements ITvisStpObserver {
                 redisTemplate.opsForList().set("dk_rtvr_violation", 11, count + 1);
             }
 
-//            if(vNum.contains(vo.getVehicleCxtzVo().getCllxzflCode())) {
-//                redisTemplate.opsForList().rightPush("ks_ksvtvrps_images", imageHash); //重点监控车辆实时图片
-//            }
+            if(vNum.contains(vo.getVehicleCxtzVo().getCllxzflCode())) {
+                redisTemplate.opsForList().rightPush("ks_ksvtvrps_images", imageHash); //重点监控车辆实时图片
+            }
             List<String> ksvcHphm = ksVcMapper.getKsvcHphm();
-//            if(random == 0) {
-//                random = 4;
-//            }
-//            if(random < 10) {
-//                code = "C000000" + random;
-//            } else {
-//                code = "C00000" + random;
-//            }
             if(ksvcHphm.contains(hphm)) {
                 //布控违章记录统计同一辆车在同一个设备下通过的次数
                 redisTemplate.opsForHash().increment("ks_vs_ill_total",  hphm + "|" + code, 1);

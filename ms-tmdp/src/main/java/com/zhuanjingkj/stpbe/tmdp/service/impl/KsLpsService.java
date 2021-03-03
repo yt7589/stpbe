@@ -55,7 +55,15 @@ public class KsLpsService implements IKsLpsService {
                 (id, transfer) -> {
                     transfer.stream().reduce((a,b) -> new KsLpsAreaDTO(a.getName(), a.getCount() + b.getCount())).ifPresent(dklist :: add);
                 });
-        if (dklist != null && dklist.size() > 0) {
+        if (dklist == null || dklist.size() == 0) {
+            for (String key : areaMap.keySet()) {
+                dklist.add(new KsLpsAreaDTO("" + areaMap.get(key), 0));
+                if (dklist.size() == 10) {
+                    break;
+                }
+            }
+        }
+        if (dklist != null && dklist.size() < 10) {
             for (String key : areaMap.keySet()) {
                 if (!sb.toString().contains(areaMap.get(key) + "")) {
                     dklist.add(new KsLpsAreaDTO("" + areaMap.get(key), 0));

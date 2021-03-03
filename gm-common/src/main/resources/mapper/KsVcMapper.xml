@@ -16,7 +16,7 @@
     <select id ="getKsvc" resultMap="ksvcDTO">
         SELECT vehicle_control_id, hphm
           FROM t_vehicle_control
-         WHERE hphm LIKE CONCAT(#{hphm}, '%')
+         WHERE hphm LIKE CONCAT('%', #{hphm}, '%')
          LIMIT #{startIndex}, #{amount}
     </select>
 
