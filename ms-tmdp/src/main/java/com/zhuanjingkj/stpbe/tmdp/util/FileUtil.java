@@ -75,12 +75,12 @@ public class FileUtil {
                 column ++;
             }
         }
-        try {
-            //指定文件导出的路径
-            workbook.write(new File(fileExp.getPath() + "//" + fileExp.getFileName() + ".xls"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            //指定文件导出的路径
+//            workbook.write(new File(fileExp.getPath() + "//" + fileExp.getFileName() + ".xls"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         OutputStream os = null;
         try {
             os = response.getOutputStream();
