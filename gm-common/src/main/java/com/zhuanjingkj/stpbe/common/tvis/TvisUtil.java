@@ -32,7 +32,7 @@ import java.util.List;
 
 public class TvisUtil {
     public final static String ERROR_RESPONSE = "ERROR";
-    public final static int TVIS_RST_TIMEOUT = 300;
+    public static int TVIS_RST_TIMEOUT = 300;
     private final static Logger logger = LoggerFactory.getLogger(TvisUtil.class);
 
     /**
