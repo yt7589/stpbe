@@ -32,6 +32,9 @@ public class AuthFilter  extends ZuulFilter {
         mssWhiteList.add("ms-facade/facade/login");
         mssWhiteList.add("ms-facade/facade/register");
         mssWhiteList.add("ms-tmdp/sm/getSysInfo");
+        mssWhiteList.add("ms-tmdp/vm/ils/exportvs");
+        mssWhiteList.add("ms-tmdp/vm/ils/export");
+        mssWhiteList.add("ms-tmdp/dc/hp/exportAllData");
     }
 
     @Override
