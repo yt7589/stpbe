@@ -28,7 +28,7 @@ public class VideoAnalysisTask implements Runnable {
     private static Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
     private final static Logger logger = LoggerFactory.getLogger(VideoAnalysisTask.class);
     private static long wsmVfvvIdx = 0;
-    private final static long VAT_INTERVAL = 1000; // 每*毫秒运行一次
+    private final static long VAT_INTERVAL = 50; // 每*毫秒运行一次
 
     private long cameraId;
 
