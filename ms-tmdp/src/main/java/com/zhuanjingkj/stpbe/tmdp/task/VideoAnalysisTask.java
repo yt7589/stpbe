@@ -28,7 +28,7 @@ public class VideoAnalysisTask implements Runnable {
     private static Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
     private final static Logger logger = LoggerFactory.getLogger(VideoAnalysisTask.class);
     private static long wsmVfvvIdx = 0;
-    private final static long VAT_INTERVAL = 1000; // 每*毫秒运行一次
+    private final static long VAT_INTERVAL = 50; // 每*毫秒运行一次
 
     private long cameraId;
 
@@ -89,6 +89,13 @@ public class VideoAnalysisTask implements Runnable {
             List<WebSocketSession> wsss = new ArrayList<>();
             wsss.add(wss);
             streamWsss.put("" + streamId, wsss);
+        }
+    }
+
+    public static void removeStream(long streamId, WebSocketSession wss) {
+        String streamIdKey = "" + streamId;
+        if (streamIds.contains(streamIdKey) && streamWsss.get("" + streamId) != null) {
+            streamWsss.get("" + streamId).remove(wss);
         }
     }
 }
