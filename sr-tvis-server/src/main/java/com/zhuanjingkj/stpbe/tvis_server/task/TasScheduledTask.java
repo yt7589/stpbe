@@ -57,11 +57,11 @@ public class TasScheduledTask implements Runnable {
         String response = jo.toString();
         StringBuilder msg = null;
         long tvisJsonId = 0;
-        synchronized (redisTemplate) {
-            tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
-            msg = new StringBuilder("{\"cameraId\": \"-1\", \"tvisJsonId\": "
-                    + tvisJsonId + ", \"json\": " + response + "}");
-        }
+        //synchronized (redisTemplate) {
+        tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
+        msg = new StringBuilder("{\"cameraId\": \"-1\", \"tvisJsonId\": "
+                + tvisJsonId + ", \"json\": " + response + "}");
+        //}
         String json = msg.toString();
         TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, json);
         if (isFirstRun) {
