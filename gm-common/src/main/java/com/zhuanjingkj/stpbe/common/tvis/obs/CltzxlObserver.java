@@ -29,16 +29,20 @@ public class CltzxlObserver implements ITvisStpObserver {
         VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
         VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
         VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
-        String partitionTag = GrqEngine.getPartitionTag(
-                vehicleWztzVo.getPsfx(),
-                vehicleCxtzVo.getCllxflCode(),
-                vehicleCxtzVo.getCllxzflCode()
-        );
-        if (partitionTag.indexOf("tail_") >= 0) {
-            System.out.println("忽略车尾数据......");
-            return ;
+        try {
+            String partitionTag = GrqEngine.getPartitionTag(
+                    vehicleWztzVo.getPsfx(),
+                    vehicleCxtzVo.getCllxflCode(),
+                    vehicleCxtzVo.getCllxzflCode()
+            );
+            if (partitionTag.indexOf("tail_") >= 0) {
+                System.out.println("忽略车尾数据......");
+                return;
+            }
+            long tid = GrqEngine.insertRecord(redisTemplate, partitionTag, vo);
+        } catch (Exception ex) {
+            System.out.println("CltzxlObserver.notifyObserver Exception: " + ex.getMessage() + " !!!!!!!!!!!!!!!!!!!!!!");
         }
-        long tid = GrqEngine.insertRecord(redisTemplate, partitionTag, vo);
     }
 
     @Override
