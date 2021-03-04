@@ -91,4 +91,11 @@ public class VideoAnalysisTask implements Runnable {
             streamWsss.put("" + streamId, wsss);
         }
     }
+
+    public static void removeStream(long streamId, WebSocketSession wss) {
+        String streamIdKey = "" + streamId;
+        if (streamIds.contains(streamIdKey) && streamWsss.get("" + streamId) != null) {
+            streamWsss.get("" + streamId).remove(wss);
+        }
+    }
 }

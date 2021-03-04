@@ -50,6 +50,10 @@ public class TmdpWsHandler extends TextWebSocketHandler {
         String user = jsonObject.getString("userId");
         String type = jsonObject.getString("type");
         String topic = jsonObject.getString("topic");
+        String action = "";
+        if (jsonObject.has("action")) {
+            action = jsonObject.getString("action");
+        }
         synchronized (topics) {
             if (topics.get(topic) != null) {
                 if (type.equals("sub")) {
@@ -61,7 +65,17 @@ public class TmdpWsHandler extends TextWebSocketHandler {
             if (StringUtils.isNotBlank(type) && type.equals(WMT_RR_SPFX)) {
                 long wssId = videoAnalysisService.registerWs(session);
                 long streamId = jsonObject.getLong("streamId");
-                VideoAnalysisTask.addStream(streamId, session);
+                if (action.equals("unsub")) {
+                    System.out.println("##### 取消实时视频发送 ！！！！！！！！！！");
+                    VideoAnalysisTask.removeStream(streamId, session);
+                } else {
+                    System.out.println("##### 请求实时视频发送 ！！！！！！！！！！");
+                    VideoAnalysisTask.addStream(streamId, session);
+                    JSONObject jo = new JSONObject();
+                    jo.put("code", 0);
+                    jo.put("videoUrl", "rtmp://222.128.117.234:1935/stream/" + streamId);
+                    session.sendMessage(new TextMessage(jo.toString()));
+                }
                 System.out.println("### 建立视频分析WebSocket连接...wssId=" + wssId + "; streamId=" + streamId + "!");
             }
         }
