@@ -39,11 +39,11 @@ public class TasScheduledTask implements Runnable {
     public void run() {
         while (true) {
             runTasScheduledTask();
-            try {
+            /*try {
                 Thread.sleep(TST_INTERVAL);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 
