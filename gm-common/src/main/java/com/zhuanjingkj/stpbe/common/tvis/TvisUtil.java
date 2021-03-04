@@ -244,12 +244,13 @@ public class TvisUtil {
             } else {
                 vo = cutVehs.get("" + veh.getTrackId());
             }
+            /*
             TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
             // 车型特征
             String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
             String hphm = veh.getVehicleHptzVO().getHphm();
             TvisSodImage.drawString(orgImg, Font.BOLD, 50,
-                    Color.RED, x, y + 3, hphm + ":" + ppxhms);
+                    Color.RED, x, y + 3, hphm + ":" + ppxhms); */
             maxArea = vo.getArea();
             if (1>0 || currentArea >= maxArea) {
                 maxArea = currentArea;

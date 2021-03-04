@@ -37,12 +37,13 @@ public class TsWxs2102Service implements ITsWxs2102Service {
         JSONObject joRst = new JSONObject(jsonResp);
         rst.put("CODE", "1");
         rst.put("MSG", "");
-        rst.put("CLLX", joRst.getString("CLLX"));
+        rst.put("RST", jsonResp);
+        /*rst.put("CLLX", joRst.getString("CLLX"));
         rst.put("CLLXKXD", joRst.getString("CLLXKXD"));
         rst.put("YWFD", joRst.getString("YWFD"));
         rst.put("YWFDKXD", joRst.getString("YWFDKXD"));
         rst.put("YWPG", joRst.getString("YWPG"));
-        rst.put("YWPGKXD", joRst.getString("YWPGKXD"));
+        rst.put("YWPGKXD", joRst.getString("YWPGKXD"));*/
         return rst;
     }
 

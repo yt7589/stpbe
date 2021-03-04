@@ -73,6 +73,7 @@ public class TmdpWsHandler extends TextWebSocketHandler {
                     VideoAnalysisTask.addStream(streamId, session);
                     JSONObject jo = new JSONObject();
                     jo.put("code", 0);
+                    jo.put("type", 101);
                     jo.put("videoUrl", "rtmp://222.128.117.234:1935/stream/" + streamId);
                     session.sendMessage(new TextMessage(jo.toString()));
                 }
