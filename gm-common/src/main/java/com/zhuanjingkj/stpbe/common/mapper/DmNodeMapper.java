@@ -15,7 +15,7 @@ public interface DmNodeMapper {
 
     Integer deleteNode(@Param("nodeId") long nodeId);
 
-    Integer addNode2Nd(@Param("rto") AddNodeToNdRTO rto);
+    Integer addNode2Nd(@Param("rto") AddNodeToNdRTO rto, @Param("city") String city);
 
     Integer updateNode(@Param("rto") UpdateNodeRTO rto);
 }

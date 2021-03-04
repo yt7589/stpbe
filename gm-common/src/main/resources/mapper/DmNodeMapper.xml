@@ -5,18 +5,19 @@
         <result column="site_id" property="nodeId" jdbcType="INTEGER"/>
         <result column="city" property="cityName" jdbcType="VARCHAR"/>
         <result column="site_name" property="nodeName" jdbcType="VARCHAR"/>
-        <result column="position" property="nodeAddr" jdbcType="VARCHAR"/>
+        <result column="area_name" property="nodeAddr" jdbcType="VARCHAR"/>
         <result column="lng" property="lng" jdbcType="DOUBLE"/>
         <result column="lat" property="lat" jdbcType="DOUBLE"/>
         <result column="area_id" property="areaId" jdbcType="DOUBLE"/>
     </resultMap>
     <select id ="getNodeList" resultMap="dmNodeDTO">
-        SELECT ts.city, ts.site_id, ts.site_name, ts.`position`, ts.lng, ts.lat, ts.area_id
+        SELECT ts.city, ts.site_id, ts.site_name, ts.area_name, ts.lng, ts.lat, ts.area_id
           FROM t_site ts
+     LEFT JOIN t_area ta
+            ON ts.area_id = ta.area_id
          WHERE 1 = 1
             <if test="nodeAddr != null and nodeAddr !=''">
-                AND ts.`position`
-               LIKE CONCAT('%', #{nodeAddr}, '%')
+                AND ts.area_id = #{nodeAddr}
             </if>
             <if test="nodeName != null and nodeName != ''">
                 AND ts.site_name
@@ -30,8 +31,7 @@
           FROM t_site ts
          WHERE 1 = 1
             <if test="nodeAddr != null and nodeAddr !=''">
-                AND ts.`position`
-               LIKE CONCAT(#{nodeAddr}, '%')
+                AND ts.area_id = #{nodeAddr}
             </if>
             <if test="nodeName != null and nodeName != ''">
                 AND ts.site_name
@@ -46,14 +46,14 @@
     </delete>
 
     <insert id ="addNode2Nd" keyProperty="rto.nodeId" useGeneratedKeys="true">
-        INSERT INTO t_site(site_name, city, `position`, lng, lat, area_id)
-                    VALUES(#{rto.nodeName}, #{rto.nodeName}, #{rto.nodeAddr}, #{rto.lng}, #{rto.lat}, #{rto.areaId})
+        INSERT INTO t_site(site_name, city, area_id, lng, lat)
+                    VALUES(#{rto.nodeName}, #{city}, #{rto.nodeAddr}, #{rto.lng}, #{rto.lat})
     </insert>
 
     <update id ="updateNode">
         UPDATE t_site ts
-           SET ts.site_name =#{rto.nodeName}, ts.city =#{rto.cityName}, ts.`position` =#{rto.nodeAddr},
-               ts.lng =#{rto.lng}, ts.lat =#{rto.lat}, ts.area_id =#{rto.areaId}
+           SET ts.site_name =#{rto.nodeName}, ts.area_id =#{rto.nodeAddr},
+               ts.lng =#{rto.lng}, ts.lat =#{rto.lat}
          WHERE ts.site_id =#{rto.nodeId}
     </update>
 </mapper>
