@@ -33,16 +33,6 @@ public class KsVcService implements IKsVcService {
         Integer count = ksvcServiceMaper.getKsvcCount(hphm);
         List<KsVcDTO> recs = ksvcServiceMaper.getKsvc(hphm, startIndex, amount);
         DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
-//        List<KsVcDTO> recs = new ArrayList<>();
-//        recs.add(new KsVcDTO(102, "苏AL6H87"));
-//        recs.add(new KsVcDTO(102, "豫A52301X"));
-//        recs.add(new KsVcDTO(102, "苏GW81752"));
-//        recs.add(new KsVcDTO(102, "苏AL9687"));
-//        recs.add(new KsVcDTO(102, "鲁C817S2"));
-//        recs.add(new KsVcDTO(102, "津KL9687"));
-//        recs.add(new KsVcDTO(102, "蒙Q81752"));
-//        recs.add(new KsVcDTO(102, "鲁KL9687"));
-//        data.setRecs(recs);
         dto.setData(data);
         return dto;
     }
@@ -118,7 +108,8 @@ public class KsVcService implements IKsVcService {
                         continue;
                     }
                     KsVcLsvsDTO illLsvs = new KsVcLsvsDTO(0,0,101,"" + KsAsService.areaMap.get(cameraId),
-                            "" + redisTemplate.opsForHash().get("ks_vs_dyn_time", val),hphm,Integer.parseInt("" + redisTemplate.opsForHash().get("ks_vs_dyn_total", val)));
+                            "" + redisTemplate.opsForHash().get("ks_vs_dyn_time", val),hphm,
+                            Integer.parseInt(redisTemplate.opsForHash().get("ks_vs_dyn_total", val) == null ? "0": "" + redisTemplate.opsForHash().get("ks_vs_dyn_total", val)));
                     recs.add(illLsvs);
                     if(recs.size() == 3) {
                         break;
@@ -126,11 +117,7 @@ public class KsVcService implements IKsVcService {
                 }
             }
         }
-        DbQrsDTO data = new DbQrsDTO(4,4,0,4,1,recs);
-//        recs.add(new KsVcLsvsDTO(0,0,101,"北京市海淀区西二旗街道19号","2020-12-21 18:02:57","赣Q817S2",1));
-//        recs.add(new KsVcLsvsDTO(0,0,101,"北京市海淀区上地街道39号","2020-12-22 18:02:57","豫KL9687",2));
-//        recs.add(new KsVcLsvsDTO(0,0,101,"北京市海淀区西直门街道29号","2020-12-23 18:02:57","豫Q817S2",3));
-//        recs.add(new KsVcLsvsDTO(0,0,101,"北京市海淀区知春路街道109号","2020-12-29 18:02:57","赣KL9687",4));
+        DbQrsDTO data = new DbQrsDTO(4,recs.size(),0,4,1,recs);
         dto.setData(data);
         return dto;
     }

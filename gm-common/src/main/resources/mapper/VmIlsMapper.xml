@@ -82,10 +82,10 @@
             ON tv.wzlx = tvt.violation_type_code
          WHERE 1 = 1
             <if test="hphm != null and hphm != ''">
-                AND tv.hphm like CONCAT(#{hphm}, '%')
+                AND tv.hphm LIKE CONCAT('%', #{hphm}, '%')
             </if>
             <if test="addr != null and addr != ''">
-                AND ts.site_name =#{addr}
+                AND ts.site_name LIKE CONCAT('%', #{addr}, '%')
             </if>
             <if test="illType != null and illType != ''">
                 AND tv.wzlx =#{illType}
@@ -247,8 +247,10 @@
     </select>
 
     <select id ="getIlTypeByHphm" resultType="hashmap">
-        SELECT tv.wzlx, COUNT(tv.violation_id)  AS `count`
+        SELECT tvt.violation_type_name AS wzlx, COUNT(tv.violation_id)  AS `count`
           FROM t_violation tv
+     LEFT JOIN t_violation_type tvt
+            ON tvt.violation_type_code = tv.wzlx
          WHERE tv.hphm =#{hphm}
       GROUP BY tv.wzlx
     </select>

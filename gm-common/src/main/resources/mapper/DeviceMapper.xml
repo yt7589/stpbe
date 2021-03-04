@@ -52,7 +52,7 @@
                 AND tc.camera_type_id =#{type}
             </if>
             <if test="code != null and code != ''">
-                AND tc.camera_id =#{code}
+                AND tc.camera_code LIKE CONCAT('%', #{code}, '%')
             </if>
       ORDER BY camera_id DESC
          LIMIT #{startIndex}, #{amount}

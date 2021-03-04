@@ -237,6 +237,11 @@ public class SmDcService implements ISmDcService {
          * list 类型的需要删除，然后重新初始化
          */
 
+        if (redisTemplate.hasKey("ks_ksvrp_images")) { //本日重点监管车辆实时图片
+            redisTemplate.delete("ks_ksvrp_images");
+            redisTemplate.opsForList().rightPushAll("ks_ksvrp_images","", "");
+        }
+
         if (redisTemplate.hasKey("dk_htfs_week")) {
             redisTemplate.delete("dk_htfs_week");
             redisTemplate.opsForList().rightPushAll("dk_htfs_week",0,0,0,0,0,0);
@@ -279,12 +284,12 @@ public class SmDcService implements ISmDcService {
 
         if (redisTemplate.hasKey("ks_vs_dyn_list")) {
             redisTemplate.delete("ks_vs_dyn_list"); //车辆布控动态列表删除
-            redisTemplate.opsForList().rightPushAll("ks_vs_dyn_list", 0 + "|" + 0);
+            redisTemplate.opsForList().rightPushAll("ks_vs_dyn_list", "");
         }
 
         if (redisTemplate.hasKey("ks_vs_ill_list")) {
             redisTemplate.delete("ks_vs_ill_list"); //车辆报警列表删除
-            redisTemplate.opsForList().rightPushAll("ks_vs_ill_list", 0 + "|" + 0);
+            redisTemplate.opsForList().rightPushAll("ks_vs_ill_list", "");
         }
 
         //hash

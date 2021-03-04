@@ -231,26 +231,6 @@ public class VmIlsService implements IVmIlsService {
         }
         Integer count = vmIlsMapper.getVIlCount(hphm);
         DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
-
-//        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市昌平区小汤山8街20号","主驾驶未系安全带",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区知春路8街21号","主驾驶抽烟",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市昌平区北七家8街19号","主驾驶打电话",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市朝阳区来广营8街18号","主驾驶放下遮阳板",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市朝阳区望京8街16号","主驾驶看手机",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区西二旗8街13号","主驾驶放下遮阳板",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区上地8街12号","主驾驶抽烟",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市昌平区小汤山8街20号","主驾驶打电话",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//        recs.add(new VmIlsVhsDTO(105,"2020-12-28 12:56:43","北京市海淀区回龙观8街15号","主驾驶看手机",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//        data.setRecs(recs);
         dto.setData(data);
         return dto;
     }
@@ -259,8 +239,10 @@ public class VmIlsService implements IVmIlsService {
     public ResultDTO<VmIlsVsInfoDTO> queryIlsVsInfo_exp(String hphm, long tvisJsonId, Integer vehsIdx) {
         TvisJsonVO vo = TvisUtil.getTvisJsonVOById(tvisJsonMapper, tvisJsonId);
         Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
+
         TvisUtil.getTvisFrameAnalysisResult(vo, cutVehs);
         String imgUrl = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=c_" + tvisJsonId + "_" + vehsIdx + ".jpg";
+
         ResultDTO<VmIlsVsInfoDTO> dto = new ResultDTO<>();
         VmIlsVsInfoDTO vmIlsVsInfoDTO = new VmIlsVsInfoDTO();
         vmIlsVsInfoDTO.setHphm(hphm);
@@ -295,38 +277,13 @@ public class VmIlsService implements IVmIlsService {
 
     @Override
     public List<VmIlsTopAreaDTO> queryIllArea(String startTime, String endTime, Integer category) {
-//        String cg = PropUtil.getValue("hphm.native.prefix");
         List<VmIlsTopAreaDTO> ilsArea = vmIlsMapper.getIllTopArea(startTime, endTime, category);
-
-//        List<VmIlsTopAreaDTO> ilsArea = new ArrayList<>();
-//        ilsArea.add(new VmIlsTopAreaDTO(102,"西二旗",1100000));
-//        ilsArea.add(new VmIlsTopAreaDTO(103,"望京",1200000));
-//        ilsArea.add(new VmIlsTopAreaDTO(104,"东湖区",1300000));
-//        ilsArea.add(new VmIlsTopAreaDTO(105,"来广营",1400000));
-//        ilsArea.add(new VmIlsTopAreaDTO(106,"西三旗",1500000));
-//        ilsArea.add(new VmIlsTopAreaDTO(107,"东直门",1600000));
-//        ilsArea.add(new VmIlsTopAreaDTO(108,"西直门",1700000));
-//        ilsArea.add(new VmIlsTopAreaDTO(109,"大钟寺",1800000));
-//        ilsArea.add(new VmIlsTopAreaDTO(101,"知春路",1900000));
-//        ilsArea.add(new VmIlsTopAreaDTO(110,"安河桥北",1200000));
         return ilsArea;
     }
 
     @Override
     public List<VmIlsTopSiteDTO> queryIllSite(String startTime, String endTime, Integer category) {
-//        String cg = PropUtil.getValue("hphm.native.prefix");
         List<VmIlsTopSiteDTO> ilsSite = vmIlsMapper.getIlsTopSite(startTime, endTime, category);
-//        List<VmIlsTopSiteDTO> ilsSite = new ArrayList<>();
-//        ilsSite.add(new VmIlsTopSiteDTO(102,"西二旗",1100000));
-//        ilsSite.add(new VmIlsTopSiteDTO(103,"望京",1200000));
-//        ilsSite.add(new VmIlsTopSiteDTO(104,"东湖区",1300000));
-//        ilsSite.add(new VmIlsTopSiteDTO(105,"来广营",1400000));
-//        ilsSite.add(new VmIlsTopSiteDTO(106,"西直门",1500000));
-//        ilsSite.add(new VmIlsTopSiteDTO(107,"西三旗",1600000));
-//        ilsSite.add(new VmIlsTopSiteDTO(108,"东湖区",1700000));
-//        ilsSite.add(new VmIlsTopSiteDTO(109,"望京",1800000));
-//        ilsSite.add(new VmIlsTopSiteDTO(101,"西二旗",1900000));
-//        ilsSite.add(new VmIlsTopSiteDTO(110,"安河桥北",2000000));
         return ilsSite;
     }
 

@@ -28,41 +28,6 @@ public class DeviceService implements IDeviceService {
         List<DmDeviceDTO> recs = deviceMapper.getDmDevice(startIndex, amount, type, code);
         Integer count = deviceMapper.getDmDeviceCount(type, code);
         DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
-//        List<DmDeviceDTO> recs = new ArrayList<>();
-//        recs.add(new DmDeviceDTO("JHSD0001","JHS0001","北京市海淀区","视频监控",
-//                "北京市海淀区西二旗街道19号","东南","车头","http://192.168.11.117:8080/resf"));
-//
-//        recs.add(new DmDeviceDTO("JHSD0002","JHS0001","北京市海淀区","卡口相机",
-//                "北京市海淀区上地街道39号","东北","车尾","http://192.168.11.117:8080/resf"));
-//
-//        recs.add(new DmDeviceDTO("JHSD0003","JHS0001","北京市海淀区","卡口相机",
-//                "北京市海淀区西直门街道29号","东南","车头","http://192.168.11.117:8080/resf"));
-//
-//        recs.add(new DmDeviceDTO("JHSD0004","JHS0001","北京市海淀区","卡口相机",
-//                "北京市海淀区知春路街道109号","西南","车尾","http://192.168.11.117:8080/resf"));
-//
-//        recs.add(new DmDeviceDTO("JHSD0005","JHS0001","北京市朝阳区","视频监控",
-//                "北京市朝阳区东湖区99号","东","车尾","http://192.168.11.117:8080/resf"));
-//
-//        recs.add(new DmDeviceDTO("JHSD0006","JHS0001","北京市昌平区","视频监控",
-//                "北京市昌平区北七家街道21号","南","车头","http://192.168.11.117:8080/resf"));
-//
-//        recs.add(new DmDeviceDTO("JHSD0007","JHS0001","北京市海淀区","视频监控",
-//                "北京市海淀区知春路街道109号","西","车尾","http://192.168.11.117:8080/resf"));
-//
-//        recs.add(new DmDeviceDTO("JHSD0008","JHS0001","北京市海淀区","卡口相机",
-//                "海淀区上地8街8号位","北","车头","http://192.168.11.117:8080/resf"));
-//
-//        recs.add(new DmDeviceDTO("JHSD0009","JHS0001","北京市海淀区","视频监控",
-//                "北京市海淀区西直门街道29号","北","车头","http://192.168.11.117:8080/resf"));
-//
-//        recs.add(new DmDeviceDTO("JHSD0010","JHS0001","北京市海淀区","卡口相机",
-//                "北京市海淀区西二旗街道19号","东","车尾","http://192.168.11.117:8080/resf"));
-//
-//        recs.add(new DmDeviceDTO("JHSD0011","JHS0001","北京市朝阳","视频监控",
-//                "北京市望京街道59号","东南","车尾","http://192.168.11.117:8080/resf"));
-
-//        data.setRecs(recs);
         dto.setData(data);
         return dto;
     }
