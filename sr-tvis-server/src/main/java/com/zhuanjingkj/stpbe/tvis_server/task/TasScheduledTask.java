@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public class TasScheduledTask implements Runnable {
     private static Logger logger = LoggerFactory.getLogger(TasScheduledTask.class);
-    private final static long TST_INTERVAL = 1000; // 每*毫秒运行一次
+    private final static long TST_INTERVAL = 100; // 每*毫秒运行一次
     private static List<ITvisStpObserver> observers = new ArrayList<>();
     private static boolean isFirstRun = true;
     @Autowired
