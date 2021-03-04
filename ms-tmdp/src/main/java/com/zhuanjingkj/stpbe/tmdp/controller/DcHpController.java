@@ -94,12 +94,9 @@ public class DcHpController {
      * @return
      */
     @GetMapping(value = "/hp/exportAllData")
-    public ResultDTO<DbQrsDTO> exportAllData(
+    public void exportAllData(
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
-            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
             @RequestParam(name = "startTime", required = false) String startTime,
             @RequestParam(name = "endTime", required = false) String endTime,
             @RequestParam(name = "category", required = false) String category,
@@ -125,7 +122,6 @@ public class DcHpController {
             FileExpDTO fed = new FileExpDTO("数据中心" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
             FileUtil.export(response, fed);
         }
-        return queryAllData_exp(startIndex, amount, direction, startTime, endTime, category, vType, ilType, hphm, vAddr);
     }
 
     private ResultDTO<DbQrsDTO> queryAllData_exp(int startIndex, int amount, Integer direction, String startTime, String endTime, String category,
