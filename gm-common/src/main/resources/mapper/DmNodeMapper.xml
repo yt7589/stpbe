@@ -11,7 +11,7 @@
         <result column="area_id" property="areaId" jdbcType="DOUBLE"/>
     </resultMap>
     <select id ="getNodeList" resultMap="dmNodeDTO">
-        SELECT ts.city, ts.site_id, ts.site_name, ts.area_name, ts.lng, ts.lat, ts.area_id
+        SELECT ts.city, ts.site_id, ts.site_name, ta.area_name, ts.lng, ts.lat, ts.area_id
           FROM t_site ts
      LEFT JOIN t_area ta
             ON ts.area_id = ta.area_id
