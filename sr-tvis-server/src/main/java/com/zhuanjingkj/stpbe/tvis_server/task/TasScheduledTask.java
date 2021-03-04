@@ -38,11 +38,13 @@ public class TasScheduledTask implements Runnable {
 
     public void run() {
         while (true) {
-            runTasScheduledTask();
             try {
+                runTasScheduledTask();
                 Thread.sleep(TST_INTERVAL);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } catch (Exception ex) {
+                System.out.println("##### sr-tvis-server::TasScheduledTask.run Exception: " + ex.getMessage() + "!");
             }
         }
     }
