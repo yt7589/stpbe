@@ -10,6 +10,7 @@ import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,20 +29,6 @@ public class DmSpaceService implements IDmSpaceService {
         List<DmAmAreaDTO> recs = dmSpaceMapper.getSpaceArea(startIndex, amount);
         Integer count = dmSpaceMapper.getSpaceAreaCount();
         DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
-//        List<DmAmAreaDTO> recs = new ArrayList<>();
-//        recs.add(new DmAmAreaDTO(103,"圆明园西路","143456","海淀区"));
-//        recs.add(new DmAmAreaDTO(104,"朝阳区","153456","北京市"));
-//        recs.add(new DmAmAreaDTO(103,"上地","163456","海淀区"));
-//        recs.add(new DmAmAreaDTO(104,"海淀区","173456","海淀区"));
-//        recs.add(new DmAmAreaDTO(103,"西直门","183456","海淀区"));
-//        recs.add(new DmAmAreaDTO(104,"东直门","193456","朝阳区"));
-//        recs.add(new DmAmAreaDTO(103,"惠新西街","223456","海淀区"));
-//        recs.add(new DmAmAreaDTO(104,"石景山区","323456","北京市"));
-//        recs.add(new DmAmAreaDTO(103,"门头沟区","423456","北京市"));
-//        recs.add(new DmAmAreaDTO(104,"朝阳区","523456","北京市"));
-//        recs.add(new DmAmAreaDTO(103,"通州区","623456","北京市"));
-//        recs.add(new DmAmAreaDTO(104,"朝阳区","723456","北京市"));
-//        data.setRecs(recs);
         dto.setData(data);
         return dto;
     }
@@ -90,6 +77,15 @@ public class DmSpaceService implements IDmSpaceService {
         ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
         Integer affectedRows = dmSpaceMapper.deleteSpaceArea(rto.getAreaId());
         DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);
+        dto.setData(data);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<DbQrsDTO> querySiteAddr_exp() {
+        ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
+        List<SmSiteAddrDTO> recs = dmSpaceMapper.querySiteAddr();
+        DbQrsDTO data = new DbQrsDTO(0, recs.size(),0,0, 0,recs);
         dto.setData(data);
         return dto;
     }

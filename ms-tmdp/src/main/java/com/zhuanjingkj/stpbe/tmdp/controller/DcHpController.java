@@ -1,11 +1,16 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
+import com.zhuanjingkj.stpbe.data.dto.DcHpDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.dto.VmIlsVhsDTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.FileExpDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpDaDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpIlTrendDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpRgTrendDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DcHpService;
+import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
+import com.zhuanjingkj.stpbe.tmdp.util.FileUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.Cursor;
@@ -13,6 +18,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +40,8 @@ public class DcHpController {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    private static final Long ROW_MAX_COUNT = 60000L;
 
     /**
      * 数据记录列表
@@ -53,7 +63,7 @@ public class DcHpController {
         @RequestParam(name = "ilType", required = false) String ilType,
         @RequestParam(name = "hphm", required = false) String hphm,
         @RequestParam(name = "vAddr", required = false) String vAddr
-    ){
+    ) {
         return queryAllData_exp(startIndex, amount, direction, startTime, endTime, category, vType, ilType, hphm, vAddr);
     }
 
@@ -75,6 +85,47 @@ public class DcHpController {
         data.setTotal_violation_town(redisTemplate.opsForValue().get("dchp_vehicle_1_violation") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_1_violation")));
         dto.setData(data);
         return dto;
+    }
+
+    /**
+     * 数据导出
+     * @param platform
+     * @param version
+     * @return
+     */
+    @GetMapping(value = "/hp/exportAllData")
+    public ResultDTO<DbQrsDTO> exportAllData(
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
+            @RequestParam(name = "startTime", required = false) String startTime,
+            @RequestParam(name = "endTime", required = false) String endTime,
+            @RequestParam(name = "category", required = false) String category,
+            @RequestParam(name = "vType", required = false) String vType,
+            @RequestParam(name = "ilType", required = false) String ilType,
+            @RequestParam(name = "hphm", required = false) String hphm,
+            @RequestParam(name = "vAddr", required = false) String vAddr,
+            HttpServletResponse response
+    ) {
+        List<DcHpDTO> recs = new ArrayList<>();
+        String[] columns = {"id", "tvisJsonId", "tvisJsonTbl", "时间", "地址", "车牌号", "类别", "是否违章", "违章类型", "图片地址", "图片下标"};
+        Integer allMaxCount = dcHpService.getVehicleCount();
+        if(allMaxCount > ROW_MAX_COUNT) {
+            long count = allMaxCount/ ROW_MAX_COUNT + 1;
+            for(int i = 0; i < count; i++) {
+                recs.clear();
+                recs = dcHpService.getVehicleData(i *  ROW_MAX_COUNT.intValue(), ROW_MAX_COUNT.intValue(), 1, startTime, endTime, category, vType, ilType, hphm, vAddr);
+                FileExpDTO fed = new FileExpDTO("数据中心" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
+                FileUtil.export(response, fed);
+            }
+        } else {
+            recs = dcHpService.getVehicleData(0, ROW_MAX_COUNT.intValue(), 1, startTime, endTime, category, vType, ilType, hphm, vAddr);
+            FileExpDTO fed = new FileExpDTO("数据中心" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
+            FileUtil.export(response, fed);
+        }
+        return queryAllData_exp(startIndex, amount, direction, startTime, endTime, category, vType, ilType, hphm, vAddr);
     }
 
     private ResultDTO<DbQrsDTO> queryAllData_exp(int startIndex, int amount, Integer direction, String startTime, String endTime, String category,

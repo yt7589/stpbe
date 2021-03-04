@@ -377,10 +377,10 @@
             ON sv.vehicle_type_num = tv.cllxzfl
          WHERE 1 = 1
             <if test="hphm != null and hphm != ''">
-                AND tv.hphm like CONCAT(#{hphm}, '%')
+                AND tv.hphm LIKE CONCAT('%', #{hphm}, '%')
             </if>
             <if test="addr != null and addr != ''">
-                AND ts.site_name =#{addr}
+                AND ts.site_name LIKE CONCAT('%', #{addr}, '%')
             </if>
             <if test="illType != null and illType != ''">
                 AND tv.wzlx =#{illType}

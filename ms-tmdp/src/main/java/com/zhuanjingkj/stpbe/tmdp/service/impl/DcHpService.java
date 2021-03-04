@@ -95,4 +95,15 @@ public class DcHpService implements IDcHpService {
         }
         return drt;
     }
+
+    @Override
+    public List<DcHpDTO> getVehicleData(Integer startIndex, Integer amount, Integer direction, String startTime, String endTime, String category, String vType, String ilType, String hphm, String vAddr) {
+        List<DcHpDTO> recs = dcHpMapper.getVehicleData(startIndex, amount, startTime, endTime, category, vType, ilType, hphm, vAddr);
+        return recs;
+    }
+
+    @Override
+    public Integer getVehicleCount() {
+        return dcHpMapper.getVehicleCount(null, null, null, null, null, null, null);
+    }
 }

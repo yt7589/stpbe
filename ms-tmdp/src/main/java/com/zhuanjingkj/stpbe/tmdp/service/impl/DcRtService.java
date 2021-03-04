@@ -113,7 +113,12 @@ public class DcRtService implements IDcRtService {
                 }
             }
             for(String key : rtjFor24Map.keySet()) {
-                recs.add(new DcRtTimeJamDTO(key +":00", str2Double((double)rtjFor24Map.get(key)/total)));
+                if(total > 0) {
+                    recs.add(new DcRtTimeJamDTO(key +":00", str2Double((double)rtjFor24Map.get(key)/total)));
+                } else {
+                    recs.add(new DcRtTimeJamDTO(key +":00", 0));
+                }
+
             }
         }
         return recs;

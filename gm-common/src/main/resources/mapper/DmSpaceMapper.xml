@@ -7,6 +7,11 @@
         <result column="parentCode" property="parentCode" jdbcType="VARCHAR"/>
         <result column="parentName" property="parentName" jdbcType="VARCHAR"/>
     </resultMap>
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.SmSiteAddrDTO"  id="siteAddrDTO">
+        <result column="area_id" property="siteAddrId" jdbcType="INTEGER"/>
+        <result column="area_name" property="siteAddrName" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id ="getSpaceArea" resultMap ="dmAmDTO">
         SELECT ta.area_id AS areaId, ta.area_name AS areaName, tr.area_id AS parentCode, tr.area_name AS parentName
           FROM t_area ta
@@ -52,4 +57,9 @@
           FROM t_area
          WHERE area_id =#{areaId}
     </delete>
+
+    <select id ="querySiteAddr" resultMap ="siteAddrDTO">
+        SELECT ta.area_id, ta.area_name
+          FROM t_area ta
+    </select>
 </mapper>

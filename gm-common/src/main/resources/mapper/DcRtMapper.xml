@@ -156,6 +156,7 @@
       GROUP BY tiv.camera_id) P
             ON M.siteId = P.siteId;
     </select>
+
     <select id ="getTivTotal" resultType ="Integer">
         SELECT COUNT(1)
           FROM t_itf_vehicle tiv

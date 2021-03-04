@@ -17,4 +17,6 @@ public interface IDmSpaceService {
     ResultDTO<DbDeleteResultDTO> updateArea_exp(UpdateSpaceAreaRTO rto);
 
     ResultDTO<DbDeleteResultDTO> deleteAreaFromSpace_exp(DeleteAreaFromSpaceRTO rto);
+
+    ResultDTO<DbQrsDTO> querySiteAddr_exp();
 }

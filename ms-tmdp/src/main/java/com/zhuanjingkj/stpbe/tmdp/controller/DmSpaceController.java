@@ -87,6 +87,17 @@ public class DmSpaceController {
         return deleteAreaFromSpace_exp(rto);
     }
 
+    /**
+     * 查询节点位置
+     */
+    @GetMapping(value ="/sm/querySiteAddr")
+    public ResultDTO<DbQrsDTO> querySiteAddr (
+        @RequestParam(name = "p", required = false) String platform,
+        @RequestParam(name = "v", required = false) String version
+    ) {
+        return querySiteAddr_exp();
+    }
+
     private ResultDTO<DbQrsDTO> queryArea_exp(Integer startIndex, Integer amount, Integer direction) {
         return dmSpaceService.queryArea_exp(startIndex, amount, direction);
     }
@@ -101,5 +112,9 @@ public class DmSpaceController {
 
     private ResultDTO<DbDeleteResultDTO> deleteAreaFromSpace_exp(DeleteAreaFromSpaceRTO rto) {
         return dmSpaceService.deleteAreaFromSpace_exp(rto);
+    }
+
+    private ResultDTO<DbQrsDTO> querySiteAddr_exp() {
+        return dmSpaceService.querySiteAddr_exp();
     }
 }

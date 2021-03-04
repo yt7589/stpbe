@@ -16,11 +16,11 @@
          WHERE 1 = 1
             <if test="nodeAddr != null and nodeAddr !=''">
                 AND ts.`position`
-               LIKE CONCAT(#{nodeAddr}, '%')
+               LIKE CONCAT('%', #{nodeAddr}, '%')
             </if>
             <if test="nodeName != null and nodeName != ''">
                 AND ts.site_name
-               LIKE CONCAT(#{nodeName}, '%')
+               LIKE CONCAT('%',#{nodeName}, '%')
             </if>
          LIMIT #{startIndex}, #{amount}
     </select>

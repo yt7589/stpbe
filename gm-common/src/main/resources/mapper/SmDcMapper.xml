@@ -36,13 +36,13 @@
             ON tr.tr_id = tt.tr_id
          WHERE 1 = 1
             <if test="loginName != null and loginName !=''">
-                AND u.login_name =#{loginName}
+                AND u.login_name LIKE CONCAT('%', #{loginName},'%')
             </if>
             <if test="userName != null and userName !='' ">
-                AND u.user_name =#{userName}
+                AND u.user_name LIKE CONCAT('%', #{userName},'%')
             </if>
             <if test ="phone != null and phone != ''">
-                AND u.phone =#{phone}
+                AND u.phone LIKE CONCAT('%', #{phone},'%')
             </if>
       GROUP BY u.user_id
          LIMIT #{startIndex}, #{amount}

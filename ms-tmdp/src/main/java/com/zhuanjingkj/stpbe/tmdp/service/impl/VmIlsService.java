@@ -296,19 +296,6 @@ public class VmIlsService implements IVmIlsService {
         List<VmIlssDTO> recs = vmIlsMapper.getIlsSite(startIndex, amount, startTime, endTime);
         Integer count = vmIlsMapper.getIlsSiteCount();
         DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
-//        List<VmIlssDTO> recs = new ArrayList<>();
-//        recs.add(new VmIlssDTO(101,"北京市海淀区上地8街12号",1100000));
-//        recs.add(new VmIlssDTO(102,"北京市海淀区西二旗8街13号",1200000));
-//        recs.add(new VmIlssDTO(103,"北京市海淀区龙泽8街14号",1300000));
-//        recs.add(new VmIlssDTO(104,"北京市海淀区回龙观8街15号",1400000));
-//        recs.add(new VmIlssDTO(105,"北京市朝阳区望京8街16号",1500000));
-//        recs.add(new VmIlssDTO(106,"北京市朝阳区东湖渠8街17号",1600000));
-//        recs.add(new VmIlssDTO(107,"北京市朝阳区来广营8街18号",1700000));
-//        recs.add(new VmIlssDTO(108,"北京市昌平区北七家8街19号",1800000));
-//        recs.add(new VmIlssDTO(109,"北京市昌平区小汤山8街20号",1900000));
-//        recs.add(new VmIlssDTO(110,"北京市海淀区知春路8街21号",2000000));
-//        recs.add(new VmIlssDTO(111,"北京市东城区东四十条8街22号",21000000));
-//        data.setRecs(recs);
         dto.setData(data);
         return dto;
     }
@@ -316,28 +303,14 @@ public class VmIlsService implements IVmIlsService {
     @Override
     public ResultDTO<DbQrsDTO> querySiteIllegal_exp(String startTime, String endTime, Integer category) {
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
-//        String cg = PropUtil.getValue("hphm.native.prefix");
         List<VmIlsSiteDTO> recs = vmIlsMapper.getIlsMapSite(startTime, endTime, category);;
         DbQrsDTO data = new DbQrsDTO(10,10,0,10,0,recs);
-//        List<VmIlsSiteDTO> recs = new ArrayList<>();
-//        recs.add(new VmIlsSiteDTO(101,"北京市海淀区上地8街12号",116.085471,40.085471,110000));
-//        recs.add(new VmIlsSiteDTO(102,"北京市海淀区西二旗8街13号",116.185471,40.096541,120000));
-//        recs.add(new VmIlsSiteDTO(103,"北京市海淀区龙泽8街14号",116.285471,40.06584,130000));
-//        recs.add(new VmIlsSiteDTO(104,"北京市海淀区回龙观8街15号",116.385471,40.056284,140000));
-//        recs.add(new VmIlsSiteDTO(105,"北京市朝阳区望京8街16号",116.485471,40.024885,150000));
-//        recs.add(new VmIlsSiteDTO(106,"北京市朝阳区来广营8街18号",116.585471,40.058414,160000));
-//        recs.add(new VmIlsSiteDTO(107,"北京市昌平区北七家8街19号",116.685471,40.058964,170000));
-//        recs.add(new VmIlsSiteDTO(108,"北京市东城区东四十条8街22号",116.785471,40.058954,180000));
-//        recs.add(new VmIlsSiteDTO(109,"北京市海淀区知春路8街21号",116.885471,40.058741,190000));
-//        recs.add(new VmIlsSiteDTO(110,"北京市昌平区小汤山8街20号",116.985471,40.052695,200000));
-//        data.setRecs(recs);
         dto.setData(data);
         return dto;
     }
 
     @Override
     public Integer getIlsCount(String startTime, String endTime, Integer category, String vType, String illType, String hphm, String addr) {
-//        String cg = PropUtil.getValue("hphm.native.prefix");
         return vmIlsMapper.getIlsCount(startTime, endTime, category, vType, illType, hphm, addr);
     }
 

@@ -142,6 +142,8 @@ public class VmIlsController {
      */
     @GetMapping(value = "/ils/export")
     public void ilsExport(HttpServletResponse response,
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
             @RequestParam(name = "startTime", required = false) String startTime,
             @RequestParam(name = "endTime", required = false) String endTime,
             @RequestParam(name = "category", required = false) Integer category,
@@ -150,31 +152,6 @@ public class VmIlsController {
             @RequestParam(name = "hphm", required = false) String hphm,
             @RequestParam(name = "addr", required = false) String addr){
         List<VmIlsDTO> recs = new ArrayList<VmIlsDTO>();
-//
-//        recs.add(new VmIlsDTO(101,"2020-12-25 16:18:52","北京市海淀区西二旗街道19号","京A88858","外埠","轿车","副驾驶放下遮阳板",
-//                102,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsDTO(102,"2020-12-25 16:18:52","北京市海淀区上地街道39号","津E88868","本市","轿车","副驾驶不系安全带",
-//                103,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsDTO(103,"2020-12-25 16:18:52","北京市海淀区西直门街道29号","冀E48878","外埠","SUV","主驾驶放下遮阳板",
-//                104,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsDTO(10,"2020-12-25 16:18:52","北京市海淀区知春路街道109号","豫E88888","本市","MPV","主驾驶抽烟",
-//                105,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsDTO(105,"2020-12-25 16:18:52","北京市朝阳区东湖区99号","沪E88828","外埠","面包车","主驾驶不系安全带",
-//                106,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsDTO(106,"2020-12-25 16:18:52","北京市昌平区北七家街道21号","豫A88838","本市","罐式货车","主驾驶看手机",
-//                107,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsDTO(107,"2020-12-25 16:18:52","北京市望京街道59号","豫B88818","外埠","箱式货车","主驾驶打电话",
-//                108,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsDTO(108,"2020-12-25 16:18:52","北京市海淀区回龙观39号","黑E88838","本市","栏板式货车","超速行驶",
-//                109,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-
         String[] columns = {"违章编号", "时间", "地点", "车牌号" ,"类别" , "车辆类型", "违章类型编号", "违章类型", "详情"};
         long allMaxCount = vmIlsService.getIlsCount(startTime, endTime, category, vType, illType, hphm, addr);
         if(allMaxCount > ROW_MAX_COUNT) {
@@ -201,34 +178,6 @@ public class VmIlsController {
     public void exportvs(HttpServletResponse response,
             @RequestParam(name = "hphm", required = false) String hphm){
         List<VmIlsVhsDTO> recs = new ArrayList<>();
-
-//        recs.add(new VmIlsVhsDTO(105,"2020-12-21 12:56:43","北京市海淀区西二旗街道19号","主驾驶打电话",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsVhsDTO(106,"2020-12-22 11:56:43","北京市海淀区上地街道39号","主驾驶看手机",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsVhsDTO(107,"2020-12-23 10:56:43","北京市海淀区西直门街道29号","主驾驶不系安全带",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsVhsDTO(108,"2020-12-24 12:56:43","北京市海淀区知春路街道109号","主驾驶抽烟",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsVhsDTO(109,"2020-12-25 03:04:43","北京市朝阳区东湖区99号","主驾驶放下遮阳板",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsVhsDTO(110,"2020-12-26 05:56:43","北京市昌平区北七家街道21号","副驾驶不系安全带",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsVhsDTO(111,"2020-12-27 06:56:43","北京市望京街道59号","副驾驶放下遮阳板",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsVhsDTO(112,"2020-12-28 12:56:43","北京市海淀区回龙观39号","副驾驶放下遮阳板",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-//
-//        recs.add(new VmIlsVhsDTO(113,"2020-12-29 14:56:43","北京市海淀区上龙泽23号","副驾驶放下遮阳板",
-//                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606650551241&di=8378d72dc6414bfa9a243c2e75db511a&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F246%2F190%2F1582%2F102918246.jpg"));
-
         Integer allMaxCount = vmIlsService.getVIlsHistory(hphm);
         String[] columns = {"违章编号", "时间", "地点", "违章类型", "详情"};
         if(allMaxCount > ROW_MAX_COUNT) {
@@ -244,7 +193,6 @@ public class VmIlsController {
             FileExpDTO fed = new FileExpDTO("违章监管" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
             FileUtil.export(response, fed);
         }
-
     }
     /**
      * 违章分类统计
