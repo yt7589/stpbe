@@ -252,7 +252,7 @@
      LEFT JOIN t_violation_type tvt
             ON tvt.violation_type_code = tv.wzlx
          WHERE tv.hphm =#{hphm}
-      GROUP BY tv.wzlx
+      GROUP BY tvt.violation_type_name
     </select>
 
     <select id ="getIlTypeByYear" resultType="hashmap">
