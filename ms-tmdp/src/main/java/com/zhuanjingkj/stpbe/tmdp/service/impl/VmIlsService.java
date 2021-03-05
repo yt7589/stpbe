@@ -162,7 +162,7 @@ public class VmIlsService implements IVmIlsService {
         String timeStamp = DateUtil.timeStamp2Date(rstJson.getString("TimeStamp"));
         String hphm_pre = PropUtil.getHphmPre();
 //        for (Object veh :vehs) {
-        if (StringUtils.isNotBlank("" + vehsIdx)) {
+        if (StringUtils.isBlank("" + vehsIdx)) {
             return null;
         }
         JSONObject vehJson  = (JSONObject) vehs.getJSONObject(vehsIdx);
