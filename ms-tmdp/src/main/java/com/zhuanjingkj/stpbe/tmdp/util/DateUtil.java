@@ -263,6 +263,13 @@ public class DateUtil {
 		return ld.format(DTF_MD);
 	}
 
+	public static Map<String, Integer> yearForMap(Integer num) {
+		SortedMap<String, Integer> sortedMap = new TreeMap<>();
+		for (int i =0; i < num; i++) {
+			sortedMap.put("" + LocalDate.now().plusYears(-i).getYear(), 0);
+		}
+		return sortedMap;
+	}
 	public static void main(String[] args) {
 		System.out.println("getLocalDateTime:" + getLocalDateTime());
 		System.out.println("isBefore:" + isBefore("2020-08-03 14:48:26"));

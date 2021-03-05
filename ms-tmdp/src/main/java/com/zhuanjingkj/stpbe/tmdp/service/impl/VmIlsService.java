@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -259,14 +260,16 @@ public class VmIlsService implements IVmIlsService {
         vmIlsVsInfoDTO.setIlsVstype(recs);
         List<VmIlsVsTrendDTO> trend = new ArrayList<>();
         List<Map<String, Object>> ilyType = vmIlsMapper.getIlTypeByYear(hphm);
+        Map<String, Integer> sortedMap = DateUtil.yearForMap(8);
         if(ilyType != null && ilyType.size() > 0) {
             for(int i =0; i < ilyType.size(); i++) {
-                trend.add(new VmIlsVsTrendDTO("" + ilyType.get(i).get("year"),Integer.parseInt(ilyType.get(i).get("count") == null ? "0" : "" + ilyType.get(i).get("count"))));
-                if(i == 0) {
-                    avCount += (Integer.parseInt(ilyType.get(i).get("count") == null ? "0" : "" + ilyType.get(i).get("count")));
-                }
+                sortedMap.put("" + ilyType.get(i).get("year"), Integer.parseInt(ilyType.get(i).get("count") == null ? "0" : "" + ilyType.get(i).get("count")));
+            }
+            for (String key : sortedMap.keySet()) {
+                trend.add(new VmIlsVsTrendDTO("" + key, sortedMap.get(key)));
             }
         }
+
         vmIlsVsInfoDTO.setIlsCount(ilTotal);
         vmIlsVsInfoDTO.setAvCount(avCount);
         vmIlsVsInfoDTO.setImgUrl(imgUrl);
