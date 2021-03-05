@@ -137,6 +137,7 @@ public class VmIlsService implements IVmIlsService {
 
     @Override
     public ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx) {
+        System.out.println("tvisJsonId:" + tvisJsonId + "; vehsIdx:" + vehsIdx);
         TvisJsonVO vo = TvisUtil.getTvisJsonVOById(tvisJsonMapper, tvisJsonId);
         ResultDTO<VmIlsVdDTO> dto = new ResultDTO<>();
         String data = IpfsClient.getTextFile("" + vo.getJsonHash());
