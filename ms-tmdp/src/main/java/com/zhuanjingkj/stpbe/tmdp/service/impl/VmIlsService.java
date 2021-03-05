@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -243,7 +244,7 @@ public class VmIlsService implements IVmIlsService {
                 trend.add(new VmIlsVsTrendDTO("" + key, sortedMap.get(key)));
             }
         }
-
+        avCount = sortedMap.get("" + LocalDate.now().getYear());
         vmIlsVsInfoDTO.setIlsCount(ilTotal);
         vmIlsVsInfoDTO.setAvCount(avCount);
         vmIlsVsInfoDTO.setImgUrl(imgUrl);
