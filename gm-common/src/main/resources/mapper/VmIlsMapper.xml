@@ -29,11 +29,11 @@
     <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsVhsDTO"  id ="vilrDTO" >
         <result column="tvis_json_id" property="tvisJsonId" jdbcType="INTEGER"/>
         <result column="violation_id" property="ilId" jdbcType="INTEGER"/>
+        <result column="vehs_idx" property="vehsIdx" jdbcType="INTEGER"/>
         <result column="create_time" property="ilTime" jdbcType="VARCHAR"/>
         <result column="road_name" property="ilAddr" jdbcType="VARCHAR"/>
         <result column="violation_type_name" property="ilType" jdbcType="VARCHAR"/>
         <result column="tvis_json_tbl" property="tvisJsonTbl" jdbcType="VARCHAR"/>
-<!--        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>-->
     </resultMap>
 
     <resultMap type="com.zhuanjingkj.stpbe.data.dto.VmIlsTopAreaDTO" id ="ilAreaDTO">
@@ -184,10 +184,8 @@
     </select>
 
     <select id="getVIlRecord" resultMap="vilrDTO">
-        SELECT tv.tvis_json_id, tv.violation_id, tv.hphm, tv.create_time, tr.road_name, tv.wzlx, tv.tvis_json_tbl
+        SELECT tv.tvis_json_id, tv.vehs_idx, tv.violation_id, tv.hphm, tv.create_time, tr.road_name, tv.wzlx, tv.tvis_json_tbl
           FROM t_violation tv
-<!--     LEFT JOIN #{tblName} tj-->
-<!--            ON tv.tvis_json_id = tj.tvis_json_id-->
      LEFT JOIN t_camera tc
             ON tv.camera_id = tc.camera_id
      LEFT JOIN t_site ts
@@ -199,10 +197,8 @@
          WHERE tv.hphm =#{hphm}
            AND road_name IS NOT NULL
      UNION ALL
-        SELECT tv.tvis_json_id, tv.violation_id, tv.hphm, tv.create_time,tr.road_name, tv.wzlx, tv.tvis_json_tbl
+        SELECT tv.tvis_json_id, tv.vehs_idx, tv.violation_id, tv.hphm, tv.create_time,tr.road_name, tv.wzlx, tv.tvis_json_tbl
           FROM t_violation tv
-<!--     LEFT JOIN #{tblName} tj-->
-<!--            ON tv.tvis_json_id = tj.tvis_json_id-->
      LEFT JOIN t_camera tc
             ON tv.camera_id = tc.camera_id
      LEFT JOIN t_site ts

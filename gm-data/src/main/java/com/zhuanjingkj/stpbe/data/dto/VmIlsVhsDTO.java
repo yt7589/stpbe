@@ -21,6 +21,8 @@ public class VmIlsVhsDTO extends BaseDTO {
     private String ilType;
     @JSONField(name = "imageUrl")
     private String imageUrl;
+    @JSONField(name = "vehsIdx")
+    private long vehsIdx;
 
     public VmIlsVhsDTO() {
         super();
@@ -88,5 +90,13 @@ public class VmIlsVhsDTO extends BaseDTO {
 
     public void setTvisJsonTbl(String tvisJsonTbl) {
         this.tvisJsonTbl = tvisJsonTbl;
+    }
+
+    public long getVehsIdx() {
+        return vehsIdx;
+    }
+
+    public void setVehsIdx(long vehsIdx) {
+        this.vehsIdx = vehsIdx;
     }
 }
