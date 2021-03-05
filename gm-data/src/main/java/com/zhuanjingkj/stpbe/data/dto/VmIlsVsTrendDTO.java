@@ -18,7 +18,7 @@ public class VmIlsVsTrendDTO extends BaseDTO {
     }
 
     public VmIlsVsTrendDTO(String year, Integer count) {
-        this.year = "Y_" + year;
+        this.year = year;
         this.count = count;
     }
 

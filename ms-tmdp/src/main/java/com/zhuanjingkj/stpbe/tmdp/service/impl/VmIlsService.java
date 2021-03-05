@@ -83,35 +83,6 @@ public class VmIlsService implements IVmIlsService {
             }
         }
         Integer count = vmIlsMapper.getIllegalVehicleCount(startIndex, amount, startTime, endTime, category, vType, illType, hphm, addr);
-
-//        List<VmIlsDTO> recs = new ArrayList<>();
-//        recs.add(new VmIlsDTO(101,"2020-12-21 16:18:52","海淀区西二旗","湘K·UV068","外埠","栏板式货车","副驾驶不系安全带",
-//                102,"http://222.128.117.234:9003/imgs/vmfjsbjaqd1.png"));
-//
-//        recs.add(new VmIlsDTO(102,"2020-12-22 16:18:52","海淀区上地南路","湘C·AS661","外埠","轿车","副驾驶不系安全带",
-//                103,"http://222.128.117.234:9003/imgs/vmfjsbjaqd2.png"));
-//
-//        recs.add(new VmIlsDTO(103,"2020-12-23 16:18:52","海淀区上地西里","渝A·865XB","外埠","面包车","副驾驶不系安全带",
-//                104,"http://222.128.117.234:9003/imgs/vmfjsbjaqd3.png"));
-//
-//        recs.add(new VmIlsDTO(10,"2020-12-24 16:18:52","海淀区知春路","闽C·53245","外埠","栏板式货车","主驾驶不系安全带",
-//                105,"http://222.128.117.234:9003/imgs/vmzjsbjaqd1.png"));
-//
-//        recs.add(new VmIlsDTO(105,"2020-12-25 16:18:52","朝阳区望京","桂A·39655","外埠","中型客车","主驾驶不系安全带",
-//                106,"http://222.128.117.234:9003/imgs/vmzjsbjaqd2.png"));
-//
-//        recs.add(new VmIlsDTO(106,"2020-12-26 16:18:52","朝阳区大屯路","渝B·VB098","外埠","面包车","主驾驶打电话",
-//                107,"http://222.128.117.234:9003/imgs/vmzjsddh1.png"));
-//
-//        recs.add(new VmIlsDTO(107,"2020-12-27 16:18:52","昌平区回南路","京GWM567","本市","轿车","主驾驶打电话",
-//                108,"http://222.128.117.234:9003/imgs/vmzjsddh2.png"));
-//
-//        recs.add(new VmIlsDTO(108,"2020-12-28 16:18:52","朝阳区关庄","云A·918RT","外埠","轿车","主驾驶看手机",
-//                109,"http://222.128.117.234:9003/imgs/vmzjsksj1.png"));
-//
-//        recs.add(new VmIlsDTO(108,"2020-12-29 16:18:52","朝阳区关庄","豫A·9YR78","外埠","轿车","主驾驶看手机",
-//                109,"http://222.128.117.234:9003/imgs/vmzjsksj2.png"));
-
         DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
         data.setRecs(recs);
 
@@ -136,8 +107,8 @@ public class VmIlsService implements IVmIlsService {
     }
 
     @Override
-    public ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx) {
-        System.out.println("tvisJsonId:" + tvisJsonId + "; vehsIdx:" + vehsIdx);
+    public ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehIdx) {
+        System.out.println("tvisJsonId:" + tvisJsonId + "; vehsIdx:" + vehIdx);
         TvisJsonVO vo = TvisUtil.getTvisJsonVOById(tvisJsonMapper, tvisJsonId);
         ResultDTO<VmIlsVdDTO> dto = new ResultDTO<>();
         String data = IpfsClient.getTextFile("" + vo.getJsonHash());
@@ -155,7 +126,7 @@ public class VmIlsService implements IVmIlsService {
         }
         Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
         TvisUtil.getTvisFrameAnalysisResult(vo, cutVehs);
-        String imgUrl = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=c_" + tvisJsonId + "_" + vehsIdx + ".jpg";
+        String imgUrl = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=c_" + tvisJsonId + "_" + vehIdx + ".jpg";
         String ilsName = "" + KsAsService.areaMap.get(code);
         JSONObject rstJson = JSONObject.parseObject(dataJson.getString("json"));
         JSONArray vehs = rstJson.getJSONArray("VEH");
@@ -163,10 +134,10 @@ public class VmIlsService implements IVmIlsService {
         String timeStamp = DateUtil.timeStamp2Date(rstJson.getString("TimeStamp"));
         String hphm_pre = PropUtil.getHphmPre();
 //        for (Object veh :vehs) {
-        if (StringUtils.isBlank("" + vehsIdx)) {
+        if (StringUtils.isBlank("" + vehIdx)) {
             return null;
         }
-        JSONObject vehJson  = (JSONObject) vehs.getJSONObject(vehsIdx);
+        JSONObject vehJson  = (JSONObject) vehs.getJSONObject(vehIdx);
         System.out.println(vehJson);
 //        if(!vehJson.get("SXH").equals("" + vehsIdx)) {
 //            continue;
@@ -231,7 +202,6 @@ public class VmIlsService implements IVmIlsService {
                 if(map != null && map.size() > 0) {
                     recs.get(i).setImageUrl(IpfsClient.getIpfsUrl(map.get("image_hash") + ""));
                 }
-
             }
         }
         Integer count = vmIlsMapper.getVIlCount(hphm);

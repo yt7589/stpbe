@@ -294,7 +294,7 @@ public class VmIlsController {
         return vmIlsService.queryIlsVsInfo_exp(hphm, tvisJsonId, vehsIdx);
     }
 
-    private ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehsIdx) {
-        return vmIlsService.queryIlsDat_exp(tvisJsonId, vehsIdx);
+    private ResultDTO<VmIlsVdDTO> queryIlsDat_exp(long tvisJsonId, Integer vehIdx) {
+        return vmIlsService.queryIlsDat_exp(tvisJsonId, vehIdx);
     }
 }

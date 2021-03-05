@@ -28,12 +28,13 @@ public class VmIlsVhsDTO extends BaseDTO {
         super();
     }
 
-    public VmIlsVhsDTO(long ilId, String ilTime, String ilAddr, String ilType, String imageUrl) {
+    public VmIlsVhsDTO(long ilId, String ilTime, String ilAddr, String ilType, String imageUrl, long vehIdx) {
         this.ilId = ilId;
         this.ilTime = ilTime;
         this.ilAddr = ilAddr;
         this.ilType = ilType;
         this.imageUrl = imageUrl;
+        this.vehIdx = vehIdx;
     }
 
     public long getIlId() {
@@ -90,6 +91,10 @@ public class VmIlsVhsDTO extends BaseDTO {
 
     public void setTvisJsonTbl(String tvisJsonTbl) {
         this.tvisJsonTbl = tvisJsonTbl;
+    }
+
+    public long getVehIdx() {
+        return vehIdx;
     }
 
     public void setVehIdx(long vehIdx) {
