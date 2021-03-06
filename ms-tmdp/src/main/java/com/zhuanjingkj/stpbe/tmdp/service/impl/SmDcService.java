@@ -222,7 +222,6 @@ public class SmDcService implements ISmDcService {
         redisTemplate.opsForValue().set("dk_vt_others", 0); //其他
         redisTemplate.opsForValue().set("dkInternalNum", 0); //本市
         redisTemplate.opsForValue().set("dkExternalNum", 0); //外埠
-        redisTemplate.opsForValue().set("dk_titf_2020123004", 0); //2020年12月30日4时过车量 需要按月批量删除所有key dk_titf_202012
         redisTemplate.opsForValue().set("dcst_vehicle_alerts", 0); //布控车辆出现报警次数
         redisTemplate.opsForValue().set("dcst_vehicle_total", 0); //数据中心车辆识别统计
         redisTemplate.opsForValue().set("dcst_category_0_total", 0); //本市车辆统计次数

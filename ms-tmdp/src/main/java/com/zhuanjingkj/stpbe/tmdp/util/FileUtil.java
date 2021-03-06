@@ -66,7 +66,7 @@ public class FileUtil {
                     PropertyDescriptor pd = new PropertyDescriptor(field.getName(), clss);
                     Method getMethod = pd.getReadMethod();
                     Object o1 = getMethod.invoke(obj);
-                    System.out.println("字段名称："+field.getName() + " 字段值： "+o1);
+//                    System.out.println("字段名称："+field.getName() + " 字段值： "+o1);
                     cell1.setCellStyle(dataStyle);
                     cell1.setCellValue(o1 + "");
                 } catch (Exception e) {
