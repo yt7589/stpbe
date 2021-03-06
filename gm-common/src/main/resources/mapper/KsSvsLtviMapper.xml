@@ -7,14 +7,15 @@
         <result column="site_name" property="siteName" jdbcType="VARCHAR"/>
         <result column="hphm" property="hphm" jdbcType="VARCHAR"/>
         <result column="clpp" property="clpp" jdbcType="VARCHAR"/>
-<!--        <result column="occur_time" property="occurTime" jdbcType="VARCHAR"/>-->
-<!--        <result column="image_hash" property="imageHash" jdbcType="VARCHAR"/>-->
+        <result column="lng" property="lng" jdbcType="VARCHAR"/>
+        <result column="lat" property="lat" jdbcType="VARCHAR"/>
         <result column="violation_type_name" property="violationTypeName" jdbcType="VARCHAR"/>
         <result column="tvis_json_tbl" property="tvisJsonTbl" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id ="getKsSvsLtvi" resultMap="ltviDTO">
-        SELECT tv.tvis_json_id, tv.hphm, tv.clpp, tv.wzlx, tvt.violation_type_name, tsi.site_name, tv.tvis_json_tbl
+        SELECT tv.tvis_json_id, tv.hphm, tv.clpp, tv.wzlx, tvt.violation_type_name, tsi.site_name,
+               tv.tvis_json_tbl, tsi.lng, tsi.lat
           FROM t_violation tv
      LEFT JOIN t_special_vehicle_type ts
             ON tv.cllxzfl = ts.vehicle_type_num
