@@ -73,13 +73,17 @@ public class KsVcService implements IKsVcService {
             for(int i = 0; i < ill.size(); i++) {
                 String val = ill.get(i);
                 if(StringUtils.isNotBlank(val) && val.split("\\|").length == 2) {
-                    String hphm = val.split("\\|")[0];
-                    String cameraId = val.split("\\|")[1];
-                    KsVcLsvsDTO illLsvs = new KsVcLsvsDTO(0,0,101,"" + KsAsService.areaMap.get(cameraId),
-                            "" + redisTemplate.opsForHash().get("ks_vs_ill_time", val),hphm,Integer.parseInt("" + (redisTemplate.opsForHash().get("ks_vs_ill_total", val) == null ? "0" : redisTemplate.opsForHash().get("ks_vs_ill_total", val))));
-                    recs.add(illLsvs);
-                    if(recs.size() == 3) {
-                        break;
+                    Integer vSize = val.split("\\|").length;
+                    if (vSize == 2) {
+                        String hphm = val.split("\\|")[0];
+                        String cameraId = val.split("\\|")[1];
+                        KsVcLsvsDTO illLsvs = new KsVcLsvsDTO(0,0,101,"" + KsAsService.areaMap.get(cameraId),
+                                "" + redisTemplate.opsForHash().get("ks_vs_ill_time", val), hphm,
+                                Integer.parseInt("" + (redisTemplate.opsForHash().get("ks_vs_ill_total", val) == null ? "0" : redisTemplate.opsForHash().get("ks_vs_ill_total", val))));
+                        recs.add(illLsvs);
+                        if(recs.size() == 3) {
+                            break;
+                        }
                     }
                 }
             }
@@ -138,6 +142,7 @@ public class KsVcService implements IKsVcService {
                         || "null".equals(coordinate)) {
                     continue;
                 }
+                System.out.println(redisTemplate.opsForHash().get("ks_vs_ill_total", val));
                 KsVcSfvsDTO illLsvs = new KsVcSfvsDTO(0,"" + KsAsService.areaMap.get(cameraId),Double.parseDouble("" + coordinate.split("\\|")[0]), Double.parseDouble("" + coordinate.split("\\|")[1]),
                         Integer.parseInt("" + redisTemplate.opsForHash().get("ks_vs_ill_total", val)), hphm);
                 recs.add(illLsvs);

@@ -99,6 +99,7 @@ public class FileUtil {
                     e.printStackTrace();
                 }
             }
+            System.out.println("已导出" + fileExp.getList().size() + "条数据！" );
         }
     }
 

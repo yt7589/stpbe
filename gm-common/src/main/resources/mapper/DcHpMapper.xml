@@ -39,13 +39,15 @@
                 AND #{endTime} > occur_time
             </if>
             <if test="hphm != null and hphm != ''">
-                AND hphm =#{hphm}
+                AND hphm LIKE CONCAT('%', #{hphm}, '%')
             </if>
             <if test="category == 0">
                 AND category = 0
             </if>
             <if test="category == 1">
                 AND category = 1
+            </if>
+            <if test="category == 3">
             </if>
             <if test="vType != null and vType != ''">
                 AND cllxzfl =#{vType}
@@ -54,7 +56,7 @@
                 AND il_type =#{ilType}
             </if>
             <if test="vAddr != null and vAddr != ''">
-                AND ts.site_name =#{vAddr}
+                AND ts.site_name CONCAT('%', #{vAddr}, '%')
             </if>
      ORDER BY occur_time DESC
         LIMIT #{startIndex}, #{amount}

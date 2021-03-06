@@ -11,6 +11,7 @@ import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpRgTrendDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DcHpService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
 import com.zhuanjingkj.stpbe.tmdp.util.FileUtil;
+import org.apache.commons.lang.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.Cursor;
@@ -106,6 +107,9 @@ public class DcHpController {
             @RequestParam(name = "vAddr", required = false) String vAddr,
             HttpServletResponse response
     ) {
+        if(StringUtils.isBlank(category)) {
+            category = "3";
+        }
         List<DcHpDTO> recs = new ArrayList<>();
         String[] columns = {"id", "tvisJsonId", "tvisJsonTbl", "时间", "地址", "车牌号", "类别", "是否违章", "违章类型", "图片地址", "图片下标"};
         Integer allMaxCount = dcHpService.getVehicleCount();
@@ -114,12 +118,12 @@ public class DcHpController {
             for(int i = 0; i < count; i++) {
                 recs.clear();
                 recs = dcHpService.getVehicleData(i *  ROW_MAX_COUNT.intValue(), ROW_MAX_COUNT.intValue(), 1, startTime, endTime, category, vType, ilType, hphm, vAddr);
-                FileExpDTO fed = new FileExpDTO("数据中心" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
+                FileExpDTO fed = new FileExpDTO("数据中心" + DateUtil.getDayOfMonth(LocalDate.now()) + "_" + i ,"数据记录", columns, recs, "D://");
                 FileUtil.export(response, fed);
             }
         } else {
             recs = dcHpService.getVehicleData(0, ROW_MAX_COUNT.intValue(), 1, startTime, endTime, category, vType, ilType, hphm, vAddr);
-            FileExpDTO fed = new FileExpDTO("数据中心" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
+            FileExpDTO fed = new FileExpDTO("数据中心" + DateUtil.getDayOfMonth(LocalDate.now()) + "_" + 0 ,"数据记录", columns, recs, "D://");
             FileUtil.export(response, fed);
         }
     }

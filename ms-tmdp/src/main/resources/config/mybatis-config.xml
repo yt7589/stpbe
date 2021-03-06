@@ -11,4 +11,8 @@
         <mapper resource="mapper/VehicleAnalysisWztzMapper.xml"/>
     </mappers>
     -->
+<!--    <settings>-->
+<!--        &lt;!&ndash; 打印查询语句 &ndash;&gt;-->
+<!--        <setting name="logImpl" value="STDOUT_LOGGING" />-->
+<!--    </settings>-->
 </configuration>

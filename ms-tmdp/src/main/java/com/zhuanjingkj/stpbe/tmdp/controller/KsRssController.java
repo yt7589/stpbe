@@ -118,7 +118,17 @@ public class KsRssController {
 
     @GetMapping(value ="/rss/test")
     public void test(){
-        redisTemplate.opsForHash().increment("ks_vs_lsvs_total",  "hphm" + "|" + "code", 1);
+//       System.out.println(redisTemplate.opsForHash().get("ks_vs_ill_total",  "赣CJKT96|100"));
+//        if (redisTemplate.hasKey("ks_vs_ill_list")) {
+//            redisTemplate.delete("ks_vs_ill_list"); //车辆报警列表删除
+//            redisTemplate.opsForList().rightPushAll("ks_vs_ill_list", "");
+//        }
+//        redisTemplate.opsForList().leftPush("ks_vs_ill_list", "赣CJKT96|100");
+//        redisTemplate.opsForList().leftPush("ks_vs_ill_list", "赣CJKT96|101");
+//        redisTemplate.opsForList().leftPush("ks_vs_ill_list", "赣CJKT96|102");
+//        redisTemplate.opsForList().leftPush("ks_vs_ill_list", "赣CJKT96|103");
+//        redisTemplate.opsForList().leftPush("ks_vs_ill_list", "赣CJKT96|104");
+//        redisTemplate.opsForList().leftPush("ks_vs_ill_list", "赣CJKT96|105");
     }
 
 }
