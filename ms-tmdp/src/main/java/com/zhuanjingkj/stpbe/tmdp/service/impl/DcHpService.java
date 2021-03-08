@@ -2,7 +2,6 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.zhuanjingkj.stpbe.common.mapper.DcHpMapper;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
-import com.zhuanjingkj.stpbe.common.net.IpfsClient;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.DcHpDTO;
@@ -60,7 +59,7 @@ public class DcHpService implements IDcHpService {
     public List<DcHpIlTrendDTO> getDit_exp() {
         List<DcHpIlTrendDTO> dit = new ArrayList<>();
         Map<String, Integer> res30Map = DateUtil.dayFor30Map(30, DateUtil.DTF_NYR);
-        String endTime = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String endTime = LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String startTime = DateUtil.plusDaysForDate(endTime, -29);
         List<Map<String,Object>> recs = dcHpMapper.getVmDitCount(startTime, endTime);
         if(recs != null && recs.size() > 0)  {
