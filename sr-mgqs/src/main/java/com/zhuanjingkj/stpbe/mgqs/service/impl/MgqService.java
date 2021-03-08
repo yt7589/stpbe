@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import sun.awt.windows.ThemeReader;
 
 import java.io.*;
 import java.util.*;
@@ -33,10 +32,10 @@ public class MgqService implements IMgqService {
 
     @Override
     public ResultDTO<BaseDTO> importDclFds() {
-        Thread thd = new Thread(()->{
+        /*Thread thd = new Thread(()->{
             runImportDclFdsThread();
         });
-        thd.start();
+        thd.start();*/
         ResultDTO<BaseDTO> dto = new ResultDTO<>();
         dto.setCode(0);
         dto.setMsg("开始建库 v0.0.2");

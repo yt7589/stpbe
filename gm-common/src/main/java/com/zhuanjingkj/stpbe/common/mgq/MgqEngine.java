@@ -181,6 +181,38 @@ public class MgqEngine {
         }
         System.out.println("MgqEngine.initialize 4: truckCllxfl=" + truckCllxfl + "!");
     }
+    public static void initMgqsMilvus(String milvusServerAddr, short milvusServerPort,
+                                      String collectionName, int reidDim, String tagName) {
+        ConnectParam connectParam = new ConnectParam.Builder().
+                withHost(milvusServerAddr).
+                withPort(milvusServerPort).build();
+        client = new MilvusGrpcClient(connectParam);
+        // 创建Collection
+        if (client.listCollections().contains(collectionName)) {
+            client.dropCollection(collectionName);
+        }
+        logger.info("删除已有Collection");
+        final int dimension = reidDim; // ReID特征向量维数
+        CollectionMapping collectionMapping =
+                CollectionMapping.create(collectionName)
+                        .addField(FLD_CLLXFL, DataType.INT32) // 车辆类型分类
+                        .addField(FLD_CLLXZFL, DataType.INT32) // 车辆类型子分类
+                        .addField(FLD_CSYS, DataType.INT32) // 车身颜色
+                        .addField(FLD_CLPP, DataType.INT32) // 车辆品牌
+                        .addField(FLD_PPCX, DataType.INT32) // 品牌车型
+                        .addField(FLD_CXNK, DataType.INT32) // 车型年款
+                        .addField(FLD_PPXHMS, DataType.INT32) // 品牌型号描述
+                        .addVectorField("embedding", DataType.VECTOR_FLOAT, dimension)
+                        .setParamsInJson("{\"segment_row_limit\": 4096, \"auto_id\": false}");
+        client.createCollection(collectionMapping);
+        // Check the existence of collection
+        if (!client.hasCollection(collectionName)) {
+            throw new AssertionError("创建Collection失败：Collection not found!");
+        }
+        // 生成partition
+        createPartitionMilvus(collectionName, tagName);
+        logger.info("创建分区成功！");
+    }
 
     /**
      * 初始化Milvus系统，创建Collection和Partition，只需要调用一次，

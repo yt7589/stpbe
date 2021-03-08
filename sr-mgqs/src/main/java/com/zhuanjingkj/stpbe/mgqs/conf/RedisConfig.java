@@ -13,12 +13,10 @@ import java.io.Serializable;
 public class RedisConfig {
     @Bean
     public RedisTemplate<String, Serializable> redisTemplate(LettuceConnectionFactory connectionFactory) {
-        System.out.println("?????????????????????????????????????????????????????????");
         RedisTemplate<String, Serializable> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         redisTemplate.setConnectionFactory(connectionFactory);
-        System.out.println("??????? redisTemplate in RedisConfig: " + redisTemplate + "  !???????");
         return redisTemplate;
     }
 }

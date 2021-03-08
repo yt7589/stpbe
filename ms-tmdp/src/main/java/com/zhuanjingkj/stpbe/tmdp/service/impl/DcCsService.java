@@ -36,7 +36,8 @@ public class DcCsService implements IDcCsService {
         }
         embeddinbs.add(embedding);
         String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
-        List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, 9999);
+        long topK = 22; // 以图搜车返回的记录数
+        List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, topK);
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
         List<DcCsDTO> recs = new ArrayList<>();
