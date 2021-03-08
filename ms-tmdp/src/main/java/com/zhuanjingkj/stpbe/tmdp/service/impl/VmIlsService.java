@@ -60,6 +60,7 @@ public class VmIlsService implements IVmIlsService {
     @Override
     public ResultDTO<DbQrsDTO> queryIllegalVehicle_epx(Integer startIndex, Integer amount, Integer direction, String startTime, String endTime,
                                                        Integer category, String vType, String illType, String hphm, String addr) {
+        long start = System.currentTimeMillis();
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         if(direction == 0) {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
@@ -88,6 +89,8 @@ public class VmIlsService implements IVmIlsService {
         data.setRecs(recs);
 
         dto.setData(data);
+        long end = System.currentTimeMillis();
+        System.out.println("违章数据查询时间为:" + (end - start)/1000 + "s");
         return dto;
     }
 

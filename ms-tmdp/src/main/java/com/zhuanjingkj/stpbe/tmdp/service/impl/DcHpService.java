@@ -32,7 +32,9 @@ public class DcHpService implements IDcHpService {
     private DkRtvrMapper dkRtvrMapper;
     @Override
     public ResultDTO<DbQrsDTO> queryAllData_exp(int startIndex, int amount, Integer direction, String startTime,
+
                                                 String endTime, String category, String vType, String ilType, String hphm, String vAddr) {
+        long start = System.currentTimeMillis();
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         if(direction == 0) {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
@@ -52,6 +54,8 @@ public class DcHpService implements IDcHpService {
 //        }
         DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
         dto.setData(data);
+        long end = System.currentTimeMillis();
+        System.out.println("全部数据查询时间queryAllData_exp：" + (end - start)/1000 + "s");
         return dto;
     }
 
