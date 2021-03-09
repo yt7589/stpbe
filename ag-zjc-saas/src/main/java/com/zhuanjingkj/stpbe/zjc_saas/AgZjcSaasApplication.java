@@ -3,6 +3,7 @@ package com.zhuanjingkj.stpbe.zjc_saas;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +24,7 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = MongoAutoConfiguration.class)
 //@EnableFeignClients(basePackages = "com.zhuanjingkj.zjcbe.zjc_saas.fcc")
 @EnableHystrix
 @EnableZuulProxy

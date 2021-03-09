@@ -113,19 +113,24 @@ public class DcHpController {
         List<DcHpDTO> recs = new ArrayList<>();
         String[] columns = {"id", "tvisJsonId", "tvisJsonTbl", "时间", "地址", "车牌号", "类别", "是否违章", "违章类型", "图片地址", "图片下标"};
         Integer allMaxCount = dcHpService.getVehicleCount();
+        String fileName = "数据中心" + DateUtil.getDayOfMonth(LocalDate.now());
+        long count = 1;
         if(allMaxCount > ROW_MAX_COUNT) {
-            long count = allMaxCount/ ROW_MAX_COUNT + 1;
+            count = allMaxCount/ ROW_MAX_COUNT + 1;
             for(int i = 0; i < count; i++) {
                 recs.clear();
                 recs = dcHpService.getVehicleData(i *  ROW_MAX_COUNT.intValue(), ROW_MAX_COUNT.intValue(), 1, startTime, endTime, category, vType, ilType, hphm, vAddr);
-                FileExpDTO fed = new FileExpDTO("数据中心" + DateUtil.getDayOfMonth(LocalDate.now()) + "_" + i ,"数据记录", columns, recs, "D://");
-                FileUtil.export(response, fed);
+                FileExpDTO fed = new FileExpDTO(fileName + "_" + i,"数据记录", columns, recs);
+                FileUtil.export(fed);
             }
         } else {
             recs = dcHpService.getVehicleData(0, ROW_MAX_COUNT.intValue(), 1, startTime, endTime, category, vType, ilType, hphm, vAddr);
-            FileExpDTO fed = new FileExpDTO("数据中心" + DateUtil.getDayOfMonth(LocalDate.now()) + "_" + 0 ,"数据记录", columns, recs, "D://");
-            FileUtil.export(response, fed);
+            FileExpDTO fed = new FileExpDTO(fileName + "_"+ 0,"数据记录", columns, recs);
+            FileUtil.export(fed);
         }
+        FileUtil.doZip(fileName, count);
+        FileUtil.downZip(response, fileName);
+        FileUtil.deleteZip(fileName);
     }
 
     private ResultDTO<DbQrsDTO> queryAllData_exp(int startIndex, int amount, Integer direction, String startTime, String endTime, String category,

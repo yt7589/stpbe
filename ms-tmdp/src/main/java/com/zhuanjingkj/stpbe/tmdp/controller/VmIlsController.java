@@ -154,20 +154,23 @@ public class VmIlsController {
         List<VmIlsDTO> recs = new ArrayList<VmIlsDTO>();
         String[] columns = {"违章编号", "时间", "地点", "车牌号" ,"类别" , "车辆类型", "违章类型编号", "违章类型", "详情"};
         long allMaxCount = vmIlsService.getIlsCount(startTime, endTime, category, vType, illType, hphm, addr);
+        String fileName = "违章监管" + DateUtil.getDayOfMonth(LocalDate.now());
+        long count = allMaxCount/ROW_MAX_COUNT + 1;
         if(allMaxCount > ROW_MAX_COUNT) {
-            long count = allMaxCount/ROW_MAX_COUNT + 1;
             for (long i = 0; i < count; i++) {
                 recs.clear();
                 recs = vmIlsService.getIlsPart(i * ROW_MAX_COUNT, ROW_MAX_COUNT, 1, startTime, endTime, category, vType, illType, hphm, addr );
-                FileExpDTO fed = new FileExpDTO("违章监管" + DateUtil.getDayOfMonth(LocalDate.now()) + "_" + i,"违章记录", columns, recs, "D://");
-                FileUtil.export(response, fed);
+                FileExpDTO fed = new FileExpDTO(fileName + "_" + i,"违章记录", columns, recs);
+                FileUtil.export(fed);
             }
         } else {
             recs = vmIlsService.getIlsPart(0, ROW_MAX_COUNT, 1, startTime, endTime, category, vType, illType, hphm, addr );
-            FileExpDTO fed = new FileExpDTO("违章监管" + DateUtil.getDayOfMonth(LocalDate.now()) + "_" + 0,"违章记录", columns, recs, "D://");
-            FileUtil.export(response, fed);
+            FileExpDTO fed = new FileExpDTO(fileName + "_0","违章记录", columns, recs);
+            FileUtil.export(fed);
         }
-
+        FileUtil.doZip(fileName, count);
+        FileUtil.downZip(response, fileName);
+        FileUtil.deleteZip(fileName);
     }
 
     /**
@@ -180,19 +183,23 @@ public class VmIlsController {
         List<VmIlsVhsDTO> recs = new ArrayList<>();
         Integer allMaxCount = vmIlsService.getVIlsHistory(hphm);
         String[] columns = {"违章编号", "时间", "地点", "违章类型", "详情"};
+        String fileName = "违章监管" + DateUtil.getDayOfMonth(LocalDate.now());
+        long count = allMaxCount/ ROW_MAX_COUNT + 1;
         if(allMaxCount > ROW_MAX_COUNT) {
-            long count = allMaxCount/ ROW_MAX_COUNT + 1;
             for(int i = 0; i < count; i++) {
                 recs.clear();
                 recs = vmIlsService.queryIlsVehicleHistoric(hphm, i *  ROW_MAX_COUNT.intValue(), ROW_MAX_COUNT.intValue());
-                FileExpDTO fed = new FileExpDTO("违章监管" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
-                FileUtil.export(response, fed);
+                FileExpDTO fed = new FileExpDTO("违章监管" + fileName + "_" + i,"违章记录", columns, recs);
+                FileUtil.export(fed);
             }
         } else {
             recs = vmIlsService.queryIlsVehicleHistoric(hphm, 0, ROW_MAX_COUNT.intValue());
-            FileExpDTO fed = new FileExpDTO("违章监管" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
-            FileUtil.export(response, fed);
+            FileExpDTO fed = new FileExpDTO("违章监管" +fileName + "_0","违章记录", columns, recs);
+            FileUtil.export(fed);
         }
+        FileUtil.doZip(fileName, count);
+        FileUtil.downZip(response, fileName);
+        FileUtil.deleteZip(fileName);
     }
     /**
      * 违章分类统计

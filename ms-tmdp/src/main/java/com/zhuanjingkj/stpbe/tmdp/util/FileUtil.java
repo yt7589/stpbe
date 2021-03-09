@@ -2,24 +2,29 @@ package com.zhuanjingkj.stpbe.tmdp.util;
 
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.tmdp.dto.FileExpDTO;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.util.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyDescriptor;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class FileUtil {
 
-    public static void export(HttpServletResponse response, FileExpDTO fileExp) {
+    private static final String path = PropUtil.getValue("stp.excel.path");
+
+    public static void export(FileExpDTO fileExp) {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet(fileExp.getTitle());
         HSSFRow row = sheet.createRow(0);
@@ -66,7 +71,6 @@ public class FileUtil {
                     PropertyDescriptor pd = new PropertyDescriptor(field.getName(), clss);
                     Method getMethod = pd.getReadMethod();
                     Object o1 = getMethod.invoke(obj);
-//                    System.out.println("字段名称："+field.getName() + " 字段值： "+o1);
                     cell1.setCellStyle(dataStyle);
                     cell1.setCellValue(o1 + "");
                 } catch (Exception e) {
@@ -75,34 +79,79 @@ public class FileUtil {
                 column ++;
             }
         }
-//        try {
-//            //指定文件导出的路径
-//            workbook.write(new File(fileExp.getPath() + "//" + fileExp.getFileName() + ".xls"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        OutputStream os = null;
         try {
-            os = response.getOutputStream();
-            response.setContentType("application/x-download");
-            response.setCharacterEncoding("UTF-8");
-            response.setHeader("Content-disposition", "attachment;filename=" + new String(fileExp.getFileName().getBytes(), "ISO8859-1") + ".xls");
-            workbook.write(os);
-            os.flush();
-        }catch (Exception e) {
+            //指定文件导出的路径
+//            workbook.write(new File(fileExp.getPath() + "//" + fileExp.getFileName() + ".xls"));
+            workbook.write(new File(path + fileExp.getFileName() + ".xls"));
+        } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if(os!=null){
-                try {
-                    os.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            System.out.println("已导出" + fileExp.getList().size() + "条数据！" );
         }
     }
 
+    /**
+     * excel打包
+     * @param fileName
+     */
+    public static void doZip(String fileName, long count) {
+       try {
+           ZipOutputStream out = new ZipOutputStream(new FileOutputStream(path + fileName + ".zip"));
+           if (count > 0) {
+               for (int i = 0; i < count; i++) {
+                    FileInputStream in = new FileInputStream(new File(path + fileName + "_" + i +".xls"));
+                    BufferedInputStream bis = new BufferedInputStream(in);
+                    byte[] bytes = new byte[1024];
+                    out.putNextEntry(new ZipEntry(fileName + "_" + i +".xls"));// 将文件夹放入zip中
+                    int bt;
+                    while ((bt = bis.read(bytes)) > 0) {
+                        out.write(bytes, 0, bt);
+                    }
+                    if (bis != null) {
+                        bis.close();
+                    }
+                    if (in != null) {
+                        in.close();
+                    }
+               }
+           }
+           out.closeEntry();// 关闭zip文件中之前打开的项
+           out.close();
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+    }
+
+    public static void deleteZip(String fileName) {
+        File file = new File(path + fileName + ".zip");
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
+    public static void downZip(HttpServletResponse response, String fileName) {
+        String epath = path + fileName + ".zip";
+        fileName = fileName + ".zip";
+        File file = new File(epath);
+        FileInputStream fis;
+        try {
+            fis = new FileInputStream(file);
+            byte[] bf = new byte[fis.available()];
+            fis.read(bf);
+            fis.close();
+            response.reset();
+            response.setHeader("Content-disposition", "attachment;filename= "+ URLEncoder.encode(fileName, "utf-8"));
+            response.addHeader("Content-Length", "" + file.length());
+            OutputStream out = new BufferedOutputStream(response.getOutputStream());
+            response.addHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Expose-Headers", "*");
+            response.setContentType("application/octet-stream;charset=UTF-8");
+            out.write(bf);
+            IOUtils.closeQuietly(out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 图片上传
      * @param file

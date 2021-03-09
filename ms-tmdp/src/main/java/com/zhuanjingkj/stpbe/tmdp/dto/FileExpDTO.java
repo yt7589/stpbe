@@ -18,12 +18,11 @@ public class FileExpDTO extends BaseDTO {
     @JSONField(name = "path")
     private String path;
 
-    public FileExpDTO(String fileName, String title, String[] columns, List<?> list, String path) {
+    public FileExpDTO(String fileName, String title, String[] columns, List<?> list) {
         this.fileName = fileName;
         this.title = title;
         this.columns = columns;
         this.list = Arrays.asList(list.toArray());;
-        this.path = path;
     }
 
     public String getFileName() {

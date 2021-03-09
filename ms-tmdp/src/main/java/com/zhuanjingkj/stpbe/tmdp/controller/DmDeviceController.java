@@ -64,8 +64,8 @@ public class DmDeviceController {
     public void export(HttpServletResponse response) {
         String[] columns = {"设备编号", "城市编号", "城市名称", "设备类型", "所属节点", "设备朝向", "车辆方向", "视频流地址"};
         List<DmDeviceDTO> recs = new ArrayList<>();
-        FileExpDTO fed = new FileExpDTO("设备列表" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs, "D://");
-        FileUtil.export(response, fed);
+        FileExpDTO fed = new FileExpDTO("设备列表" + DateUtil.getDayOfMonth(LocalDate.now()),"违章记录", columns, recs);
+        FileUtil.export(fed);
     }
 
     /**
