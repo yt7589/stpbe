@@ -152,7 +152,7 @@ public class VmIlsController {
             @RequestParam(name = "hphm", required = false) String hphm,
             @RequestParam(name = "addr", required = false) String addr){
         List<VmIlsDTO> recs = new ArrayList<VmIlsDTO>();
-        String[] columns = {"违章编号", "时间", "地点", "车牌号" ,"类别" , "车辆类型", "违章类型编号", "违章类型", "详情"};
+        String[] columns = {"tvisJsonId", "表名", "违章ID", "违章时间", "违章地点", "车牌号码", "类别", "车辆类型", "违章原因", "图片id", "图片路径", "vehIdx"};
         long allMaxCount = vmIlsService.getIlsCount(startTime, endTime, category, vType, illType, hphm, addr);
         String fileName = "违章监管" + DateUtil.getDayOfMonth(LocalDate.now());
         long count = allMaxCount/ROW_MAX_COUNT + 1;
@@ -182,7 +182,7 @@ public class VmIlsController {
             @RequestParam(name = "hphm", required = false) String hphm){
         List<VmIlsVhsDTO> recs = new ArrayList<>();
         Integer allMaxCount = vmIlsService.getVIlsHistory(hphm);
-        String[] columns = {"违章编号", "时间", "地点", "违章类型", "详情"};
+        String[] columns = {"tvisJsonId", "表名", "违章ID", "时间", "地点", "车牌号", ""};
         String fileName = "违章监管" + DateUtil.getDayOfMonth(LocalDate.now());
         long count = allMaxCount/ ROW_MAX_COUNT + 1;
         if(allMaxCount > ROW_MAX_COUNT) {
