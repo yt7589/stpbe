@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -187,6 +188,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             }
             List<String> ksvcHphm = ksVcMapper.getKsvcHphm();
             if (ksvcHphm.contains(hphm)) {
+                System.out.println("布控车辆违章报警车牌号：" + hphm);
                 //布控违章记录统计同一辆车在同一个设备下通过的次数
                 redisTemplate.opsForHash().increment("ks_vs_ill_total",  hphm + "|" + code, 1);
                 redisTemplate.opsForHash().put("ks_vs_ill_time", hphm + "|" + code, date);
@@ -246,5 +248,4 @@ public class DkRtvrObserver implements ITvisStpObserver {
                 vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
                 psfx, vo.getVehicleWztzVo().getClwz(), wzlx, vType, category, tblName, date);
     }
-
 }
