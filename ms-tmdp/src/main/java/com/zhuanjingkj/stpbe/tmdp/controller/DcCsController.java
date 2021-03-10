@@ -28,7 +28,7 @@ public class DcCsController {
      * @param endTime
      * @return
      */
-    @PostMapping(value = "/cs/queryVehicle")
+    @GetMapping(value = "/cs/queryVehicle")
     public String queryVehicle(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
