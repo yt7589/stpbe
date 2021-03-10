@@ -42,6 +42,7 @@ public class DcCsController {
                                @RequestParam(name = "amount", required = false) int amount*/
     ) {
         long t1 = System.currentTimeMillis();
+        System.out.println("joReq:" + joReq.toString() + "!");
         String platform = joReq.getString("p");
         String version = joReq.getString("v");
         String cltzxl = joReq.getString("cltzxl");
