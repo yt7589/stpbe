@@ -4,6 +4,7 @@ import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcCsDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.DcCsService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,28 +23,37 @@ public class DcCsController {
 
     /**
      * 以图搜车
-     * @param platform
-     * @param version
-     * @param startTime
-     * @param endTime
      * @return
      */
     @PostMapping(value = "/cs/queryVehicle")
-    public String queryVehicle(
+    public String queryVehicle(@RequestBody JSONObject joReq
+    /*public String queryVehicle(
         @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestParam(name = "cltzxl", required = true) String cltzxl,
-        @RequestParam(name = "psfx", required = true) String psfx,
-        @RequestParam(name = "cllxfl", required = true) String cllxfl,
-        @RequestParam(name = "cllxzfl", required = true) String cllxzfl,
-        @RequestParam(name = "startDate", required = false) String startDate,
-        @RequestParam(name = "endDate", required = false) String endDate,
-        @RequestParam(name = "startTime", required = false) String startTime,
-        @RequestParam(name = "endTime", required = false) String endTime,
-        @RequestParam(name = "startIndex", required = false) int startIndex,
-        @RequestParam(name = "amount", required = false) int amount
+                               @RequestParam(name = "v") String version,
+                               @RequestParam(name = "cltzxl", required = true) String cltzxl,
+                               @RequestParam(name = "psfx", required = true) String psfx,
+                               @RequestParam(name = "cllxfl", required = true) String cllxfl,
+                               @RequestParam(name = "cllxzfl", required = true) String cllxzfl,
+                               @RequestParam(name = "startDate", required = false) String startDate,
+                               @RequestParam(name = "endDate", required = false) String endDate,
+                               @RequestParam(name = "startTime", required = false) String startTime,
+                               @RequestParam(name = "endTime", required = false) String endTime,
+                               @RequestParam(name = "startIndex", required = false) int startIndex,
+                               @RequestParam(name = "amount", required = false) int amount*/
     ) {
         long t1 = System.currentTimeMillis();
+        String platform = joReq.getString("p");
+        String version = joReq.getString("v");
+        String cltzxl = joReq.getString("cltzxl");
+        String psfx = joReq.getString("psfx");
+        String cllxfl = joReq.getString("cllxfl");
+        String cllxzfl = joReq.getString("cllxzfl");
+        String startDate = "";
+        String endDate = "";
+        String startTime = "";
+        String endTime = "";
+        int startIndex = joReq.getInt("startIndex");
+        int amount = joReq.getInt("amount");
         System.out.println("ms-tmdp::DcCsController.queryVehicle 1");
         ResultDTO<DbQrsDTO> rst = dcCsService.queryVehicleByGraph(cltzxl, psfx, cllxfl, cllxzfl, startDate,
                 endDate, startTime, endTime, startIndex, amount);
