@@ -238,17 +238,17 @@ public class SmDcService implements ISmDcService {
 
         if (redisTemplate.hasKey("ks_ksvrp_images")) { //本日重点监管车辆实时图片
             redisTemplate.delete("ks_ksvrp_images");
-            redisTemplate.opsForList().rightPushAll("ks_ksvrp_images","", "");
+//            redisTemplate.opsForList().rightPushAll("ks_ksvrp_images","", "");
         }
 
         if (redisTemplate.hasKey("dk_htfs_week")) {
             redisTemplate.delete("dk_htfs_week");
-            redisTemplate.opsForList().rightPushAll("dk_htfs_week",0,0,0,0,0,0);
+//            redisTemplate.opsForList().rightPushAll("dk_htfs_week",0,0,0,0,0,0);
         }
 
         if (redisTemplate.hasKey("ks_rss_lsvs_list")) {  //路段监管监控动态列表
             redisTemplate.delete("ks_rss_lsvs_list");
-            redisTemplate.opsForList().rightPushAll("ks_rss_lsvs_list","0");
+//            redisTemplate.opsForList().rightPushAll("ks_rss_lsvs_list","0");
         }
 
         if (redisTemplate.hasKey("ks_lps_time")) { // 车牌异常分时段统计
@@ -258,7 +258,7 @@ public class SmDcService implements ISmDcService {
 
         if (redisTemplate.hasKey("ks_as_lsvs_list")) { //区域监管监控动态列表
             redisTemplate.delete("ks_as_lsvs_list");
-            redisTemplate.opsForList().rightPushAll("ks_as_lsvs_list","0");
+//            redisTemplate.opsForList().rightPushAll("ks_as_lsvs_list","0");
         }
 
         if (redisTemplate.hasKey("dk_vttf_lcar")) { //车辆类型流量(大型车)
@@ -283,12 +283,12 @@ public class SmDcService implements ISmDcService {
 
         if (redisTemplate.hasKey("ks_vs_dyn_list")) {
             redisTemplate.delete("ks_vs_dyn_list"); //车辆布控动态列表删除
-            redisTemplate.opsForList().rightPushAll("ks_vs_dyn_list", "");
+//            redisTemplate.opsForList().rightPushAll("ks_vs_dyn_list", "");
         }
 
         if (redisTemplate.hasKey("ks_vs_ill_list")) {
             redisTemplate.delete("ks_vs_ill_list"); //车辆报警列表删除
-            redisTemplate.opsForList().rightPushAll("ks_vs_ill_list", "");
+//            redisTemplate.opsForList().rightPushAll("ks_vs_ill_list", "");
         }
 
         //hash
