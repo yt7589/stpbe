@@ -87,7 +87,9 @@ public class AgzsService implements IAgzsService {
         cmd.append("cllxzfl=" + cllxzfl + "&");
         cmd.append("startIndex=" + startIndex + "&");
         cmd.append("amount=" + amount);*/
-        return restTemplate.postForObject("http://ms-tmdp/" + cmd.toString(), params, String.class);
+        String agResp = restTemplate.postForObject("http://ms-tmdp/" + cmd.toString(), params, String.class);
+        System.out.println("agService Resp:" + agResp + "!");
+        return agResp;
     }
     public String defaultQueryVehicle(
             String platform,
