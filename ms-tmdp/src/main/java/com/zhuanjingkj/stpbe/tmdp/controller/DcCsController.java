@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Data Center =》 Car Search
@@ -26,7 +27,7 @@ public class DcCsController {
      * @return
      */
     @PostMapping(value = "/cs/queryVehicle")
-    public String queryVehicle(@RequestBody JSONObject joReq
+    public String queryVehicle(@RequestBody Map<String, Object> joReq
     /*public String queryVehicle(
         @RequestParam(name = "p") String platform,
                                @RequestParam(name = "v") String version,
@@ -43,18 +44,18 @@ public class DcCsController {
     ) {
         long t1 = System.currentTimeMillis();
         System.out.println("joReq:" + joReq.toString() + "!");
-        String platform = joReq.getString("p");
-        String version = joReq.getString("v");
-        String cltzxl = joReq.getString("cltzxl");
-        String psfx = joReq.getString("psfx");
-        String cllxfl = joReq.getString("cllxfl");
-        String cllxzfl = joReq.getString("cllxzfl");
+        String platform = (String)joReq.get("p");
+        String version = (String)joReq.get("v");
+        String cltzxl = (String)joReq.get("cltzxl");
+        String psfx = (String)joReq.get("psfx");
+        String cllxfl = (String)joReq.get("cllxfl");
+        String cllxzfl = (String)joReq.get("cllxzfl");
         String startDate = "";
         String endDate = "";
         String startTime = "";
         String endTime = "";
-        int startIndex = joReq.getInt("startIndex");
-        int amount = joReq.getInt("amount");
+        int startIndex = (int)joReq.get("startIndex");
+        int amount = (int)joReq.get("amount");
         System.out.println("ms-tmdp::DcCsController.queryVehicle 1");
         ResultDTO<DbQrsDTO> rst = dcCsService.queryVehicleByGraph(cltzxl, psfx, cllxfl, cllxzfl, startDate,
                 endDate, startTime, endTime, startIndex, amount);
