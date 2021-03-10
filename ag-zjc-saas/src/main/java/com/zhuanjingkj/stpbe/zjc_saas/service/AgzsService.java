@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class AgzsService implements IAgzsService {
     @Autowired
@@ -62,7 +65,20 @@ public class AgzsService implements IAgzsService {
             int startIndex,
             int amount) {
         System.out.println("ag-zjc-saas.AgzsService.queryVehicle ...");
-        return restTemplate.getForObject("http://ms-tmdp/" + "dc/cs/queryVehicle", String.class);
+        Map<String, Object> params = new HashMap<>();
+        params.put("p", platform);
+        params.put("v", version);
+        params.put("cltzxl", cltzxl);
+        params.put("psfx", psfx);
+        params.put("cllxfx", cllxfl);
+        params.put("cllxzfl", cllxzfl);
+        params.put("startDate", startDate);
+        params.put("endDate", endDate);
+        params.put("startTime", startTime);
+        params.put("endTime", endTime);
+        params.put("startIndex", startIndex);
+        params.put("amount", amount);
+        return restTemplate.postForObject("http://ms-tmdp/" + "dc/cs/queryVehicle", params, String.class);
     }
     public String defaultQueryVehicle(
             String platform,
