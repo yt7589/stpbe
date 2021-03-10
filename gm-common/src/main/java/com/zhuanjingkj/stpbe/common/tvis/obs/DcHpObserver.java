@@ -57,7 +57,7 @@ public class DcHpObserver implements ITvisStpObserver {
          * cameraId = -1 时需要根据streamId查找正确的cameraId
          */
         String code = "";
-        if(cameraId == -1) {
+        if (cameraId == -1) {
             long streamId = vo.getStreamId();
             String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
             if(StringUtils.isNotBlank(newCameraId)) {
@@ -66,56 +66,58 @@ public class DcHpObserver implements ITvisStpObserver {
         } else {
             code = cameraId +"";
         }
-        if(isViolation(vo.getVehicleJsxwtzVO().getZjsddh())) {
+        String zjsddh = vo.getVehicleJsxwtzVO().getZjsddh();
+        if (StringUtils.isNotBlank(zjsddh) && isViolation(zjsddh)) {
             ilType = "ZJSDDH";
             isIl = "1";
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
-        if(isViolation(vo.getVehicleJsxwtzVO().getFjsbjaqd())) {
-            ilType = "FJSBJAQD";
+        String fjsbjaqd = vo.getVehicleJsxwtzVO().getFjsbjaqd();
+        if (StringUtils.isNotBlank(fjsbjaqd) && isViolation(fjsbjaqd)) {
             isIl = "1";
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
-        if(isViolation(vo.getVehicleJsxwtzVO().getFjszyb())) {
-            ilType = "FJSZYB";
+        String fjszyb = vo.getVehicleJsxwtzVO().getFjszyb();
+        if (StringUtils.isNotBlank(fjszyb) && isViolation(fjszyb)) {
             isIl = "1";
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
-        if(isViolation(vo.getVehicleJsxwtzVO().getZjsbjaqd())) {
-            ilType = "ZJSBJAQD";
+        String zjsbjaqd = vo.getVehicleJsxwtzVO().getZjsbjaqd();
+        if (StringUtils.isNotBlank(zjsbjaqd) && isViolation(zjsbjaqd)) {
             isIl = "1";
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
-        if(isViolation(vo.getVehicleJsxwtzVO().getZjscy())) {
-            ilType = "ZJSCY";
+        String zjscy = vo.getVehicleJsxwtzVO().getZjscy();
+        if (StringUtils.isNotBlank(zjscy) && isViolation(zjscy)) {
             isIl = "1";
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
-        if(isViolation(vo.getVehicleJsxwtzVO().getZjsksj())) {
-            ilType = "ZJSKSJ";
+        String zjsksj = vo.getVehicleJsxwtzVO().getZjsksj();
+        if (StringUtils.isNotBlank(zjsksj) && isViolation(zjsksj)) {
             isIl = "1";
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
-        if(isViolation(vo.getVehicleJsxwtzVO().getZjszyb())) {
-            ilType = "ZJSZYB";
+        String zjszyb = vo.getVehicleJsxwtzVO().getZjszyb();
+        if (StringUtils.isNotBlank(zjszyb) && isViolation(zjszyb)) {
             isIl = "1";
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
-        if(isViolation(vo.getVehicleJsxwtzVO().getMtcbdtk())) {
+        String mtcbdtk = vo.getVehicleJsxwtzVO().getMtcbdtk();
+        if (StringUtils.isNotBlank(mtcbdtk) && isViolation(mtcbdtk)) {
             ilType = "MTCBDTK";
             isIl = "1";
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
@@ -123,7 +125,7 @@ public class DcHpObserver implements ITvisStpObserver {
             violation(category);
         }
 
-        if("0".equals(isIl)) {
+        if ("0".equals(isIl)) {
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
         }
@@ -132,7 +134,7 @@ public class DcHpObserver implements ITvisStpObserver {
         redisTemplate.opsForZSet().incrementScore("tn_vs_site_vehicle", code, 1);
         Integer index = LocalDateTime.now().getHour();
         String tnVsTrend = "tn_vs_trend_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        if(!redisTemplate.hasKey(tnVsTrend)) {
+        if (!redisTemplate.hasKey(tnVsTrend)) {
             redisTemplate.opsForList().rightPushAll(tnVsTrend, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         }
         Integer count = (int)(redisTemplate.opsForList().index(tnVsTrend,index));
@@ -143,17 +145,13 @@ public class DcHpObserver implements ITvisStpObserver {
     public void initialize(Environment env) {
 
     }
-
-    private static boolean isViolation(String str) {
-        boolean flag = false;
-        if(StringUtils.isNotBlank(str)) {
-            String state = str.split("_")[0];
-            String rb = str.split("_")[1];
-            if("1".equals(state) && "80".compareTo(rb) == -1) { //违章
-               flag = true;
-            }
-        }
-        return flag;
+    /**
+     * 驾驶行为
+     * @param jsxw
+     * @return
+     */
+    private boolean isViolation(String jsxw) {
+        return Integer.parseInt(StringUtils.isNotBlank(jsxw.replace("_", "")) ? jsxw.replace("_", "") : "0") >= 180;
     }
 
     private void  insertItfVehicle(DcHpDTO dcHpDTO, long tvisJsonId, String tvisJsonTbl, String cllxzfl) {
@@ -162,9 +160,9 @@ public class DcHpObserver implements ITvisStpObserver {
 
     private void violation(String category) {
         redisTemplate.opsForValue().increment("dchp_vehicle_violation"); //车辆违章数量
-        if("0".equals(category)) {
+        if ("0".equals(category)) {
             redisTemplate.opsForValue().increment("dchp_vehicle_0_violation"); //本市车辆违章数量
-        } else if("1".equals(category)) {
+        } else if ("1".equals(category)) {
             redisTemplate.opsForValue().increment("dchp_vehicle_1_violation"); //外埠车辆违章数量
         }
     }
