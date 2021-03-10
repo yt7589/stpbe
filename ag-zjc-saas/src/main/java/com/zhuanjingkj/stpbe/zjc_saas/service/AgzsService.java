@@ -18,16 +18,16 @@ public class AgzsService implements IAgzsService {
                 String.class);
     }
 
-    @HystrixCommand(fallbackMethod = "defaultCallGetContacts", commandProperties = {
-            @HystrixProperty(
-                    name="execution.isolation.strategy",
-                    value="THREAD"
-            ),
-            @HystrixProperty(
-                    name="execution.isolation.thread.timeoutInMilliseconds",
-                    value="1000"
-            )
-    })
+//    @HystrixCommand(fallbackMethod = "defaultCallGetContacts", commandProperties = {
+//            @HystrixProperty(
+//                    name="execution.isolation.strategy",
+//                    value="THREAD"
+//            ),
+//            @HystrixProperty(
+//                    name="execution.isolation.thread.timeoutInMilliseconds",
+//                    value="1000"
+//            )
+//    })
     @Override
     public String callGetContacts() {
         return restTemplate.getForObject("http://ms-system-info/" +
