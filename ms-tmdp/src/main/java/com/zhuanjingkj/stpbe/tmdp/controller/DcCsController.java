@@ -29,7 +29,7 @@ public class DcCsController {
      * @return
      */
     @PostMapping(value = "/cs/queryVehicle")
-    public ResultDTO<DbQrsDTO> queryVehicle(
+    public String queryVehicle(
         @RequestParam(name = "p") String platform,
         @RequestParam(name = "v") String version,
         @RequestParam(name = "cltzxl", required = true) String cltzxl,
@@ -43,7 +43,12 @@ public class DcCsController {
         @RequestParam(name = "startIndex", required = false) int startIndex,
         @RequestParam(name = "amount", required = false) int amount
     ) {
-        return dcCsService.queryVehicleByGraph(cltzxl, psfx, cllxfl, cllxzfl, startDate,
+        long t1 = System.currentTimeMillis();
+        System.out.println("ms-tmdp::DcCsController.queryVehicle 1");
+        ResultDTO<DbQrsDTO> rst = dcCsService.queryVehicleByGraph(cltzxl, psfx, cllxfl, cllxzfl, startDate,
                 endDate, startTime, endTime, startIndex, amount);
+        long diff = System.currentTimeMillis() - t1;
+        System.out.println("runtime: " + diff + "!");
+        return rst.toString();
     }
 }
