@@ -18,23 +18,26 @@ public class AgzsService implements IAgzsService {
                 String.class);
     }
 
-//    @HystrixCommand(fallbackMethod = "defaultCallGetContacts", commandProperties = {
-//            @HystrixProperty(
-//                    name="execution.isolation.strategy",
-//                    value="THREAD"
-//            ),
-//            @HystrixProperty(
-//                    name="execution.isolation.thread.timeoutInMilliseconds",
-//                    value="1000"
-//            )
-//    })
+    @HystrixCommand(fallbackMethod = "defaultCallGetContacts", commandProperties = {
+            @HystrixProperty(
+                    name="execution.isolation.strategy",
+                    value="THREAD"
+            ),
+            @HystrixProperty(
+                    name="execution.isolation.thread.timeoutInMilliseconds",
+                    value="1000"
+            )
+    })
     @Override
     public String callGetContacts() {
         return restTemplate.getForObject("http://ms-system-info/" +
                 "systemInfo/getContacts", String.class);
     }
+    public String defaultCallGetContacts() {
+        return "缺省响应001";
+    }
 
-    @HystrixCommand(fallbackMethod = "defaultCallGetContacts", commandProperties = {
+    @HystrixCommand(fallbackMethod = "defaultQueryVehicle", commandProperties = {
             @HystrixProperty(
                     name="execution.isolation.strategy",
                     value="THREAD"
@@ -61,8 +64,19 @@ public class AgzsService implements IAgzsService {
         System.out.println("ag-zjc-saas.AgzsService.queryVehicle ...");
         return restTemplate.getForObject("http://ms-tmdp/" + "dc/cs/queryVehicle", String.class);
     }
-
-    public String defaultCallGetContacts() {
-        return "缺省响应001";
+    public String defaultQueryVehicle(
+            String platform,
+            String version,
+            String cltzxl,
+            String psfx,
+            String cllxfl,
+            String cllxzfl,
+            String startDate,
+            String endDate,
+            String startTime,
+            String endTime,
+            int startIndex,
+            int amount) {
+        return "";
     }
 }
