@@ -33,6 +33,12 @@ public class AgzsService implements IAgzsService {
         return restTemplate.getForObject("http://ms-system-info/" +
                 "systemInfo/getContacts", String.class);
     }
+
+    @Override
+    public String queryVehicle() {
+        return null;
+    }
+
     public String defaultCallGetContacts() {
         return "缺省响应001";
     }
