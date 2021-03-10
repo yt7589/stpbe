@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcCsDTO;
@@ -60,8 +61,8 @@ public class DcCsController {
         ResultDTO<DbQrsDTO> rst = dcCsService.queryVehicleByGraph(cltzxl, psfx, cllxfl, cllxzfl, startDate,
                 endDate, startTime, endTime, startIndex, amount);
         long diff = System.currentTimeMillis() - t1;
-        String resp = JSONObject.valueToString(rst);
-        System.out.println("runtime: " + diff + "! rst=" + resp + "!!!!!!!");
+        String resp = JSON.toJSONString(rst);
+        System.out.println("runtime: " + diff + "! v0.0.1 resp=" + resp + "!!!!!!!");
         return resp;
     }
 }
