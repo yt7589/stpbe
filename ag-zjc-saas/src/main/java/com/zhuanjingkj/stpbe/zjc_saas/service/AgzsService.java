@@ -47,7 +47,7 @@ public class AgzsService implements IAgzsService {
            ),
             @HystrixProperty(
                     name="execution.isolation.thread.timeoutInMilliseconds",
-                    value="1000"
+                    value="100000"
             )
     })
     @Override
