@@ -78,7 +78,16 @@ public class AgzsService implements IAgzsService {
         params.put("endTime", endTime);
         params.put("startIndex", startIndex);
         params.put("amount", amount);
-        return restTemplate.postForObject("http://ms-tmdp/" + "dc/cs/queryVehicle", params, String.class);
+        StringBuilder cmd = new StringBuilder("dc/cs/queryVehicle?");
+        cmd.append("p=" + platform + "&");
+        cmd.append("v=" + version + "&");
+        cmd.append("cltzxl=" + cltzxl + "&");
+        cmd.append("psfx=" + psfx + "&");
+        cmd.append("cllxfl=" + cllxfl + "&");
+        cmd.append("cllxzfl=" + cllxzfl + "&");
+        cmd.append("startIndex=" + startIndex + "&");
+        cmd.append("amount=" + amount);
+        return restTemplate.getForObject("http://ms-tmdp/" + cmd.toString(), String.class);
     }
     public String defaultQueryVehicle(
             String platform,
