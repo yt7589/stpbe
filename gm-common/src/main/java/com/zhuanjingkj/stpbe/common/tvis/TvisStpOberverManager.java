@@ -41,6 +41,8 @@ public class TvisStpOberverManager {
     private DcHpObserver dcHpObserver; //数据中心全部数据
 
     public void initialize(List<ITvisStpObserver> observers, Environment environment) {
+        dcHpObserver.initialize(environment);
+        observers.add(dcHpObserver);
         cltzxlObserver.initialize(environment);
         observers.add(cltzxlObserver);
         dkVtieObserver.initialize(environment);
@@ -69,7 +71,5 @@ public class TvisStpOberverManager {
         observers.add(ksAsObserver);
         ksRssObserver.initialize(environment);
         observers.add(ksRssObserver);
-        dcHpObserver.initialize(environment);
-        observers.add(dcHpObserver);
     }
 }
