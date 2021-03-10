@@ -60,7 +60,8 @@ public class DcCsController {
         ResultDTO<DbQrsDTO> rst = dcCsService.queryVehicleByGraph(cltzxl, psfx, cllxfl, cllxzfl, startDate,
                 endDate, startTime, endTime, startIndex, amount);
         long diff = System.currentTimeMillis() - t1;
-        System.out.println("runtime: " + diff + "! rst=" + rst + "!!!!!!!");
-        return rst.toString();
+        String resp = JSONObject.valueToString(rst);
+        System.out.println("runtime: " + diff + "! rst=" + resp + "!!!!!!!");
+        return resp;
     }
 }
