@@ -41,7 +41,7 @@ public class DcHpObserver implements ITvisStpObserver {
         String hphm = vo.getVehicleHptzVO().getHphm();
         long cameraId = vo.getCameraId();
         String ilType = "";
-        String isIl = "0";
+        Integer isIl = 0;
         String cllxzfl = vo.getVehicleCxtzVo().getCllxzflCode();
         long tvisJsonId = vo.getTvisJsonId();
         String tblName = AppRegistry.tvisJsonTblName;
@@ -69,64 +69,64 @@ public class DcHpObserver implements ITvisStpObserver {
         String zjsddh = vo.getVehicleJsxwtzVO().getZjsddh();
         if (StringUtils.isNotBlank(zjsddh) && isViolation(zjsddh)) {
             ilType = "ZJSDDH";
-            isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
+            isIl = 1;
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         String fjsbjaqd = vo.getVehicleJsxwtzVO().getFjsbjaqd();
         if (StringUtils.isNotBlank(fjsbjaqd) && isViolation(fjsbjaqd)) {
-            isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
+            isIl = 1;
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         String fjszyb = vo.getVehicleJsxwtzVO().getFjszyb();
         if (StringUtils.isNotBlank(fjszyb) && isViolation(fjszyb)) {
-            isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
+            isIl = 1;
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         String zjsbjaqd = vo.getVehicleJsxwtzVO().getZjsbjaqd();
         if (StringUtils.isNotBlank(zjsbjaqd) && isViolation(zjsbjaqd)) {
-            isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
+            isIl = 1;
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         String zjscy = vo.getVehicleJsxwtzVO().getZjscy();
         if (StringUtils.isNotBlank(zjscy) && isViolation(zjscy)) {
-            isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
+            isIl = 1;
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         String zjsksj = vo.getVehicleJsxwtzVO().getZjsksj();
         if (StringUtils.isNotBlank(zjsksj) && isViolation(zjsksj)) {
-            isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
+            isIl = 1;
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         String zjszyb = vo.getVehicleJsxwtzVO().getZjszyb();
         if (StringUtils.isNotBlank(zjszyb) && isViolation(zjszyb)) {
-            isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
+            isIl = 1;
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
         String mtcbdtk = vo.getVehicleJsxwtzVO().getMtcbdtk();
         if (StringUtils.isNotBlank(mtcbdtk) && isViolation(mtcbdtk)) {
             ilType = "MTCBDTK";
-            isIl = "1";
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
+            isIl = 1;
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
 
-        if ("0".equals(isIl)) {
-            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
+        if (isIl == 0) {
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
         }
         System.out.println("识别车辆子分类cllxzfl：" + cllxzfl + "; 违章类型：" + dcHpDTO.getIlType());
