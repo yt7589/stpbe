@@ -12,7 +12,7 @@
         <result column="isIl" property="isIl" jdbcType="VARCHAR"/>
         <result column="ilType" property="ilType" jdbcType="VARCHAR"/>
     </resultMap>
-    <insert id="insertItfVehicle">
+    <insert id ="insertItfVehicle">
         INSERT INTO t_itf_vehicle(hphm, tvis_json_id, occur_time, camera_id, category, il_type, tvis_json_tbl, cllxzfl, vehs_idx)
                            VALUES(#{dcHpDTO.hphm}, #{tvisJsonId}, #{dcHpDTO.dcTime}, #{dcHpDTO.dcAddr}, #{dcHpDTO.category}, #{dcHpDTO.ilType}, #{tvisJsonTbl}, #{cllxzfl}, #{dcHpDTO.vehsIdx})
     </insert>

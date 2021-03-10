@@ -52,7 +52,6 @@ public class DcHpObserver implements ITvisStpObserver {
         if(!hphm.contains(hphm_pre)) {
             category = "1";
         }
-
         /**
          * cameraId = -1 时需要根据streamId查找正确的cameraId
          */
@@ -129,6 +128,7 @@ public class DcHpObserver implements ITvisStpObserver {
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
         }
+        System.out.println("所有驾驶行为：" + "; " + zjsddh + "; "+ fjsbjaqd +"; "+ fjszyb +"; " + zjsbjaqd + "; " + zjscy +"; "+ ";" +mtcbdtk + ";" +zjszyb + "; " + zjsksj);
         System.out.println("识别车辆子分类cllxzfl：" + cllxzfl + "; 违章类型：" + dcHpDTO.getIlType());
         redisTemplate.opsForValue().increment("dchp_vehicle_identification"); //车辆识别数量
         redisTemplate.opsForZSet().incrementScore("tn_vs_site_vehicle", code, 1);
@@ -151,7 +151,9 @@ public class DcHpObserver implements ITvisStpObserver {
      * @return
      */
     private boolean isViolation(String jsxw) {
-        return Integer.parseInt(StringUtils.isNotBlank(jsxw.replace("_", "")) ? jsxw.replace("_", "") : "0") >= 180;
+        boolean flag = Integer.parseInt(StringUtils.isNotBlank(jsxw.replace("_", "")) ? jsxw.replace("_", "") : "0") >= 180;
+        System.out.println(jsxw + ":"+ flag);
+        return flag;
     }
 
     private void  insertItfVehicle(DcHpDTO dcHpDTO, long tvisJsonId, String tvisJsonTbl, String cllxzfl) {
