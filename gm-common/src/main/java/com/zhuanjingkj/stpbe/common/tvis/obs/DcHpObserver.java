@@ -152,7 +152,7 @@ public class DcHpObserver implements ITvisStpObserver {
      */
     private boolean isViolation(String jsxw) {
         boolean flag = Integer.parseInt(StringUtils.isNotBlank(jsxw.replace("_", "")) ? jsxw.replace("_", "") : "0") >= 180;
-        System.out.println(jsxw + ":"+ flag);
+        System.out.println(jsxw + "="+ flag);
         return flag;
     }
 

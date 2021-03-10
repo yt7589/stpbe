@@ -140,6 +140,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
             insertViolation(vo,Long.parseLong(code), hphm,"HPYC", vType, tblName, category, date);
             flag = true;
         }
+        System.out.println("所有驾驶行为：" + "zjsddh: " + zjsddh + "; fjsbjaqd:"+ fjsbjaqd +"; fjszyb:"+ fjszyb +"; zjsbjaqd:" + zjsbjaqd + "; zjscy:" + zjscy +"; mtcbdtk:"+ mtcbdtk + ";zjszyb:" +zjszyb + "; zjsksj:" + zjsksj);
         //统计时段违章到redis
         if (flag) {
             Integer hour = LocalDateTime.now().getHour();
@@ -231,7 +232,9 @@ public class DkRtvrObserver implements ITvisStpObserver {
      * @return
      */
     private boolean isViolation(String jsxw) {
-        return Integer.parseInt(StringUtils.isNotBlank(jsxw.replace("_", "")) ? jsxw.replace("_", "") : "0") >= 180;
+        boolean flag = Integer.parseInt(StringUtils.isNotBlank(jsxw.replace("_", "")) ? jsxw.replace("_", "") : "0") >= 180;
+        System.out.println(jsxw + "=" + flag);
+        return flag;
     }
     private void insertViolation(VehicleVo vo, long cameraId, String hphm, String wzlx, String vType, /**String imageHash,
                                  String jsonHash,*/ String tblName, Integer category, String date) {
