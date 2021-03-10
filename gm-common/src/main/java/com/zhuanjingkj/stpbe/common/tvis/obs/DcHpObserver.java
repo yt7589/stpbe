@@ -75,6 +75,7 @@ public class DcHpObserver implements ITvisStpObserver {
         }
         String fjsbjaqd = vo.getVehicleJsxwtzVO().getFjsbjaqd();
         if (StringUtils.isNotBlank(fjsbjaqd) && isViolation(fjsbjaqd)) {
+            ilType = "FJSBJAQD";
             isIl = 1;
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
@@ -82,6 +83,7 @@ public class DcHpObserver implements ITvisStpObserver {
         }
         String fjszyb = vo.getVehicleJsxwtzVO().getFjszyb();
         if (StringUtils.isNotBlank(fjszyb) && isViolation(fjszyb)) {
+            ilType = "FJSZYB";
             isIl = 1;
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
@@ -89,6 +91,7 @@ public class DcHpObserver implements ITvisStpObserver {
         }
         String zjsbjaqd = vo.getVehicleJsxwtzVO().getZjsbjaqd();
         if (StringUtils.isNotBlank(zjsbjaqd) && isViolation(zjsbjaqd)) {
+            ilType = "ZJSBJAQD";
             isIl = 1;
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
@@ -96,6 +99,7 @@ public class DcHpObserver implements ITvisStpObserver {
         }
         String zjscy = vo.getVehicleJsxwtzVO().getZjscy();
         if (StringUtils.isNotBlank(zjscy) && isViolation(zjscy)) {
+            ilType = "ZJSCY";
             isIl = 1;
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
@@ -103,6 +107,7 @@ public class DcHpObserver implements ITvisStpObserver {
         }
         String zjsksj = vo.getVehicleJsxwtzVO().getZjsksj();
         if (StringUtils.isNotBlank(zjsksj) && isViolation(zjsksj)) {
+            ilType = "ZJSKSJ";
             isIl = 1;
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
@@ -110,6 +115,7 @@ public class DcHpObserver implements ITvisStpObserver {
         }
         String zjszyb = vo.getVehicleJsxwtzVO().getZjszyb();
         if (StringUtils.isNotBlank(zjszyb) && isViolation(zjszyb)) {
+            ilType = "ZJSZYB";
             isIl = 1;
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
@@ -128,8 +134,8 @@ public class DcHpObserver implements ITvisStpObserver {
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
         }
-        System.out.println("所有驾驶行为：" + "; " + zjsddh + "; "+ fjsbjaqd +"; "+ fjszyb +"; " + zjsbjaqd + "; " + zjscy +"; "+ ";" +mtcbdtk + ";" +zjszyb + "; " + zjsksj);
-        System.out.println("识别车辆子分类cllxzfl：" + cllxzfl + "; 违章类型：" + dcHpDTO.getIlType());
+        System.out.println("DCHP所有驾驶行为：" + zjsddh + "; "+ fjsbjaqd +"; "+ fjszyb +"; " + zjsbjaqd + "; " + zjscy +"; "+ ";" +mtcbdtk + ";" +zjszyb + "; " + zjsksj);
+        System.out.println("DCHP识别车辆子分类cllxzfl：" + cllxzfl + "; 违章类型：" + dcHpDTO.getIlType());
         redisTemplate.opsForValue().increment("dchp_vehicle_identification"); //车辆识别数量
         redisTemplate.opsForZSet().incrementScore("tn_vs_site_vehicle", code, 1);
         Integer index = LocalDateTime.now().getHour();
@@ -152,7 +158,7 @@ public class DcHpObserver implements ITvisStpObserver {
      */
     private boolean isViolation(String jsxw) {
         boolean flag = Integer.parseInt(StringUtils.isNotBlank(jsxw.replace("_", "")) ? jsxw.replace("_", "") : "0") >= 180;
-        System.out.println(jsxw + "="+ flag);
+        System.out.println("DCHP:" + jsxw + "="+ flag);
         return flag;
     }
 
