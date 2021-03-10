@@ -13,6 +13,22 @@ public class FccSystemInfoServiceFallbackFactory implements FallbackFactory<FccS
                 return "Hystrix: " + systemName + "; cause: " +
                         throwable.getMessage() + "; s=" + throwable.getCause() +"!";
             }
+            @Override
+            public String queryVehicle(
+                    String platform,
+                    String version,
+                    String cltzxl,
+                    String psfx,
+                    String cllxfl,
+                    String cllxzfl,
+                    String startDate,
+                    String endDate,
+                    String startTime,
+                    String endTime,
+                    int startIndex,
+                    int amount) {
+                return "";
+            }
         };
     }
 }

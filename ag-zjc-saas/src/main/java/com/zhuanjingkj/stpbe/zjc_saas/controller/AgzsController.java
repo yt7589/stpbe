@@ -51,7 +51,7 @@ public class AgzsController {
             @RequestParam(name = "startIndex", required = false) int startIndex,
             @RequestParam(name = "amount", required = false) int amount
     ) {
-        System.out.println("ag-zjc-saas.AgzsController.queryVehicle...");
+        System.out.println("ag-zjc-saas.AgzsController.queryVehicle ...");
         return agzsService.queryVehicle(platform,
                 version,
                 cltzxl,
