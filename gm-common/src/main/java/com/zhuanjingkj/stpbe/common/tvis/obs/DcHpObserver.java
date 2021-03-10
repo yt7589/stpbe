@@ -66,7 +66,6 @@ public class DcHpObserver implements ITvisStpObserver {
         } else {
             code = cameraId +"";
         }
-        System.out.println("识别车辆子分类cllxzfl：" + cllxzfl);
         if(isViolation(vo.getVehicleJsxwtzVO().getZjsddh())) {
             ilType = "ZJSDDH";
             isIl = "1";
@@ -128,7 +127,7 @@ public class DcHpObserver implements ITvisStpObserver {
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
         }
-
+        System.out.println("识别车辆子分类cllxzfl：" + cllxzfl + "; 违章类型：" + dcHpDTO.getIlType());
         redisTemplate.opsForValue().increment("dchp_vehicle_identification"); //车辆识别数量
         redisTemplate.opsForZSet().incrementScore("tn_vs_site_vehicle", code, 1);
         Integer index = LocalDateTime.now().getHour();
