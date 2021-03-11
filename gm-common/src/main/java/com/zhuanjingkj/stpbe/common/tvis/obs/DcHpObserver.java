@@ -43,6 +43,10 @@ public class DcHpObserver implements ITvisStpObserver {
         String ilType = "";
         Integer isIl = 0;
         String cllxzfl = vo.getVehicleCxtzVo().getCllxzflCode();
+        String cllxfl = vo.getVehicleCxtzVo().getCllxflCode();
+        if (StringUtils.isBlank(cllxzfl)) {
+            cllxzfl = cllxfl;
+        }
         long tvisJsonId = vo.getTvisJsonId();
         String tblName = AppRegistry.tvisJsonTblName;
         DcHpDTO dcHpDTO = null;

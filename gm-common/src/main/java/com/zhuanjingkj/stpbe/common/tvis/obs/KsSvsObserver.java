@@ -61,26 +61,21 @@ public class KsSvsObserver implements ITvisStpObserver {
             redisTemplate.opsForValue().increment("ks_svs_flat_truck");
         } else if("215".equals(vType)) { //仓栅式货车
             redisTemplate.opsForValue().increment("ks_svs_grate_truck");
+        } else if("11".equals(vType)) { //大型客车
+            redisTemplate.opsForValue().increment("ks_svs_medium_bus");
+        } else if("12".equals(vType)) { //中型客车
+            redisTemplate.opsForValue().increment("ks_svs_light_bus");
+        } else if("22".equals(vType)) { //轻微型货车
+            redisTemplate.opsForValue().increment("ks_svs_mini_truck");
+        } else if("23".equals(vType)) { //三轮车
+            redisTemplate.opsForValue().increment("ks_svs_tricycle");
+        } else if("30".equals(vType)) { //摩托车
+            redisTemplate.opsForValue().increment("ks_svs_motorcycle");
         } else { //其他
             redisTemplate.opsForValue().increment("ks_svs_others");
         }
         //本日重点监控车辆区域分布图
         redisTemplate.opsForHash().increment("ks_svs_area", code, 1);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000001", 1);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000002", 2);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000003", 3);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000004", 4);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000005", 5);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000006", 6);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000007", 7);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000008", 8);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000009", 9);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000010", 10);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000011", 11);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000012", 12);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000013", 13);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000014", 14);
-//        redisTemplate.opsForHash().increment("ks_svs_area", "C0000015", 10);
     }
 
     @Override

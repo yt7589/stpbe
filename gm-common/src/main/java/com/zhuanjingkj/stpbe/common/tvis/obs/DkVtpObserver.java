@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.common.tvis.obs;
 
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,6 +19,10 @@ public class DkVtpObserver implements ITvisStpObserver {
     public void notifyObserver(VehicleVo vo) {
         System.out.println("DkVtpObserver...");
         String vType = vo.getVehicleCxtzVo().getCllxzflCode();
+        String cllxfl = vo.getVehicleCxtzVo().getCllxflCode();
+        if (StringUtils.isBlank(vType)) {
+            vType = cllxfl;
+        }
         if("131".equals(vType)) {  //轿车
             redisTemplate.opsForValue().increment("dk_vt_car");
         } else if("132".equals(vType)) { //SUV
@@ -30,6 +35,16 @@ public class DkVtpObserver implements ITvisStpObserver {
             redisTemplate.opsForValue().increment("dk_vt_tank_truck");
         } else if("216".equals(vType)) { //普通货车
             redisTemplate.opsForValue().increment("dk_vt_normal_truck");
+        } else if("11".equals(vType)) { //大型客车
+            redisTemplate.opsForValue().increment("dk_vt_medium_bus");
+        } else if("12".equals(vType)) { //中型客车
+            redisTemplate.opsForValue().increment("dk_vt_light_bus");
+        } else if("22".equals(vType)) { //轻微型货车
+            redisTemplate.opsForValue().increment("dk_vt_mini_truck");
+        } else if("23".equals(vType)) { //三轮车
+            redisTemplate.opsForValue().increment("dk_vt_tricycle");
+        } else if("30".equals(vType)) { //摩托车
+            redisTemplate.opsForValue().increment("dk_vt_motorcycle");
         } else { //其他
             redisTemplate.opsForValue().increment("dk_vt_others");
         }
