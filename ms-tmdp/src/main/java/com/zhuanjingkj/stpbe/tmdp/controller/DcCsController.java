@@ -28,22 +28,7 @@ public class DcCsController {
      * @return
      */
     @PostMapping(value = "/cs/queryVehicle")
-    public String queryVehicle(@RequestBody Map<String, Object> joReq
-    /*public String queryVehicle(
-        @RequestParam(name = "p") String platform,
-                               @RequestParam(name = "v") String version,
-                               @RequestParam(name = "cltzxl", required = true) String cltzxl,
-                               @RequestParam(name = "psfx", required = true) String psfx,
-                               @RequestParam(name = "cllxfl", required = true) String cllxfl,
-                               @RequestParam(name = "cllxzfl", required = true) String cllxzfl,
-                               @RequestParam(name = "startDate", required = false) String startDate,
-                               @RequestParam(name = "endDate", required = false) String endDate,
-                               @RequestParam(name = "startTime", required = false) String startTime,
-                               @RequestParam(name = "endTime", required = false) String endTime,
-                               @RequestParam(name = "startIndex", required = false) int startIndex,
-                               @RequestParam(name = "amount", required = false) int amount*/
-    ) {
-        long t1 = System.currentTimeMillis();
+    public String queryVehicle(@RequestBody Map<String, Object> joReq) {
         System.out.println("joReq:" + joReq.toString() + "!");
         String platform = (String)joReq.get("p");
         String version = (String)joReq.get("v");
@@ -60,9 +45,6 @@ public class DcCsController {
         System.out.println("ms-tmdp::DcCsController.queryVehicle 1");
         ResultDTO<DbQrsDTO> rst = dcCsService.queryVehicleByGraph(cltzxl, psfx, cllxfl, cllxzfl, startDate,
                 endDate, startTime, endTime, startIndex, amount);
-        long diff = System.currentTimeMillis() - t1;
-        String resp = JSON.toJSONString(rst);
-        System.out.println("runtime: " + diff + "! v0.0.1 resp=" + resp + "!!!!!!!");
-        return resp;
+        return JSON.toJSONString(rst);
     }
 }
