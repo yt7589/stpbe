@@ -157,7 +157,7 @@ public class VmIlsService implements IVmIlsService {
         Integer gj = StringUtils.isBlank(gxhtz.getString("GJ")) ? 0 : gxhtz.getString("GJ").split("#").length; //挂件
         Integer tc = StringUtils.isBlank(gxhtz.getString("TC")) ? 0 : 1; //天窗
         String xlj = StringUtils.isBlank(gxhtz.getString("XLJ")) ? "无" : "有"; //行李架
-        String dcjqs = Integer.parseInt(gxhtz.getString("DCJQS").replace("_", "")) >= 180 ? "有" : "无"; //倒车镜缺失
+        String dcjqs =Integer.parseInt(StringUtils.isBlank(gxhtz.getString("DCJQS")) ? "0" : gxhtz.getString("DCJQS").replace("_", "")) >= 180 ? "有" : "无"; //倒车镜缺失
         Integer cszt = StringUtils.isBlank(gxhtz.getString("CSZT")) ? 0 : gxhtz.getString("CSZT").split("#").length; //车身张贴
         Integer csps = StringUtils.isBlank(gxhtz.getString("CSPS")) ? 0 : gxhtz.getString("CSPS").split("#").length; //车身破损
         Integer csgh = StringUtils.isBlank(gxhtz.getString("CSGH")) ? 0 : gxhtz.getString("CSGH").split("#").length; //车身刮痕
@@ -178,7 +178,7 @@ public class VmIlsService implements IVmIlsService {
         Integer md_isSunVisor = isViolation(jsxwtzJson.getString("ZJSZYB")); //主驾驶遮阳板
         Integer ct_isSafetyBelt = isViolation(jsxwtzJson.getString("FJSBJAQD")); //副驾驶不系安全带
         Integer ct_isSunVisor = isViolation(jsxwtzJson.getString("FJSZYB")); //副驾驶遮阳板
-        //Integer mc_isHelmet = Integer.parseInt(jsxwtzJson.getString("MTCBDTK").replace("_", "")) >= 180 ? 1:0;
+        Integer mc_isHelmet = Integer.parseInt(jsxwtzJson.getString("MTCBDTK").replace("_", "")) >= 180 ? 1:0;
         vmIlsVdDTO = new VmIlsVdDTO(0,imgUrl,timeStamp,
                 ilsName, category, hphm, "","" + VEH_TYPE.get("C" + cxtzJson.get("CLLXFL")),
                 "" + VEH_TYPE.get("C" + cxtzJson.get("CLLXZFL")), direction, md_isPhone,md_isWPhone, md_isSafetyBelt,
