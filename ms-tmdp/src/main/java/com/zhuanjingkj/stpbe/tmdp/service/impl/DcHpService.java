@@ -40,7 +40,7 @@ public class DcHpService implements IDcHpService {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
         }
         List<DcHpDTO> recs = dcHpMapper.getVehicleData(startIndex, amount, startTime, endTime, category, vType, ilType, hphm, vAddr);
-        Integer count = 0; //dcHpMapper.getVehicleCount(startTime, endTime, category, vType, ilType, hphm, vAddr);
+        Integer count = dcHpMapper.getVehicleCount(startTime, endTime, category, vType, ilType, hphm, vAddr);
 //        if(recs != null && recs.size() > 0) {
 //            for(int i = 0; i < recs.size(); i++) {
 //                String tblName = recs.get(i).getTvisJsonTbl().replace("StpDb.", "");
@@ -55,7 +55,7 @@ public class DcHpService implements IDcHpService {
         DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
         dto.setData(data);
         long end = System.currentTimeMillis();
-        System.out.println("全部数据查询时间queryAllData_exp：" + (end - start)/1000 + "s");
+        System.out.println("全部数据查询时间queryAllData_exp：" + (end - start) + "s");
         return dto;
     }
 
