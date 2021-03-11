@@ -35,7 +35,7 @@ public class SrTvisServerApplication {
         System.out.println("Traffic Video Image Structure Server v0.0.1");
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // 将删除所有数据！！！！！！！！！！！！！！！！！！！！！！！！！！！
-        GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         GrqEngine.initializeGrp();
         SpringApplication.run(SrTvisServerApplication.class, args);
