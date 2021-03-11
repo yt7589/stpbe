@@ -170,7 +170,7 @@ public class VmIlsService implements IVmIlsService {
         } else {
             category = "外埠";
         }
-        String direction = Integer.parseInt(wztzJson.getString("PSFX")) == 1 ? "车头" : "车尾";
+        String direction = Integer.parseInt(StringUtils.isBlank(wztzJson.getString("PSFX")) ? "0" : wztzJson.getString("PSFX")) == 1 ? "车头" : "车尾";
         Integer md_isPhone = isViolation(jsxwtzJson.getString("ZJSDDH"));  //主驾驶打电话
         Integer md_isWPhone = isViolation(jsxwtzJson.getString("ZJSKSJ")); //主驾驶看手机
         Integer md_isSafetyBelt = isViolation(jsxwtzJson.getString("ZJSBJAQD")); //主驾驶不系安全带
