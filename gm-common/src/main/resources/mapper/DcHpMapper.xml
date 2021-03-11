@@ -63,7 +63,7 @@
     </select>
 
     <select id ="getVehicleCount" resultType="Integer">
-        SELECT count(tif.tvis_json_id)
+        SELECT count(1)
           FROM t_itf_vehicle tif
      LEFT JOIN t_camera tc
             ON tc.camera_id = tif.camera_id
