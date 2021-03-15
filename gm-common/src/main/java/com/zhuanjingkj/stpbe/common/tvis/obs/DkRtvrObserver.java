@@ -76,6 +76,8 @@ public class DkRtvrObserver implements ITvisStpObserver {
          */
         String code ="";
         long cameraId = vo.getCameraId();
+        long tvisJsonId = vo.getTvisJsonId();
+        long vehIdx = vo.getVehsIdx();
         if (cameraId == -1) {
             long streamId = vo.getStreamId();
             String newCameraId = deviceMapper.getCameraIdByStreamId(streamId);
@@ -102,47 +104,47 @@ public class DkRtvrObserver implements ITvisStpObserver {
         String date = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
         String zjsddh = vo.getVehicleJsxwtzVO().getZjsddh();
         if (StringUtils.isNotBlank(zjsddh) && isViolation(zjsddh)) {
-            insertViolation(vo,Long.parseLong(code), hphm,"ZJSDDH", vType, tblName, category, date);
+            insertViolation(tvisJsonId, vo,Long.parseLong(code), hphm,"ZJSDDH", vType, tblName, category, date, vehIdx);
             flag = true;
         }
         String fjsbjaqd = vo.getVehicleJsxwtzVO().getFjsbjaqd();
         if (StringUtils.isNotBlank(fjsbjaqd) && isViolation(fjsbjaqd)) {
-            insertViolation(vo,Long.parseLong(code), hphm,"FJSBJAQD", vType, tblName, category, date);
+            insertViolation(tvisJsonId, vo,Long.parseLong(code), hphm,"FJSBJAQD", vType, tblName, category, date, vehIdx);
             flag = true;
         }
         String fjszyb = vo.getVehicleJsxwtzVO().getFjszyb();
         if (StringUtils.isNotBlank(fjszyb) && isViolation(fjszyb)) {
-            insertViolation(vo,Long.parseLong(code), hphm,"FJSZYB", vType, tblName, category, date);
+            insertViolation(tvisJsonId, vo,Long.parseLong(code), hphm,"FJSZYB", vType, tblName, category, date, vehIdx);
             flag = true;
         }
         String zjsbjaqd = vo.getVehicleJsxwtzVO().getZjsbjaqd();
         if (StringUtils.isNotBlank(zjsbjaqd) && isViolation(zjsbjaqd)) {
-            insertViolation(vo,Long.parseLong(code), hphm,"ZJSBJAQD", vType, tblName, category, date);
+            insertViolation(tvisJsonId, vo,Long.parseLong(code), hphm,"ZJSBJAQD", vType, tblName, category, date, vehIdx);
             flag = true;
         }
         String zjscy = vo.getVehicleJsxwtzVO().getZjscy();
         if (StringUtils.isNotBlank(zjscy) && isViolation(zjscy)) {
-            insertViolation(vo,Long.parseLong(code), hphm,"ZJSCY", vType, tblName, category, date);
+            insertViolation(tvisJsonId, vo,Long.parseLong(code), hphm,"ZJSCY", vType, tblName, category, date, vehIdx);
             flag = true;
         }
         String zjsksj = vo.getVehicleJsxwtzVO().getZjsksj();
         if (StringUtils.isNotBlank(zjsksj) && isViolation(zjsksj)) {
-            insertViolation(vo,Long.parseLong(code), hphm,"ZJSKSJ", vType, tblName, category, date);
+            insertViolation(tvisJsonId, vo,Long.parseLong(code), hphm,"ZJSKSJ", vType, tblName, category, date, vehIdx);
             flag = true;
         }
         String zjszyb = vo.getVehicleJsxwtzVO().getZjszyb();
         if (StringUtils.isNotBlank(zjszyb) && isViolation(zjszyb)) {
-            insertViolation(vo,Long.parseLong(code), hphm,"ZJSZYB", vType, tblName, category, date);
+            insertViolation(tvisJsonId, vo,Long.parseLong(code), hphm,"ZJSZYB", vType, tblName, category, date, vehIdx);
             flag = true;
         }
         String mtcbdtk = vo.getVehicleJsxwtzVO().getMtcbdtk();
         if (StringUtils.isNotBlank(mtcbdtk) && isViolation(mtcbdtk)) {
-            insertViolation(vo,Long.parseLong(code), hphm,"MTCBDTK", vType, tblName, category, date);
+            insertViolation(tvisJsonId, vo,Long.parseLong(code), hphm,"MTCBDTK", vType, tblName, category, date, vehIdx);
             flag = true;
         }
         String hType = vo.getVehicleHptzVO().getHpzt(); //牌照异常
         if (!"1".equals(hType)) {
-            insertViolation(vo,Long.parseLong(code), hphm,"HPYC", vType, tblName, category, date);
+            insertViolation(tvisJsonId, vo,Long.parseLong(code), hphm,"HPYC", vType, tblName, category, date, vehIdx);
             flag = true;
         }
         System.out.println("RTVR所有驾驶行为：" + "zjsddh: " + zjsddh + "; fjsbjaqd:"+ fjsbjaqd +"; fjszyb:"+ fjszyb +"; zjsbjaqd:" + zjsbjaqd + "; zjscy:" + zjscy +"; mtcbdtk:"+ mtcbdtk + ";zjszyb:" +zjszyb + "; zjsksj:" + zjsksj);
@@ -237,19 +239,22 @@ public class DkRtvrObserver implements ITvisStpObserver {
      * @param jsxw
      * @return
      */
-    private boolean isViolation(String jsxw) {
+    private static boolean isViolation(String jsxw) {
         boolean flag = Integer.parseInt(StringUtils.isNotBlank(jsxw.replace("_", "")) ? jsxw.replace("_", "") : "0") >= 180;
-        System.out.println("RTVRR:" + jsxw + "=" + flag);
+        System.out.println("RTVR:" + jsxw + "=" + flag);
         return flag;
     }
-    private void insertViolation(VehicleVo vo, long cameraId, String hphm, String wzlx, String vType, /**String imageHash,
-                                 String jsonHash,*/ String tblName, Integer category, String date) {
+    private void insertViolation(long tvisJsonId, VehicleVo vo, long cameraId, String hphm, String wzlx, String vType, String tblName, Integer category, String date, long vehIdx) {
         String psfx = vo.getVehicleWztzVo().getPsfx();
         if (null == psfx || psfx.equals("")) {
             psfx = "3";
         }
-        dkRtvrMapper.insertViolation(vo.getTvisJsonId(), vo.getVehsIdx(),cameraId, hphm,
+        if ("1".equals(vo.getVehicleHptzVO().getHpzt())) {
+            System.out.println(vo.getVehicleHptzVO().getHpzt());
+        }
+        dkRtvrMapper.insertViolation(tvisJsonId, vehIdx,cameraId, hphm,
                 vo.getVehicleCxtzVo().getCsysCode(), vo.getVehicleCxtzVo().getClppCode(), vo.getVehicleCxtzVo().getPpcxCode(), vo.getVehicleCxtzVo().getCxnkCode(),
                 psfx, vo.getVehicleWztzVo().getClwz(), wzlx, vType, category, tblName, date);
     }
+
 }
