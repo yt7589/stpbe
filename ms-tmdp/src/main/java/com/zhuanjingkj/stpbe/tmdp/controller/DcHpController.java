@@ -3,7 +3,6 @@ package com.zhuanjingkj.stpbe.tmdp.controller;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.DcHpDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.dto.VmIlsVhsDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.FileExpDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpDaDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcHpIlTrendDTO;
@@ -12,20 +11,14 @@ import com.zhuanjingkj.stpbe.tmdp.service.impl.DcHpService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
 import com.zhuanjingkj.stpbe.tmdp.util.FileUtil;
 import org.apache.commons.lang.StringUtils;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
 
 /**
  * Data Center =》 Home Page

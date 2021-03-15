@@ -133,7 +133,14 @@ public class DcHpObserver implements ITvisStpObserver {
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
             violation(category);
         }
-
+        String hType = vo.getVehicleHptzVO().getHpzt(); //牌照异常
+        if (!"1".equals(hType)) {
+            ilType = "HPYC";
+            isIl = 1;
+            dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
+            insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
+            violation(category);
+        }
         if (isIl == 0) {
             dcHpDTO = new DcHpDTO(0,time,"" + code,hphm,category,"" + isIl,ilType,"", vehIdx);
             insertItfVehicle(dcHpDTO, tvisJsonId, tblName, cllxzfl);
