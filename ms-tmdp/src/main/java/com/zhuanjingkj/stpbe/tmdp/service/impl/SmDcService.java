@@ -200,6 +200,26 @@ public class SmDcService implements ISmDcService {
         if (!redisTemplate.hasKey(tnVsTrend)) {
             redisTemplate.opsForList().rightPushAll(tnVsTrend, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         }
+
+        if (redisTemplate.hasKey("dk_rtvr_violation")) { //统计时段违章
+            redisTemplate.delete("dk_rtvr_violation");
+            redisTemplate.opsForList().rightPushAll("dk_rtvr_violation", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
+
+        if (redisTemplate.hasKey("dk_vttf_lcar")) { //车辆类型流量(大型车)
+            redisTemplate.delete("dk_vttf_lcar");
+            redisTemplate.opsForList().rightPushAll("dk_vttf_lcar", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
+
+        if (redisTemplate.hasKey("dk_vttf_car")) { //车辆类型流量(中型车)
+            redisTemplate.delete("dk_vttf_car");
+            redisTemplate.opsForList().rightPushAll("dk_vttf_car", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
+
+        if (redisTemplate.hasKey("dk_vttf_scar")) { //车辆类型流量(小型车)
+            redisTemplate.delete("dk_vttf_scar");
+            redisTemplate.opsForList().rightPushAll("dk_vttf_scar", 0,0,0,0,0,0,0,0,0,0,0,0);
+        }
     }
 
     /**
@@ -259,26 +279,6 @@ public class SmDcService implements ISmDcService {
         if (redisTemplate.hasKey("ks_as_lsvs_list")) { //区域监管监控动态列表
             redisTemplate.delete("ks_as_lsvs_list");
 //            redisTemplate.opsForList().rightPushAll("ks_as_lsvs_list","0");
-        }
-
-        if (redisTemplate.hasKey("dk_vttf_lcar")) { //车辆类型流量(大型车)
-            redisTemplate.delete("dk_vttf_lcar");
-            redisTemplate.opsForList().rightPushAll("dk_vttf_lcar", 0,0,0,0,0,0,0,0,0,0,0,0);
-        }
-
-        if (redisTemplate.hasKey("dk_vttf_car")) { //车辆类型流量(中型车)
-            redisTemplate.delete("dk_vttf_car");
-            redisTemplate.opsForList().rightPushAll("dk_vttf_car", 0,0,0,0,0,0,0,0,0,0,0,0);
-        }
-
-        if (redisTemplate.hasKey("dk_vttf_scar")) { //车辆类型流量(小型车)
-            redisTemplate.delete("dk_vttf_scar");
-            redisTemplate.opsForList().rightPushAll("dk_vttf_scar", 0,0,0,0,0,0,0,0,0,0,0,0);
-        }
-
-        if (redisTemplate.hasKey("dk_rtvr_violation")) { //统计时段违章
-            redisTemplate.delete("dk_rtvr_violation");
-            redisTemplate.opsForList().rightPushAll("dk_rtvr_violation", 0,0,0,0,0,0,0,0,0,0,0,0);
         }
 
         if (redisTemplate.hasKey("ks_vs_dyn_list")) {
