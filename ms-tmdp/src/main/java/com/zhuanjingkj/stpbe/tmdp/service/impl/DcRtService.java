@@ -181,7 +181,7 @@ public class DcRtService implements IDcRtService {
         List<Map<String, Object>> rtv = new ArrayList<>();
         if("week".equals(tp)) { //一周
             String startTime = DateUtil.countDays(-6);
-            rtv = dcRtMapper.getDcForDay(startTime, endTime);
+            rtv = dcRtMapper.getRtvForDay(startTime, endTime);
             Map<String, Integer> rtvMap = DateUtil.dayFor30Map(7, DateUtil.DTF_MD);
             if(rtv != null && rtv.size() > 0) {
                 for(int i =0; i < rtv.size(); i++) {
@@ -193,8 +193,8 @@ public class DcRtService implements IDcRtService {
             }
         } else if("month".equals(tp)) { //一月
             String startTime = DateUtil.countDays(-29);
-            rtv = dcRtMapper.getDcForDay(startTime, endTime);
-            Map<String, Integer> rtvMap = DateUtil.dayFor30Map(30, DateUtil.DTF_NYR);
+            rtv = dcRtMapper.getRtvForDay(startTime, endTime);
+            Map<String, Integer> rtvMap = DateUtil.dayFor30Map(30, DateUtil.DTF_MD);
             if(rtv != null && rtv.size() > 0) {
                 for(int i =0; i < rtv.size(); i++) {
                     rtvMap.put("" + rtv.get(i).get("rj"), Integer.parseInt(rtv.get(i).get("count") == null ? "0" : ""+ rtv.get(i).get("count")));
