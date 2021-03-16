@@ -198,10 +198,9 @@ public class DateUtil {
 	 * @return
 	 */
 	public static Map<String, Integer> dayFor30Map(Integer num, DateTimeFormatter dtf) {
-		String endTime = LocalDate.now().format(dtf);
 		SortedMap<String, Integer> resMap = new TreeMap<>();
 		for(int i =0; i < num; i++) {
-			resMap.put((plusDaysForDate(endTime, -i)), 0);
+			resMap.put(LocalDate.now().plusDays(-i).format(dtf), 0);
 		}
 		return resMap;
 	}
@@ -284,7 +283,6 @@ public class DateUtil {
 		System.out.println("countMonth:" + countMonth(-1));
 		System.out.println("plusDays:" + plusDays("2020-08-27 10:19:22", -1));
 		System.out.println("countDays:" + countDays(-1));
-		System.out.println("plusDaysForDate:" + plusDaysForDate("2021-01-04", -1));
 		System.out.println("getHour:" + LocalDateTime.now().getHour());
 		int hour = LocalDateTime.now().getHour();
 		String date = "" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + (hour < 10 ? ("0" + hour) : hour) ;

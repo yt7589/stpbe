@@ -28,7 +28,7 @@ public class DcRtService implements IDcRtService {
             String startTime = DateUtil.plusDays(endTime, -6, DateUtil.DTF_NYR);
             List<Map<String, Object>> rtj = dcRtMapper.getDcForWeek(startTime, pEndTime);
             Integer total = dcRtMapper.getTivTotal(startTime, pEndTime); //7天总过车量
-            Map<String, Integer> rtjForWeek = DateUtil.dayFor30Map(6, DateUtil.DTF_NYR);
+            Map<String, Integer> rtjForWeek = DateUtil.dayFor30Map(6, DateUtil.DTF_MD);
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i < rtj.size(); i++) {
                     Integer count = Integer.parseInt(rtj.get(i).get("count") == null ? "0" : rtj.get(i).get("count") + "");
@@ -42,7 +42,7 @@ public class DcRtService implements IDcRtService {
             String startTime = DateUtil.plusDays(endTime, -29, DateUtil.DTF_NYR);
             List<Map<String, Object>> rtj = dcRtMapper.getDcForWeek(startTime, pEndTime);
             Integer total = dcRtMapper.getTivTotal(startTime, pEndTime); //30天总过车量
-            Map<String, Integer> rtjFor4W = DateUtil.dayFor30Map(-29, DateUtil.DTF_NYR);
+            Map<String, Integer> rtjFor4W = DateUtil.dayFor30Map(-29, DateUtil.DTF_MD);
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i <rtj.size(); i++) {
                     Integer count = Integer.parseInt(rtj.get(i).get("count") == null ? "0" : rtj.get(i).get("count") + "");
@@ -182,7 +182,7 @@ public class DcRtService implements IDcRtService {
         if("week".equals(tp)) { //一周
             String startTime = DateUtil.countDays(-6);
             rtv = dcRtMapper.getDcForDay(startTime, endTime);
-            Map<String, Integer> rtvMap = DateUtil.dayFor30Map(6, DateUtil.DTF_NYR);
+            Map<String, Integer> rtvMap = DateUtil.dayFor30Map(6, DateUtil.DTF_MD);
             if(rtv != null && rtv.size() > 0) {
                 for(int i =0; i < rtv.size(); i++) {
                     rtvMap.put("" + rtv.get(i).get("rj"), Integer.parseInt(rtv.get(i).get("count") == null ? "0" : ""+ rtv.get(i).get("count")));
