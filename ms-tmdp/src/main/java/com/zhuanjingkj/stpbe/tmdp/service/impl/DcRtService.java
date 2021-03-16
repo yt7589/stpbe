@@ -28,7 +28,7 @@ public class DcRtService implements IDcRtService {
             String startTime = DateUtil.plusDays(endTime, -6, DateUtil.DTF_NYR);
             List<Map<String, Object>> rtj = dcRtMapper.getDcForWeek(startTime, pEndTime);
             Integer total = dcRtMapper.getTivTotal(startTime, pEndTime); //7天总过车量
-            Map<String, Integer> rtjForWeek = DateUtil.dayFor30Map(6, DateUtil.DTF_MD);
+            Map<String, Integer> rtjForWeek = DateUtil.dayFor30Map(7, DateUtil.DTF_MD);
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i < rtj.size(); i++) {
                     Integer count = Integer.parseInt(rtj.get(i).get("count") == null ? "0" : rtj.get(i).get("count") + "");
@@ -42,7 +42,7 @@ public class DcRtService implements IDcRtService {
             String startTime = DateUtil.plusDays(endTime, -29, DateUtil.DTF_NYR);
             List<Map<String, Object>> rtj = dcRtMapper.getDcForWeek(startTime, pEndTime);
             Integer total = dcRtMapper.getTivTotal(startTime, pEndTime); //30天总过车量
-            Map<String, Integer> rtjFor4W = DateUtil.dayFor30Map(-29, DateUtil.DTF_MD);
+            Map<String, Integer> rtjFor4W = DateUtil.dayFor30Map(30, DateUtil.DTF_MD);
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i <rtj.size(); i++) {
                     Integer count = Integer.parseInt(rtj.get(i).get("count") == null ? "0" : rtj.get(i).get("count") + "");
@@ -66,9 +66,9 @@ public class DcRtService implements IDcRtService {
                 }
             }
             for(String key : rtjFor3m.keySet()) {
-                if(rtjFor3m.get(key) > 0) {
+//                if(rtjFor3m.get(key) > 0) {
                     recs.add(new DcRtTimeJamDTO(key, str2Double((double)rtjFor3m.get(key)/total)));
-                }
+//                }
             }
         } else if("half" .equals(tp)) { //近半年
             String startTime = DateUtil.plusDays(endTime, -180, DateUtil.DTF_NYR);
@@ -82,9 +82,9 @@ public class DcRtService implements IDcRtService {
                 }
             }
             for(String key : rtjFor3m.keySet()) {
-                if(rtjFor3m.get(key) > 0) {
+//                if(rtjFor3m.get(key) > 0) {
                     recs.add(new DcRtTimeJamDTO(key, str2Double((double)rtjFor3m.get(key)/total)));
-                }
+//                }
             }
         } else if("year".equals(tp)) { //近一年
             String startTime = DateUtil.plusDays(endTime, -365, DateUtil.DTF_NYR);
@@ -98,9 +98,9 @@ public class DcRtService implements IDcRtService {
                 }
             }
             for(String key : rtjFor3m.keySet()) {
-                if(rtjFor3m.get(key) > 0) {
+//                if(rtjFor3m.get(key) > 0) {
                     recs.add(new DcRtTimeJamDTO(key, str2Double((double)rtjFor3m.get(key)/total)));
-                }
+//                }
             }
         } else {
             List<Map<String, Object>> rtj = dcRtMapper.getDcForDay(endTime, pEndTime);
@@ -182,7 +182,7 @@ public class DcRtService implements IDcRtService {
         if("week".equals(tp)) { //一周
             String startTime = DateUtil.countDays(-6);
             rtv = dcRtMapper.getDcForDay(startTime, endTime);
-            Map<String, Integer> rtvMap = DateUtil.dayFor30Map(6, DateUtil.DTF_MD);
+            Map<String, Integer> rtvMap = DateUtil.dayFor30Map(7, DateUtil.DTF_MD);
             if(rtv != null && rtv.size() > 0) {
                 for(int i =0; i < rtv.size(); i++) {
                     rtvMap.put("" + rtv.get(i).get("rj"), Integer.parseInt(rtv.get(i).get("count") == null ? "0" : ""+ rtv.get(i).get("count")));
@@ -194,7 +194,7 @@ public class DcRtService implements IDcRtService {
         } else if("month".equals(tp)) { //一月
             String startTime = DateUtil.countDays(-29);
             rtv = dcRtMapper.getDcForDay(startTime, endTime);
-            Map<String, Integer> rtvMap = DateUtil.dayFor30Map(29, DateUtil.DTF_NYR);
+            Map<String, Integer> rtvMap = DateUtil.dayFor30Map(30, DateUtil.DTF_NYR);
             if(rtv != null && rtv.size() > 0) {
                 for(int i =0; i < rtv.size(); i++) {
                     rtvMap.put("" + rtv.get(i).get("rj"), Integer.parseInt(rtv.get(i).get("count") == null ? "0" : ""+ rtv.get(i).get("count")));
