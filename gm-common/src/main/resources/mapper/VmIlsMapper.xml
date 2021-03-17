@@ -202,7 +202,6 @@
      LEFT JOIN t_violation_type tvt ON tv.wzlx = tvt.violation_type_code
         WHERE tv.hphm =#{hphm}
           AND ts.site_name IS NOT NULL
-        LIMIT #{startIndex}, #{amount}
     </select>
 
     <select id ="getIlTypeByHphm" resultType="hashmap">
