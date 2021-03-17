@@ -220,6 +220,11 @@ public class SmDcService implements ISmDcService {
             redisTemplate.delete("dk_vttf_scar");
             redisTemplate.opsForList().rightPushAll("dk_vttf_scar", 0,0,0,0,0,0,0,0,0,0,0,0);
         }
+
+        if (redisTemplate.hasKey("ks_lps_time")) { // 车牌异常分时段统计
+            redisTemplate.delete("ks_lps_time");
+            redisTemplate.opsForList().rightPushAll("ks_lps_time", 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+        }
     }
 
     /**
@@ -269,11 +274,6 @@ public class SmDcService implements ISmDcService {
         if (redisTemplate.hasKey("ks_rss_lsvs_list")) {  //路段监管监控动态列表
             redisTemplate.delete("ks_rss_lsvs_list");
 //            redisTemplate.opsForList().rightPushAll("ks_rss_lsvs_list","0");
-        }
-
-        if (redisTemplate.hasKey("ks_lps_time")) { // 车牌异常分时段统计
-            redisTemplate.delete("ks_lps_time");
-            redisTemplate.opsForList().rightPushAll("ks_lps_time", 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         }
 
         if (redisTemplate.hasKey("ks_as_lsvs_list")) { //区域监管监控动态列表

@@ -31,7 +31,7 @@
         <result column="violation_id" property="ilId" jdbcType="INTEGER"/>
         <result column="vehs_idx" property="vehIdx" jdbcType="INTEGER"/>
         <result column="create_time" property="ilTime" jdbcType="VARCHAR"/>
-        <result column="road_name" property="ilAddr" jdbcType="VARCHAR"/>
+        <result column="site_name" property="ilAddr" jdbcType="VARCHAR"/>
         <result column="violation_type_name" property="ilType" jdbcType="VARCHAR"/>
         <result column="tvis_json_tbl" property="tvisJsonTbl" jdbcType="VARCHAR"/>
     </resultMap>
@@ -183,63 +183,25 @@
           FROM t_violation_hpzl tvh
     </select>
 
-    <select id="getVIlRecord" resultMap="vilrDTO">
-        SELECT tv.tvis_json_id, tv.vehs_idx, tv.violation_id, tv.hphm, tv.create_time, tr.road_name, tv.wzlx, tv.tvis_json_tbl
+    <select id ="getVIlRecord" resultMap="vilrDTO">
+        SELECT tv.tvis_json_id, tv.vehs_idx, tv.violation_id, tv.hphm, tv.create_time, ts.site_name, tv.wzlx, tvt.violation_type_name, tv.tvis_json_tbl
           FROM t_violation tv
-     LEFT JOIN t_camera tc
-            ON tv.camera_id = tc.camera_id
-     LEFT JOIN t_site ts
-            ON tc.site_id =ts.site_id
-     LEFT JOIN t_road_seg trs
-            ON trs.src_site_id = ts.site_id
-     LEFT JOIN t_road tr
-            ON tr.road_id = trs.road_id
+     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+     LEFT JOIN t_violation_type tvt ON tv.wzlx = tvt.violation_type_code
          WHERE tv.hphm =#{hphm}
-           AND road_name IS NOT NULL
-     UNION ALL
-        SELECT tv.tvis_json_id, tv.vehs_idx, tv.violation_id, tv.hphm, tv.create_time,tr.road_name, tv.wzlx, tv.tvis_json_tbl
-          FROM t_violation tv
-     LEFT JOIN t_camera tc
-            ON tv.camera_id = tc.camera_id
-     LEFT JOIN t_site ts
-            ON tc.site_id =ts.site_id
-     LEFT JOIN t_road_seg trs
-            ON trs.dst_site_id = ts.site_id
-     LEFT JOIN t_road tr
-            ON tr.road_id = trs.road_id
-         WHERE tv.hphm =#{hphm}
-           AND road_name IS NOT NULL
+           AND ts.site_name IS NOT NULL
          LIMIT #{startIndex}, #{amount}
     </select>
 
     <select id ="getVIlCount" resultType="Integer">
-        SELECT SUM(tmp.`count`)
-          FROM (
-        SELECT COUNT(tv.violation_id) AS `count`
+        SELECT count(1)
           FROM t_violation tv
-     LEFT JOIN t_camera tc
-            ON tv.camera_id = tc.camera_id
-     LEFT JOIN t_site ts
-            ON tc.site_id =ts.site_id
-     LEFT JOIN t_road_seg trs
-            ON trs.src_site_id = ts.site_id
-     LEFT JOIN t_road tr
-            ON tr.road_id = trs.road_id
-         WHERE tv.hphm =#{hphm}
-           AND road_name IS NOT NULL
-     UNION ALL
-        SELECT COUNT(tv.violation_id) AS `count`
-          FROM t_violation tv
-     LEFT JOIN t_camera tc
-            ON tv.camera_id = tc.camera_id
-     LEFT JOIN t_site ts
-            ON tc.site_id =ts.site_id
-     LEFT JOIN t_road_seg trs
-            ON trs.dst_site_id = ts.site_id
-     LEFT JOIN t_road tr
-            ON tr.road_id = trs.road_id
-         WHERE tv.hphm =#{hphm}
-           AND road_name IS NOT NULL) AS tmp
+     LEFT JOIN t_camera tc ON tv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+     LEFT JOIN t_violation_type tvt ON tv.wzlx = tvt.violation_type_code
+        WHERE tv.hphm =#{hphm}
+          AND ts.site_name IS NOT NULL
     </select>
 
     <select id ="getIlTypeByHphm" resultType="hashmap">
