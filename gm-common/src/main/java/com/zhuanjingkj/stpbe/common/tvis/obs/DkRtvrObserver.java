@@ -189,7 +189,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
                 redisTemplate.opsForList().set("dk_rtvr_violation", 11, count + 1);
             }
 
-            if (vNum.contains(vo.getVehicleCxtzVo().getCllxzflCode())) {
+            if (vNum.contains(vo.getVehicleCxtzVo().getCllxzflCode()) || vNum.contains(vo.getVehicleCxtzVo().getCllxflCode())) {
                 redisTemplate.opsForList().rightPush("ks_ksvtvrps_images", imageHash); //重点监控车辆违章实时图片
             }
             List<String> ksvcHphm = ksVcMapper.getKsvcHphm();
