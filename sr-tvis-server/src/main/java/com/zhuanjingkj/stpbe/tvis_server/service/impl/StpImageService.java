@@ -47,7 +47,7 @@ public class StpImageService implements IStpImageService {
                 tvisJsonMapper, tvisStpOberverManager, LIST_VEHICLE_RECOGNITION,
                 cameraId, streamId,
                 imageFile, imageData);
-        System.out.println("StpImageService.submitImage 2");
+        System.out.println("StpImageService.submitImage 2 jsonId=" + data.getTvisJsonId() + "; result=" + data.getJsonResult() + "!!!!!!");
         rst.setData(data);
         if (data.getTvisJsonId() < 0) {
             rst.setCode(4);

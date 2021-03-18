@@ -465,9 +465,9 @@ public class TvisUtil {
         TvisUtil.processStpTvisJson(observers, msg.toString());
         System.out.println("TvisUtil.submitTvisImage 8");
         data.setTvisJsonId(tvisJsonId);
-        System.out.println("TvisUtil.submitTvisImage 9");
+        System.out.println("Yt001 TvisUtil.submitTvisImage 9 jsonId=" + data.getTvisJsonId() + "!");
         data.setJsonResult(rawResp);
-        System.out.println("TvisUtil.submitTvisImage 10");
+        System.out.println("Yt002 TvisUtil.submitTvisImage 10 resp=" + data.getJsonResult() + "!");
         return data;
     }
 
