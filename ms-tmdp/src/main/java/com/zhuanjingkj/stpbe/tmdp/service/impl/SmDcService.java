@@ -1,5 +1,8 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.mapper.DcStMapper;
 import com.zhuanjingkj.stpbe.common.mapper.SmDcMapper;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
@@ -8,11 +11,13 @@ import com.zhuanjingkj.stpbe.data.rto.sm.AddUserToSmRTO;
 import com.zhuanjingkj.stpbe.data.rto.sm.DeleteUserFromSmRTO;
 import com.zhuanjingkj.stpbe.data.dto.SmRoleDTO;
 import com.zhuanjingkj.stpbe.data.rto.sm.UpdateUserInfoRTO;
+import com.zhuanjingkj.stpbe.tmdp.dto.dc.*;
 import com.zhuanjingkj.stpbe.tmdp.service.ISmDcService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
 import com.zhuanjingkj.stpbe.tmdp.util.FileUtil;
 import com.zhuanjingkj.stpbe.tmdp.util.SHA1;
 import org.apache.commons.lang.StringUtils;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -25,8 +30,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -42,6 +49,9 @@ public class SmDcService implements ISmDcService {
 
     @Autowired
     private SmDcMapper smDcMapper;
+
+    @Autowired
+    private DcRtService dcRtService;
 
     @Override
     public ResultDTO<DbQrsDTO> getUsers_exp(Integer startIndex, Integer amount, Integer direction,
@@ -225,6 +235,11 @@ public class SmDcService implements ISmDcService {
             redisTemplate.delete("ks_lps_time");
             redisTemplate.opsForList().rightPushAll("ks_lps_time", 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
         }
+
+        redisTemplate.opsForValue().set("ks_lps_wp", 0); //无牌照
+        redisTemplate.opsForValue().set("ks_lps_tp", 0); //套牌照
+        redisTemplate.opsForValue().set("ks_lps_jp", 0); //假牌照
+        redisTemplate.opsForValue().set("ks_lps_hpzd", 0); //号牌遮挡
     }
 
     /**
@@ -234,10 +249,6 @@ public class SmDcService implements ISmDcService {
     public void mrkc() {
         redisTemplate.opsForValue().set("dcst_key_vehicle", 0); //重点监管车辆数量统计
         redisTemplate.opsForValue().set("dcst_key_truck", 0); //大货车数量统计
-        redisTemplate.opsForValue().set("ks_lps_wp", 0); //无牌照
-        redisTemplate.opsForValue().set("ks_lps_tp", 0); //套牌照
-        redisTemplate.opsForValue().set("ks_lps_jp", 0); //假牌照
-        redisTemplate.opsForValue().set("ks_lps_hpzd", 0); //号牌遮挡
         redisTemplate.opsForValue().set("dk_vt_car", 0); //轿车
         redisTemplate.opsForValue().set("dk_vt_suv", 0); //SUV
         redisTemplate.opsForValue().set("dk_vt_mpv", 0); //MPV
@@ -351,5 +362,28 @@ public class SmDcService implements ISmDcService {
             redisTemplate.delete("tn_vs_site_vehicle");
         }
         dcStMapper.deleteTifData();
+    }
+
+
+    @Override
+    public void report() {
+        long startTime = System.currentTimeMillis();
+        String[] tp = {"week", "month", "quarter", "half", "year", "today"};
+        List<DcRtAreaJamDTO> raj = new ArrayList<>();
+        List<DcRtAreaVehicleDTO> rav = new ArrayList<>();
+        List<DcRtRoadJamDTO> rrj = new ArrayList<>();
+        List<DcRtTimeJamDTO> rtj = new ArrayList<>();
+        List<DcRtTimeVehicleDTO> rtv = new ArrayList<>();
+        for (int i =0; i < tp.length; i++) {
+            raj = dcRtService.getRaj_exp(tp[i]);
+            rav = dcRtService.getRav_exp(tp[i]);
+            rrj = dcRtService.getRrj_exp(tp[i]);
+            rtj = dcRtService.getRtj_exp(tp[i]);
+            rtv = dcRtService.getRtv_exp(tp[i]);
+            smDcMapper.addReport(tp[i], JSON.toJSONString(raj), JSON.toJSONString(rav), JSON.toJSONString(rrj),
+                    JSON.toJSONString(rtj), JSON.toJSONString(rtv), LocalDate.now().toString());
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println((endTime - startTime)/1000);
     }
 }

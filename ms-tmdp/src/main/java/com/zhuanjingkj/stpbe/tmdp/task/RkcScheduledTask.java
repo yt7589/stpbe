@@ -11,13 +11,27 @@ public class RkcScheduledTask {
     @Autowired
     private SmDcService smDcService;
 
+    /**
+     * 0点清空本日数据
+     */
     @Scheduled(cron = "0 0 0 * * ?")
     public void runTrkcScheduledTask() {
         smDcService.trkc();
     }
 
+    /**
+     * 1号清空当月数据
+     */
     @Scheduled(cron = "0 0 0 1 * ?")
     public void runMrkcScheduledTask() {
         smDcService.mrkc();
+    }
+
+    /**
+     * 0点生成数据报告
+     */
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void runReportScheduledTask() {
+        smDcService.report();
     }
 }

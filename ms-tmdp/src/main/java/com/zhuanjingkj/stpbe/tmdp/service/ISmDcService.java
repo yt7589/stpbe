@@ -15,6 +15,8 @@ public interface ISmDcService {
 
     void mrkc();
 
+    void report();
+
     ResultDTO<DbQrsDTO> getUsers_exp(Integer startIndex, Integer amount, Integer direction,
                                      String loginName, String userName, String phone);
 
@@ -34,4 +36,5 @@ public interface ISmDcService {
     ResultDTO<SmSysInfoDTO> getSysInfo_exp();
 
     ResultDTO<String> uploadImg_exp(MultipartFile file);
+
 }

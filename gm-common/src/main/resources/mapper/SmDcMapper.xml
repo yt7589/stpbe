@@ -138,4 +138,9 @@
             </trim>
          WHERE ts.sys_id = 1
     </update>
+
+    <insert id ="addReport">
+        INSERT INTO t_data_report(rt_tp, rt_raj, rt_rav, rt_rrj, rt_rtj, rt_rtv, create_time)
+               VALUES(#{tp}, #{raj}, #{rav}, #{rrj}, #{rtj}, #{rtv}, #{date});
+    </insert>
 </mapper>

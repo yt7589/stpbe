@@ -22,4 +22,6 @@ public interface DcRtMapper {
     Integer getTivTotal(@Param("startTime") String startTime, @Param("endTime") String endTime);
 
     List<Map<String, Object>> getRtvForDay(@Param("startTime") String startTime, @Param("endTime") String endTime);
+
+    Map<String, Object> getDcRt(@Param("tp") String tp, @Param("date") String date);
 }

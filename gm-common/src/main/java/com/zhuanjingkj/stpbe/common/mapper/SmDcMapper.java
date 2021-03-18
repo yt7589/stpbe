@@ -35,4 +35,7 @@ public interface SmDcMapper {
 
     Integer uptSysInfo(@Param("qyName") String qyName, @Param("qyImgUrl") String qyImgUrl, @Param("sysName") String sysName,
                        @Param("qyIcp") String qyIcp, @Param("ownership") String ownership, @Param("city") String city);
+
+    Integer addReport(@Param("tp") String tp, @Param("raj") String raj, @Param("rav") String rav, @Param("rrj") String rrj,
+                      @Param("rtj") String rtj, @Param("rtv") String rtv, @Param("date") String date);
 }

@@ -1,6 +1,9 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.mapper.DcRtMapper;
+import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.*;
 import com.zhuanjingkj.stpbe.tmdp.service.IDcRtService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -327,6 +331,27 @@ public class DcRtService implements IDcRtService {
             }
         }
         return recs;
+    }
+
+    @Override
+    public ResultDTO<DcRtDTO> queryDataReport_exp(String tp) {
+        ResultDTO<DcRtDTO> dto = new ResultDTO<>();
+        Map<String, Object> resMap = dcRtMapper.getDcRt(tp, LocalDate.now().toString());
+        DcRtDTO data = new DcRtDTO();
+        if (resMap !=null && resMap.size() > 0) {
+            List<DcRtTimeJamDTO> rtj = JSON.parseArray(resMap.get("rt_rtj").toString(), DcRtTimeJamDTO.class); //分时段拥堵趋势
+            List<DcRtAreaJamDTO> raj = JSON.parseArray(resMap.get("rt_raj").toString(), DcRtAreaJamDTO.class) ; //分区高峰时段拥堵排名
+            List<DcRtTimeVehicleDTO> rtv = JSON.parseArray(resMap.get("rt_rtv").toString(), DcRtTimeVehicleDTO.class) ; //分时段过车量
+            List<DcRtAreaVehicleDTO> rav = JSON.parseArray(resMap.get("rt_rav").toString(), DcRtAreaVehicleDTO.class) ; //分区过车量排名
+            List<DcRtRoadJamDTO> rrj = JSON.parseArray(resMap.get("rt_rrj").toString(), DcRtRoadJamDTO.class) ; //高峰时段拥堵路名排名
+            data.setRaj(raj);
+            data.setRav(rav);
+            data.setRrj(rrj);
+            data.setRtj(rtj);
+            data.setRtv(rtv);
+        }
+        dto.setData(data);
+        return dto;
     }
 
 
