@@ -167,8 +167,8 @@
     <select id ="getRtvForDay" resultType ="hashmap">
         SELECT SUBSTRING(tiv.occur_time, 6, 5) AS `rj`, COUNT(1) AS `count`
           FROM t_itf_vehicle tiv
-         WHERE tiv.occur_time > '2021-03-10'
-           AND '2021-03-17'> tiv.occur_time
+         WHERE tiv.occur_time > #{startTime}
+           AND #{endTime}> tiv.occur_time
       GROUP BY SUBSTRING(tiv.occur_time, 6, 5)
     </select>
 
