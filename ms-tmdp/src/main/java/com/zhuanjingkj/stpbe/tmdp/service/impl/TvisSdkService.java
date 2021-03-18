@@ -27,7 +27,7 @@ public class TvisSdkService implements ITvisSdkService {
         byte[] reqBytes = req.toString().getBytes();
         byte[] respBytes = null;
         try {
-            System.out.println("addr:" + AppConst.VIDEO_TVIS_ADDR + ":" + AppConst.VIDEO_TVIS_PORT + "!");
+            System.out.println("Yt001 addr:" + AppConst.VIDEO_TVIS_ADDR + ":" + AppConst.VIDEO_TVIS_PORT + "!");
             respBytes = TcpClient.sendRequest(
                     AppConst.VIDEO_TVIS_ADDR, AppConst.VIDEO_TVIS_PORT,
                     reqBytes);

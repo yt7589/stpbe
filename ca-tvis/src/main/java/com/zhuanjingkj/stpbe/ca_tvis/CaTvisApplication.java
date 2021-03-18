@@ -56,6 +56,7 @@ public class CaTvisApplication implements CommandLineRunner {
     		MgqEngine.initialize();
 			getMgqsClient().startup(args);
 		} else if (cmd.equals(MODE_SNAPSHOT)) {
+    		System.out.println("抓拍机模拟器...");
     		getSnapshotApp().startup(args);
 		} else {
     		System.out.println("未知命令：" + cmd + "!");
