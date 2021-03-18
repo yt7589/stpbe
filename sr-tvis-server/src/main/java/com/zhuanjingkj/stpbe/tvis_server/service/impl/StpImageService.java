@@ -40,14 +40,12 @@ public class StpImageService implements IStpImageService {
     public ResultDTO<RecognizeTvisImageDTO> submitImage(String cameraId, String gcxh,
                                                         String mrhpt, String hphm,
                                                         byte[] imageData, String imageFile) {
-        System.out.println("StpImageService.submitImage 1");
         String streamId = "-1";
         ResultDTO<RecognizeTvisImageDTO> rst = new ResultDTO<>();
         RecognizeTvisImageDTO data = TvisUtil.submitTvisImage(environment, redisTemplate, redisTemplate2,
                 tvisJsonMapper, tvisStpOberverManager, LIST_VEHICLE_RECOGNITION,
                 cameraId, streamId,
                 imageFile, imageData);
-        System.out.println("StpImageService.submitImage 2 jsonId=" + data.getTvisJsonId() + "; result=" + data.getJsonResult() + "!!!!!!");
         rst.setData(data);
         if (data.getTvisJsonId() < 0) {
             rst.setCode(4);

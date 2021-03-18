@@ -432,11 +432,8 @@ public class TvisUtil {
                                                         String redis_request_queue,
                                                         String cameraId, String streamId, String imageFile,
                                                         byte[] imageData) {
-        System.out.println("TvisUtil.submitTvisImage 1");
         String rawResp = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, redis_request_queue, imageData);
-        System.out.println("TvisUtil.submitTvisImage 2:" + rawResp + "!");
         JSONObject jo = JSONObject.parseObject(rawResp);
-        System.out.println("TvisUtil.submitTvisImage 3");
         jo.put("ImageUrl", imageFile);
         jo.put("StreamID", streamId);
         String response = jo.toJSONString();
@@ -447,27 +444,20 @@ public class TvisUtil {
             msg = new StringBuilder("{\"cameraId\":" + cameraId + ", \"tvisJsonId\": "
                     + tvisJsonId + ", \"json\": " + response + "}");
         }
-        System.out.println("TvisUtil.submitTvisImage 4");
         RecognizeTvisImageDTO data = new RecognizeTvisImageDTO();
         if(org.apache.commons.lang3.StringUtils.equals(response,"0")){
             data.setTvisJsonId(-1);
             return data;
         }
-        System.out.println("TvisUtil.submitTvisImage 5");
         if (isFirstRun) {
             //TvisUtil.rotateTvisJsonTbl(tvisJsonMapper);
             tvisStpOberverManager.initialize(observers, environment);
             isFirstRun = false;
         }
-        System.out.println("TvisUtil.submitTvisImage 6");
         TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, msg.toString());
-        System.out.println("TvisUtil.submitTvisImage 7");
         TvisUtil.processStpTvisJson(observers, msg.toString());
-        System.out.println("TvisUtil.submitTvisImage 8");
         data.setTvisJsonId(tvisJsonId);
-        System.out.println("Yt001 TvisUtil.submitTvisImage 9 jsonId=" + data.getTvisJsonId() + "!");
         data.setJsonResult(rawResp);
-        System.out.println("Yt002 TvisUtil.submitTvisImage 10 resp=" + data.getJsonResult() + "!");
         return data;
     }
 
@@ -498,24 +488,19 @@ public class TvisUtil {
             if ("file".equals(type)) {
                 map.put("TPXX", f);
                 map.put("TPLX", "1");
-                System.out.println("recognizeImageFile.recognizeImageFile 1 url=" + url + "!");
                 response = HttpUtil.postFile(url, map);
-                System.out.println("recognizeImageFile.recognizeImageFile 2 response:" + response + "!");
             } else {
                 map.put("TPLX", "2");
                 map.put("TPXX", Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(f)));
                 response = HttpUtil.postString(url, map);
             }
-            System.out.println("recognizeImageFile.recognizeImageFile 3");
             map.clear();
             map = null;
         } catch (IOException ex) {
             logger.info("### exception: " + ex.getMessage() + "!");
             return ERROR_RESPONSE;
         }
-        System.out.println("recognizeImageFile.recognizeImageFile 4");
         if (isSuccessRequest(response)) {
-            System.out.println("recognizeImageFile.recognizeImageFile 5");
             return response;
         } else {
             logger.info("### error response:" + response + "!");

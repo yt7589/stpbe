@@ -59,7 +59,6 @@ public class SnapshotTask implements Runnable {
         map.put("cameraId", "" + cameraId);
         map.put("TPMC", f.getName());
         String response = null;
-        logger.info("### before submitTvisImage");
         return TvisUtil.submitTvisImage(map, f);
     }
 }
