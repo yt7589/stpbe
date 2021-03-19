@@ -1,5 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.VideoAnalysisService;
 import com.zhuanjingkj.stpbe.tmdp.task.VideoAnalysisTask;
 import org.apache.commons.lang.StringUtils;
@@ -74,7 +75,7 @@ public class TmdpWsHandler extends TextWebSocketHandler {
                     JSONObject jo = new JSONObject();
                     jo.put("code", 0);
                     jo.put("type", 101);
-                    jo.put("videoUrl", "rtmp://222.128.117.234:1935/stream/" + streamId);
+                    jo.put("videoUrl", PropUtil.getValue("video_url_rtmp") + streamId);
                     session.sendMessage(new TextMessage(jo.toString()));
                 }
                 System.out.println("### 建立视频分析WebSocket连接...wssId=" + wssId + "; streamId=" + streamId + "!");
