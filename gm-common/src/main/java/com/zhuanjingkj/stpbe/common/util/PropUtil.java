@@ -17,16 +17,22 @@ public class PropUtil {
 
     /** 从配置文件中，获取单个属性值*/
     public static String getValue(String name) {
+        String profilesActive = getPropertyValue("application.properties", "spring.profiles.active");
+        String value = getPropertyValue("application-" + profilesActive + ".properties", name);
+        log.info("############ value=" + value + "!!!!!!!!!!!!!!!!!!");
+        return value;
+    }
+
+    private static String getPropertyValue(String propertiesFile, String key) {
         Properties p = new Properties();
-        InputStream inStream = PropUtil.class.getClassLoader().getResourceAsStream("application-ks505.properties");
+        InputStream inStream = PropUtil.class.getClassLoader().getResourceAsStream(propertiesFile);
         String value = "";
         try {
             p.load(inStream);
-            value = p.getProperty(name) ;
+            value = p.getProperty(key);
         } catch (Exception e) {
             log.error("读取属性文件错误:",e);
         }
-        log.info("############ value=" + value + "!!!!!!!!!!!!!!!!!!");
         return value;
     }
 
