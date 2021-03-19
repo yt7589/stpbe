@@ -202,7 +202,7 @@ public class DateUtil {
 		for(int i =0; i < num; i++) {
 			resMap.put(LocalDate.now().plusDays(-i).format(dtf), 0);
 		}
-		
+
 		return resMap;
 	}
 
