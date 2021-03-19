@@ -66,9 +66,9 @@ public class TnVaService implements ITnVaService {
         ts.setSnapshot(0);
         if(devCount != null && devCount.size() > 0) {
             for(int i = 0; i < devCount.size(); i++) {
-                if("2".equals("" + devCount.get(i).get("camera_type_id"))) {
+                if("1".equals("" + devCount.get(i).get("camera_type_id"))) {
                     ts.setCamera(Integer.parseInt(devCount.get(i).get("count") == null ? "0" : "" + devCount.get(i).get("count")));
-                } else if("1".equals("" + devCount.get(i).get("camera_type_id"))) {
+                } else if("2".equals("" + devCount.get(i).get("camera_type_id"))) {
                     ts.setSnapshot(Integer.parseInt(devCount.get(i).get("count") == null ? "0" : "" + devCount.get(i).get("count")));
                 }
             }
