@@ -209,7 +209,7 @@ public class DcStService implements IDcStService {
     }
 
     @PostConstruct
-    public void getSiteInfos() {
+    public void getSiteInfo() {
         List<Map<String, Object>> recs = dcStMapper.getSiteInfo(); //{"code" : "site_name"}
         if(recs != null && recs.size() > 0) {
             for (int i = 0; i < recs.size(); i++) {
