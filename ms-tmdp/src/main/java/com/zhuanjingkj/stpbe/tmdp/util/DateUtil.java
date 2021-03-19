@@ -201,6 +201,7 @@ public class DateUtil {
 		SortedMap<String, Integer> resMap = new TreeMap<>();
 		for(int i =0; i < num; i++) {
 			resMap.put(LocalDate.now().plusDays(-i).format(dtf), 0);
+			System.out.println(LocalDate.now().plusDays(-i).format(dtf));
 		}
 		return resMap;
 	}
