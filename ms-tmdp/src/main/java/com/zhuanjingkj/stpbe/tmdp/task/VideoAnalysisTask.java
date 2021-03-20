@@ -57,6 +57,7 @@ public class VideoAnalysisTask implements Runnable {
             for (WebSocketSession wss : wsss) {
                 if (wss.isOpen()) {
                     try {
+                        System.out.println("######### 发送视频数据.....");
                         wss.sendMessage(new TextMessage(JSONObject.toJSONString(vfv)));
                     } catch (IOException e) {
                         e.printStackTrace();

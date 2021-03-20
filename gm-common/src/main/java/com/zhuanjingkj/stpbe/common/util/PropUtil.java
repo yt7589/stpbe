@@ -15,21 +15,38 @@ public class PropUtil {
 
     public static String HPHM_PRE = null;
 
-    /** 从配置文件中，获取单个属性值*/
+    /** 从配置文件中，获取单个属性值，分为两步进行，第一步从application.properties文件中取出profiles.active属性，
+     * 找到当前的配置文件，然后从当前配置文件中读出指定的属性值
+     */
     public static String getValue(String name) {
-        Properties p = new Properties();
-        InputStream inStream = PropUtil.class.getClassLoader().getResourceAsStream("application-ks505.properties");
-        String value = "";
-        try {
-            p.load(inStream);
-            value = p.getProperty(name) ;
-        } catch (Exception e) {
-            log.error("读取属性文件错误:",e);
-        }
+        String profilesActive = getPropertyValue("application.properties", "spring.profiles.active");
+        String value = getPropertyValue("application-" + profilesActive + ".properties", name);
         log.info("############ value=" + value + "!!!!!!!!!!!!!!!!!!");
         return value;
     }
 
+    /**
+     * 从当前活跃的配置文件中读出指定的属性值
+     * @param propertiesFile 当前活跃的配置文件，由application.properties中的spring.profiles.active指定
+     * @param key 属性名称
+     * @return 属性值，如果未找到则返回空
+     */
+    private static String getPropertyValue(String propertiesFile, String key) {
+        Properties p = new Properties();
+        InputStream inStream = PropUtil.class.getClassLoader().getResourceAsStream(propertiesFile);
+        String value = "";
+        try {
+            p.load(inStream);
+            value = p.getProperty(key);
+        } catch (Exception e) {
+            log.error("读取属性文件错误:",e);
+        }
+        return value;
+    }
+
+    /**
+     * 设置本地号牌号码前缀，如：京A-XY123。京字即为号牌号码前缀
+     */
     @PostConstruct
     public void  init() {
         HPHM_PRE = getValue("hphm.native.prefix");
