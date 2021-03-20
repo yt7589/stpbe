@@ -26,7 +26,7 @@
     </select>
 
     <select id ="getRajForDay" resultType ="hashmap">
-        SELECT M.area_name, M.`count` AS mcount, M.lng, M.lat, IFNULL((M.`count` - P.`count`)/P.`count` * 100 , 0) AS rg
+        SELECT M.area_name, SUM(M.`count`) AS mcount, MIN(M.lng) AS lng, MIN(M.lat) AS lat, IFNULL((SUM(M.`count`) - SUM(P.`count`))/SUM(P.`count`) * 100 , 0) AS rg
           FROM (
         SELECT ta.area_name, COUNT(1) AS `count`, ts.lng, ts.lat, ta.area_id
           FROM t_itf_vehicle tiv
@@ -47,10 +47,12 @@
            AND #{startTime} > tiv.occur_time
       GROUP BY ts.site_id
       ORDER BY COUNT(1) DESC) P ON M.area_id = P.area_id
+      GROUP BY M.area_name
+         LIMIT 10
     </select>
 
     <select id ="getRavForDay" resultType ="hashmap">
-        SELECT N.mAreaName, N.mcount, N.lng, N.lat, IFNULL(((N.mcount - T.pcount)/(T.pcount) * 100), 0) AS rg
+        SELECT N.mAreaName, SUM(N.mcount) AS mcount, MIN(N.lng) AS lng, MIN(N.lat) AS lat, IFNULL(((SUM(N.mcount) - SUM(T.pcount))/(SUM(T.pcount)) * 100), 0) AS rg
           FROM (
         SELECT M.area_name AS mAreaName, M.mcount, M.area_id AS mAreaId, M.lng, M.lat
           FROM (
@@ -76,10 +78,38 @@
            AND #{startTime} > tiv.occur_time
       GROUP BY tiv.camera_id )p) Q) T
             ON N.mAreaId = T.pAreaId
-      ORDER BY N.mcount DESC
-        LIMIT 10
+      GROUP BY N.mAreaName
+      ORDER BY SUM(N.mcount) DESC
+         LIMIT 10
+<!--        SELECT N.mAreaName, N.mcount, N.lng, N.lat, IFNULL(((N.mcount - T.pcount)/(T.pcount) * 100), 0) AS rg-->
+<!--          FROM (-->
+<!--        SELECT M.area_name AS mAreaName, M.mcount, M.area_id AS mAreaId, M.lng, M.lat-->
+<!--          FROM (-->
+<!--        SELECT ta.area_name, COUNT(1) AS mcount, ta.area_id, ts.lng, ts.lat-->
+<!--          FROM t_itf_vehicle tiv-->
+<!--     LEFT JOIN t_camera tc ON tiv.camera_id = tc.camera_id-->
+<!--     LEFT JOIN t_site ts ON tc.site_id = ts.site_id-->
+<!--     LEFT JOIN t_area ta ON ts.area_id = ta.area_id-->
+<!--         WHERE tiv.occur_time > #{startTime}-->
+<!--           AND #{endTime} > tiv.occur_time-->
+<!--      GROUP BY tiv.camera_id) M) N-->
+<!--     LEFT JOIN (-->
+<!--        SELECT Q.pAreaName, Q.pAreaId, Q.pcount, Q.lng, Q.lat-->
+<!--          FROM (-->
+<!--        SELECT p.area_name AS pAreaName, p.area_id AS pAreaId, p.`count` AS pcount, p.lng, p.lat-->
+<!--          FROM (-->
+<!--        SELECT ta.area_name, COUNT(1) AS `count`, ta.area_id, ts.lng, ts.lat-->
+<!--          FROM t_itf_vehicle tiv-->
+<!--     LEFT JOIN t_camera tc ON tiv.camera_id = tc.camera_id-->
+<!--     LEFT JOIN t_site ts ON tc.site_id = ts.site_id-->
+<!--     LEFT JOIN t_area ta ON ts.area_id = ta.area_id-->
+<!--         WHERE tiv.occur_time > #{pStartTime}-->
+<!--           AND #{startTime} > tiv.occur_time-->
+<!--      GROUP BY tiv.camera_id )p) Q) T-->
+<!--            ON N.mAreaId = T.pAreaId-->
+<!--      ORDER BY N.mcount DESC-->
+<!--        LIMIT 10-->
     </select>
-
 <!--    <select id ="getRrjForDay" resultType ="hashmap">-->
 <!--        SELECT T.road_name AS roadName, (T.mcount + Q.mcount) AS mcount, T.srcLng, T.srcLat, Q.dstLng, Q.dstLat,-->
 <!--               IFNULL((T.mcount + Q.mcount - T.pcount - Q.pcount)/(Q.pcount + T.pcount),0) As rg-->

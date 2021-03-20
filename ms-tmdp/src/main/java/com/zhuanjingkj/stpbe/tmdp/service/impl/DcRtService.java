@@ -7,6 +7,7 @@ import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.*;
 import com.zhuanjingkj.stpbe.tmdp.service.IDcRtService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class DcRtService implements IDcRtService {
 
     @Autowired
     private DcRtMapper dcRtMapper;
+
+    @Autowired
+    private DcRtService dcRtService;
 
     @Override
     public List<DcRtTimeJamDTO> getRtj_exp(String tp) {
@@ -113,10 +117,15 @@ public class DcRtService implements IDcRtService {
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i < rtj.size(); i ++) {
                     Integer count = Integer.parseInt(rtj.get(i).get("count") == null ? "0" : "" + rtj.get(i).get("count"));
-                    rtjFor24Map.put("" + rtj.get(i).get("rj"), count);
+                    String key = "" + rtj.get(i).get("rj");
+                    if (StringUtils.isNotBlank(key)) {
+                        key = (Integer.parseInt(key) + 1) < 10 ? "0" + (Integer.parseInt(key) + 1) : "" + (Integer.parseInt(key) + 1);
+                    }
+                    rtjFor24Map.put(key, count);
                 }
             }
             for(String key : rtjFor24Map.keySet()) {
+
                 if(total > 0) {
                     recs.add(new DcRtTimeJamDTO(key +":00", str2Double((double)rtjFor24Map.get(key)/total)));
                 } else {
@@ -230,7 +239,11 @@ public class DcRtService implements IDcRtService {
             Map<String, Integer> rtvMap = DateUtil.timeFor24Map();
             if(rtv != null && rtv.size() > 0) {
                 for(int i = 0; i < rtv.size(); i++) {
-                    rtvMap.put("" + rtv.get(i).get("rj"), Integer.parseInt(rtv.get(i).get("count") == null ? "0" : ""+ rtv.get(i).get("count")));
+                    String key = "" + rtv.get(i).get("rj");
+                    if (StringUtils.isNotBlank(key)) {
+                        key = (Integer.parseInt(key) + 1) < 10 ? "0" + (Integer.parseInt(key) + 1) : "" + (Integer.parseInt(key) + 1);
+                    }
+                    rtvMap.put(key +":00", Integer.parseInt(rtv.get(i).get("count") == null ? "0" : ""+ rtv.get(i).get("count")));
                 }
             }
             for(String key : rtvMap.keySet()) {
@@ -336,19 +349,27 @@ public class DcRtService implements IDcRtService {
     @Override
     public ResultDTO<DcRtDTO> queryDataReport_exp(String tp) {
         ResultDTO<DcRtDTO> dto = new ResultDTO<>();
-        Map<String, Object> resMap = dcRtMapper.getDcRt(tp, LocalDate.now().toString());
         DcRtDTO data = new DcRtDTO();
-        if (resMap !=null && resMap.size() > 0) {
-            List<DcRtTimeJamDTO> rtj = JSON.parseArray(resMap.get("rt_rtj").toString(), DcRtTimeJamDTO.class); //分时段拥堵趋势
-            List<DcRtAreaJamDTO> raj = JSON.parseArray(resMap.get("rt_raj").toString(), DcRtAreaJamDTO.class) ; //分区高峰时段拥堵排名
-            List<DcRtTimeVehicleDTO> rtv = JSON.parseArray(resMap.get("rt_rtv").toString(), DcRtTimeVehicleDTO.class) ; //分时段过车量
-            List<DcRtAreaVehicleDTO> rav = JSON.parseArray(resMap.get("rt_rav").toString(), DcRtAreaVehicleDTO.class) ; //分区过车量排名
-            List<DcRtRoadJamDTO> rrj = JSON.parseArray(resMap.get("rt_rrj").toString(), DcRtRoadJamDTO.class) ; //高峰时段拥堵路名排名
-            data.setRaj(raj);
-            data.setRav(rav);
-            data.setRrj(rrj);
-            data.setRtj(rtj);
-            data.setRtv(rtv);
+        if ("today".equals(tp)) {
+            data.setRaj(dcRtService.getRaj_exp(tp));
+            data.setRav(dcRtService.getRav_exp(tp));
+            data.setRrj(dcRtService.getRrj_exp(tp));
+            data.setRtj(dcRtService.getRtj_exp(tp));
+            data.setRtv(dcRtService.getRtv_exp(tp));
+        } else {
+            Map<String, Object> resMap = dcRtMapper.getDcRt(tp, LocalDate.now().toString());
+            if (resMap !=null && resMap.size() > 0) {
+                List<DcRtTimeJamDTO> rtj = JSON.parseArray(resMap.get("rt_rtj").toString(), DcRtTimeJamDTO.class); //分时段拥堵趋势
+                List<DcRtAreaJamDTO> raj = JSON.parseArray(resMap.get("rt_raj").toString(), DcRtAreaJamDTO.class) ; //分区高峰时段拥堵排名
+                List<DcRtTimeVehicleDTO> rtv = JSON.parseArray(resMap.get("rt_rtv").toString(), DcRtTimeVehicleDTO.class) ; //分时段过车量
+                List<DcRtAreaVehicleDTO> rav = JSON.parseArray(resMap.get("rt_rav").toString(), DcRtAreaVehicleDTO.class) ; //分区过车量排名
+                List<DcRtRoadJamDTO> rrj = JSON.parseArray(resMap.get("rt_rrj").toString(), DcRtRoadJamDTO.class) ; //高峰时段拥堵路名排名
+                data.setRaj(raj);
+                data.setRav(rav);
+                data.setRrj(rrj);
+                data.setRtj(rtj);
+                data.setRtv(rtv);
+            }
         }
         dto.setData(data);
         return dto;
@@ -368,7 +389,6 @@ public class DcRtService implements IDcRtService {
     }
 
     private static Double str2Double(double num) {
-        System.out.println("num:" + num);
         DecimalFormat df = new DecimalFormat("#.##");
         return Double.parseDouble(df.format(num));
     }
