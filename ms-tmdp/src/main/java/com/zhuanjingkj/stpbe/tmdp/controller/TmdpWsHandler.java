@@ -76,7 +76,7 @@ public class TmdpWsHandler extends TextWebSocketHandler {
                     jo.put("code", 0);
                     jo.put("type", 101);
                     jo.put("videoUrl", PropUtil.getValue("video_url_rtmp") + streamId + "");
-                    jo.put("test", "测试");
+//                    jo.put("test", "测试");
                     session.sendMessage(new TextMessage(jo.toString()));
                 }
                 System.out.println("### 建立视频分析WebSocket连接...wssId=" + wssId + "; streamId=" + streamId + "!");
