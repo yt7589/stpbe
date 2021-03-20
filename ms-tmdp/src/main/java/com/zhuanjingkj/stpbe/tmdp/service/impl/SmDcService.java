@@ -368,18 +368,13 @@ public class SmDcService implements ISmDcService {
     @Override
     public void report() {
         long startTime = System.currentTimeMillis();
-        String[] tp = {"week", "month", "quarter", "half", "year", "today"};
-        List<DcRtAreaJamDTO> raj = new ArrayList<>();
-        List<DcRtAreaVehicleDTO> rav = new ArrayList<>();
-        List<DcRtRoadJamDTO> rrj = new ArrayList<>();
-        List<DcRtTimeJamDTO> rtj = new ArrayList<>();
-        List<DcRtTimeVehicleDTO> rtv = new ArrayList<>();
+        String[] tp = {"week", "month", "quarter", "half", "year"};
         for (int i =0; i < tp.length; i++) {
-            raj = dcRtService.getRaj_exp(tp[i]);
-            rav = dcRtService.getRav_exp(tp[i]);
-            rrj = dcRtService.getRrj_exp(tp[i]);
-            rtj = dcRtService.getRtj_exp(tp[i]);
-            rtv = dcRtService.getRtv_exp(tp[i]);
+            List<DcRtAreaJamDTO> raj = dcRtService.getRaj_exp(tp[i]);
+            List<DcRtAreaVehicleDTO> rav = dcRtService.getRav_exp(tp[i]);
+            List<DcRtRoadJamDTO> rrj = dcRtService.getRrj_exp(tp[i]);
+            List<DcRtTimeJamDTO> rtj = dcRtService.getRtj_exp(tp[i]);
+            List<DcRtTimeVehicleDTO> rtv = dcRtService.getRtv_exp(tp[i]);
             smDcMapper.addReport(tp[i], JSON.toJSONString(raj), JSON.toJSONString(rav), JSON.toJSONString(rrj),
                     JSON.toJSONString(rtj), JSON.toJSONString(rtv), LocalDate.now().toString());
         }
