@@ -65,13 +65,15 @@ public class TvisImageRecogService implements ITvisImageRecogService {
 
     @Override
     public Map<String, Object> recognition(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData) {
+        System.out.println("recognition:cameraId>" + cameraId + ";gcxh>" + gcxh + ";mrhpt>"+ mrhpt);
         String response = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_RECOGNITION, imageData);
         if(StringUtils.equals(response,"0")){
             TvisImageErrorResponse responseError = new TvisImageErrorResponse(4,gcxh,MSG);
             return JSON.parseObject(JSON.toJSONString(responseError));
         }
+        System.out.println("recognition:cameraId>" + cameraId + ";gcxh>" + gcxh + ";mrhpt>"+ mrhpt);
         // 向Kafka的Topic发送请求
-        StringBuilder msg = new StringBuilder("{\"cameraId\": \"" + cameraId + "\", \"json\": " + response + "}");
+//        StringBuilder msg = new StringBuilder("{\"cameraId\": \"" + cameraId + "\", \"json\": " + response + "}");
 //        kafkaTemplate.send("tvis", 0, msg.toString());
 //        kafkaTemplate.flush();
         return JSON.parseObject(response);
