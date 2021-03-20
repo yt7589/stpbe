@@ -71,7 +71,7 @@ public class TvisImageRecogService implements ITvisImageRecogService {
             TvisImageErrorResponse responseError = new TvisImageErrorResponse(4,gcxh,MSG);
             return JSON.parseObject(JSON.toJSONString(responseError));
         }
-        System.out.println("recognition:cameraId>" + cameraId + ";gcxh>" + gcxh + ";mrhpt>"+ mrhpt);
+        System.out.println("recognition:cameraId>" + cameraId + ";gcxh>" + gcxh + ";mrhpt>"+ mrhpt +";response>" + response);
         // 向Kafka的Topic发送请求
 //        StringBuilder msg = new StringBuilder("{\"cameraId\": \"" + cameraId + "\", \"json\": " + response + "}");
 //        kafkaTemplate.send("tvis", 0, msg.toString());
