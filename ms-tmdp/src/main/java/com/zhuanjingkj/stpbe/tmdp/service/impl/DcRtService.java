@@ -243,7 +243,7 @@ public class DcRtService implements IDcRtService {
                     if (StringUtils.isNotBlank(key)) {
                         key = (Integer.parseInt(key) + 1) < 10 ? "0" + (Integer.parseInt(key) + 1) : "" + (Integer.parseInt(key) + 1);
                     }
-                    rtvMap.put(key, Integer.parseInt(rtv.get(i).get("count") == null ? "0" : ""+ rtv.get(i).get("count")));
+                    rtvMap.put(key +":00", Integer.parseInt(rtv.get(i).get("count") == null ? "0" : ""+ rtv.get(i).get("count")));
                 }
             }
             for(String key : rtvMap.keySet()) {
