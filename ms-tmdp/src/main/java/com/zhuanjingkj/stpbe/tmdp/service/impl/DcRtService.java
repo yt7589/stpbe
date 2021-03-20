@@ -7,6 +7,7 @@ import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.*;
 import com.zhuanjingkj.stpbe.tmdp.service.IDcRtService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -116,10 +117,15 @@ public class DcRtService implements IDcRtService {
             if(rtj != null && rtj.size() > 0) {
                 for(int i = 0; i < rtj.size(); i ++) {
                     Integer count = Integer.parseInt(rtj.get(i).get("count") == null ? "0" : "" + rtj.get(i).get("count"));
-                    rtjFor24Map.put("" + rtj.get(i).get("rj"), count);
+                    String key = "" + rtj.get(i).get("rj");
+                    if (StringUtils.isNotBlank(key)) {
+                        key = (Integer.parseInt(key) + 1) < 10 ? "0" + (Integer.parseInt(key) + 1) : "" + (Integer.parseInt(key) + 1);
+                    }
+                    rtjFor24Map.put(key, count);
                 }
             }
             for(String key : rtjFor24Map.keySet()) {
+
                 if(total > 0) {
                     recs.add(new DcRtTimeJamDTO(key +":00", str2Double((double)rtjFor24Map.get(key)/total)));
                 } else {
@@ -233,7 +239,11 @@ public class DcRtService implements IDcRtService {
             Map<String, Integer> rtvMap = DateUtil.timeFor24Map();
             if(rtv != null && rtv.size() > 0) {
                 for(int i = 0; i < rtv.size(); i++) {
-                    rtvMap.put("" + rtv.get(i).get("rj"), Integer.parseInt(rtv.get(i).get("count") == null ? "0" : ""+ rtv.get(i).get("count")));
+                    String key = "" + rtv.get(i).get("rj");
+                    if (StringUtils.isNotBlank(key)) {
+                        key = (Integer.parseInt(key) + 1) < 10 ? "0" + (Integer.parseInt(key) + 1) : "" + (Integer.parseInt(key) + 1);
+                    }
+                    rtvMap.put(key, Integer.parseInt(rtv.get(i).get("count") == null ? "0" : ""+ rtv.get(i).get("count")));
                 }
             }
             for(String key : rtvMap.keySet()) {
