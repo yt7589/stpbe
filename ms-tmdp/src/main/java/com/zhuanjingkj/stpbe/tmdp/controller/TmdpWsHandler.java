@@ -48,6 +48,7 @@ public class TmdpWsHandler extends TextWebSocketHandler {
             throws InterruptedException, IOException, JSONException {
         String payload = message.getPayload();
         JSONObject jsonObject = new JSONObject(payload);
+        System.out.println(jsonObject.get("userId"));
         String user = jsonObject.getString("userId");
         String type = jsonObject.getString("type");
         String topic = jsonObject.getString("topic");
