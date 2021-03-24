@@ -124,7 +124,7 @@ public class GrqEngine {
      */
     public static void initializeGrp() {
         if (null == client) {
-            ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
+            ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.68").withPort(19530).build();
             client = new MilvusGrpcClient(connectParam);
         }
         if (null == carCllxzfl || null == carCllxfl || null == busCllxfl || null == truckCllxfl) {

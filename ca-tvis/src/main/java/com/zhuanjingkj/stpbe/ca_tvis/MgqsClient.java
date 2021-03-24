@@ -305,7 +305,7 @@ public class MgqsClient implements ITvisClient {
                 "</style>\n" +
                 "<script>\n" +
                 "let g_idx = 0\n" +
-                "let g_urlBase = 'http://192.168.2.15:5000/'\n" +
+                "let g_urlBase = 'http://192.168.2.68:5000/'\n" +
                 "let g_sdkIdx = 0\n" +
                 "let g_milvusIdx = 0\r\n");
         return html.toString();
