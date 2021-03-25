@@ -197,6 +197,7 @@ public class TvisUtil {
                                                               Map<String, CameraVehicleRecordVO> cutVehs) {
         long wsmVfvvIdx = 0;
         String vaImgUrlBase = PropUtil.getValue("TMDP_BASE_URL") + "va/getVaImage?imgFn=";
+
         WsmVideoFrameDTO vfv = null;
         List<WsmVideoFrameVehicleDTO> wvfvvs = null;
         WsmVideoFrameVehicleDTO vfvv = null;
@@ -221,6 +222,7 @@ public class TvisUtil {
         File cutFileObj = null;
         String imgBaseFolder = "images/";
         String orgFileFn = "n_" + tvisJsonId + ".jpg";
+        System.out.println("vaImgUrlBase:" + vaImgUrlBase + orgFileFn);
         vfv = new WsmVideoFrameDTO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
         wvfvvs = vfv.getData();
         for (VehicleVo veh : vehs) {
