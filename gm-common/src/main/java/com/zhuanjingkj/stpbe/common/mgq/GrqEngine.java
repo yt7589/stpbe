@@ -54,69 +54,69 @@ public class GrqEngine {
     public static long insertRecord(RedisTemplate<String, Serializable> redisTemplate,
                                     String partitionTag,
                                     VehicleVo vo) {
-        long grqId = getGrqId(redisTemplate);
-        // 插入记录
-        List<Long> ids = new ArrayList<>(Arrays.asList(grqId));
-        VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
-        VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
-        VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
-        List<Long> tvisJsonIds = Arrays.asList(vo.getTvisJsonId());
-        List<Long> vehsIdxs = Arrays.asList(vo.getVehsIdx());
-        List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
-        InsertParam insertParam =
-                InsertParam.create(PropUtil.getValue("GRQ_COLLECTION_NAME"))
-                        .addField(PropUtil.getValue("GRQ_TVIS_JSON_ID"), DataType.INT64, tvisJsonIds)
-                        .addField(PropUtil.getValue("GRQ_VEHS_IDX"), DataType.INT64, vehsIdxs)
-                        .addVectorField("embedding", DataType.VECTOR_FLOAT, embeddings)
-                        .setEntityIds(ids)
-                        .setPartitionTag(partitionTag);
-        List<Long> entityIds = client.insert(insertParam);
+//        long grqId = getGrqId(redisTemplate);
+//        // 插入记录
+//        List<Long> ids = new ArrayList<>(Arrays.asList(grqId));
+//        VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
+//        VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
+//        VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
+//        List<Long> tvisJsonIds = Arrays.asList(vo.getTvisJsonId());
+//        List<Long> vehsIdxs = Arrays.asList(vo.getVehsIdx());
+//        List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
+//        InsertParam insertParam =
+//                InsertParam.create(PropUtil.getValue("GRQ_COLLECTION_NAME"))
+//                        .addField(PropUtil.getValue("GRQ_TVIS_JSON_ID"), DataType.INT64, tvisJsonIds)
+//                        .addField(PropUtil.getValue("GRQ_VEHS_IDX"), DataType.INT64, vehsIdxs)
+//                        .addVectorField("embedding", DataType.VECTOR_FLOAT, embeddings)
+//                        .setEntityIds(ids)
+//                        .setPartitionTag(partitionTag);
+//        List<Long> entityIds = client.insert(insertParam);
         long entityId = 0;
-        if (entityIds != null && !entityIds.isEmpty() && entityIds.size() > 0) {
-            entityId = entityIds.get(0);
-        }
-        client.flush(PropUtil.getValue("GRQ_COLLECTION_NAME"));
+//        if (entityIds != null && !entityIds.isEmpty() && entityIds.size() > 0) {
+//            entityId = entityIds.get(0);
+//        }
+//        client.flush(PropUtil.getValue("GRQ_COLLECTION_NAME"));
         return entityId;
     }
 
     public static List<TvisGrqRstVo> findTopK(String partitionTag, List<List<Float>> queryEmbedding, long topK) {
-        String dsl =
-                String.format(
-                        "{\"bool\": {"
-                                + "\"must\": [{"
-                                + "    \"vector\": {"
-                                + "        \"embedding\": {"
-                                + "            \"topk\": %d, \"metric_type\": \"L2\", " +
-                                "\"type\": \"float\", \"query\": %s"
-                                + "    }}}]}}",
-                        topK, queryEmbedding.toString());
-        // Only specified fields in `setParamsInJson` will be returned from search request.
-        // If not set, all fields will be returned.
-        SearchParam searchParam =
-                SearchParam.create(PropUtil.getValue("GRQ_COLLECTION_NAME"))
-                        .setDsl(dsl)
-                        .setParamsInJson("{\"fields\": [\"" + PropUtil.getValue("GRQ_TVIS_JSON_ID") + "\", \"" +
-                                PropUtil.getValue("GRQ_VEHS_IDX") + "\", \"embedding\"]}");
-        SearchResult searchResult = client.search(searchParam);
-        int idx = 0;
+//        String dsl =
+//                String.format(
+//                        "{\"bool\": {"
+//                                + "\"must\": [{"
+//                                + "    \"vector\": {"
+//                                + "        \"embedding\": {"
+//                                + "            \"topk\": %d, \"metric_type\": \"L2\", " +
+//                                "\"type\": \"float\", \"query\": %s"
+//                                + "    }}}]}}",
+//                        topK, queryEmbedding.toString());
+//        // Only specified fields in `setParamsInJson` will be returned from search request.
+//        // If not set, all fields will be returned.
+//        SearchParam searchParam =
+//                SearchParam.create(PropUtil.getValue("GRQ_COLLECTION_NAME"))
+//                        .setDsl(dsl)
+//                        .setParamsInJson("{\"fields\": [\"" + PropUtil.getValue("GRQ_TVIS_JSON_ID") + "\", \"" +
+//                                PropUtil.getValue("GRQ_VEHS_IDX") + "\", \"embedding\"]}");
+//        SearchResult searchResult = client.search(searchParam);
+//        int idx = 0;
         List<TvisGrqRstVo> rst = new ArrayList<>();
-        TvisGrqRstVo vo = null;
-        long grpId = 0;
-        double dist = 0.0;
-        if (searchResult.getResultIdsList().size() <= 0) {
-            return rst;
-        }
-        int baseIdx = 0;
-        int count = searchResult.getResultIdsList().get(baseIdx).size();
-        for (idx=0; idx<count; idx++) {
-            vo = new TvisGrqRstVo();
-            vo.setGrqId(searchResult.getResultIdsList().get(baseIdx).get(idx));
-            vo.setDist(searchResult.getResultDistancesList().get(baseIdx).get(idx));
-            Map<String, Object> rec = searchResult.getFieldsMap().get(baseIdx).get(idx);
-            vo.setTvisJsonId((Long) rec.get(PropUtil.getValue("GRQ_TVIS_JSON_ID")));
-            vo.setVehsIdx((long) rec.get(PropUtil.getValue("GRQ_VEHS_IDX")));
-            rst.add(vo);
-        }
+//        TvisGrqRstVo vo = null;
+//        long grpId = 0;
+//        double dist = 0.0;
+//        if (searchResult.getResultIdsList().size() <= 0) {
+//            return rst;
+//        }
+//        int baseIdx = 0;
+//        int count = searchResult.getResultIdsList().get(baseIdx).size();
+//        for (idx=0; idx<count; idx++) {
+//            vo = new TvisGrqRstVo();
+//            vo.setGrqId(searchResult.getResultIdsList().get(baseIdx).get(idx));
+//            vo.setDist(searchResult.getResultDistancesList().get(baseIdx).get(idx));
+//            Map<String, Object> rec = searchResult.getFieldsMap().get(baseIdx).get(idx);
+//            vo.setTvisJsonId((Long) rec.get(PropUtil.getValue("GRQ_TVIS_JSON_ID")));
+//            vo.setVehsIdx((long) rec.get(PropUtil.getValue("GRQ_VEHS_IDX")));
+//            rst.add(vo);
+//        }
         return rst;
     }
 
@@ -171,28 +171,28 @@ public class GrqEngine {
     }
 
     public static void createCollection(String collectionName) {
-        if (client.listCollections().contains(collectionName)) {
-            client.dropCollection(collectionName);
-        }
-        logger.info("删除已有Collection");
-        final int dimension = Integer.parseInt(PropUtil.getValue("REID_DIM")); // ReID特征向量维数
-        CollectionMapping collectionMapping =
-                CollectionMapping.create(collectionName)
-                        .addField(PropUtil.getValue("GRQ_TVIS_JSON_ID"), DataType.INT64) // tvisJsonId
-                        .addField(PropUtil.getValue("GRQ_VEHS_IDX"), DataType.INT64) // vehsIdx
-                        .addVectorField("embedding", DataType.VECTOR_FLOAT, dimension)
-                        .setParamsInJson("{\"segment_row_limit\": 4096, \"auto_id\": false}");
-        client.createCollection(collectionMapping);
-        // Check the existence of collection
-        if (!client.hasCollection(collectionName)) {
-            throw new AssertionError("创建Collection失败：Collection not found!");
-        }
+//        if (client.listCollections().contains(collectionName)) {
+//            client.dropCollection(collectionName);
+//        }
+//        logger.info("删除已有Collection");
+//        final int dimension = Integer.parseInt(PropUtil.getValue("REID_DIM")); // ReID特征向量维数
+//        CollectionMapping collectionMapping =
+//                CollectionMapping.create(collectionName)
+//                        .addField(PropUtil.getValue("GRQ_TVIS_JSON_ID"), DataType.INT64) // tvisJsonId
+//                        .addField(PropUtil.getValue("GRQ_VEHS_IDX"), DataType.INT64) // vehsIdx
+//                        .addVectorField("embedding", DataType.VECTOR_FLOAT, dimension)
+//                        .setParamsInJson("{\"segment_row_limit\": 4096, \"auto_id\": false}");
+//        client.createCollection(collectionMapping);
+//        // Check the existence of collection
+//        if (!client.hasCollection(collectionName)) {
+//            throw new AssertionError("创建Collection失败：Collection not found!");
+//        }
     }
 
     public static void createPartition(String collectionName, String partitionTag) {
-        client.createPartition(collectionName, partitionTag);
-        if (!client.hasPartition(collectionName, partitionTag)) {
-            throw new AssertionError("创建" + partitionTag + "分区失败：Partition not found!");
-        }
+//        client.createPartition(collectionName, partitionTag);
+//        if (!client.hasPartition(collectionName, partitionTag)) {
+//            throw new AssertionError("创建" + partitionTag + "分区失败：Partition not found!");
+//        }
     }
 }
