@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.facade.service;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.GetUserInfoDTO;
 import com.zhuanjingkj.stpbe.data.dto.LoginDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
@@ -51,8 +52,8 @@ public class FacadeService implements IFacadeService {
             userVo.setRoleName(data.getRoleName());
             logger.info("### Yt ###: save userVo to Redis");
             redisTemplate.opsForValue().set(
-                    AppConst.AUTH_REDIS_USER_PREFIX + userVo.getUserId(),
-                    userVo, AppConst.REDIS_USER_DURATION, TimeUnit.MILLISECONDS);
+                    PropUtil.getValue("AUTH_REDIS_USER_PREFIX") + userVo.getUserId(),
+                    userVo, Long.parseLong(PropUtil.getValue("REDIS_USER_DURATION")), TimeUnit.MILLISECONDS);
             logger.info("### Yt ###: save userVo to Redis Done");
         }
         return dto;
@@ -60,7 +61,7 @@ public class FacadeService implements IFacadeService {
 
     @Override
     public ResultDTO<GetUserInfoDTO> getUserInfo(String platform, String version, String userIdStr) {
-        String uidStr = request.getHeader(AppConst.AUTH_USER_HEADER);
+        String uidStr = request.getHeader(PropUtil.getValue("AUTH_USER_HEADER"));
         logger.info("用户编号：" + uidStr + "!");
         return fccUserService.getUserInfo(platform, version, userIdStr);
     }
@@ -72,7 +73,7 @@ public class FacadeService implements IFacadeService {
         Long endTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 15;
         String token = Jwts.builder().setSubject("zjc").setExpiration(new Date(endTime))
                 .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS256, AppConst.JWT_KEY.getBytes()).compact();
+                .signWith(SignatureAlgorithm.HS256, PropUtil.getValue("JWT_KEY").getBytes()).compact();
         System.out.println("token=" + token + "!");
         return token;
     }

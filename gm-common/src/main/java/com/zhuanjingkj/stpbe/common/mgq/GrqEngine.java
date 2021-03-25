@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.common.mgq;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.vo.*;
 import io.milvus.client.*;
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class GrqEngine {
      * @return
      */
     public static long getGrqId(RedisTemplate<String, Serializable> redisTemplate) {
-        return redisTemplate.opsForValue().increment(AppConst.GRQ_ID);
+        return redisTemplate.opsForValue().increment(PropUtil.getValue("GRQ_ID"));
     }
 
     public static long insertRecord(RedisTemplate<String, Serializable> redisTemplate,
@@ -63,9 +64,9 @@ public class GrqEngine {
         List<Long> vehsIdxs = Arrays.asList(vo.getVehsIdx());
         List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
         InsertParam insertParam =
-                InsertParam.create(AppConst.GRQ_COLLECTION_NAME)
-                        .addField(AppConst.GRQ_TVIS_JSON_ID, DataType.INT64, tvisJsonIds)
-                        .addField(AppConst.GRQ_VEHS_IDX, DataType.INT64, vehsIdxs)
+                InsertParam.create(PropUtil.getValue("GRQ_COLLECTION_NAME"))
+                        .addField(PropUtil.getValue("GRQ_TVIS_JSON_ID"), DataType.INT64, tvisJsonIds)
+                        .addField(PropUtil.getValue("GRQ_VEHS_IDX"), DataType.INT64, vehsIdxs)
                         .addVectorField("embedding", DataType.VECTOR_FLOAT, embeddings)
                         .setEntityIds(ids)
                         .setPartitionTag(partitionTag);
@@ -74,7 +75,7 @@ public class GrqEngine {
         if (entityIds != null && !entityIds.isEmpty() && entityIds.size() > 0) {
             entityId = entityIds.get(0);
         }
-        client.flush(AppConst.GRQ_COLLECTION_NAME);
+        client.flush(PropUtil.getValue("GRQ_COLLECTION_NAME"));
         return entityId;
     }
 
@@ -92,10 +93,10 @@ public class GrqEngine {
         // Only specified fields in `setParamsInJson` will be returned from search request.
         // If not set, all fields will be returned.
         SearchParam searchParam =
-                SearchParam.create(AppConst.GRQ_COLLECTION_NAME)
+                SearchParam.create(PropUtil.getValue("GRQ_COLLECTION_NAME"))
                         .setDsl(dsl)
-                        .setParamsInJson("{\"fields\": [\"" + AppConst.GRQ_TVIS_JSON_ID + "\", \"" +
-                                AppConst.GRQ_VEHS_IDX + "\", \"embedding\"]}");
+                        .setParamsInJson("{\"fields\": [\"" + PropUtil.getValue("GRQ_TVIS_JSON_ID") + "\", \"" +
+                                PropUtil.getValue("GRQ_VEHS_IDX") + "\", \"embedding\"]}");
         SearchResult searchResult = client.search(searchParam);
         int idx = 0;
         List<TvisGrqRstVo> rst = new ArrayList<>();
@@ -112,8 +113,8 @@ public class GrqEngine {
             vo.setGrqId(searchResult.getResultIdsList().get(baseIdx).get(idx));
             vo.setDist(searchResult.getResultDistancesList().get(baseIdx).get(idx));
             Map<String, Object> rec = searchResult.getFieldsMap().get(baseIdx).get(idx);
-            vo.setTvisJsonId((Long) rec.get(AppConst.GRQ_TVIS_JSON_ID));
-            vo.setVehsIdx((long) rec.get(AppConst.GRQ_VEHS_IDX));
+            vo.setTvisJsonId((Long) rec.get(PropUtil.getValue("GRQ_TVIS_JSON_ID")));
+            vo.setVehsIdx((long) rec.get(PropUtil.getValue("GRQ_VEHS_IDX")));
             rst.add(vo);
         }
         return rst;
@@ -124,7 +125,7 @@ public class GrqEngine {
      */
     public static void initializeGrp() {
         if (null == client) {
-            ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
+            ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.68").withPort(19530).build();
             client = new MilvusGrpcClient(connectParam);
         }
         if (null == carCllxzfl || null == carCllxfl || null == busCllxfl || null == truckCllxfl) {
@@ -156,17 +157,17 @@ public class GrqEngine {
      */
     public static void createGrqDb() {
         ConnectParam connectParam = new ConnectParam.Builder().
-                withHost(AppConst.MILVUS_SERVER_ADDR).
-                withPort(AppConst.MILVUS_SERVER_PORT).build();
+                withHost(PropUtil.getValue("MILVUS_SERVER_ADDR")).
+                withPort(Integer.parseInt(PropUtil.getValue("MILVUS_SERVER_PORT"))).build();
         client = new MilvusGrpcClient(connectParam);// 创建Collection
-        final String collectionName = AppConst.GRQ_COLLECTION_NAME;
+        final String collectionName = PropUtil.getValue("GRQ_COLLECTION_NAME");
         createCollection(collectionName);
-        createPartition(collectionName, AppConst.GRQ_PN_HEAD_BUS);
-        createPartition(collectionName, AppConst.GRQ_PN_HEAD_CAR);
-        createPartition(collectionName, AppConst.GRQ_PN_HEAD_TRUCK);
-        createPartition(collectionName, AppConst.GRQ_PN_TAIL_BUS);
-        createPartition(collectionName, AppConst.GRQ_PN_TAIL_CAR);
-        createPartition(collectionName, AppConst.GRQ_PN_TAIL_TRUCK);
+        createPartition(collectionName, PropUtil.getValue("GRQ_PN_HEAD_BUS"));
+        createPartition(collectionName, PropUtil.getValue("GRQ_PN_HEAD_CAR"));
+        createPartition(collectionName, PropUtil.getValue("GRQ_PN_HEAD_TRUCK"));
+        createPartition(collectionName, PropUtil.getValue("GRQ_PN_TAIL_BUS"));
+        createPartition(collectionName, PropUtil.getValue("GRQ_PN_TAIL_CAR"));
+        createPartition(collectionName, PropUtil.getValue("GRQ_PN_TAIL_TRUCK"));
     }
 
     public static void createCollection(String collectionName) {
@@ -174,11 +175,11 @@ public class GrqEngine {
             client.dropCollection(collectionName);
         }
         logger.info("删除已有Collection");
-        final int dimension = AppConst.REID_DIM; // ReID特征向量维数
+        final int dimension = Integer.parseInt(PropUtil.getValue("REID_DIM")); // ReID特征向量维数
         CollectionMapping collectionMapping =
                 CollectionMapping.create(collectionName)
-                        .addField(AppConst.GRQ_TVIS_JSON_ID, DataType.INT64) // tvisJsonId
-                        .addField(AppConst.GRQ_VEHS_IDX, DataType.INT64) // vehsIdx
+                        .addField(PropUtil.getValue("GRQ_TVIS_JSON_ID"), DataType.INT64) // tvisJsonId
+                        .addField(PropUtil.getValue("GRQ_VEHS_IDX"), DataType.INT64) // vehsIdx
                         .addVectorField("embedding", DataType.VECTOR_FLOAT, dimension)
                         .setParamsInJson("{\"segment_row_limit\": 4096, \"auto_id\": false}");
         client.createCollection(collectionMapping);

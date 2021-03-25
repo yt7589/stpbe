@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.facade.interceptor;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,6 @@ public class FeignBasicAuthRequestInterceptor implements RequestInterceptor {
         String sessionId = RequestContextHolder.getRequestAttributes().getSessionId();
         String uidStr = redisTemplate.opsForValue().get(sessionId);
         System.out.println("用户编号值：uidStr=" + uidStr + "! sessionId=" + sessionId + "!");
-        requestTemplate.header(AppConst.AUTH_USER_HEADER, uidStr);
+        requestTemplate.header(PropUtil.getValue("AUTH_USER_HEADER"), uidStr);
     }
 }

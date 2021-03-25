@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.user;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -14,6 +15,6 @@ public class MsUserApplication {
     public static ConfigurableApplicationContext appCtx = null;
     public static void main(String[] args) {
         MsUserApplication.appCtx = SpringApplication.run(MsUserApplication.class, args);
-        AppRegistry.putParam(AppConst.APP_CTX, MsUserApplication.appCtx);
+        AppRegistry.putParam(PropUtil.getValue("APP_CTX"), MsUserApplication.appCtx);
     }
 }

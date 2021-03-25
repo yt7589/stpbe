@@ -4,6 +4,7 @@ import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.tvis.TvisStpOberverManager;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.RecognizeTvisImageDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
@@ -50,7 +51,7 @@ public class TmdpService implements ITmdpService {
                                                                String mrhpt, String hphm,
                                                                byte[] imageData, String imageFile) {
         String jsonResult = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2,
-                AppConst.LIST_VEHICLE_RECOGNITION, imageData);
+                PropUtil.getValue("LIST_VEHICLE_RECOGNITION"), imageData);
         ResultDTO<RecognizeTvisImageDTO> rst = new ResultDTO<>();
         RecognizeTvisImageDTO data = new RecognizeTvisImageDTO();
         rst.setData(data);

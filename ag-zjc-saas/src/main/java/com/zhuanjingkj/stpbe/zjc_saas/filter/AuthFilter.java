@@ -5,6 +5,7 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.zjc_saas.common.ZjcSaasConst;
@@ -83,7 +84,7 @@ public class AuthFilter  extends ZuulFilter {
             String token = ctx.getRequest().getHeader("Authorization");
             long userId = 0;
             try {
-                Claims cs = Jwts.parser().setSigningKey(AppConst.JWT_KEY.getBytes()).parseClaimsJws(token).getBody();
+                Claims cs = Jwts.parser().setSigningKey(PropUtil.getValue("JWT_KEY").getBytes()).parseClaimsJws(token).getBody();
                 String userIdStr = cs.get("userId", String.class);
                 userId = Long.parseLong(userIdStr);
             } catch (Exception ex) {
@@ -92,8 +93,8 @@ public class AuthFilter  extends ZuulFilter {
             logger.info("AuthFilter.run 7");
             if (userId > 0) {
                 ctx.set(ZjcSaasConst.ZUUL_FILTER_IS_SUCCESS, ZjcSaasConst.ZULL_FILTER_IS_SUCCESS_TRUE);
-                ctx.addZuulRequestHeader(AppConst.AUTH_USER_HEADER, "" + userId);
-                Object userIdStr = redisTemplate.opsForValue().get(AppConst.AUTH_REDIS_USER_PREFIX + userId);
+                ctx.addZuulRequestHeader(PropUtil.getValue("AUTH_USER_HEADER"), "" + userId);
+                Object userIdStr = redisTemplate.opsForValue().get(PropUtil.getValue("AUTH_REDIS_USER_PREFIX") + userId);
                 return true;
             }
             logger.info("AuthFilter.run 8");

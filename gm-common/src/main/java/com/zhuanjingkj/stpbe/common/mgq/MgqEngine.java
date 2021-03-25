@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.common.mgq;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
@@ -157,7 +158,7 @@ public class MgqEngine {
         System.out.println("MgqEngine.initialize 1");
         if (null == client) {
             System.out.println("MgqEngine.initialize 2");
-            ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
+            ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.68").withPort(19530).build();
             client = new MilvusGrpcClient(connectParam);
         }
         if (null == carCllxzfl || null == carCllxfl || null == busCllxfl || null == truckCllxfl) {
@@ -220,8 +221,8 @@ public class MgqEngine {
      */
     public static void initMilvus() {
         ConnectParam connectParam = new ConnectParam.Builder().
-                withHost(AppConst.MILVUS_SERVER_ADDR).
-                withPort(AppConst.MILVUS_SERVER_PORT).build();
+                withHost(PropUtil.getValue("MILVUS_SERVER_ADDR")).
+                withPort(Integer.parseInt(PropUtil.getValue("MILVUS_SERVER_PORT"))).build();
         client = new MilvusGrpcClient(connectParam);
         // 创建Collection
         final String collectionName = COLLECTION_NAME;
@@ -273,7 +274,7 @@ public class MgqEngine {
 
     public static void demo() {
         logger.info("Milvus Graph Query Engine Demo");
-        ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.15").withPort(19530).build();
+        ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.68").withPort(19530).build();
         MilvusClient client = new MilvusGrpcClient(connectParam);
         // 创建Collection
         final String collectionName = "tvis01";

@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.tebs.conf;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.tebs.scs.TvisJsonRawListener;
 import com.zhuanjingkj.stpbe.tebs.scs.TvisJsonStpListener;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -44,8 +45,8 @@ public class KafkaConfig {
     @Bean
     public Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConst.KAFKA_SERVER);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, AppConst.KAFKA_GROUP_JSON_RAW);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, PropUtil.getValue("KAFKA_SERVER"));
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, PropUtil.getValue("KAFKA_GROUP_JSON_RAW"));
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
         props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "15000");
@@ -72,7 +73,7 @@ public class KafkaConfig {
     @Bean
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConst.KAFKA_SERVER);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, PropUtil.getValue("KAFKA_SERVER"));
         props.put(ProducerConfig.RETRIES_CONFIG, 0);
         props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
         props.put(ProducerConfig.LINGER_MS_CONFIG, 1);

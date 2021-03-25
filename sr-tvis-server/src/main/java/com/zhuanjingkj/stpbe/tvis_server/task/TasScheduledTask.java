@@ -6,6 +6,7 @@ import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.common.tvis.TvisStpOberverManager;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class TasScheduledTask implements Runnable {
     //@Async("tvisServerPool")
     //@Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
-        JSONObject jo = (JSONObject) redisTemplate.opsForList().leftPop(AppConst.VIDEO_RECOG_RST_REDIS_KEY);
+        JSONObject jo = (JSONObject) redisTemplate.opsForList().leftPop(PropUtil.getValue("VIDEO_RECOG_RST_REDIS_KEY"));
         if (null == jo) {
             return ;
         }
@@ -60,7 +61,7 @@ public class TasScheduledTask implements Runnable {
         StringBuilder msg = null;
         long tvisJsonId = 0;
         //synchronized (redisTemplate) {
-        tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
+        tvisJsonId = redisTemplate.opsForValue().increment(PropUtil.getValue("TVIS_JSON_TBL_ID_KEY"));
         msg = new StringBuilder("{\"cameraId\": \"-1\", \"tvisJsonId\": "
                 + tvisJsonId + ", \"json\": " + response + "}");
         //}
