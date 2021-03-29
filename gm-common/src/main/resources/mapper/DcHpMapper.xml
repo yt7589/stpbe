@@ -58,7 +58,7 @@
             <if test="vAddr != null and vAddr != ''">
                 AND ts.site_name LIKE CONCAT('%', #{vAddr}, '%')
             </if>
-     ORDER BY occur_time DESC
+     ORDER BY tif.occur_time DESC
         LIMIT #{startIndex}, #{amount}
     </select>
 

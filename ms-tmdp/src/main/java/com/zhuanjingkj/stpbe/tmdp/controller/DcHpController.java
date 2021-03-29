@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 
 /**
@@ -67,17 +70,44 @@ public class DcHpController {
      */
     @GetMapping(value = "/hp/queryDataAnalysis")
     public ResultDTO<DcHpDaDTO> queryDataAnalysis() {
+        long startTime = System.currentTimeMillis();
         ResultDTO<DcHpDaDTO> dto = new ResultDTO<>();
         DcHpDaDTO data = new DcHpDaDTO();
-        List<DcHpIlTrendDTO> dit = getDit_exp();
-        List<DcHpRgTrendDTO> drt = getDrt_exp();
-        data.setDit(dit);
-        data.setDrt(drt);
+        FutureTask ditTask = new FutureTask(new Callable() {
+            @Override
+            public List<DcHpIlTrendDTO> call() throws Exception {
+                return getDit_exp();
+            }
+        });
+        ditTask.run();
+        FutureTask drtTask = new FutureTask(new Callable() {
+            @Override
+            public List<DcHpRgTrendDTO> call() throws Exception {
+                return getDrt_exp();
+            }
+        });
+        drtTask.run();
+        try {
+            List<DcHpIlTrendDTO> dit = (List<DcHpIlTrendDTO>)ditTask.get();
+            List<DcHpRgTrendDTO> drt = (List<DcHpRgTrendDTO>)drtTask.get();
+            data.setDit(dit);
+            data.setDrt(drt);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+//        List<DcHpIlTrendDTO> dit = getDit_exp();
+//        List<DcHpRgTrendDTO> drt = getDrt_exp();
+//        data.setDit(dit);
+//        data.setDrt(drt);
         data.setTotal_recognition(redisTemplate.opsForValue().get("dchp_vehicle_identification") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_identification")));
         data.setTotal_violation(redisTemplate.opsForValue().get("dchp_vehicle_violation") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_violation")));
         data.setTotal_violation_city(redisTemplate.opsForValue().get("dchp_vehicle_0_violation") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_0_violation")));
         data.setTotal_violation_town(redisTemplate.opsForValue().get("dchp_vehicle_1_violation") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_1_violation")));
         dto.setData(data);
+        long endTime = System.currentTimeMillis();
+        System.out.println((endTime - startTime)/1000 + "s");
         return dto;
     }
 
