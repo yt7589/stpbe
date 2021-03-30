@@ -104,7 +104,7 @@ public class GrqEngine {
         TvisGrqRstVo vo = null;
         // Search vectors
         // Searching the first 5 vectors of the vectors we just inserted
-        final int searchBatchSize = (int)topK;
+        final int searchBatchSize = 1;
         List<List<Float>> vectorsToSearch = queryEmbedding.subList(0, searchBatchSize);
         // Based on the index you created, the available search parameters will be different. Refer to
         // the Milvus documentation for how to set the optimal parameters based on your needs.
