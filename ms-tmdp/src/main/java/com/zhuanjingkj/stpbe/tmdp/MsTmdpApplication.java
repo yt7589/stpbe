@@ -32,7 +32,7 @@ public class MsTmdpApplication {
     public static void main(String[] args) {
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // 将删除所有数据！！！！！！！！！！！！！！！！！！！！！！！！！！！
-        //GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         GrqEngine.initializeGrp();
         TmdpWsHandler.initialize();

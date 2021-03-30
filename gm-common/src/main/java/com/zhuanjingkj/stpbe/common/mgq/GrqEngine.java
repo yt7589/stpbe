@@ -54,7 +54,7 @@ public class GrqEngine {
     private final static String GRQ_PN_TAIL_CAR = "GRQ_PN_TAIL_CAR";
     private final static String GRQ_PN_TAIL_TRUCK = "GRQ_PN_TAIL_TRUCK";
 
-    private final static String MILVUS_INDEX = "tvisJsonId";
+    private final static String MILVUS_INDEX = "nlist";
     private final static String REID_DIM = "REID_DIM";
 
     /**
@@ -70,6 +70,7 @@ public class GrqEngine {
                                     VehicleVo vo) {
         String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
         long grqId = getGrqId(redisTemplate);
+        logger.info("##### grqId=" + grqId + "!");
         // 插入记录
         List<Long> ids = new ArrayList<>(Arrays.asList(grqId));
         VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
@@ -80,18 +81,23 @@ public class GrqEngine {
         List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
         InsertParam insertParam =
                 new InsertParam.Builder(collectionName).withFloatVectors(embeddings).build();
+        logger.info("##### before add to milvus");
         InsertResponse insertResponse = client.insert(insertParam);
+        logger.info("##### before add to milvus");
         // Insert returns a list of vector ids that you will be using (if you did not supply them
         // yourself) to reference the vectors you just inserted
         List<Long> entityIds = insertResponse.getVectorIds();
+        logger.info("##### get entityIds");
         JSONObject jo = new JSONObject();
         long entityId = 0;
         if (entityIds != null && !entityIds.isEmpty() && entityIds.size() > 0) {
             entityId = entityIds.get(0);
+            logger.info("##### entityId=" + entityId + "!");
             jo.put("entityId", entityId);
             jo.put("tvisJsonId", tvisJsonIds.get(0));
             jo.put("vehsIdx", vehsIdxs.get(0));
             redisTemplate.opsForValue().set("" + entityId, jo.toString());
+            logger.info("##### add jo to redis." + entityId + "!");
         }
         // Flush data in collection
         Response flushResponse = client.flush(collectionName);
@@ -104,7 +110,7 @@ public class GrqEngine {
         TvisGrqRstVo vo = null;
         // Search vectors
         // Searching the first 5 vectors of the vectors we just inserted
-        final int searchBatchSize = (int)topK;
+        final int searchBatchSize = 1;
         List<List<Float>> vectorsToSearch = queryEmbedding.subList(0, searchBatchSize);
         // Based on the index you created, the available search parameters will be different. Refer to
         // the Milvus documentation for how to set the optimal parameters based on your needs.
@@ -116,18 +122,21 @@ public class GrqEngine {
                         .withTopK(topK)
                         .withParamsInJson(searchParamsJson.toString())
                         .build();
+        logger.info("##### befor milvus search...");
         SearchResponse searchResponse = client.search(searchParam);
+        logger.info("##### after milvus search");
         if (searchResponse.ok()) {
             List<List<SearchResponse.QueryResult>> queryResultsList =
                     searchResponse.getQueryResultsList();
-            for (int i = 0; i < searchBatchSize; i++) {
+            for (int i = 0; i < queryResultsList.size(); i++) {
                 // Since we are searching for vector that is already present in the collection,
                 // the first result vector should be itself and the distance (inner product) should be
                 // very close to 1 (some precision is lost during the process)
                 SearchResponse.QueryResult firstQueryResult = queryResultsList.get(i).get(0);
                 long vectorId = firstQueryResult.getVectorId();
+                logger.info("##### vectorId=" + vectorId + "!");
                 vo = new TvisGrqRstVo();
-                JSONObject jo = new JSONObject(redisTemplate.opsForValue().get("tvisJsonId").toString());
+                JSONObject jo = new JSONObject(redisTemplate.opsForValue().get("" + vectorId).toString());
                 vo.setTvisJsonId(jo.getLong("tvisJsonId"));
                 vo.setVehsIdx(jo.getInt("vehsIdx"));
                 vo.setDist(firstQueryResult.getDistance());
@@ -217,6 +226,7 @@ public class GrqEngine {
             client.dropCollection(collectionName);
         }
         logger.info("删除已有Collection");
+        // 添加索引
         final int dimension = Integer.parseInt(PropUtil.getValue(REID_DIM)); // ReID特征向量维数
         final int indexFileSize = 1024; // maximum size (in MB) of each index file
         final MetricType metricType = MetricType.IP; // we choose IP (Inner Product) as our metric type
