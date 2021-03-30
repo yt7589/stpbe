@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,6 +24,7 @@ import java.util.List;
 @Component
 public class TasScheduledTask implements Runnable {
     private static Logger logger = LoggerFactory.getLogger(TasScheduledTask.class);
+    private static boolean isInitialized = false;
     private final static long TST_INTERVAL = 1; // 每*毫秒运行一次
     private static List<ITvisStpObserver> observers = new ArrayList<>();
     private static boolean isFirstRun = true;
@@ -36,8 +38,21 @@ public class TasScheduledTask implements Runnable {
     private TvisJsonMapper tvisJsonMapper;
     @Autowired
     private TvisStpOberverManager tvisStpOberverManager;
+    
+    private void initialize() {
+        if (isInitialized) {
+            return ;
+        }
+        TvisUtil.rotateTvisJsonTbl(tvisJsonMapper);
+        isInitialized = true;
+    }
 
     public void run() {
+        if (!isInitialized) {
+            synchronized (logger) {
+                initialize();
+            }
+        }
         while (true) {
             try {
                 runTasScheduledTask();
