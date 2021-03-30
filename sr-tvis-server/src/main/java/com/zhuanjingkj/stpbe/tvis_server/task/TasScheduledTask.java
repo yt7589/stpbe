@@ -38,7 +38,7 @@ public class TasScheduledTask implements Runnable {
     private TvisJsonMapper tvisJsonMapper;
     @Autowired
     private TvisStpOberverManager tvisStpOberverManager;
-    
+
     private void initialize() {
         if (isInitialized) {
             return ;

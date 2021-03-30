@@ -45,17 +45,30 @@ public class GrqEngine {
         return partitionTag.toString();
     }
 
+    private final static String GRQ_COLLECTION_NAME = "GRQ_COLLECTION_NAME";
+    private final static String GRQ_ID = "GRQ_ID";
+    private final static String GRQ_PN_HEAD_BUS = "GRQ_PN_HEAD_BUS";
+    private final static String GRQ_PN_HEAD_CAR = "GRQ_PN_HEAD_CAR";
+    private final static String GRQ_PN_HEAD_TRUCK = "GRQ_PN_HEAD_TRUCK";
+    private final static String GRQ_PN_TAIL_BUS = "GRQ_PN_TAIL_BUS";
+    private final static String GRQ_PN_TAIL_CAR = "GRQ_PN_TAIL_CAR";
+    private final static String GRQ_PN_TAIL_TRUCK = "GRQ_PN_TAIL_TRUCK";
+
+    private final static String MILVUS_INDEX = "tvisJsonId";
+    private final static String REID_DIM = "REID_DIM";
+
     /**
      * 从Redis中取出向量编号
      * @return
      */
     public static long getGrqId(RedisTemplate<String, Serializable> redisTemplate) {
-        return redisTemplate.opsForValue().increment(PropUtil.getValue("GRQ_ID"));
+        return redisTemplate.opsForValue().increment(PropUtil.getValue(GRQ_ID));
     }
 
     public static long insertRecord(RedisTemplate<String, Serializable> redisTemplate,
                                     String partitionTag,
                                     VehicleVo vo) {
+        String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
         long grqId = getGrqId(redisTemplate);
         // 插入记录
         List<Long> ids = new ArrayList<>(Arrays.asList(grqId));
@@ -66,7 +79,7 @@ public class GrqEngine {
         List<Long> vehsIdxs = Arrays.asList(vo.getVehsIdx());
         List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
         InsertParam insertParam =
-                new InsertParam.Builder(AppConst.GRQ_COLLECTION_NAME).withFloatVectors(embeddings).build();
+                new InsertParam.Builder(collectionName).withFloatVectors(embeddings).build();
         InsertResponse insertResponse = client.insert(insertParam);
         // Insert returns a list of vector ids that you will be using (if you did not supply them
         // yourself) to reference the vectors you just inserted
@@ -81,11 +94,12 @@ public class GrqEngine {
             redisTemplate.opsForValue().set("" + entityId, jo.toString());
         }
         // Flush data in collection
-        Response flushResponse = client.flush(AppConst.GRQ_COLLECTION_NAME);
+        Response flushResponse = client.flush(collectionName);
         return entityId;
     }
 
     public static List<TvisGrqRstVo> findTopK(RedisTemplate<String, Serializable> redisTemplate, String partitionTag, List<List<Float>> queryEmbedding, long topK) {
+        String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
         List<TvisGrqRstVo> rst = new ArrayList<>();
         TvisGrqRstVo vo = null;
         // Search vectors
@@ -97,7 +111,7 @@ public class GrqEngine {
         JsonObject searchParamsJson = new JsonObject();
         searchParamsJson.addProperty("nprobe", 20);
         SearchParam searchParam =
-                new SearchParam.Builder(AppConst.GRQ_COLLECTION_NAME)
+                new SearchParam.Builder(collectionName)
                         .withFloatVectors(vectorsToSearch)
                         .withTopK(topK)
                         .withParamsInJson(searchParamsJson.toString())
@@ -170,14 +184,14 @@ public class GrqEngine {
                 withHost(appMilvusHost).
                 withPort(appMilvusPort).build();
         client = new MilvusGrpcClient(connectParam);// 创建Collection
-        final String collectionName = PropUtil.getValue("GRQ_COLLECTION_NAME");
+        final String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
         createCollection(collectionName);
-        createPartition(collectionName, AppConst.GRQ_PN_HEAD_BUS);
-        createPartition(collectionName, AppConst.GRQ_PN_HEAD_CAR);
-        createPartition(collectionName, AppConst.GRQ_PN_HEAD_TRUCK);
-        createPartition(collectionName, AppConst.GRQ_PN_TAIL_BUS);
-        createPartition(collectionName, AppConst.GRQ_PN_TAIL_CAR);
-        createPartition(collectionName, AppConst.GRQ_PN_TAIL_TRUCK);
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_BUS));
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_CAR));
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_TRUCK));
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_BUS));
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_CAR));
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_TRUCK));
         // Create index for the collection
         // We choose IVF_SQ8 as our index type here. Refer to IndexType javadoc for a
         // complete explanation of different index types
@@ -186,7 +200,7 @@ public class GrqEngine {
         // Each index type has its optional parameters you can set. Refer to the Milvus documentation
         // for how to set the optimal parameters based on your needs.
         JsonObject indexParamsJson = new JsonObject();
-        indexParamsJson.addProperty("tvisJsonId", 16384);
+        indexParamsJson.addProperty(MILVUS_INDEX, 16384);
         Index index =
                 new Index.Builder(collectionName, indexType)
                         .withParamsInJson(indexParamsJson.toString())
@@ -203,7 +217,7 @@ public class GrqEngine {
             client.dropCollection(collectionName);
         }
         logger.info("删除已有Collection");
-        final int dimension = AppConst.REID_DIM; // ReID特征向量维数
+        final int dimension = Integer.parseInt(PropUtil.getValue(REID_DIM)); // ReID特征向量维数
         final int indexFileSize = 1024; // maximum size (in MB) of each index file
         final MetricType metricType = MetricType.IP; // we choose IP (Inner Product) as our metric type
         CollectionMapping collectionMapping =
