@@ -23,6 +23,8 @@ public class AppConst {
     public final static String VIDEO_TVIS_ADDR = "192.168.2.68";
     public final static short VIDEO_TVIS_PORT = 4040;
     // Milvus图搜相关
+    public final static String APP_MILVUS_HOST = "app.milvus.host";
+    public final static String APP_MILVUS_PORT = "app.milvus.port";
     public final static String MILVUS_SERVER_ADDR = "192.168.2.68";
     public final static short MILVUS_SERVER_PORT = 19530;
     public final static int REID_DIM = 256;

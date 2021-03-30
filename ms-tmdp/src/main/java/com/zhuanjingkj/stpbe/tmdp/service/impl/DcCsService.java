@@ -11,13 +11,18 @@ import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcCsDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IDcCsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DcCsService implements IDcCsService {
+    @Autowired
+    private RedisTemplate redisTemplate;
     @Autowired
     private TvisJsonMapper tvisJsonMapper;
 
@@ -37,7 +42,7 @@ public class DcCsService implements IDcCsService {
         embeddinbs.add(embedding);
         String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
         long topK = 100; // 以图搜车返回的记录数
-        List<TvisGrqRstVo> results = GrqEngine.findTopK(partitionTag, embeddinbs, topK);
+        List<TvisGrqRstVo> results = GrqEngine.findTopK(redisTemplate, partitionTag, embeddinbs, topK);
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
         List<DcCsDTO> recs = new ArrayList<>();
