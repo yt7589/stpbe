@@ -122,7 +122,7 @@ public class GrqEngine {
                         .withTopK(topK)
                         .withParamsInJson(searchParamsJson.toString())
                         .build();
-        logger.info("##### befor milvus search");
+        logger.info("##### befor milvus search...");
         SearchResponse searchResponse = client.search(searchParam);
         logger.info("##### after milvus search");
         if (searchResponse.ok()) {
