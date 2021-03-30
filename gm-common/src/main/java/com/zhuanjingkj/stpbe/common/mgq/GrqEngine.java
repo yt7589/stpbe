@@ -54,7 +54,7 @@ public class GrqEngine {
     private final static String GRQ_PN_TAIL_CAR = "GRQ_PN_TAIL_CAR";
     private final static String GRQ_PN_TAIL_TRUCK = "GRQ_PN_TAIL_TRUCK";
 
-    private final static String MILVUS_INDEX = "tvisJsonId";
+    private final static String MILVUS_INDEX = "nlist";
     private final static String REID_DIM = "REID_DIM";
 
     /**
@@ -217,6 +217,7 @@ public class GrqEngine {
             client.dropCollection(collectionName);
         }
         logger.info("删除已有Collection");
+        // 添加索引
         final int dimension = Integer.parseInt(PropUtil.getValue(REID_DIM)); // ReID特征向量维数
         final int indexFileSize = 1024; // maximum size (in MB) of each index file
         final MetricType metricType = MetricType.IP; // we choose IP (Inner Product) as our metric type
