@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.common.tvis;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,8 +20,8 @@ public class TvisSodImage {
         URL url = null;
         BufferedImage img = null;
         try {
-            url = new URL(AppConst.IPFS_GW_URL + fileHash);
-            System.out.println("##### url:" + (AppConst.IPFS_GW_URL + fileHash) + "!");
+            url = new URL(PropUtil.getValue("IPFS_GW_URL") + fileHash);
+            System.out.println("##### url:" + (PropUtil.getValue("IPFS_GW_URL") + fileHash) + "!");
             img = ImageIO.read(url);
         } catch (MalformedURLException e) {
             e.printStackTrace();

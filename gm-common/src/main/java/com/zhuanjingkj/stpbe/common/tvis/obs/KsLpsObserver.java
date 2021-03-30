@@ -80,5 +80,19 @@ public class KsLpsObserver implements ITvisStpObserver {
         if(!redisTemplate.hasKey("ks_lps")) {
             redisTemplate.opsForList().rightPushAll("ks_lps", 0);
         }
+        if (!redisTemplate.hasKey("ks_lps_wp")) {
+            redisTemplate.opsForValue().set("ks_lps_wp", 0); //无牌照
+        }
+        if (!redisTemplate.hasKey("ks_lps_tp")) {
+            redisTemplate.opsForValue().set("ks_lps_tp",0); //套牌照
+        }
+
+        if (!redisTemplate.hasKey("ks_lps_jp")) {
+            redisTemplate.opsForValue().set("ks_lps_jp",0); //假牌照
+        }
+
+        if (!redisTemplate.hasKey("ks_lps_hpzd")) {
+            redisTemplate.opsForValue().set("ks_lps_hpzd",0); //号牌遮挡
+        }
     }
 }

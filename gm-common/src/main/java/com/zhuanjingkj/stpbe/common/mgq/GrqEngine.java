@@ -50,7 +50,7 @@ public class GrqEngine {
      * @return
      */
     public static long getGrqId(RedisTemplate<String, Serializable> redisTemplate) {
-        return redisTemplate.opsForValue().increment(AppConst.GRQ_ID);
+        return redisTemplate.opsForValue().increment(PropUtil.getValue("GRQ_ID"));
     }
 
     public static long insertRecord(RedisTemplate<String, Serializable> redisTemplate,
@@ -117,6 +117,7 @@ public class GrqEngine {
                 vo.setTvisJsonId(jo.getLong("tvisJsonId"));
                 vo.setVehsIdx(jo.getInt("vehsIdx"));
                 vo.setDist(firstQueryResult.getDistance());
+                rst.add(vo);
             }
         }
         // You can also get result ids and distances separately
@@ -169,7 +170,7 @@ public class GrqEngine {
                 withHost(appMilvusHost).
                 withPort(appMilvusPort).build();
         client = new MilvusGrpcClient(connectParam);// 创建Collection
-        final String collectionName = AppConst.GRQ_COLLECTION_NAME;
+        final String collectionName = PropUtil.getValue("GRQ_COLLECTION_NAME");
         createCollection(collectionName);
         createPartition(collectionName, AppConst.GRQ_PN_HEAD_BUS);
         createPartition(collectionName, AppConst.GRQ_PN_HEAD_CAR);

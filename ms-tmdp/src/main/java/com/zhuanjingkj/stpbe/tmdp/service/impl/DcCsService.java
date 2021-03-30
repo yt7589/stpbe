@@ -4,6 +4,7 @@ import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.mgq.GrqEngine;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.vo.TvisGrqRstVo;
@@ -58,7 +59,7 @@ public class DcCsService implements IDcCsService {
                 tvisJsonVO.setVehIdx(result.getVehsIdx());
                 rec = new DcCsDTO(tvisJsonVO.getTvisJsonId(), "北京市" + tvisJsonVO.getTvisJsonId(),
                         tvisJsonVO.getOccurTime(),
-                        AppConst.IPFS_GW_URL + tvisJsonVO.getImageHash());
+                        PropUtil.getValue("IPFS_GW_URL") + tvisJsonVO.getImageHash());
                 recs.add(rec);
                 idx++;
                 if (idx >= startIndex + amount) {

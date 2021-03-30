@@ -34,9 +34,11 @@ public class PropUtil {
     private static String getPropertyValue(String propertiesFile, String key) {
         Properties p = new Properties();
         InputStream inStream = PropUtil.class.getClassLoader().getResourceAsStream(propertiesFile);
+        InputStream consts = PropUtil.class.getClassLoader().getResourceAsStream("AppConst.properties");
         String value = "";
         try {
             p.load(inStream);
+            p.load(consts);
             value = p.getProperty(key);
         } catch (Exception e) {
             log.error("读取属性文件错误:",e);

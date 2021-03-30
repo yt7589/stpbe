@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.common.net;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.json.JSONObject;
 
@@ -25,7 +26,7 @@ public class IpfsClient {
         Map<String, File> params = new HashMap<>();
         params.put("arg", new File(fn));
         try {
-            String resp = HttpUtil.postFile(AppConst.IPFS_API_URL + "add", params);
+            String resp = HttpUtil.postFile(PropUtil.getValue("IPFS_API_URL") + "add", params);
             JSONObject jo = new JSONObject(resp);
             fileHash = jo.getString("Hash");
         } catch (IOException e) {
@@ -47,7 +48,7 @@ public class IpfsClient {
         FileOutputStream fos = null;
         boolean rst = true;
         try {
-            url = new URL(AppConst.IPFS_GW_URL + fileHash);
+            url = new URL(PropUtil.getValue("IPFS_GW_URL") + fileHash);
             conn = url.openConnection();
             ins = conn.getInputStream();
             fos = new FileOutputStream(dstFn);
@@ -83,7 +84,7 @@ public class IpfsClient {
         int bytesRead = 0;
         int offset = 0;
         try {
-            url = new URL(AppConst.IPFS_GW_URL + fileHash);
+            url = new URL(PropUtil.getValue("IPFS_GW_URL") + fileHash);
             conn = url.openConnection();
             String contentType = conn.getContentType();
             int contentLength = conn.getContentLength();
@@ -122,6 +123,6 @@ public class IpfsClient {
     }
 
     public static String getIpfsUrl(String fileHash) {
-        return AppConst.IPFS_GW_URL + fileHash;
+        return PropUtil.getValue("IPFS_GW_URL") + fileHash;
     }
 }

@@ -8,6 +8,7 @@ import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.RecognizeTvisImageDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameVehicleDTO;
@@ -43,7 +44,7 @@ public class TvisUtil {
      */
     public static String recognizeImageFile(Map<String, Object> map, File f) {
         String type = "file";
-        String url = AppConst.TVIS_SERVER_URL;
+        String url = PropUtil.getValue("TVIS_SERVER_URL");
         return processTvisImage(url, type, map, f);
     }
 
@@ -55,7 +56,7 @@ public class TvisUtil {
      */
     public static String submitTvisImage(Map<String, Object> map, File f) {
         String type = "file";
-        String url = AppConst.TVIS_SERVER_BASE_URL + AppConst.TSC_SUBMIT_IMAGE;
+        String url = PropUtil.getValue("TVIS_SERVER_BASE_URL") + PropUtil.getValue("TSC_SUBMIT_IMAGE");
         return processTvisImage(url, type, map, f);
     }
 
@@ -93,7 +94,7 @@ public class TvisUtil {
         String tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         String[] arrs = tvisJsonTblName.split("_");
         long idx = Long.parseLong(arrs[arrs.length - 1]);
-        AppRegistry.tvisJsonTblName = AppConst.TVIS_JSON_TBL_PREFIX + String.format("%08d", idx+1);
+        AppRegistry.tvisJsonTblName = PropUtil.getValue("TVIS_JSON_TBL_PREFIX") + String.format("%08d", idx+1);
         AppRegistry.tvisJsonTblRecs = 0;
         tvisJsonMapper.createTvisJsonTbl(AppRegistry.tvisJsonTblName);
     }
@@ -108,7 +109,7 @@ public class TvisUtil {
         if (jo.getJSONObject("json").getString("StreamID").equals("-1")) {
             imageFile = relativeImageFile;
         } else {
-            imageFile = AppConst.VIDEO_FRAME_IMG_BASE_DIR + relativeImageFile.substring(2);
+            imageFile = PropUtil.getValue("VIDEO_FRAME_IMG_BASE_DIR") + relativeImageFile.substring(2);
         }
         Optional<String> imgRst = IpfsClient.uploadFile(imageFile);
         final StringBuilder imageHash = new StringBuilder();
@@ -120,7 +121,7 @@ public class TvisUtil {
         OutputStreamWriter osw = null;
         BufferedWriter bw = null;
         Random rand = new Random();
-        String jf = AppConst.JSON_TMP_BASE_DIR + "json_" + System.currentTimeMillis() + "_" + rand.nextInt() + ".json";
+        String jf = PropUtil.getValue("JSON_TMP_BASE_DIR") + "json_" + System.currentTimeMillis() + "_" + rand.nextInt() + ".json";
         try {
             fos = new FileOutputStream(new File(jf));
             bw = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
@@ -149,7 +150,7 @@ public class TvisUtil {
         if (jo.containsKey("tvisJsonId")) {
             tvisJsonId = jo.getLong("tvisJsonId");
         } else {
-            tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
+            tvisJsonId = redisTemplate.opsForValue().increment(PropUtil.getValue("TVIS_JSON_TBL_ID_KEY"));
         }
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String occurTime = df.format(new Date());
@@ -170,7 +171,7 @@ public class TvisUtil {
                 cameraId, streamId, pts, imageHash.toString(), jsonHash.toString());
         tvisJsonMapper.insertTvisJson(vo);
         AppRegistry.tvisJsonTblRecs++;
-        if (AppRegistry.tvisJsonTblRecs >= AppConst.TVIS_JSON_TBL_MAX_RECS) {
+        if (AppRegistry.tvisJsonTblRecs >= Long.parseLong(PropUtil.getValue("TVIS_JSON_TBL_MAX_RECS"))) {
             rotateTvisJsonTbl(tvisJsonMapper);
         }
     }
@@ -195,7 +196,8 @@ public class TvisUtil {
     public static WsmVideoFrameDTO getTvisFrameAnalysisResult(TvisJsonVO tvisJsonVO,
                                                               Map<String, CameraVehicleRecordVO> cutVehs) {
         long wsmVfvvIdx = 0;
-        String vaImgUrlBase = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=";
+        String vaImgUrlBase = PropUtil.getValue("TMDP_BASE_URL") + "va/getVaImage?imgFn=";
+
         WsmVideoFrameDTO vfv = null;
         List<WsmVideoFrameVehicleDTO> wvfvvs = null;
         WsmVideoFrameVehicleDTO vfvv = null;
@@ -220,6 +222,7 @@ public class TvisUtil {
         File cutFileObj = null;
         String imgBaseFolder = "images/";
         String orgFileFn = "n_" + tvisJsonId + ".jpg";
+        System.out.println("vaImgUrlBase:" + vaImgUrlBase + orgFileFn);
         vfv = new WsmVideoFrameDTO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
         wvfvvs = vfv.getData();
         for (VehicleVo veh : vehs) {
@@ -440,7 +443,7 @@ public class TvisUtil {
         long tvisJsonId = 0;
         StringBuilder msg = null;
         synchronized (redisTemplate) {
-            tvisJsonId = redisTemplate.opsForValue().increment(AppConst.TVIS_JSON_TBL_ID_KEY);
+            tvisJsonId = redisTemplate.opsForValue().increment(PropUtil.getValue("TVIS_JSON_TBL_ID_KEY"));
             msg = new StringBuilder("{\"cameraId\":" + cameraId + ", \"tvisJsonId\": "
                     + tvisJsonId + ", \"json\": " + response + "}");
         }
@@ -560,7 +563,7 @@ public class TvisUtil {
                 vehicleWztzVo.setClwz(wztzJson.getString("CLWZ"));
                 vo.setVehicleWztzVo(vehicleWztzVo);
                 // 解析号牌特征
-                vo.setVehicleHptzVO(parseHptzJson(vehJson.getJSONObject(AppConst.TJ_HPTZ)));
+                vo.setVehicleHptzVO(parseHptzJson(vehJson.getJSONObject(PropUtil.getValue("TJ_HPTZ"))));
                 // 车型特征
                 vehicleCxtzVo = new VehicleCxtzVo();
                 cxtzJson = vehJson.getJSONObject("CXTZ");
@@ -611,15 +614,15 @@ public class TvisUtil {
 
     private static VehicleHptzVO parseHptzJson(JSONObject hptzJson) {
         VehicleHptzVO hptzVO = new VehicleHptzVO(
-                hptzJson.getString(AppConst.TJ_HPTZ_HPZT),
-                hptzJson.getString(AppConst.TJ_HPTZ_HPWZ),
-                hptzJson.getString(AppConst.TJ_HPTZ_HPZL),
-                hptzJson.getString(AppConst.TJ_HPTZ_HPYS),
-                hptzJson.getString(AppConst.TJ_HPTZ_HPGG),
-                hptzJson.getString(AppConst.TJ_HPTZ_HPHM),
-                hptzJson.getString(AppConst.TJ_HPTZ_HPKXD),
-                hptzJson.getString(AppConst.TJ_HPTZ_MWHPKXD),
-                hptzJson.getString(AppConst.TJ_HPTZ_YWLSHP)
+                hptzJson.getString(PropUtil.getValue("TJ_HPTZ_HPZT")),
+                hptzJson.getString(PropUtil.getValue("TJ_HPTZ_HPWZ")),
+                hptzJson.getString(PropUtil.getValue("TJ_HPTZ_HPZL")),
+                hptzJson.getString(PropUtil.getValue("TJ_HPTZ_HPYS")),
+                hptzJson.getString(PropUtil.getValue("TJ_HPTZ_HPGG")),
+                hptzJson.getString(PropUtil.getValue("TJ_HPTZ_HPHM")),
+                hptzJson.getString(PropUtil.getValue("TJ_HPTZ_HPKXD")),
+                hptzJson.getString(PropUtil.getValue("TJ_HPTZ_MWHPKXD")),
+                hptzJson.getString(PropUtil.getValue("TJ_HPTZ_YWLSHP"))
         );
         return hptzVO;
     }

@@ -55,7 +55,7 @@ public class DcHpService implements IDcHpService {
         DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
         dto.setData(data);
         long end = System.currentTimeMillis();
-        System.out.println("全部数据查询时间queryAllData_exp：" + (end - start) + "s");
+        System.out.println("全部数据查询时间queryAllData_exp：" + (end - start)/1000 + "s");
         return dto;
     }
 

@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.facade.filter;
 
 
 import com.zhuanjingkj.stpbe.common.AppConst;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -25,7 +26,7 @@ public class HttpHeaderUserIdFilter implements Filter {
         System.out.println("请求为：" + request.getRequestURI() + "!");
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
-        String uidStr = request.getHeader(AppConst.AUTH_USER_HEADER);
+        String uidStr = request.getHeader(PropUtil.getValue("AUTH_USER_HEADER"));
         String sessionId = request.getSession().getId();
         System.out.println("filter: sessionId=" + sessionId + "!");
         redisTemplate.opsForValue().set(sessionId, uidStr + "");

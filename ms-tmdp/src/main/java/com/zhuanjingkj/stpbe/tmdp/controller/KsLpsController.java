@@ -37,10 +37,10 @@ public class KsLpsController {
         List<KsLpsAreaDTO> areaDTO = getAreaAbnormalLicensePlate();
         List<KsLpsSiteDTO> siteDTO = getSiteAbnormalLicensePlate();
         List<KsLpsLalpDTO> lalpDTO = getKsLpsLalp();
-        data.setWpCount(Integer.parseInt(""+ redisTemplate.opsForValue().get("ks_lps_wp")));
-        data.setTpCount(Integer.parseInt(""+ redisTemplate.opsForValue().get("ks_lps_tp")));
-        data.setJpCount(Integer.parseInt(""+ redisTemplate.opsForValue().get("ks_lps_jp")));
-        data.setHpzdCount(Integer.parseInt(""+ redisTemplate.opsForValue().get("ks_lps_hpzd")));
+        data.setWpCount(Integer.parseInt(redisTemplate.opsForValue().get("ks_lps_wp") == null ? "0" : ""+ redisTemplate.opsForValue().get("ks_lps_wp")));
+        data.setTpCount(Integer.parseInt(redisTemplate.opsForValue().get("ks_lps_tp") == null ? "0" : ""+ redisTemplate.opsForValue().get("ks_lps_tp")));
+        data.setJpCount(Integer.parseInt(redisTemplate.opsForValue().get("ks_lps_jp") == null ? "0" : ""+ redisTemplate.opsForValue().get("ks_lps_jp")));
+        data.setHpzdCount(Integer.parseInt(redisTemplate.opsForValue().get("ks_lps_hpzd") == null ? "0" : ""+ redisTemplate.opsForValue().get("ks_lps_hpzd")));
         data.setLalp(lalpDTO);
         data.setArea(areaDTO);
         data.setTime(timeDTO);

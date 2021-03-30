@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.net.TcpClient;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.CreateRtspBindDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.ITvisSdkService;
@@ -27,9 +28,9 @@ public class TvisSdkService implements ITvisSdkService {
         byte[] reqBytes = req.toString().getBytes();
         byte[] respBytes = null;
         try {
-            System.out.println("Yt001 addr:" + AppConst.VIDEO_TVIS_ADDR + ":" + AppConst.VIDEO_TVIS_PORT + "!");
+            System.out.println("Yt001 addr:" + PropUtil.getValue("VIDEO_TVIS_ADDR") + ":" + PropUtil.getValue("VIDEO_TVIS_PORT") + "!");
             respBytes = TcpClient.sendRequest(
-                    AppConst.VIDEO_TVIS_ADDR, AppConst.VIDEO_TVIS_PORT,
+                    PropUtil.getValue("VIDEO_TVIS_ADDR"), Short.parseShort(PropUtil.getValue("VIDEO_TVIS_PORT")),
                     reqBytes);
         } catch (Exception ex) {
             System.out.println("########### exception: " + ex.getMessage() + "!");

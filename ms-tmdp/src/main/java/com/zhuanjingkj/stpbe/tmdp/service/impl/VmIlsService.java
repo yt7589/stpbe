@@ -130,7 +130,7 @@ public class VmIlsService implements IVmIlsService {
         }
         Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
         TvisUtil.getTvisFrameAnalysisResult(vo, cutVehs);
-        String imgUrl = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=c_" + tvisJsonId + "_" + vehIdx + ".jpg";
+        String imgUrl = PropUtil.getValue("TMDP_BASE_URL") + "va/getVaImage?imgFn=c_" + tvisJsonId + "_" + vehIdx + ".jpg";
         String ilsName = "" + KsAsService.areaMap.get(code);
         JSONObject rstJson = JSONObject.parseObject(dataJson.getString("json"));
         JSONArray vehs = rstJson.getJSONArray("VEH");
@@ -220,7 +220,7 @@ public class VmIlsService implements IVmIlsService {
         Map<String, CameraVehicleRecordVO> cutVehs = new HashMap<>();
 
         TvisUtil.getTvisFrameAnalysisResult(vo, cutVehs);
-        String imgUrl = AppConst.TMDP_BASE_URL + "va/getVaImage?imgFn=c_" + tvisJsonId + "_" + vehsIdx + ".jpg";
+        String imgUrl = PropUtil.getValue("TMDP_BASE_URL") + "va/getVaImage?imgFn=c_" + tvisJsonId + "_" + vehsIdx + ".jpg";
 
         ResultDTO<VmIlsVsInfoDTO> dto = new ResultDTO<>();
         VmIlsVsInfoDTO vmIlsVsInfoDTO = new VmIlsVsInfoDTO();

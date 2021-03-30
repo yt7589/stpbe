@@ -2,6 +2,7 @@ package com.zhuanjingkj.stpbe.db;
 
 import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
+import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,7 +21,7 @@ public class DataSourceRegistry {
     private static DataSourceRegistry instance = null;
 
     public static DataSourceRegistry getInstance() {
-        Object obj = AppRegistry.getParam(AppConst.APP_CTX).orElse(Thread.currentThread());
+        Object obj = AppRegistry.getParam(PropUtil.getValue("APP_CTX")).orElse(Thread.currentThread());
         if (instance == null) {
             synchronized (obj) {
                 instance = new DataSourceRegistry();
