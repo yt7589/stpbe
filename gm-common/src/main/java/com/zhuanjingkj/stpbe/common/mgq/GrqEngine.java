@@ -70,6 +70,7 @@ public class GrqEngine {
                                     VehicleVo vo) {
         String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
         long grqId = getGrqId(redisTemplate);
+        logger.info("##### grqId=" + grqId + "!");
         // 插入记录
         List<Long> ids = new ArrayList<>(Arrays.asList(grqId));
         VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
@@ -80,18 +81,23 @@ public class GrqEngine {
         List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
         InsertParam insertParam =
                 new InsertParam.Builder(collectionName).withFloatVectors(embeddings).build();
+        logger.info("##### before add to milvus");
         InsertResponse insertResponse = client.insert(insertParam);
+        logger.info("##### before add to milvus");
         // Insert returns a list of vector ids that you will be using (if you did not supply them
         // yourself) to reference the vectors you just inserted
         List<Long> entityIds = insertResponse.getVectorIds();
+        logger.info("##### get entityIds");
         JSONObject jo = new JSONObject();
         long entityId = 0;
         if (entityIds != null && !entityIds.isEmpty() && entityIds.size() > 0) {
             entityId = entityIds.get(0);
+            logger.info("##### entityId=" + entityId + "!");
             jo.put("entityId", entityId);
             jo.put("tvisJsonId", tvisJsonIds.get(0));
             jo.put("vehsIdx", vehsIdxs.get(0));
             redisTemplate.opsForValue().set("" + entityId, jo.toString());
+            logger.info("##### add jo to redis." + entityId + "!");
         }
         // Flush data in collection
         Response flushResponse = client.flush(collectionName);
@@ -116,18 +122,21 @@ public class GrqEngine {
                         .withTopK(topK)
                         .withParamsInJson(searchParamsJson.toString())
                         .build();
+        logger.info("##### befor milvus search");
         SearchResponse searchResponse = client.search(searchParam);
+        logger.info("##### after milvus search");
         if (searchResponse.ok()) {
             List<List<SearchResponse.QueryResult>> queryResultsList =
                     searchResponse.getQueryResultsList();
-            for (int i = 0; i < searchBatchSize; i++) {
+            for (int i = 0; i < queryResultsList.size(); i++) {
                 // Since we are searching for vector that is already present in the collection,
                 // the first result vector should be itself and the distance (inner product) should be
                 // very close to 1 (some precision is lost during the process)
                 SearchResponse.QueryResult firstQueryResult = queryResultsList.get(i).get(0);
                 long vectorId = firstQueryResult.getVectorId();
+                logger.info("##### vectorId=" + vectorId + "!");
                 vo = new TvisGrqRstVo();
-                JSONObject jo = new JSONObject(redisTemplate.opsForValue().get("tvisJsonId").toString());
+                JSONObject jo = new JSONObject(redisTemplate.opsForValue().get("" + vectorId).toString());
                 vo.setTvisJsonId(jo.getLong("tvisJsonId"));
                 vo.setVehsIdx(jo.getInt("vehsIdx"));
                 vo.setDist(firstQueryResult.getDistance());
