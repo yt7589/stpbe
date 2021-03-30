@@ -32,6 +32,7 @@ public class PropUtil {
      * @return 属性值，如果未找到则返回空
      */
     private static String getPropertyValue(String propertiesFile, String key) {
+        System.out.println("########## 获取属性值：" + key + "!");
         Properties p = new Properties();
         InputStream inStream = PropUtil.class.getClassLoader().getResourceAsStream(propertiesFile);
         InputStream consts = PropUtil.class.getClassLoader().getResourceAsStream("AppConst.properties");
