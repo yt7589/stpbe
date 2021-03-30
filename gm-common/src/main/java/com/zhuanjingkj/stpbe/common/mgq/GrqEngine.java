@@ -1,9 +1,11 @@
 package com.zhuanjingkj.stpbe.common.mgq;
 
+import com.google.gson.JsonObject;
 import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.vo.*;
 import io.milvus.client.*;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -43,80 +45,98 @@ public class GrqEngine {
         return partitionTag.toString();
     }
 
+    private final static String GRQ_COLLECTION_NAME = "GRQ_COLLECTION_NAME";
+    private final static String GRQ_ID = "GRQ_ID";
+    private final static String GRQ_PN_HEAD_BUS = "GRQ_PN_HEAD_BUS";
+    private final static String GRQ_PN_HEAD_CAR = "GRQ_PN_HEAD_CAR";
+    private final static String GRQ_PN_HEAD_TRUCK = "GRQ_PN_HEAD_TRUCK";
+    private final static String GRQ_PN_TAIL_BUS = "GRQ_PN_TAIL_BUS";
+    private final static String GRQ_PN_TAIL_CAR = "GRQ_PN_TAIL_CAR";
+    private final static String GRQ_PN_TAIL_TRUCK = "GRQ_PN_TAIL_TRUCK";
+
+    private final static String MILVUS_INDEX = "tvisJsonId";
+    private final static String REID_DIM = "REID_DIM";
+
     /**
      * 从Redis中取出向量编号
      * @return
      */
     public static long getGrqId(RedisTemplate<String, Serializable> redisTemplate) {
-        return redisTemplate.opsForValue().increment(PropUtil.getValue("GRQ_ID"));
+        return redisTemplate.opsForValue().increment(PropUtil.getValue(GRQ_ID));
     }
 
     public static long insertRecord(RedisTemplate<String, Serializable> redisTemplate,
                                     String partitionTag,
                                     VehicleVo vo) {
-//        long grqId = getGrqId(redisTemplate);
-//        // 插入记录
-//        List<Long> ids = new ArrayList<>(Arrays.asList(grqId));
-//        VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
-//        VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
-//        VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
-//        List<Long> tvisJsonIds = Arrays.asList(vo.getTvisJsonId());
-//        List<Long> vehsIdxs = Arrays.asList(vo.getVehsIdx());
-//        List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
-//        InsertParam insertParam =
-//                InsertParam.create(PropUtil.getValue("GRQ_COLLECTION_NAME"))
-//                        .addField(PropUtil.getValue("GRQ_TVIS_JSON_ID"), DataType.INT64, tvisJsonIds)
-//                        .addField(PropUtil.getValue("GRQ_VEHS_IDX"), DataType.INT64, vehsIdxs)
-//                        .addVectorField("embedding", DataType.VECTOR_FLOAT, embeddings)
-//                        .setEntityIds(ids)
-//                        .setPartitionTag(partitionTag);
-//        List<Long> entityIds = client.insert(insertParam);
+        String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
+        long grqId = getGrqId(redisTemplate);
+        // 插入记录
+        List<Long> ids = new ArrayList<>(Arrays.asList(grqId));
+        VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
+        VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
+        VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
+        List<Long> tvisJsonIds = Arrays.asList(vo.getTvisJsonId());
+        List<Long> vehsIdxs = Arrays.asList(vo.getVehsIdx());
+        List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
+        InsertParam insertParam =
+                new InsertParam.Builder(collectionName).withFloatVectors(embeddings).build();
+        InsertResponse insertResponse = client.insert(insertParam);
+        // Insert returns a list of vector ids that you will be using (if you did not supply them
+        // yourself) to reference the vectors you just inserted
+        List<Long> entityIds = insertResponse.getVectorIds();
+        JSONObject jo = new JSONObject();
         long entityId = 0;
-//        if (entityIds != null && !entityIds.isEmpty() && entityIds.size() > 0) {
-//            entityId = entityIds.get(0);
-//        }
-//        client.flush(PropUtil.getValue("GRQ_COLLECTION_NAME"));
+        if (entityIds != null && !entityIds.isEmpty() && entityIds.size() > 0) {
+            entityId = entityIds.get(0);
+            jo.put("entityId", entityId);
+            jo.put("tvisJsonId", tvisJsonIds.get(0));
+            jo.put("vehsIdx", vehsIdxs.get(0));
+            redisTemplate.opsForValue().set("" + entityId, jo.toString());
+        }
+        // Flush data in collection
+        Response flushResponse = client.flush(collectionName);
         return entityId;
     }
 
-    public static List<TvisGrqRstVo> findTopK(String partitionTag, List<List<Float>> queryEmbedding, long topK) {
-//        String dsl =
-//                String.format(
-//                        "{\"bool\": {"
-//                                + "\"must\": [{"
-//                                + "    \"vector\": {"
-//                                + "        \"embedding\": {"
-//                                + "            \"topk\": %d, \"metric_type\": \"L2\", " +
-//                                "\"type\": \"float\", \"query\": %s"
-//                                + "    }}}]}}",
-//                        topK, queryEmbedding.toString());
-//        // Only specified fields in `setParamsInJson` will be returned from search request.
-//        // If not set, all fields will be returned.
-//        SearchParam searchParam =
-//                SearchParam.create(PropUtil.getValue("GRQ_COLLECTION_NAME"))
-//                        .setDsl(dsl)
-//                        .setParamsInJson("{\"fields\": [\"" + PropUtil.getValue("GRQ_TVIS_JSON_ID") + "\", \"" +
-//                                PropUtil.getValue("GRQ_VEHS_IDX") + "\", \"embedding\"]}");
-//        SearchResult searchResult = client.search(searchParam);
-//        int idx = 0;
+    public static List<TvisGrqRstVo> findTopK(RedisTemplate<String, Serializable> redisTemplate, String partitionTag, List<List<Float>> queryEmbedding, long topK) {
+        String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
         List<TvisGrqRstVo> rst = new ArrayList<>();
-//        TvisGrqRstVo vo = null;
-//        long grpId = 0;
-//        double dist = 0.0;
-//        if (searchResult.getResultIdsList().size() <= 0) {
-//            return rst;
-//        }
-//        int baseIdx = 0;
-//        int count = searchResult.getResultIdsList().get(baseIdx).size();
-//        for (idx=0; idx<count; idx++) {
-//            vo = new TvisGrqRstVo();
-//            vo.setGrqId(searchResult.getResultIdsList().get(baseIdx).get(idx));
-//            vo.setDist(searchResult.getResultDistancesList().get(baseIdx).get(idx));
-//            Map<String, Object> rec = searchResult.getFieldsMap().get(baseIdx).get(idx);
-//            vo.setTvisJsonId((Long) rec.get(PropUtil.getValue("GRQ_TVIS_JSON_ID")));
-//            vo.setVehsIdx((long) rec.get(PropUtil.getValue("GRQ_VEHS_IDX")));
-//            rst.add(vo);
-//        }
+        TvisGrqRstVo vo = null;
+        // Search vectors
+        // Searching the first 5 vectors of the vectors we just inserted
+        final int searchBatchSize = (int)topK;
+        List<List<Float>> vectorsToSearch = queryEmbedding.subList(0, searchBatchSize);
+        // Based on the index you created, the available search parameters will be different. Refer to
+        // the Milvus documentation for how to set the optimal parameters based on your needs.
+        JsonObject searchParamsJson = new JsonObject();
+        searchParamsJson.addProperty("nprobe", 20);
+        SearchParam searchParam =
+                new SearchParam.Builder(collectionName)
+                        .withFloatVectors(vectorsToSearch)
+                        .withTopK(topK)
+                        .withParamsInJson(searchParamsJson.toString())
+                        .build();
+        SearchResponse searchResponse = client.search(searchParam);
+        if (searchResponse.ok()) {
+            List<List<SearchResponse.QueryResult>> queryResultsList =
+                    searchResponse.getQueryResultsList();
+            for (int i = 0; i < searchBatchSize; i++) {
+                // Since we are searching for vector that is already present in the collection,
+                // the first result vector should be itself and the distance (inner product) should be
+                // very close to 1 (some precision is lost during the process)
+                SearchResponse.QueryResult firstQueryResult = queryResultsList.get(i).get(0);
+                long vectorId = firstQueryResult.getVectorId();
+                vo = new TvisGrqRstVo();
+                JSONObject jo = new JSONObject(redisTemplate.opsForValue().get("tvisJsonId").toString());
+                vo.setTvisJsonId(jo.getLong("tvisJsonId"));
+                vo.setVehsIdx(jo.getInt("vehsIdx"));
+                vo.setDist(firstQueryResult.getDistance());
+                rst.add(vo);
+            }
+        }
+        // You can also get result ids and distances separately
+        //List<List<Long>> resultIds = searchResponse.getResultIdsList();
+        //List<List<Float>> resultDistances = searchResponse.getResultDistancesList();
         return rst;
     }
 
@@ -125,7 +145,9 @@ public class GrqEngine {
      */
     public static void initializeGrp() {
         if (null == client) {
-            ConnectParam connectParam = new ConnectParam.Builder().withHost("192.168.2.68").withPort(19530).build();
+            String appMilvusHost = PropUtil.getValue(AppConst.APP_MILVUS_HOST);
+            short appMilvusPort = Short.parseShort(PropUtil.getValue(AppConst.APP_MILVUS_PORT));
+            ConnectParam connectParam = new ConnectParam.Builder().withHost(appMilvusHost).withPort(appMilvusPort).build();
             client = new MilvusGrpcClient(connectParam);
         }
         if (null == carCllxzfl || null == carCllxfl || null == busCllxfl || null == truckCllxfl) {
@@ -156,43 +178,63 @@ public class GrqEngine {
      * ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
      */
     public static void createGrqDb() {
+        String appMilvusHost = PropUtil.getValue(AppConst.APP_MILVUS_HOST);
+        short appMilvusPort = Short.parseShort(PropUtil.getValue(AppConst.APP_MILVUS_PORT));
         ConnectParam connectParam = new ConnectParam.Builder().
-                withHost(PropUtil.getValue("MILVUS_SERVER_ADDR")).
-                withPort(Integer.parseInt(PropUtil.getValue("MILVUS_SERVER_PORT"))).build();
+                withHost(appMilvusHost).
+                withPort(appMilvusPort).build();
         client = new MilvusGrpcClient(connectParam);// 创建Collection
-        final String collectionName = PropUtil.getValue("GRQ_COLLECTION_NAME");
+        final String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
         createCollection(collectionName);
-        createPartition(collectionName, PropUtil.getValue("GRQ_PN_HEAD_BUS"));
-        createPartition(collectionName, PropUtil.getValue("GRQ_PN_HEAD_CAR"));
-        createPartition(collectionName, PropUtil.getValue("GRQ_PN_HEAD_TRUCK"));
-        createPartition(collectionName, PropUtil.getValue("GRQ_PN_TAIL_BUS"));
-        createPartition(collectionName, PropUtil.getValue("GRQ_PN_TAIL_CAR"));
-        createPartition(collectionName, PropUtil.getValue("GRQ_PN_TAIL_TRUCK"));
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_BUS));
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_CAR));
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_TRUCK));
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_BUS));
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_CAR));
+        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_TRUCK));
+        // Create index for the collection
+        // We choose IVF_SQ8 as our index type here. Refer to IndexType javadoc for a
+        // complete explanation of different index types
+        // 高速查询，具有尽可能高的召回率
+        final IndexType indexType = IndexType.IVFLAT;   //IndexType.IVF_SQ8; // 资源有限时使用
+        // Each index type has its optional parameters you can set. Refer to the Milvus documentation
+        // for how to set the optimal parameters based on your needs.
+        JsonObject indexParamsJson = new JsonObject();
+        indexParamsJson.addProperty(MILVUS_INDEX, 16384);
+        Index index =
+                new Index.Builder(collectionName, indexType)
+                        .withParamsInJson(indexParamsJson.toString())
+                        .build();
+        Response createIndexResponse = client.createIndex(index);
+        if (!createIndexResponse.ok()) {
+            throw new AssertionError("创建索引失败：" + createIndexResponse.getMessage() + "!");
+        }
     }
 
     public static void createCollection(String collectionName) {
-//        if (client.listCollections().contains(collectionName)) {
-//            client.dropCollection(collectionName);
-//        }
-//        logger.info("删除已有Collection");
-//        final int dimension = Integer.parseInt(PropUtil.getValue("REID_DIM")); // ReID特征向量维数
-//        CollectionMapping collectionMapping =
-//                CollectionMapping.create(collectionName)
-//                        .addField(PropUtil.getValue("GRQ_TVIS_JSON_ID"), DataType.INT64) // tvisJsonId
-//                        .addField(PropUtil.getValue("GRQ_VEHS_IDX"), DataType.INT64) // vehsIdx
-//                        .addVectorField("embedding", DataType.VECTOR_FLOAT, dimension)
-//                        .setParamsInJson("{\"segment_row_limit\": 4096, \"auto_id\": false}");
-//        client.createCollection(collectionMapping);
-//        // Check the existence of collection
-//        if (!client.hasCollection(collectionName)) {
-//            throw new AssertionError("创建Collection失败：Collection not found!");
-//        }
+        HasCollectionResponse hcResp = client.hasCollection(collectionName);
+        if (hcResp.ok() && hcResp.hasCollection()) {
+            client.dropCollection(collectionName);
+        }
+        logger.info("删除已有Collection");
+        final int dimension = Integer.parseInt(PropUtil.getValue(REID_DIM)); // ReID特征向量维数
+        final int indexFileSize = 1024; // maximum size (in MB) of each index file
+        final MetricType metricType = MetricType.IP; // we choose IP (Inner Product) as our metric type
+        CollectionMapping collectionMapping =
+                new CollectionMapping.Builder(collectionName, dimension)
+                        .withIndexFileSize(indexFileSize)
+                        .withMetricType(metricType)
+                        .build();
+        Response createCollectionResponse = client.createCollection(collectionMapping);
+        if (!createCollectionResponse.ok()) {
+            throw new AssertionError("创建Collection失败：Collection not found!");
+        }
     }
 
     public static void createPartition(String collectionName, String partitionTag) {
-//        client.createPartition(collectionName, partitionTag);
-//        if (!client.hasPartition(collectionName, partitionTag)) {
-//            throw new AssertionError("创建" + partitionTag + "分区失败：Partition not found!");
-//        }
+        Response resp = client.createPartition(collectionName, partitionTag);
+        if (!resp.ok()) {
+            throw new AssertionError("创建" + partitionTag + "分区失败：Partition not found!");
+        }
     }
 }

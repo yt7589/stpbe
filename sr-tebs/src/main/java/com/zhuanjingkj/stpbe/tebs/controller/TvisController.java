@@ -16,6 +16,7 @@ import com.zhuanjingkj.stpbe.tebs.rto.TvisJsonRTO;
 import com.zhuanjingkj.stpbe.tebs.scs.TvisJsonRawListener;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,8 @@ import java.util.*;
 @RestController
 @RequestMapping("/tebs")
 public class TvisController {
+    @Autowired
+    private RedisTemplate redisTemplate;
     @Autowired
     private TvisJsonRawListener tvisListener;
     @Autowired
@@ -77,7 +80,7 @@ public class TvisController {
                 List<List<Float>> embeddings = new ArrayList<>();
                 embeddings.add(cltzxlVo.getCltzxl());
                 long topK = 20;
-                List<TvisGrqRstVo> grvs = GrqEngine.findTopK(partitionName, embeddings, topK);
+                List<TvisGrqRstVo> grvs = GrqEngine.findTopK(redisTemplate, partitionName, embeddings, topK);
                 GrqDemoListDTO data = new GrqDemoListDTO();
                 List<GrqDemoDTO> recs = new ArrayList<>();
                 GrqDemoDTO rec = null;
