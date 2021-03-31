@@ -49,6 +49,7 @@ public class VideoAnalysisTask implements Runnable {
     //
     private static long prevTime = 0;
     public void runVideoAnalysisTask() {
+        logger.info("##### yt runVideoAnalysisTask 1");
         prevTime = System.currentTimeMillis();
         WsmVideoFrameDTO vfv = null;
         for (String streamId : streamIds) {
