@@ -52,6 +52,7 @@ public class VideoAnalysisTask implements Runnable {
         prevTime = System.currentTimeMillis();
         WsmVideoFrameDTO vfv = null;
         for (String streamId : streamIds) {
+            logger.info("##### yt: runVideoAnalysisTask 1 streamId=" + streamId + "!");
             vfv = TvisUtil.getTvisVideoAnalysisResult(tvisJsonMapper, streamIds, cutVehs, Long.parseLong(streamId));
             List<WebSocketSession> wsss = streamWsss.get("" + streamId);
             for (WebSocketSession wss : wsss) {
