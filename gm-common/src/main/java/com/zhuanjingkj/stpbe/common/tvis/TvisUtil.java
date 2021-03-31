@@ -301,14 +301,10 @@ public class TvisUtil {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
-        System.out.println("##### table=" + AppRegistry.tvisJsonTblName + "! streamId=" + streamId + "!");
-        streamId = 0;
         TvisJsonVO tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, streamId);
-        logger.info("##### yt: getLatestStreamFrame...");
         if (null == tvisJsonVO) {
             return null;
         }
-        logger.info("##### yt: get analysis results...");
         return getTvisFrameAnalysisResult(tvisJsonVO, cutVehs);
     }
 
