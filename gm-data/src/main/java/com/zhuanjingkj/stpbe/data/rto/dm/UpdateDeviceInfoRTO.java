@@ -30,7 +30,8 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
     private Integer directionId; //方向id
     @JSONField(name = "scTypeId")
     private Integer scTypeId; //车辆方向id
-
+    @JSONField(name = "streamId")
+    private String streamId; //streamId
 
     public UpdateDeviceInfoRTO() {
         super();
@@ -39,7 +40,7 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
     public UpdateDeviceInfoRTO(long siteId, String deviceNo, String cityCode, String cityName,
                                String deviceType, String deviceNode, String deviceDirection, String vehicleDirection,
                                String videoUrl, Integer cameraTypeId,
-                               Integer directionId, Integer scTypeId) {
+                               Integer directionId, Integer scTypeId, String streamId) {
         this.deviceNo = deviceNo;
         this.cityCode = cityCode;
         this.cityName = cityName;
@@ -52,6 +53,7 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
         this.cameraTypeId = cameraTypeId;
         this.directionId = directionId;
         this.scTypeId = scTypeId;
+        this.streamId = streamId;
     }
 
     public String getDeviceNo() {
@@ -156,5 +158,13 @@ public class UpdateDeviceInfoRTO extends BaseRTO {
 
     public void setScTypeId(Integer scTypeId) {
         this.scTypeId = scTypeId;
+    }
+
+    public String getStreamId() {
+        return streamId;
+    }
+
+    public void setStreamId(String streamId) {
+        this.streamId = streamId;
     }
 }

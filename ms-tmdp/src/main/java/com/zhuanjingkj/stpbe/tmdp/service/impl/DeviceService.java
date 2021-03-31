@@ -8,6 +8,7 @@ import com.zhuanjingkj.stpbe.data.dto.DmDeviceNodeDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.dm.DeleteDeviceFromDsRTO;
 import com.zhuanjingkj.stpbe.data.rto.dm.UpdateDeviceInfoRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IDeviceService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class DeviceService implements IDeviceService {
 
     @Autowired
     private DeviceMapper deviceMapper;
+
+    @Autowired
+    private TvisSdkService tvisSdkService;
 
     @Override
     public ResultDTO<DbQrsDTO> queryDevice_exp(Integer startIndex, Integer amount, Integer direction, String type, String code) {
@@ -35,6 +39,11 @@ public class DeviceService implements IDeviceService {
     @Override
     public ResultDTO<DbDeleteResultDTO> deleteDevice_exp(DeleteDeviceFromDsRTO rto) {
         System.out.println("deviceno:" + rto.getDeviceNo());
+        /**
+         * 查询设备rtsp_url 进行解绑
+         */
+        String rtspUrl = deviceMapper.getRtspUrlByDeviceNo(rto.getDeviceNo());
+        tvisSdkService.createRtspBind(rtspUrl, "/end");
         Integer affectedRows = deviceMapper.deleteDevice(rto.getDeviceNo());
         ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<DbDeleteResultDTO>();
         DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);
@@ -46,6 +55,14 @@ public class DeviceService implements IDeviceService {
     public ResultDTO<DbInsertResultDTO> addDevice_exp(AddDeviceToDsRTO rto) {
         System.out.println(rto.getDeviceNo());
         ResultDTO<DbInsertResultDTO> dto = new ResultDTO<>();
+        /**
+         * 添加设备绑定rtsp视频流
+         */
+        if (rto != null && StringUtils.isNotBlank(rto.getVideoUrl())) {
+            ResultDTO<CreateRtspBindDTO> rtsp = tvisSdkService.createRtspBind(rto.getVideoUrl(), "/start");
+            String streamId = rtsp.getData().getStreamId();
+            rto.setStreamId(streamId);
+        }
         Integer affectedRows = deviceMapper.addDevice(rto);
         DbInsertResultDTO data = new DbInsertResultDTO(rto.getDeviceId(),affectedRows);
         dto.setData(data);
@@ -84,10 +101,29 @@ public class DeviceService implements IDeviceService {
 
     @Override
     public ResultDTO<DbDeleteResultDTO> updateDeviceInfo_exp(UpdateDeviceInfoRTO rto) {
+        /**
+         * 判断视频流是否改动，改动则更新视频流，不改动则不需要更新视频流
+         */
+        String rtspUrl = deviceMapper.getRtspUrlByDeviceNo(rto.getDeviceNo()); //设备原数据地址
+        if (StringUtils.isNotBlank(rtspUrl) && !rtspUrl.equals(rto.getVideoUrl())) { //原数据地址有改动
+            tvisSdkService.createRtspBind(rtspUrl, "/end"); //解绑原数据地址
+            rto.setStreamId("-1");
+            if (StringUtils.isNotBlank(rto.getVideoUrl())) {
+                ResultDTO<CreateRtspBindDTO> rtsp = tvisSdkService.createRtspBind(rto.getVideoUrl(), "/start"); //绑定新数据地址
+                String streamId = rtsp.getData().getStreamId(); //新streamId
+                rto.setStreamId(streamId);
+            }
+        } else if (StringUtils.isBlank(rtspUrl) && StringUtils.isNotBlank(rto.getVideoUrl())) {
+            ResultDTO<CreateRtspBindDTO> rtsp = tvisSdkService.createRtspBind(rto.getVideoUrl(), "/start"); //绑定新数据地址
+            String streamId = rtsp.getData().getStreamId(); //新streamId
+            rto.setStreamId(streamId);
+        }
         ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
         Integer affectedRows = deviceMapper.updateDeviceInfo(rto);
         DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);
         dto.setData(data);
         return dto;
     }
+
+
 }

@@ -14,6 +14,8 @@ import java.util.Map;
 @Repository
 public interface DeviceMapper {
 
+    String getRtspUrlByDeviceNo(@Param("deviceNo") String deviceNo);
+
     List<DmDeviceDTO> getDmDevice(@Param("startIndex") Integer startIndex, @Param("amount") Integer amount, @Param("type") String type, @Param("code") String code);
 
     Integer getDmDeviceCount(@Param("type") String type, @Param("code") String code);
