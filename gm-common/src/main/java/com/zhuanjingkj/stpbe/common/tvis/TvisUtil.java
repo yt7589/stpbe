@@ -225,9 +225,12 @@ public class TvisUtil {
         File cutFileObj = null;
         String imgBaseFolder = "images/";
         String orgFileFn = "n_" + tvisJsonId + ".jpg";
+        DebugLogger.log("##### yt: getTvisFrameAnalysisResult 5");
         vfv = new WsmVideoFrameDTO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
         wvfvvs = vfv.getData();
+        DebugLogger.log("##### yt: getTvisFrameAnalysisResult 6");
         for (VehicleVo veh : vehs) {
+            DebugLogger.log("##### yt: getTvisFrameAnalysisResult 7");
             String clwz = veh.getVehicleWztzVo().getClwz();
             String[] arrs = clwz.split(",");
             x = Integer.parseInt(arrs[0]);
@@ -249,6 +252,7 @@ public class TvisUtil {
             } else {
                 vo = cutVehs.get("" + veh.getTrackId());
             }
+            DebugLogger.log("##### yt: getTvisFrameAnalysisResult 8");
             TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
             // 车型特征
             String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
@@ -256,6 +260,7 @@ public class TvisUtil {
             TvisSodImage.drawString(orgImg, Font.BOLD, 50,
                     Color.RED, x, y + 3, hphm + ":" + ppxhms);
             maxArea = vo.getArea();
+            DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9");
             if (1>0 || currentArea >= maxArea) {
                 maxArea = currentArea;
                 BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
@@ -274,20 +279,25 @@ public class TvisUtil {
                 vo.setH(h);
                 vo.setCutImgFn(cutFileFn);
             }
+            DebugLogger.log("##### yt: getTvisFrameAnalysisResult 10");
             vfvv = new WsmVideoFrameVehicleDTO(wsmVfvvIdx++, veh.getTrackId(), idx,
                     veh.getVehicleCxtzVo().getPpcxCode(),
                     veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + vo.getCutImgFn(),
                     "50秒前", "无");
+            DebugLogger.log("##### yt: getTvisFrameAnalysisResult 11");
             wvfvvs.add(vfvv);
             idx++;
         }
         try {
+            DebugLogger.log("##### yt: getTvisFrameAnalysisResult 12");
             ImageIO.write(orgImg, "jpg", new File(imgBaseFolder + orgFileFn));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        DebugLogger.log("##### yt: getTvisFrameAnalysisResult 13");
         // 生成一个定制的URL，可以通过SpringBoot来查看图片内容
         vfv.setData(wvfvvs);
+        DebugLogger.log("##### yt: getTvisFrameAnalysisResult 14");
         return vfv;
     }
 
