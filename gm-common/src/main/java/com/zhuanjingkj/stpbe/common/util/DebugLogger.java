@@ -12,7 +12,7 @@ public class DebugLogger {
         FileOutputStream fos = null;
         OutputStreamWriter osw = null;
         try {
-            fos = new FileOutputStream(logFile);
+            fos = new FileOutputStream(logFile, true); // 以追加方式打开文件
             osw = new OutputStreamWriter(fos, "UTF-8");
             osw.write(msg);
             osw.flush();
