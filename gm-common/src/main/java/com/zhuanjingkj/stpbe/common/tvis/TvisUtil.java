@@ -260,24 +260,32 @@ public class TvisUtil {
             TvisSodImage.drawString(orgImg, Font.BOLD, 50,
                     Color.RED, x, y + 3, hphm + ":" + ppxhms);
             maxArea = vo.getArea();
-            DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9");
+            DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9 v0.0.1");
             if (1>0 || currentArea >= maxArea) {
+                DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9.1");
                 maxArea = currentArea;
                 BufferedImage vehImg = orgImg.getSubimage(x, y, w, h);
+                DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9.2");
                 try {
                     cutFileFn = "c_" + tvisJsonId + "_" + idx + ".jpg";
-                    System.out.println("cutFileFn:" + cutFileFn);
+                    DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9.3");
                     cutFileObj = new File(imgBaseFolder + cutFileFn);
+                    DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9.4");
                     ImageIO.write(vehImg, "jpg", cutFileObj);
+                    DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9.5");
                 } catch (IOException e) {
+                    DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9.6");
                     e.printStackTrace();
                     System.out.println("cutFileFn:" + e);
                 }
+                DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9,7");
                 vo.setX(x);
                 vo.setY(y);
                 vo.setW(w);
                 vo.setH(h);
+                DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9.8");
                 vo.setCutImgFn(cutFileFn);
+                DebugLogger.log("##### yt: getTvisFrameAnalysisResult 9.9");
             }
             DebugLogger.log("##### yt: getTvisFrameAnalysisResult 10");
             vfvv = new WsmVideoFrameVehicleDTO(wsmVfvvIdx++, veh.getTrackId(), idx,
