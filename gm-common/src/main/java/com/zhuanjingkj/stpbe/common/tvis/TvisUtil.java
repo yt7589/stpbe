@@ -234,9 +234,21 @@ public class TvisUtil {
             String clwz = veh.getVehicleWztzVo().getClwz();
             String[] arrs = clwz.split(",");
             x = Integer.parseInt(arrs[0]);
+            if (x<0) {
+                x = 0;
+            }
             y = Integer.parseInt(arrs[1]);
+            if (y<0) {
+                y = 0;
+            }
             w = Integer.parseInt(arrs[2]);
+            if (w<=0) {
+                w = 0;
+            }
             h = Integer.parseInt(arrs[3]);
+            if (h<=0) {
+                h = 0;
+            }
             currentArea = w * h;
             if (!cutVehs.containsKey("" + veh.getTrackId())) {
                 vo = new CameraVehicleRecordVO();
