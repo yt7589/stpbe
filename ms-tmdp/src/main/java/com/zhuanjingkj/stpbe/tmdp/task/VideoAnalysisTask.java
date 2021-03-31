@@ -46,16 +46,13 @@ public class VideoAnalysisTask implements Runnable {
     }
 
     public void runVideoAnalysisTask() {
-        DebugLogger.log("VideoAnalysisTask.runVideoAnalysisTask ......");
         WsmVideoFrameDTO vfv = null;
         for (String streamId : streamIds) {
-            DebugLogger.log("VideoAnalysisTask.runVideoAnalysisTask streamId=" + streamId + "!");
             vfv = TvisUtil.getTvisVideoAnalysisResult(tvisJsonMapper, streamIds, cutVehs, Long.parseLong(streamId));
             List<WebSocketSession> wsss = streamWsss.get("" + streamId);
             for (WebSocketSession wss : wsss) {
                 if (wss.isOpen()) {
                     try {
-                        DebugLogger.log("######### 发送视频数据..... vfv=" + vfv + "!");
                         wss.sendMessage(new TextMessage(JSONObject.toJSONString(vfv)));
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -92,9 +89,9 @@ public class VideoAnalysisTask implements Runnable {
     }
 
     public static void removeStream(long streamId, WebSocketSession wss) {
-        /*String streamIdKey = "" + streamId;
+        String streamIdKey = "" + streamId;
         if (streamIds.contains(streamIdKey) && streamWsss.get("" + streamId) != null) {
             streamWsss.get("" + streamId).remove(wss);
-        }*/
+        }
     }
 }
