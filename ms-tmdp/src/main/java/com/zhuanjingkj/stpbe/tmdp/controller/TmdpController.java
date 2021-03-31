@@ -170,7 +170,7 @@ public class TmdpController {
     public ResultDTO<CreateRtspBindDTO> createRtspBind(
             @RequestBody CreateRtspBindRTO rto) {
         System.out.println("### creteRtspBind 1");
-        return tvisSdkService.createRtspBind(rto.getRtspUrl());
+        return tvisSdkService.createRtspBind(rto.getRtspUrl(), "/start");
     }
 
     /**

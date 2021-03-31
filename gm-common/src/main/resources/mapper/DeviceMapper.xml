@@ -87,8 +87,8 @@
     </delete>
 
     <insert id="addDevice" useGeneratedKeys="true" keyProperty="rto.deviceId">
-        INSERT INTO t_camera(camera_code, camera_type_id, site_id, direction_id, sc_type_id, rtsp_url)
-                      VALUES(#{rto.deviceNo}, #{rto.cameraTypeId}, #{rto.siteId}, #{rto.directionId}, #{rto.scTypeId}, #{rto.videoUrl})
+        INSERT INTO t_camera(camera_code, camera_type_id, site_id, direction_id, sc_type_id, rtsp_url, stream_id)
+                      VALUES(#{rto.deviceNo}, #{rto.cameraTypeId}, #{rto.siteId}, #{rto.directionId}, #{rto.scTypeId}, #{rto.videoUrl}, #{rto.streamId})
     </insert>
 
     <select id ="getDmDeviceType" resultMap="deviceTypeDTO">
@@ -122,6 +122,9 @@
                 <if test="rto.videoUrl != null and rto.videoUrl != ''">
                     tc.rtsp_url =#{rto.videoUrl}
                 </if>
+                <if test="rto.streamId != null and rto.streamId != ''">
+                    tc.stream_id =#{rto.streamId}
+                </if>
             </trim>
          WHERE tc.camera_id = #{rto.deviceId}
     </update>
@@ -148,5 +151,11 @@
             ON tc.road_id = tr.road_id
          WHERE tc.camera_code =#{code}
            AND tr.`status` = 1
+    </select>
+
+    <select id ="getRtspUrlByDeviceNo" resultType ="String">
+        SELECT tc.rtsp_url
+          FROM t_camera tc
+         WHERE tc.camera_id =#{deviceNo}
     </select>
 </mapper>

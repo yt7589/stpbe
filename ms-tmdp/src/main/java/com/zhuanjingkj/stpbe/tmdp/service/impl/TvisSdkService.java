@@ -16,14 +16,14 @@ public class TvisSdkService implements ITvisSdkService {
     private final static Logger logger = LoggerFactory.getLogger(TvisSdkService.class);
 
     @Override
-    public ResultDTO<CreateRtspBindDTO> createRtspBind(String rtspUrl) {
+    public ResultDTO<CreateRtspBindDTO> createRtspBind(String rtspUrl, String status) {
         System.out.println("TvisSdkService.createRtspService 1");
         ResultDTO<CreateRtspBindDTO> dto = new ResultDTO<>();
         CreateRtspBindDTO data = new CreateRtspBindDTO();
-        data.setStreamId("1008");
+//        data.setStreamId("1008");
         dto.setData(data);
         StringBuilder req = new StringBuilder(rtspUrl);
-        req.append("/start");
+        req.append(status);
         logger.info("socket req:" + req.toString() + "!");
         byte[] reqBytes = req.toString().getBytes();
         byte[] respBytes = null;
