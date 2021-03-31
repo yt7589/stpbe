@@ -25,7 +25,7 @@ public class DebugLogger {
 
         try {
 
-            osw.write(msg);
+            osw.write(msg + "\r\n");
             osw.flush();
         } catch (IOException e) {
             e.printStackTrace();
