@@ -243,11 +243,11 @@ public class TvisUtil {
             }
             w = Integer.parseInt(arrs[2]);
             if (w<=0) {
-                w = 0;
+                w = 10;
             }
             h = Integer.parseInt(arrs[3]);
             if (h<=0) {
-                h = 0;
+                h = 10;
             }
             currentArea = w * h;
             if (!cutVehs.containsKey("" + veh.getTrackId())) {
