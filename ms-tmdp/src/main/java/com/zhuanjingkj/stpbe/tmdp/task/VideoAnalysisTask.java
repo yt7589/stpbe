@@ -3,6 +3,7 @@ package com.zhuanjingkj.stpbe.tmdp.task;
 import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.common.util.DebugLogger;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
 import com.zhuanjingkj.stpbe.data.vo.*;
 import org.slf4j.Logger;
@@ -52,13 +53,13 @@ public class VideoAnalysisTask implements Runnable {
         prevTime = System.currentTimeMillis();
         WsmVideoFrameDTO vfv = null;
         for (String streamId : streamIds) {
-            logger.info("##### yt: runVideoAnalysisTask 1 streamId=" + streamId + "!");
+            DebugLogger.log("VideoAnalysisTask.runVideoAnalysisTask streamId=" + streamId + "!");
             vfv = TvisUtil.getTvisVideoAnalysisResult(tvisJsonMapper, streamIds, cutVehs, Long.parseLong(streamId));
             List<WebSocketSession> wsss = streamWsss.get("" + streamId);
             for (WebSocketSession wss : wsss) {
                 if (wss.isOpen()) {
                     try {
-                        System.out.println("######### 发送视频数据.....");
+                        DebugLogger.log("######### 发送视频数据..... vfv=" + vfv + "!");
                         wss.sendMessage(new TextMessage(JSONObject.toJSONString(vfv)));
                     } catch (IOException e) {
                         e.printStackTrace();

@@ -8,6 +8,7 @@ import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
+import com.zhuanjingkj.stpbe.common.util.DebugLogger;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.RecognizeTvisImageDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
@@ -195,7 +196,7 @@ public class TvisUtil {
 
     public static WsmVideoFrameDTO getTvisFrameAnalysisResult(TvisJsonVO tvisJsonVO,
                                                               Map<String, CameraVehicleRecordVO> cutVehs) {
-        logger.info("##### yt: getTvisFrameAnalysisResult 1");
+        DebugLogger.log("##### yt: getTvisFrameAnalysisResult 1");
         long wsmVfvvIdx = 0;
         String vaImgUrlBase = PropUtil.getValue("TMDP_BASE_URL") + "va/getVaImage?imgFn=";
 
@@ -205,17 +206,17 @@ public class TvisUtil {
         if (null == tvisJsonVO) {
             return null;
         }
-        logger.info("##### yt: getTvisFrameAnalysisResult 2");
+        DebugLogger.log("##### yt: getTvisFrameAnalysisResult 2");
         long tvisJsonId = tvisJsonVO.getTvisJsonId();
         // 获取图片
         BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
-        logger.info("##### yt: getTvisFrameAnalysisResult 3 orgImg=" + orgImg + "!");
+        DebugLogger.log("##### yt: getTvisFrameAnalysisResult 3 orgImg=" + orgImg + "!");
         // 获取JSON结果
         String jsonStr = IpfsClient.getTextFile(tvisJsonVO.getJsonHash());
         JSONObject jo = JSONObject.parseObject(jsonStr);
         JSONObject joRst = jo.getJSONObject("json");
         List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
-        logger.info("##### yt: getTvisFrameAnalysisResult 4 size=" + vehs.size() + "!");
+        DebugLogger.log("##### yt: getTvisFrameAnalysisResult 4 size=" + vehs.size() + "!");
         // 在图像上绘制一个矩形框并保存到当前目录下
         CameraVehicleRecordVO vo = null;
         int x, y, w, h; // 检测框位置
@@ -226,7 +227,7 @@ public class TvisUtil {
         File cutFileObj = null;
         String imgBaseFolder = "images/";
         String orgFileFn = "n_" + tvisJsonId + ".jpg";
-        System.out.println("vaImgUrlBase:" + vaImgUrlBase + orgFileFn);
+        DebugLogger.log("vaImgUrlBase:" + vaImgUrlBase + orgFileFn);
         vfv = new WsmVideoFrameDTO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
         wvfvvs = vfv.getData();
         for (VehicleVo veh : vehs) {
@@ -301,7 +302,9 @@ public class TvisUtil {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
+        DebugLogger.log("table=" + AppRegistry.tvisJsonTblName + "!");
         TvisJsonVO tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, streamId);
+        DebugLogger.log("tvisJsonVo=" + tvisJsonVO + "!");
         if (null == tvisJsonVO) {
             return null;
         }
