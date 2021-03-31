@@ -45,12 +45,8 @@ public class VideoAnalysisTask implements Runnable {
         }
     }
 
-    //@Async("tmdpPool")
-    //@Scheduled(cron = "*/1 * * * * ?")
-    //
-    private static long prevTime = 0;
     public void runVideoAnalysisTask() {
-        prevTime = System.currentTimeMillis();
+        DebugLogger.log("VideoAnalysisTask.runVideoAnalysisTask ......");
         WsmVideoFrameDTO vfv = null;
         for (String streamId : streamIds) {
             DebugLogger.log("VideoAnalysisTask.runVideoAnalysisTask streamId=" + streamId + "!");

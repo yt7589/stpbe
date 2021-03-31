@@ -206,11 +206,9 @@ public class TvisUtil {
         if (null == tvisJsonVO) {
             return null;
         }
-        DebugLogger.log("##### yt: getTvisFrameAnalysisResult 2");
         long tvisJsonId = tvisJsonVO.getTvisJsonId();
         // 获取图片
         BufferedImage orgImg = TvisSodImage.downloadIpfsImage(tvisJsonVO.getImageHash());
-        DebugLogger.log("##### yt: getTvisFrameAnalysisResult 3 orgImg=" + orgImg + "!");
         // 获取JSON结果
         String jsonStr = IpfsClient.getTextFile(tvisJsonVO.getJsonHash());
         JSONObject jo = JSONObject.parseObject(jsonStr);
@@ -227,7 +225,6 @@ public class TvisUtil {
         File cutFileObj = null;
         String imgBaseFolder = "images/";
         String orgFileFn = "n_" + tvisJsonId + ".jpg";
-        DebugLogger.log("vaImgUrlBase:" + vaImgUrlBase + orgFileFn);
         vfv = new WsmVideoFrameDTO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
         wvfvvs = vfv.getData();
         for (VehicleVo veh : vehs) {
