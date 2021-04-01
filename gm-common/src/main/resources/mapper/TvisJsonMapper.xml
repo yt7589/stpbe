@@ -65,7 +65,7 @@
     <select id="getLatestStreamFrame" resultMap="tvisJsonVOMap">
         select tvis_json_id, occur_time, camera_id, image_hash,
         json_hash, pts
-        from ${tblName} where stream_id=#{streamId} order by tvis_json_id,desc limit 150, 1
+        from ${tblName} where stream_id=#{streamId} order by tvis_json_id desc limit 150, 1
     </select>
 
     <select id="getLatestCameraFrame" resultMap="tvisJsonVOMap">
