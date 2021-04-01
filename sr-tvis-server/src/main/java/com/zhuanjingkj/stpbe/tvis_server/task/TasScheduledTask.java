@@ -73,10 +73,13 @@ public class TasScheduledTask implements Runnable {
     //@Async("tvisServerPool")
     //@Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
+        DebugLogger.log("######################### yt: runTasScheduledTask 1");
         JSONObject jo = (JSONObject) redisTemplate.opsForList().leftPop(PropUtil.getValue("VIDEO_RECOG_RST_REDIS_KEY"));
+        DebugLogger.log("######################### yt: runTasScheduledTask 2");
         if (null == jo) {
             return ;
         }
+        DebugLogger.log("######################### yt: runTasScheduledTask 3");
         String response = jo.toString();
         StringBuilder msg = null;
         long tvisJsonId = 0;

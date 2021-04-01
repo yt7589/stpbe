@@ -24,7 +24,7 @@ public class ObserverThread implements Runnable {
             DebugLogger.log("##### yt ObserverThread.run 1");
             try {
                 if (lock.tryLock()) {
-                    DebugLogger.log("##### yt ObserverThread.run 2");
+                    DebugLogger.log("##### yt ObserverThread.run 2 size=" + AppRegistry.vehicleVos.size() + "!");
                     for (int i = 0; i < batchSize; i++) {
                         if (AppRegistry.vehicleVos.size() <= 1) {
                             break;
