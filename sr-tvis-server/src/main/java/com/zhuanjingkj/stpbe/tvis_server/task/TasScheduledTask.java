@@ -83,7 +83,7 @@ public class TasScheduledTask implements Runnable {
         DebugLogger.log("******************** yt: runTasScheduledTask 1");
         JSONObject jo = (JSONObject) redisTemplate.opsForList().leftPop(PropUtil.getValue("VIDEO_RECOG_RST_REDIS_KEY"));
         DebugLogger.log("**************** yt: runTasScheduledTask 2 jo=" + jo + "!");
-        if (null == jo || 1>0) {
+        if (null == jo) {
             return ;
         }
         DebugLogger.log("******************* yt: runTasScheduledTask 3");
