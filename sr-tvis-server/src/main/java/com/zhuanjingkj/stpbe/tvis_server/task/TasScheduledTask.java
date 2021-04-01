@@ -58,6 +58,13 @@ public class TasScheduledTask implements Runnable {
                 initialize();
             }
         }
+        tvisStpOberverManager.initialize(observers, environment);
+        Thread thd = null;
+        DebugLogger.log("##### yt: 启动Observer线程池");
+        for (int i=0; i<observerThreadNum; i++) {
+            thd = new Thread(new ObserverThread(observers));
+            thd.start();
+        }
         while (true) {
             try {
                 runTasScheduledTask();
@@ -89,22 +96,16 @@ public class TasScheduledTask implements Runnable {
                 + tvisJsonId + ", \"json\": " + response + "}");
         //}
         String json = msg.toString();
-        DebugLogger.log("######################### yt: runTasScheduledTask 4");
-        TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, json);
-        DebugLogger.log("######################### yt: runTasScheduledTask 5");
-        if (isFirstRun) {
-            tvisStpOberverManager.initialize(observers, environment);
-            Thread thd = null;
-            DebugLogger.log("##### yt: 启动Observer线程池");
-            for (int i=0; i<observerThreadNum; i++) {
-                thd = new Thread(new ObserverThread(observers));
-                thd.start();
-            }
-            isFirstRun = false;
+        try {
+            DebugLogger.log("######################### yt: runTasScheduledTask 4");
+            TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, json);
+            DebugLogger.log("######################### yt: runTasScheduledTask 5");
+            DebugLogger.log("######################### yt: runTasScheduledTask 6");
+            TvisUtil.processStpTvisJson(observers, json);
+            DebugLogger.log("######################### yt: runTasScheduledTask 7");
+        } catch (Exception ex) {
+            DebugLogger.log("#################### exception: " + ex.getMessage() + "!");
         }
-        DebugLogger.log("######################### yt: runTasScheduledTask 6");
-        TvisUtil.processStpTvisJson(observers, json);
-        DebugLogger.log("######################### yt: runTasScheduledTask 7");
         /*
         // 从Redis中读出视频识别结果，将其发送到Kafka
         // 向Kafka的Topic发送请求
