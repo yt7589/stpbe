@@ -1,6 +1,7 @@
 package com.zhuanjingkj.stpbe.common.tvis;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
+import com.zhuanjingkj.stpbe.common.util.DebugLogger;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 
@@ -22,6 +23,7 @@ public class ObserverThread implements Runnable {
                     vo = AppRegistry.vehicleVos.poll();
                 }
             }
+            DebugLogger.log("从队列中取出数据：vo=" + vo + "!");
             if (vo != null) {
                 // 调用所有Observer
                 for (ITvisStpObserver ob : observers) {

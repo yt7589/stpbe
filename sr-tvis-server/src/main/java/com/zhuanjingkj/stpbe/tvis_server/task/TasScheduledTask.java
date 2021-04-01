@@ -7,6 +7,7 @@ import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.common.tvis.ObserverThread;
 import com.zhuanjingkj.stpbe.common.tvis.TvisStpOberverManager;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.common.util.DebugLogger;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,6 +90,7 @@ public class TasScheduledTask implements Runnable {
         if (isFirstRun) {
             tvisStpOberverManager.initialize(observers, environment);
             Thread thd = null;
+            DebugLogger.log("##### yt: 启动Observer线程池");
             for (int i=0; i<observerThreadNum; i++) {
                 thd = new Thread(new ObserverThread(observers));
                 thd.start();
