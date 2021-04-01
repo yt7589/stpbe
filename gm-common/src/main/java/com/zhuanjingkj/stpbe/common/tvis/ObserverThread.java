@@ -6,6 +6,8 @@ import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ObserverThread implements Runnable {
     private List<ITvisStpObserver> observers;
@@ -15,13 +17,22 @@ public class ObserverThread implements Runnable {
 
     @Override
     public void run() {
+        Lock lock = new ReentrantLock();
         VehicleVo vo = null;
         int batchSize = Integer.parseInt(PropUtil.getValue("stp.observer.batchSize"));
         while (true) {
-            synchronized (AppRegistry.vehicleVos) {
-                for (int i = 0; i < batchSize; i++) {
-                    vo = AppRegistry.vehicleVos.poll();
+            try {
+                if (lock.tryLock()) {
+                    for (int i = 0; i < batchSize; i++) {
+                        if (AppRegistry.vehicleVos.size() <= 1) {
+                            break;
+                        }
+                        vo = AppRegistry.vehicleVos.poll();
+                    }
+                    lock.unlock();
                 }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
             DebugLogger.log("从队列中取出数据：vo=" + vo + "!");
             if (vo != null) {

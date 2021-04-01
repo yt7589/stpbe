@@ -189,9 +189,7 @@ public class TvisUtil {
             veh.setVehsIdx(vehsIdx);
             vehsIdx++;
             DebugLogger.log("##### yt: 添加时第" + vehsIdx + "辆车数据到队列中");
-            synchronized (AppRegistry.vehicleVos) {
-                AppRegistry.vehicleVos.offer(veh);
-            }
+            AppRegistry.vehicleVos.offer(veh);
             /*for (ITvisStpObserver obs : observers) {
                 obs.notifyObserver(veh);
             }*/
