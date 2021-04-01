@@ -7,10 +7,12 @@
     </resultMap>
 
     <select id ="getMvtss" resultMap ="mvtsDTO">
-        SELECT tvt.violation_type_name, COUNT(violation_id) AS COUNT
+        SELECT tvt.violation_type_name, tvv.counts
+          FROM (
+        SELECT tv.wzlx, COUNT(tv.violation_id) AS counts
           FROM t_violation tv
+      GROUP BY tv.wzlx) tvv
      LEFT JOIN t_violation_type tvt
-            ON tv.wzlx = tvt.violation_type_code
-      GROUP BY tvt.violation_type_name
+            ON tvv.wzlx = tvt.violation_type_code
     </select>
 </mapper>

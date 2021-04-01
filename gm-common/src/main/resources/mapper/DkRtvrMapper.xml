@@ -26,15 +26,14 @@
     </select>
 
     <select id ="getTop2Violation" resultMap ="rtvrDTO">
-        SELECT tv.tvis_json_id, ts.site_name, tv.clpp, tv.ppcx, tv.hphm, tv.wzlx, tvt.violation_type_name, tv.create_time, tv.tvis_json_tbl
+        SELECT tvv.tvis_json_id, ts.site_name, tvv.clpp, tvv.ppcx, tvv.hphm, tvv.wzlx, tvt.violation_type_name, tvv.create_time, tvv.tvis_json_tbl
+          FROM (
+        SELECT tv.tvis_json_id, tv.clpp, tv.ppcx, tv.hphm, tv.wzlx, tv.create_time, tv.tvis_json_tbl, tv.camera_id
           FROM t_violation tv
-     LEFT JOIN t_camera tc
-            ON tv.camera_id = tc.camera_id
-     LEFT JOIN t_site ts
-            ON tc.site_id = ts.site_id
-     LEFT JOIN t_violation_type tvt
-            ON tv.wzlx = tvt.violation_type_code
       ORDER BY tv.create_time DESC
-         LIMIT 2
+         LIMIT 2) tvv
+     LEFT JOIN t_camera tc ON tvv.camera_id = tc.camera_id
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+     LEFT JOIN t_violation_type tvt ON tvv.wzlx = tvt.violation_type_code
     </select>
 </mapper>

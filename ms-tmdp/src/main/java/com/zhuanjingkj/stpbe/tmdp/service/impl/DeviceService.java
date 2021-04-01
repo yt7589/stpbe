@@ -106,7 +106,7 @@ public class DeviceService implements IDeviceService {
          */
         String rtspUrl = deviceMapper.getRtspUrlByDeviceNo(rto.getDeviceNo()); //设备原数据地址
         if (StringUtils.isNotBlank(rtspUrl) && !rtspUrl.equals(rto.getVideoUrl())) { //原数据地址有改动
-            tvisSdkService.createRtspBind(rtspUrl, "/end"); //解绑原数据地址
+            tvisSdkService.createRtspBind(rtspUrl, "/stop"); //解绑原数据地址
             rto.setStreamId("-1");
             if (StringUtils.isNotBlank(rto.getVideoUrl())) {
                 ResultDTO<CreateRtspBindDTO> rtsp = tvisSdkService.createRtspBind(rto.getVideoUrl(), "/start"); //绑定新数据地址
