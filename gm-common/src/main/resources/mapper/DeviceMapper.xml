@@ -120,10 +120,10 @@
                     tc.camera_type_id =#{rto.cameraTypeId},
                 </if>
                 <if test="rto.videoUrl != null and rto.videoUrl != ''">
-                    tc.rtsp_url =#{rto.videoUrl}
+                    tc.rtsp_url =#{rto.videoUrl},
                 </if>
                 <if test="rto.streamId != null and rto.streamId != ''">
-                    tc.stream_id =#{rto.streamId}
+                    tc.stream_id =#{rto.streamId},
                 </if>
             </trim>
          WHERE tc.camera_id = #{rto.deviceId}
