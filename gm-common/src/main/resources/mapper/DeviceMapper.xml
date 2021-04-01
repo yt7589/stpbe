@@ -119,7 +119,7 @@
                 <if test="rto.cameraTypeId != null and rto.cameraTypeId != ''">
                     tc.camera_type_id =#{rto.cameraTypeId},
                 </if>
-                <if test="rto.videoUrl != null and rto.videoUrl != ''">
+                <if test="rto.videoUrl != null">
                     tc.rtsp_url =#{rto.videoUrl},
                 </if>
                 <if test="rto.streamId != null and rto.streamId != ''">
