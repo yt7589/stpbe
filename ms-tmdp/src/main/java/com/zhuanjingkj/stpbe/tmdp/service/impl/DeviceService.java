@@ -43,7 +43,7 @@ public class DeviceService implements IDeviceService {
          * 查询设备rtsp_url 进行解绑
          */
         String rtspUrl = deviceMapper.getRtspUrlByDeviceNo(rto.getDeviceNo());
-        tvisSdkService.createRtspBind(rtspUrl, "/end");
+        tvisSdkService.createRtspBind(rtspUrl, "/stop");
         Integer affectedRows = deviceMapper.deleteDevice(rto.getDeviceNo());
         ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<DbDeleteResultDTO>();
         DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);
