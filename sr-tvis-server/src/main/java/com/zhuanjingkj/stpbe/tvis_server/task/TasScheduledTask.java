@@ -31,7 +31,7 @@ public class TasScheduledTask implements Runnable {
     private static List<ITvisStpObserver> observers = new ArrayList<>();
     private static boolean isFirstRun = true;
     @Value("${observer.thread.num}")
-    private int observerThreadNum = 5;
+    private int observerThreadNum;
     @Autowired
     private Environment environment;
     @Autowired
