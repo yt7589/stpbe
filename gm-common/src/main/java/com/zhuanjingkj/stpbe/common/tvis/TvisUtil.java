@@ -188,9 +188,7 @@ public class TvisUtil {
             veh.setTvisJsonId(tvisJsonId);
             veh.setVehsIdx(vehsIdx);
             vehsIdx++;
-            synchronized (AppRegistry.vehicleVos) {
-                AppRegistry.vehicleVos.offer(veh);
-            }
+            AppRegistry.vehicleVos.offer(veh);
             /*for (ITvisStpObserver obs : observers) {
                 obs.notifyObserver(veh);
             }*/

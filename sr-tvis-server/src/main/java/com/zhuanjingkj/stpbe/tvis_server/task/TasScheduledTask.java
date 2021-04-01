@@ -7,6 +7,7 @@ import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.common.tvis.ObserverThread;
 import com.zhuanjingkj.stpbe.common.tvis.TvisStpOberverManager;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.common.util.DebugLogger;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,8 @@ public class TasScheduledTask implements Runnable {
     private static boolean isFirstRun = true;
     @Value("${observer.thread.num}")
     private int observerThreadNum;
+    @Value("${ignore.redis.list.num}")
+    private int ignoreRedisListNum;
     @Autowired
     private Environment environment;
     @Autowired
@@ -57,6 +60,13 @@ public class TasScheduledTask implements Runnable {
                 initialize();
             }
         }
+        tvisStpOberverManager.initialize(observers, environment);
+        Thread thd = null;
+        DebugLogger.log("##### yt: 启动Observer线程池");
+        for (int i=0; i<observerThreadNum; i++) {
+            thd = new Thread(new ObserverThread(observers));
+            thd.start();
+        }
         while (true) {
             try {
                 runTasScheduledTask();
@@ -69,33 +79,33 @@ public class TasScheduledTask implements Runnable {
         }
     }
 
-    //@Async("tvisServerPool")
-    //@Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
-        JSONObject jo = (JSONObject) redisTemplate.opsForList().leftPop(PropUtil.getValue("VIDEO_RECOG_RST_REDIS_KEY"));
+        JSONObject jo = null;
+        JSONObject prevJo = null;
+        for (int i=0; i<ignoreRedisListNum; i++) {
+            prevJo = jo;
+            jo = (JSONObject) redisTemplate.opsForList().leftPop(PropUtil.getValue("VIDEO_RECOG_RST_REDIS_KEY"));
+            if (null == jo) {
+                jo = prevJo;
+                break;
+            }
+        }
         if (null == jo) {
             return ;
         }
         String response = jo.toString();
         StringBuilder msg = null;
         long tvisJsonId = 0;
-        //synchronized (redisTemplate) {
         tvisJsonId = redisTemplate.opsForValue().increment(PropUtil.getValue("TVIS_JSON_TBL_ID_KEY"));
         msg = new StringBuilder("{\"cameraId\": \"-1\", \"tvisJsonId\": "
                 + tvisJsonId + ", \"json\": " + response + "}");
-        //}
         String json = msg.toString();
-        TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, json);
-        if (isFirstRun) {
-            tvisStpOberverManager.initialize(observers, environment);
-            Thread thd = null;
-            for (int i=0; i<observerThreadNum; i++) {
-                thd = new Thread(new ObserverThread(observers));
-                thd.start();
-            }
-            isFirstRun = false;
+        try {
+            TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, json);
+            TvisUtil.processStpTvisJson(observers, json);
+        } catch (Exception ex) {
+            DebugLogger.log("************************** exception: " + ex.getMessage() + "!");
         }
-        TvisUtil.processStpTvisJson(observers, json);
         /*
         // 从Redis中读出视频识别结果，将其发送到Kafka
         // 向Kafka的Topic发送请求
