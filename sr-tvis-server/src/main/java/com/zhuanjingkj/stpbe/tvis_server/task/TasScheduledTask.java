@@ -80,13 +80,13 @@ public class TasScheduledTask implements Runnable {
     //@Async("tvisServerPool")
     //@Scheduled(cron = "*/1 * * * * ?")
     public void runTasScheduledTask() {
-        DebugLogger.log("######################### yt: runTasScheduledTask 1");
+        DebugLogger.log("******************** yt: runTasScheduledTask 1");
         JSONObject jo = (JSONObject) redisTemplate.opsForList().leftPop(PropUtil.getValue("VIDEO_RECOG_RST_REDIS_KEY"));
-        DebugLogger.log("######################### yt: runTasScheduledTask 2");
+        DebugLogger.log("**************** yt: runTasScheduledTask 2 jo=" + jo + "!");
         if (null == jo) {
             return ;
         }
-        DebugLogger.log("######################### yt: runTasScheduledTask 3");
+        DebugLogger.log("******************* yt: runTasScheduledTask 3");
         String response = jo.toString();
         StringBuilder msg = null;
         long tvisJsonId = 0;
@@ -97,14 +97,13 @@ public class TasScheduledTask implements Runnable {
         //}
         String json = msg.toString();
         try {
-            DebugLogger.log("######################### yt: runTasScheduledTask 4");
+            DebugLogger.log("*************************** yt: runTasScheduledTask 4");
             TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, json);
-            DebugLogger.log("######################### yt: runTasScheduledTask 5");
-            DebugLogger.log("######################### yt: runTasScheduledTask 6");
+            DebugLogger.log("************************** yt: runTasScheduledTask 5");
             TvisUtil.processStpTvisJson(observers, json);
-            DebugLogger.log("######################### yt: runTasScheduledTask 7");
+            DebugLogger.log("*************************** yt: runTasScheduledTask 6");
         } catch (Exception ex) {
-            DebugLogger.log("#################### exception: " + ex.getMessage() + "!");
+            DebugLogger.log("************************** exception: " + ex.getMessage() + "!");
         }
         /*
         // 从Redis中读出视频识别结果，将其发送到Kafka

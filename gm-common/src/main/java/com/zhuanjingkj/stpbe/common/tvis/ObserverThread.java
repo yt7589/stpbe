@@ -21,29 +21,22 @@ public class ObserverThread implements Runnable {
         VehicleVo vo = null;
         int batchSize = Integer.parseInt(PropUtil.getValue("stp.observer.batchSize"));
         while (true) {
-            DebugLogger.log("##### yt ObserverThread.run 1");
             try {
                 if (lock.tryLock()) {
-                    DebugLogger.log("##### yt ObserverThread.run 2 size=" + AppRegistry.vehicleVos.size() + "!");
                     for (int i = 0; i < batchSize; i++) {
                         if (AppRegistry.vehicleVos.size() <= 1) {
                             break;
                         }
                         vo = AppRegistry.vehicleVos.poll();
                     }
-                    DebugLogger.log("##### yt ObserverThread.run 3");
                     lock.unlock();
-                    DebugLogger.log("##### yt ObserverThread.run 4");
                 }
-                DebugLogger.log("##### yt ObserverThread.run 5");
-                DebugLogger.log("从队列中取出数据：vo=" + vo + "!");
                 if (vo != null) {
                     // 调用所有Observer
                     for (ITvisStpObserver ob : observers) {
                         ob.notifyObserver(vo);
                     }
                 }
-                DebugLogger.log("##### yt ObserverThread.run 6");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

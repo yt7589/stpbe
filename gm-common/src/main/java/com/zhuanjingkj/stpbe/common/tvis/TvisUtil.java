@@ -188,7 +188,6 @@ public class TvisUtil {
             veh.setTvisJsonId(tvisJsonId);
             veh.setVehsIdx(vehsIdx);
             vehsIdx++;
-            DebugLogger.log("###################### yt: 添加时第" + vehsIdx + "辆车数据到队列中");
             AppRegistry.vehicleVos.offer(veh);
             /*for (ITvisStpObserver obs : observers) {
                 obs.notifyObserver(veh);
