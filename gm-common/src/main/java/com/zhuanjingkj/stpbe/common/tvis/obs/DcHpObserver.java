@@ -69,6 +69,9 @@ public class DcHpObserver implements ITvisStpObserver {
         } else {
             code = cameraId +"";
         }
+        if (StringUtils.isBlank(code)) {
+            return;
+        }
         String zjsddh = vo.getVehicleJsxwtzVO().getZjsddh();
         if (StringUtils.isNotBlank(zjsddh) && isViolation(zjsddh)) {
             ilType = "ZJSDDH";
