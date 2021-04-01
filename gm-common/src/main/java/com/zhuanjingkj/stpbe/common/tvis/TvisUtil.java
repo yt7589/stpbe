@@ -188,9 +188,10 @@ public class TvisUtil {
             veh.setTvisJsonId(tvisJsonId);
             veh.setVehsIdx(vehsIdx);
             vehsIdx++;
-            for (ITvisStpObserver obs : observers) {
+            AppRegistry.vehicleVos.offer(veh);
+            /*for (ITvisStpObserver obs : observers) {
                 obs.notifyObserver(veh);
-            }
+            }*/
         }
     }
 
@@ -301,9 +302,7 @@ public class TvisUtil {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
-        DebugLogger.log("table=" + AppRegistry.tvisJsonTblName + "!");
         TvisJsonVO tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, streamId);
-        DebugLogger.log("tvisJsonVo=" + tvisJsonVO + "!");
         if (null == tvisJsonVO) {
             return null;
         }

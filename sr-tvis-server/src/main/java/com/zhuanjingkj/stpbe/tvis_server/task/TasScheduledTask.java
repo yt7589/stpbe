@@ -4,12 +4,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
+import com.zhuanjingkj.stpbe.common.tvis.ObserverThread;
 import com.zhuanjingkj.stpbe.common.tvis.TvisStpOberverManager;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -28,6 +30,8 @@ public class TasScheduledTask implements Runnable {
     private final static long TST_INTERVAL = 1; // 每*毫秒运行一次
     private static List<ITvisStpObserver> observers = new ArrayList<>();
     private static boolean isFirstRun = true;
+    @Value("${observer.thread.num}")
+    private int observerThreadNum = 5;
     @Autowired
     private Environment environment;
     @Autowired
@@ -84,6 +88,11 @@ public class TasScheduledTask implements Runnable {
         TvisUtil.processRawTvisJson(redisTemplate, tvisJsonMapper, json);
         if (isFirstRun) {
             tvisStpOberverManager.initialize(observers, environment);
+            Thread thd = null;
+            for (int i=0; i<observerThreadNum; i++) {
+                thd = new Thread(new ObserverThread(observers));
+                thd.start();
+            }
             isFirstRun = false;
         }
         TvisUtil.processStpTvisJson(observers, json);

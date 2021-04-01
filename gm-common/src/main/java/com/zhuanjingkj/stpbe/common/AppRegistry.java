@@ -1,11 +1,13 @@
 package com.zhuanjingkj.stpbe.common;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+
+import java.util.*;
 
 public class AppRegistry {
     private static Map<String, Object> params = new HashMap<>();
+    // 保存从视频帧中解析出来的车辆值对象列表，供ObserverThread读取，存入系统数据库中
+    public static Queue<VehicleVo> vehicleVos = new LinkedList<>();
 
     public static void putParam(String paramName, Object paramVal) {
         params.put(paramName, paramVal);
