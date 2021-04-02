@@ -64,28 +64,15 @@
     </resultMap>
 
     <select id ="getIllegalVehicle" resultMap="illDTO">
-        SELECT tv.tvis_json_id, tv.violation_id, tv.create_time, tv.vehs_idx,
-               ts.site_name, tv.hphm, tv.wzlx, tvt.violation_type_name, sv.vehicle_type_name, tv.tvis_json_tbl,
-               IF(tv.category = 0, '本市', '外埠') AS category, tv.create_time
+        SELECT tvv.tvis_json_id, tvv.violation_id, tvv.vehs_idx, ts.site_name, tvv.hphm, tvv.wzlx,
+               tvt.violation_type_name, sv.vehicle_type_name, tvv.tvis_json_tbl, tvv.category, tvv.create_time
+          FROM (
+        SELECT tv.tvis_json_id, tv.violation_id, tv.vehs_idx, tv.hphm, tv.wzlx,  tv.tvis_json_tbl,
+               IF(tv.category = 0, '本市', '外埠') AS category, tv.create_time, tv.camera_id, tv.cllxzfl
           FROM t_violation tv
-<!--     LEFT JOIN #{tblName} tj-->
-<!--            ON tv.tvis_json_id = tj.tvis_json_id-->
-     LEFT JOIN t_camera tc
-            ON tc.camera_id = tv.camera_id
-     LEFT JOIN t_site ts
-            ON tc.site_id = ts.site_id
-     LEFT JOIN t_area ta
-            ON ta.area_id = ts.area_id
-     LEFT JOIN t_special_vehicle_type sv
-            ON sv.vehicle_type_num = tv.cllxzfl
-     LEFT JOIN t_violation_type tvt
-            ON tv.wzlx = tvt.violation_type_code
          WHERE 1 = 1
             <if test="hphm != null and hphm != ''">
                 AND tv.hphm LIKE CONCAT('%', #{hphm}, '%')
-            </if>
-            <if test="addr != null and addr != ''">
-                AND ts.site_name LIKE CONCAT('%', #{addr}, '%')
             </if>
             <if test="illType != null and illType != ''">
                 AND tv.wzlx =#{illType}
@@ -94,10 +81,10 @@
                 AND tv.cllxzfl =#{vType}
             </if>
             <if test="category == 0 ">
-                AND category = 0
+                AND tv.category = 0
             </if>
             <if test="category == 1">
-                AND category = 1
+                AND tv.category = 1
             </if>
             <if test="startTime != null and startTime != ''">
                 AND tv.create_time >= #{startTime}
@@ -105,8 +92,22 @@
             <if test="endTime != null and endTime != ''">
                 AND #{endTime} >= tv.create_time
             </if>
-     ORDER BY tv.create_time DESC
-        LIMIT #{startIndex}, #{amount}
+      ORDER BY tv.create_time DESC
+         LIMIT #{startIndex}, #{amount}) tvv
+     LEFT JOIN t_camera tc
+            ON tc.camera_id = tvv.camera_id
+     LEFT JOIN t_site ts
+            ON tc.site_id = ts.site_id
+     LEFT JOIN t_area ta
+            ON ta.area_id = ts.area_id
+     LEFT JOIN t_special_vehicle_type sv
+            ON sv.vehicle_type_num = tvv.cllxzfl
+     LEFT JOIN t_violation_type tvt
+            ON tvv.wzlx = tvt.violation_type_code
+         WHERE 1 = 1
+            <if test="addr != null and addr != ''">
+                AND ts.site_name LIKE CONCAT('%', #{addr}, '%')
+            </if>
     </select>
 
     <select id ="getIllegalVehicleCount" resultType="Integer">

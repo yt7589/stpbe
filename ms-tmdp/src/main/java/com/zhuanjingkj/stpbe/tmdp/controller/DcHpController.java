@@ -18,9 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
 
 /**
@@ -73,20 +71,23 @@ public class DcHpController {
         long startTime = System.currentTimeMillis();
         ResultDTO<DcHpDaDTO> dto = new ResultDTO<>();
         DcHpDaDTO data = new DcHpDaDTO();
+
+        List<FutureTask> taskList = new ArrayList<>();
+        ExecutorService exec = Executors.newFixedThreadPool(2);
         FutureTask ditTask = new FutureTask(new Callable() {
             @Override
             public List<DcHpIlTrendDTO> call() throws Exception {
                 return getDit_exp();
             }
         });
-        ditTask.run();
         FutureTask drtTask = new FutureTask(new Callable() {
             @Override
             public List<DcHpRgTrendDTO> call() throws Exception {
                 return getDrt_exp();
             }
         });
-        drtTask.run();
+        exec.submit(ditTask);
+        exec.submit(drtTask);
         try {
             List<DcHpIlTrendDTO> dit = (List<DcHpIlTrendDTO>)ditTask.get();
             List<DcHpRgTrendDTO> drt = (List<DcHpRgTrendDTO>)drtTask.get();
@@ -97,10 +98,6 @@ public class DcHpController {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-//        List<DcHpIlTrendDTO> dit = getDit_exp();
-//        List<DcHpRgTrendDTO> drt = getDrt_exp();
-//        data.setDit(dit);
-//        data.setDrt(drt);
         data.setTotal_recognition(redisTemplate.opsForValue().get("dchp_vehicle_identification") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_identification")));
         data.setTotal_violation(redisTemplate.opsForValue().get("dchp_vehicle_violation") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_violation")));
         data.setTotal_violation_city(redisTemplate.opsForValue().get("dchp_vehicle_0_violation") == null ? 0 : Integer.parseInt("" + redisTemplate.opsForValue().get("dchp_vehicle_0_violation")));
