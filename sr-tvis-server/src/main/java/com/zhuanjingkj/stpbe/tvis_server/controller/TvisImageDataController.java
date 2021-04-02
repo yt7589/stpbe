@@ -3,6 +3,11 @@ package com.zhuanjingkj.stpbe.tvis_server.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.data.dto.ImageRecogResultDTO;
+import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tvis_server.service.impl.TvisImageRecogService;
 import com.zhuanjingkj.stpbe.tvis_server.service.impl.Wxs2102Service;
 import org.slf4j.Logger;
@@ -17,10 +22,7 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 @RequestMapping("/vehicle")
@@ -113,14 +115,43 @@ public class TvisImageDataController {
     }
 
     @PostMapping("/function/recognitionZjc")
-    public Map<String, Object> recognitionZjc(@RequestParam("GCXH") String gcxh,
-                                           @RequestParam("TPLX") String tplx,
-                                           @RequestParam(name = "MRHPT", required = false) String mrhpt,
-                                           @RequestParam(name = "HPHM", required = false) String hphm,
-                                           @RequestParam(name = "cameraId", required = true) String cameraId,
-                                           @RequestParam(name = "TPXX", required = false) MultipartFile file,
-                                           @RequestParam(name = "TPWJ", required = false) String tpwj) {
-        return null;
+    public ResultDTO<ImageRecogResultDTO> recognitionZjc(@RequestParam(value = "image") MultipartFile file) {
+        String gcxh = "123";
+        String tplx = "1";
+        String mrhpt = "111";
+        String hphm = "222";
+        String cameraId = "-1";
+        String tpwj = "test";
+        byte[] data = null;
+        Map<String, Object> recogResult = null;
+
+        try {
+            checkImageEngine();
+            data = file.getBytes();
+            if (data != null) {
+                recogResult = tvisImageRecogService.recognition(cameraId, gcxh, mrhpt, hphm, data);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ResultDTO<ImageRecogResultDTO> rst = new ResultDTO<>();
+        if (recogResult != null) {
+            ImageRecogResultDTO dataDTO = new ImageRecogResultDTO();
+            List<VehicleCxtzVo> vehs = new ArrayList<>();
+            recogResult.put("StreamID", 0);
+            List<VehicleVo> vos = TvisUtil.parseTvisJson(-1, recogResult.toString());
+            for (VehicleVo vo : vos) {
+                vehs.add(vo.getVehicleCxtzVo());
+            }
+            dataDTO.setVeh(vehs);
+            rst.setCode(0);
+            rst.setMsg("");
+            rst.setData(dataDTO);
+        } else {
+            rst.setCode(2);
+            rst.setMsg("识别图像失败");
+        }
+        return rst;
     }
 
     private static int imgIdx = 0;

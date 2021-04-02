@@ -254,7 +254,7 @@ public class TvisUtil {
                 vo = cutVehs.get("" + veh.getTrackId());
             }
             /*
-            // 
+            //
             TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
             // 车型特征
             String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
