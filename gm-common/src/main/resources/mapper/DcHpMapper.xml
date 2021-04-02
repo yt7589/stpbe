@@ -18,48 +18,40 @@
     </insert>
 
     <select id ="getVehicleData" resultMap="dchpDTO">
-        SELECT tif.tvis_json_id, tif.vehs_idx, tif.tvis_json_tbl, tif.occur_time, ts.site_name, tif.hphm, IF(tif.category = 0, '本市', '外埠') AS category,
-               IF(tif.il_type ='','否', '是') AS isIl,
-               CASE tif.il_type
-               WHEN 'ZJSDDH' THEN '主驾驶打电话' WHEN 'ZJSKSJ' THEN '主驾驶看手机' WHEN 'ZJSBJAQD' THEN '主驾驶不系安全带'
-               WHEN 'ZJSCY' THEN '主驾驶抽烟' WHEN 'ZJSZYB' THEN '主驾驶放下遮阳板' WHEN 'FJSBJAQD' THEN '副驾驶不系安全带'
-               WHEN 'FJSZYB' THEN '副驾驶放下遮阳板' WHEN 'MTCBDTK' THEN '摩托车驾乘人员不戴头盔'
-               ELSE '无'
-               END 'ilType'
+        SELECT tiff.tvis_json_id, tiff.vehs_idx, tiff.tvis_json_tbl, tiff.occur_time, ts.site_name, tiff.hphm, tiff.category, tiff.isIl, tiff.ilType
+          FROM (
+        SELECT tif.tvis_json_id, tif.vehs_idx, tif.tvis_json_tbl, tif.occur_time, tif.hphm, IF(tif.category = 0, '本市', '外埠') AS category, IF(tif.il_type ='','否', '是') AS isIl, tif.camera_id, CASE tif.il_type WHEN 'ZJSDDH' THEN '主驾驶打电话' WHEN 'ZJSKSJ' THEN '主驾驶看手机' WHEN 'ZJSBJAQD' THEN '主驾驶不系安全带' WHEN 'ZJSCY' THEN '主驾驶抽烟' WHEN 'ZJSZYB' THEN '主驾驶放下遮阳板' WHEN 'FJSBJAQD' THEN '副驾驶不系安全带' WHEN 'FJSZYB' THEN '副驾驶放下遮阳板' WHEN 'MTCBDTK' THEN '摩托车驾乘人员不戴头盔' ELSE '无' END 'ilType'
           FROM t_itf_vehicle tif
-     LEFT JOIN t_camera tc
-            ON tc.camera_id = tif.camera_id
-     LEFT JOIN t_site ts
-            ON tc.site_id = ts.site_id
          WHERE 1 = 1
-            <if test="startTime != null and startTime != ''">
-                AND occur_time > #{startTime}
-            </if>
-            <if test="endTime != null and endTime != ''">
-                AND #{endTime} > occur_time
-            </if>
-            <if test="hphm != null and hphm != ''">
-                AND hphm LIKE CONCAT('%', #{hphm}, '%')
-            </if>
-            <if test="category == 0">
-                AND category = 0
-            </if>
-            <if test="category == 1">
-                AND category = 1
-            </if>
-            <if test="category == 3">
-            </if>
-            <if test="vType != null and vType != ''">
-                AND cllxzfl =#{vType}
-            </if>
-            <if test="ilType != null and ilType != ''">
-                AND il_type =#{ilType}
-            </if>
-            <if test="vAddr != null and vAddr != ''">
-                AND ts.site_name LIKE CONCAT('%', #{vAddr}, '%')
-            </if>
-     ORDER BY tif.occur_time DESC
-        LIMIT #{startIndex}, #{amount}
+             <if test="startTime != null and startTime != ''">
+                 AND tif.occur_time > #{startTime}
+             </if>
+             <if test="endTime != null and endTime != ''">
+                 AND #{endTime} > tif.occur_time
+             </if>
+             <if test="hphm != null and hphm != ''">
+                 AND tif.hphm LIKE CONCAT('%', #{hphm}, '%')
+             </if>
+             <if test="category == 0">
+                 AND tif.category = 0
+             </if>
+             <if test="category == 1"> AND tif.category = 1
+             </if>
+             <if test="category == 3">
+             </if>
+             <if test="vType != null and vType != ''">
+                 AND tif.cllxzfl =#{vType}
+             </if>
+             <if test="ilType != null and ilType != ''">
+                 AND tif.il_type =#{ilType}
+             </if>
+      ORDER BY tif.occur_time DESC
+         LIMIT #{startIndex}, #{amount} ) tiff
+     LEFT JOIN t_camera tc ON tc.camera_id = tiff.camera_id
+     LEFT JOIN t_site ts ON tc.site_id = ts.site_id
+             <if test="vAddr != null and vAddr != ''">
+                 AND ts.site_name LIKE CONCAT('%', #{vAddr}, '%')
+             </if>
     </select>
 
     <select id ="getVehicleCount" resultType="Integer">

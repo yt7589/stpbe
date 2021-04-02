@@ -17,6 +17,7 @@ public class DkMvtsService implements IDkMvtsService {
 
     @Override
     public List<DkMvtsDTO> getDkMvtsDTOs_exp() {
+        System.out.println(DateUtil.getMonthOfYear());
         return dkMvtsMapper.getMvtss(DateUtil.getMonthOfYear());
     }
 }

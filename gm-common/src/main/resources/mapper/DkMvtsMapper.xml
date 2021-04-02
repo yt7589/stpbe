@@ -3,7 +3,7 @@
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DkMvtsMapper">
     <resultMap type ="com.zhuanjingkj.stpbe.data.dto.DkMvtsDTO" id ="mvtsDTO">
         <result column="violation_type_name" property="name" jdbcType="VARCHAR"/>
-        <result column="count" property="count" jdbcType="INTEGER"/>
+        <result column="counts" property="count" jdbcType="INTEGER"/>
     </resultMap>
 
     <select id ="getMvtss" resultMap ="mvtsDTO">
