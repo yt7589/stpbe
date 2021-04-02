@@ -12,9 +12,15 @@ public class WsmVideoFrameVehicleDTO extends BaseDTO {
     private String cutImgUrl;
     private String crossTime;
     private String trafficViolationName;
+    // 转睛云需要参数
+    private String ppxhms; // 品牌型号名称
+    private String psfx; // 拍摄方向
+    private String cllxfl; // 车辆类型分类
+    private String csys; // 车身颜色
 
     public WsmVideoFrameVehicleDTO(long wvfvvId, long trackId, int vehIdx, String ppcxnk, String hphm,
-                                   String cutImgUrl, String crossTime, String trafficViolationName) {
+                                   String cutImgUrl, String crossTime, String trafficViolationName,
+                                   String ppxhms, String psfx, String cllxfl, String csys) {
         this.wvfvvId = wvfvvId;
         this.trackId = trackId;
         this.vehIdx = vehIdx;
@@ -23,6 +29,10 @@ public class WsmVideoFrameVehicleDTO extends BaseDTO {
         this.cutImgUrl = cutImgUrl;
         this.crossTime = crossTime;
         this.trafficViolationName = trafficViolationName;
+        this.ppxhms = ppxhms;
+        this.psfx = psfx;
+        this.cllxfl = cllxfl;
+        this.csys = csys;
     }
 
     public long getWvfvvId() {
@@ -87,5 +97,37 @@ public class WsmVideoFrameVehicleDTO extends BaseDTO {
 
     public void setTrafficViolationName(String trafficViolationName) {
         this.trafficViolationName = trafficViolationName;
+    }
+
+    public String getPpxhms() {
+        return ppxhms;
+    }
+
+    public void setPpxhms(String ppxhms) {
+        this.ppxhms = ppxhms;
+    }
+
+    public String getPsfx() {
+        return psfx;
+    }
+
+    public void setPsfx(String psfx) {
+        this.psfx = psfx;
+    }
+
+    public String getCllxfl() {
+        return cllxfl;
+    }
+
+    public void setCllxfl(String cllxfl) {
+        this.cllxfl = cllxfl;
+    }
+
+    public String getCsys() {
+        return csys;
+    }
+
+    public void setCsys(String csys) {
+        this.csys = csys;
     }
 }

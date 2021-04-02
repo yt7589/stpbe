@@ -3,6 +3,11 @@ package com.zhuanjingkj.stpbe.tvis_server.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.data.dto.ImageRecogResultDTO;
+import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tvis_server.service.impl.TvisImageRecogService;
 import com.zhuanjingkj.stpbe.tvis_server.service.impl.Wxs2102Service;
 import org.slf4j.Logger;
@@ -17,10 +22,7 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 @RequestMapping("/vehicle")
@@ -110,6 +112,34 @@ public class TvisImageDataController {
             result.put("MSG", e.getMessage());
             return result;
         }
+    }
+
+    /**
+     * 转睛云图片体验中心上传图片识别功能接口
+     * @param file
+     * @return
+     */
+    @PostMapping("/function/recognitionZjc")
+    public Map<String, Object> recognitionZjc(@RequestParam(value = "image") MultipartFile file) {
+        String gcxh = "123";
+        String tplx = "1";
+        String mrhpt = "111";
+        String hphm = "222";
+        String cameraId = "-1";
+        String tpwj = "test";
+        byte[] data = null;
+        Map<String, Object> recogResult = null;
+
+        try {
+            checkImageEngine();
+            data = file.getBytes();
+            if (data != null) {
+                recogResult = tvisImageRecogService.recognition(cameraId, gcxh, mrhpt, hphm, data);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return recogResult;
     }
 
     private static int imgIdx = 0;
