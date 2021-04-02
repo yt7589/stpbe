@@ -11,6 +11,7 @@
           FROM (
         SELECT tv.wzlx, COUNT(tv.violation_id) AS counts
           FROM t_violation tv
+         WHERE tv.create_time LIKE CONCAT(#{date}, '%')
       GROUP BY tv.wzlx) tvv
      LEFT JOIN t_violation_type tvt
             ON tvv.wzlx = tvt.violation_type_code
