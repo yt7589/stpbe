@@ -3,7 +3,7 @@
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.DkMvtsMapper">
     <resultMap type ="com.zhuanjingkj.stpbe.data.dto.DkMvtsDTO" id ="mvtsDTO">
         <result column="violation_type_name" property="name" jdbcType="VARCHAR"/>
-        <result column="count" property="count" jdbcType="INTEGER"/>
+        <result column="counts" property="count" jdbcType="INTEGER"/>
     </resultMap>
 
     <select id ="getMvtss" resultMap ="mvtsDTO">
@@ -11,6 +11,7 @@
           FROM (
         SELECT tv.wzlx, COUNT(tv.violation_id) AS counts
           FROM t_violation tv
+         WHERE tv.create_time LIKE CONCAT(#{date}, '%')
       GROUP BY tv.wzlx) tvv
      LEFT JOIN t_violation_type tvt
             ON tvv.wzlx = tvt.violation_type_code
