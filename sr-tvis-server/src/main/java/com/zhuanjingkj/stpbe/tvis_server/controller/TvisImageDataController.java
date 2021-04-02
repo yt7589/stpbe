@@ -112,6 +112,17 @@ public class TvisImageDataController {
         }
     }
 
+    @PostMapping("/function/recognitionZjc")
+    public Map<String, Object> recognitionZjc(@RequestParam("GCXH") String gcxh,
+                                           @RequestParam("TPLX") String tplx,
+                                           @RequestParam(name = "MRHPT", required = false) String mrhpt,
+                                           @RequestParam(name = "HPHM", required = false) String hphm,
+                                           @RequestParam(name = "cameraId", required = true) String cameraId,
+                                           @RequestParam(name = "TPXX", required = false) MultipartFile file,
+                                           @RequestParam(name = "TPWJ", required = false) String tpwj) {
+        return null;
+    }
+
     private static int imgIdx = 0;
     @PostMapping("/function/recognition")
     public Map<String, Object> recognition(@RequestParam("GCXH") String gcxh,

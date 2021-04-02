@@ -48,7 +48,15 @@ public class VideoAnalysisTask implements Runnable {
     public void runVideoAnalysisTask() {
         WsmVideoFrameDTO vfv = null;
         for (String streamId : streamIds) {
-            vfv = TvisUtil.getTvisVideoAnalysisResult(tvisJsonMapper, streamIds, cutVehs, Long.parseLong(streamId));
+            try {
+                vfv = TvisUtil.getTvisVideoAnalysisResult(tvisJsonMapper, streamIds, cutVehs, Long.parseLong(streamId));
+            } catch (Exception ex) {
+                DebugLogger.log("***** yt: ms-tmdp::VideoAnalysisTask." +
+                        "runVideoAnalysisTask exception: " + ex.getMessage() + "!");
+            }
+            if (null == vfv) {
+                continue;
+            }
             List<WebSocketSession> wsss = streamWsss.get("" + streamId);
             for (WebSocketSession wss : wsss) {
                 if (wss.isOpen()) {
