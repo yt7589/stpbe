@@ -21,14 +21,14 @@ public class HttpHeaderUserIdFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest)servletRequest;
-        HttpServletResponse response = (HttpServletResponse)servletResponse;
-        //request.setCharacterEncoding("UTF-8");
-        //response.setContentType("application/json; charset=utf-8");
-        String uidStr = request.getHeader(PropUtil.getValue("AUTH_USER_HEADER"));
-        String sessionId = request.getSession().getId();
-        redisTemplate.opsForValue().set(sessionId, uidStr + "");
-        filterChain.doFilter(request, response);
+//        HttpServletRequest request = (HttpServletRequest)servletRequest;
+//        HttpServletResponse response = (HttpServletResponse)servletResponse;
+//        //request.setCharacterEncoding("UTF-8");
+//        //response.setContentType("application/json; charset=utf-8");
+//        String uidStr = request.getHeader(PropUtil.getValue("AUTH_USER_HEADER"));
+//        String sessionId = request.getSession().getId();
+//        redisTemplate.opsForValue().set(sessionId, uidStr + "");
+//        filterChain.doFilter(request, response);
     }
 
     @Override
