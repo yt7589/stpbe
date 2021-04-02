@@ -253,15 +253,6 @@ public class TvisUtil {
             } else {
                 vo = cutVehs.get("" + veh.getTrackId());
             }
-            /*
-            //
-            TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
-            // 车型特征
-            String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
-            String hphm = veh.getVehicleHptzVO().getHphm();
-            TvisSodImage.drawString(orgImg, Font.BOLD, 50,
-                    Color.RED, x, y + 3, hphm + ":" + ppxhms);
-             */
             maxArea = vo.getArea();
             if (1>0 || currentArea >= maxArea) {
                 maxArea = currentArea;
@@ -287,6 +278,30 @@ public class TvisUtil {
             wvfvvs.add(vfvv);
             idx++;
         }
+        for (VehicleVo veh : vehs) {
+            String clwz = veh.getVehicleWztzVo().getClwz();
+            String[] arrs = clwz.split(",");
+            x = Integer.parseInt(arrs[0]);
+            if (x < 0) {
+                x = 0;
+            }
+            y = Integer.parseInt(arrs[1]);
+            if (y < 0) {
+                y = 0;
+            }
+            w = Integer.parseInt(arrs[2]);
+            h = Integer.parseInt(arrs[3]);
+            if (w <= 0 || h <= 0) {
+                continue;
+            }
+            //
+            TvisSodImage.drawRect(orgImg, Color.RED, x, y, w, h);
+            // 车型特征
+            String ppxhms = veh.getVehicleCxtzVo().getPpxhmsCode();
+            String hphm = veh.getVehicleHptzVO().getHphm();
+            TvisSodImage.drawString(orgImg, Font.BOLD, 50,
+                    Color.RED, x, y + 3, hphm + ":" + ppxhms);
+        }
         try {
             ImageIO.write(orgImg, "jpg", new File(imgBaseFolder + orgFileFn));
         } catch (IOException e) {
@@ -305,9 +320,7 @@ public class TvisUtil {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
-        DebugLogger.log("***** yt: before getLatestStreamFrame! streamId=" + streamId + "! table=" + AppRegistry.tvisJsonTblName + "!");
         TvisJsonVO tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, streamId);
-        DebugLogger.log("***** yt: after getLatestStreamFrame vo=" + tvisJsonVO + "!");
         if (null == tvisJsonVO) {
             return null;
         }

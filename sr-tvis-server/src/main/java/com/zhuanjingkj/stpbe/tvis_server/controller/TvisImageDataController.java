@@ -115,7 +115,7 @@ public class TvisImageDataController {
     }
 
     @PostMapping("/function/recognitionZjc")
-    public ResultDTO<ImageRecogResultDTO> recognitionZjc(@RequestParam(value = "image") MultipartFile file) {
+    public ImageRecogResultDTO recognitionZjc(@RequestParam(value = "image") MultipartFile file) {
         String gcxh = "123";
         String tplx = "1";
         String mrhpt = "111";
@@ -134,9 +134,8 @@ public class TvisImageDataController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ResultDTO<ImageRecogResultDTO> rst = new ResultDTO<>();
+        ImageRecogResultDTO dataDTO = new ImageRecogResultDTO();
         if (recogResult != null) {
-            ImageRecogResultDTO dataDTO = new ImageRecogResultDTO();
             List<VehicleCxtzVo> vehs = new ArrayList<>();
             recogResult.put("StreamID", 0);
             List<VehicleVo> vos = TvisUtil.parseTvisJson(-1, recogResult.toString());
@@ -144,14 +143,8 @@ public class TvisImageDataController {
                 vehs.add(vo.getVehicleCxtzVo());
             }
             dataDTO.setVeh(vehs);
-            rst.setCode(0);
-            rst.setMsg("");
-            rst.setData(dataDTO);
-        } else {
-            rst.setCode(2);
-            rst.setMsg("识别图像失败");
         }
-        return rst;
+        return dataDTO;
     }
 
     private static int imgIdx = 0;
