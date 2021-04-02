@@ -302,7 +302,9 @@ public class TvisUtil {
             // 获取当前t_tvis_json_*表名
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
+        DebugLogger.log("***** yt: before getLatestStreamFrame! streamId=" + streamId + "! table=" + AppRegistry.tvisJsonTblName + "!");
         TvisJsonVO tvisJsonVO = tvisJsonMapper.getLatestStreamFrame(AppRegistry.tvisJsonTblName, streamId);
+        DebugLogger.log("***** yt: after getLatestStreamFrame vo=" + tvisJsonVO + "!");
         if (null == tvisJsonVO) {
             return null;
         }
