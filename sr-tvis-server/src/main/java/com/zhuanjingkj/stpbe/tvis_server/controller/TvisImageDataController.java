@@ -114,6 +114,11 @@ public class TvisImageDataController {
         }
     }
 
+    /**
+     * 转睛云图片体验中心上传图片识别功能接口
+     * @param file
+     * @return
+     */
     @PostMapping("/function/recognitionZjc")
     public Map<String, Object> recognitionZjc(@RequestParam(value = "image") MultipartFile file) {
         String gcxh = "123";

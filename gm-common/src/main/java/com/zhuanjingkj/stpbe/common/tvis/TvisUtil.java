@@ -274,7 +274,9 @@ public class TvisUtil {
             vfvv = new WsmVideoFrameVehicleDTO(wsmVfvvIdx++, veh.getTrackId(), idx,
                     veh.getVehicleCxtzVo().getPpcxCode(),
                     veh.getVehicleHptzVO().getHphm(), vaImgUrlBase + vo.getCutImgFn(),
-                    "50秒前", "无");
+                    "50秒前", "无", veh.getVehicleCxtzVo().getPpxhmsCode(),
+                    veh.getVehicleWztzVo().getPsfx(), veh.getVehicleCxtzVo().getCllxflCode(),
+                    veh.getVehicleCxtzVo().getCsysCode());
             wvfvvs.add(vfvv);
             idx++;
         }
