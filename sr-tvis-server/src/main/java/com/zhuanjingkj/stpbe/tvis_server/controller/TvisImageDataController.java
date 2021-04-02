@@ -115,7 +115,7 @@ public class TvisImageDataController {
     }
 
     @PostMapping("/function/recognitionZjc")
-    public ImageRecogResultDTO recognitionZjc(@RequestParam(value = "image") MultipartFile file) {
+    public Map<String, Object> recognitionZjc(@RequestParam(value = "image") MultipartFile file) {
         String gcxh = "123";
         String tplx = "1";
         String mrhpt = "111";
@@ -134,17 +134,7 @@ public class TvisImageDataController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ImageRecogResultDTO dataDTO = new ImageRecogResultDTO();
-        if (recogResult != null) {
-            List<VehicleCxtzVo> vehs = new ArrayList<>();
-            recogResult.put("StreamID", 0);
-            List<VehicleVo> vos = TvisUtil.parseTvisJson(-1, recogResult.toString());
-            for (VehicleVo vo : vos) {
-                vehs.add(vo.getVehicleCxtzVo());
-            }
-            dataDTO.setVeh(vehs);
-        }
-        return dataDTO;
+        return recogResult;
     }
 
     private static int imgIdx = 0;
