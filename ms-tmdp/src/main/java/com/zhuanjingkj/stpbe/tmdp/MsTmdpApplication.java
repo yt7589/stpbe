@@ -10,13 +10,16 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -47,5 +50,15 @@ public class MsTmdpApplication {
         System.out.println("##### Application step 2");
         thd.start();
         System.out.println("##### Application step 3");
+    }
+
+    /**
+     * 文件上传临时路径
+     */
+    @Bean
+    MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        factory.setLocation("/home/ps/live/mediaServer/");
+        return factory.createMultipartConfig();
     }
 }
