@@ -32,9 +32,9 @@ public class DcRtController {
      */
     @GetMapping(value = "/rt/queryDataReport")
     public ResultDTO<DcRtDTO> queryDataReport(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestParam(name = "tp", defaultValue = "today", required = false) String tp
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestParam(name = "tp", defaultValue = "today", required = false) String tp
     ) {
         return queryDataReport_exp(tp);
     }

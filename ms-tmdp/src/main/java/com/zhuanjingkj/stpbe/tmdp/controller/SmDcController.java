@@ -32,14 +32,14 @@ public class SmDcController {
      */
     @GetMapping(value ="/getUsers")
     public ResultDTO<DbQrsDTO> getUsers(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestParam(name = "startIndex", required = false) Integer startIndex,
-        @RequestParam(name = "amount", required = false) Integer amount,
-        @RequestParam(name = "direction", required = false) Integer direction,
-        @RequestParam(name = "loginName", required = false) String loginName,
-        @RequestParam(name = "userName", required = false) String userName,
-        @RequestParam(name = "phone", required = false) String phone
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestParam(name = "startIndex", required = false) Integer startIndex,
+            @RequestParam(name = "amount", required = false) Integer amount,
+            @RequestParam(name = "direction", required = false) Integer direction,
+            @RequestParam(name = "loginName", required = false) String loginName,
+            @RequestParam(name = "userName", required = false) String userName,
+            @RequestParam(name = "phone", required = false) String phone
     ) {
         return getUsers_exp(startIndex, amount, direction, loginName, userName, phone);
     }
@@ -53,9 +53,9 @@ public class SmDcController {
      */
     @DeleteMapping(value ="/delUser")
     public ResultDTO<DbDeleteResultDTO> delUser(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestBody DeleteUserFromSmRTO rto
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestBody DeleteUserFromSmRTO rto
     ) {
         return delUser_exp(rto);
     }
@@ -69,9 +69,9 @@ public class SmDcController {
      */
     @PostMapping(value ="/addUser")
     public ResultDTO<DbInsertResultDTO> addUser(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestBody AddUserToSmRTO rto
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestBody AddUserToSmRTO rto
     ) {
         return addUser_exp(rto);
     }
@@ -85,9 +85,9 @@ public class SmDcController {
      */
     @PutMapping(value ="/uptUserInfo")
     public ResultDTO<DbDeleteResultDTO> uptUserInfo(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestBody UpdateUserInfoRTO rto
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestBody UpdateUserInfoRTO rto
     ) {
         return uptUserInfo_exp(rto);
     }
@@ -98,11 +98,11 @@ public class SmDcController {
      */
     @GetMapping(value ="/getRoles")
     public ResultDTO<DbQrsDTO> getRoles(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestParam(name = "startIndex", required = false) Integer startIndex,
-        @RequestParam(name = "amount", required = false) Integer amount,
-        @RequestParam(name = "direction", required = false) Integer direction
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestParam(name = "startIndex", required = false) Integer startIndex,
+            @RequestParam(name = "amount", required = false) Integer amount,
+            @RequestParam(name = "direction", required = false) Integer direction
     ) {
         return getRoles_exp(startIndex, amount, direction);
     }
@@ -116,9 +116,9 @@ public class SmDcController {
      */
     @GetMapping(value ="/getUserInfo")
     public ResultDTO<SmUserDTO> getUserInfo(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestParam(name = "userId", required = false) long userId
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestParam(name = "userId", required = false) long userId
     ) {
         return getUserInfo_exp(userId);
     }
@@ -131,8 +131,8 @@ public class SmDcController {
      */
     @GetMapping(value = "/getSysInfo")
     public ResultDTO<SmSysInfoDTO> getSysInfo(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version
     ) {
         return getSysInfo_exp();
     }
@@ -144,14 +144,14 @@ public class SmDcController {
      */
     @PostMapping(value ="/uptSysInfo")
     public ResultDTO<DbInsertResultDTO> uptSysInfo(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestParam(name = "qyImgUrl", required = false) String qyImgUrl,
-        @RequestParam(name = "qyName", required = false) String qyName,
-        @RequestParam(name = "sysName", required = false) String sysName,
-        @RequestParam(name = "qyIcp", required = false) String qyIcp,
-        @RequestParam(name = "ownership", required = false) String ownership,
-        @RequestParam(name = "city", required = false) String city
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestParam(name = "qyImgUrl", required = false) String qyImgUrl,
+            @RequestParam(name = "qyName", required = false) String qyName,
+            @RequestParam(name = "sysName", required = false) String sysName,
+            @RequestParam(name = "qyIcp", required = false) String qyIcp,
+            @RequestParam(name = "ownership", required = false) String ownership,
+            @RequestParam(name = "city", required = false) String city
     ) {
         return uptSysInfo_exp(qyImgUrl, qyName, sysName, qyIcp, ownership, city);
     }
@@ -163,9 +163,9 @@ public class SmDcController {
      */
     @PostMapping(value ="/uploadImg")
     public ResultDTO<String> uploadImg(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestParam(name = "file") MultipartFile file
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestParam(name = "file") MultipartFile file
     ) {
         return uploadImg_exp(file);
     }

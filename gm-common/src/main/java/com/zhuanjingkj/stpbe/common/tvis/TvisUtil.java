@@ -3,12 +3,10 @@ package com.zhuanjingkj.stpbe.common.tvis;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
-import com.zhuanjingkj.stpbe.common.util.DebugLogger;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.RecognizeTvisImageDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
@@ -182,13 +180,13 @@ public class TvisUtil {
         long tvisJsonId = rawJo.getLong("tvisJsonId");
         long cameraId = rawJo.getLong("cameraId");
         JSONObject rstJo = rawJo.getJSONObject("json");
-        List<VehicleVo> vehs = TvisUtil.parseTvisJson(cameraId, rstJo.toJSONString());
+        List<VehicleVO> vehs = TvisUtil.parseTvisJson(cameraId, rstJo.toJSONString());
         long vehsIdx = 0;
-        for (VehicleVo veh : vehs) {
+        for (VehicleVO veh : vehs) {
             veh.setTvisJsonId(tvisJsonId);
             veh.setVehsIdx(vehsIdx);
             vehsIdx++;
-            AppRegistry.vehicleVos.offer(veh);
+            AppRegistry.vehicleVOS.offer(veh);
             /*for (ITvisStpObserver obs : observers) {
                 obs.notifyObserver(veh);
             }*/
@@ -213,7 +211,7 @@ public class TvisUtil {
         String jsonStr = IpfsClient.getTextFile(tvisJsonVO.getJsonHash());
         JSONObject jo = JSONObject.parseObject(jsonStr);
         JSONObject joRst = jo.getJSONObject("json");
-        List<VehicleVo> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
+        List<VehicleVO> vehs = TvisUtil.parseTvisJson(jo.getLong("cameraId"), joRst.toJSONString());
         // 在图像上绘制一个矩形框并保存到当前目录下
         CameraVehicleRecordVO vo = null;
         int x, y, w, h; // 检测框位置
@@ -226,7 +224,7 @@ public class TvisUtil {
         String orgFileFn = "n_" + tvisJsonId + ".jpg";
         vfv = new WsmVideoFrameDTO(tvisJsonVO.getTvisJsonId(), tvisJsonVO.getPts(), vaImgUrlBase + orgFileFn);
         wvfvvs = vfv.getData();
-        for (VehicleVo veh : vehs) {
+        for (VehicleVO veh : vehs) {
             String clwz = veh.getVehicleWztzVo().getClwz();
             String[] arrs = clwz.split(",");
             x = Integer.parseInt(arrs[0]);
@@ -280,7 +278,7 @@ public class TvisUtil {
             wvfvvs.add(vfvv);
             idx++;
         }
-        for (VehicleVo veh : vehs) {
+        for (VehicleVO veh : vehs) {
             String clwz = veh.getVehicleWztzVo().getClwz();
             String[] arrs = clwz.split(",");
             x = Integer.parseInt(arrs[0]);
@@ -548,7 +546,7 @@ public class TvisUtil {
         }
     }
 
-    public static List<VehicleVo> parseTvisJson(long cameraId, String json) {
+    public static List<VehicleVO> parseTvisJson(long cameraId, String json) {
         JSONObject rstJson = JSONObject.parseObject(json);
         long streamId = rstJson.getLong("StreamID");
 
@@ -559,19 +557,19 @@ public class TvisUtil {
         JSONObject wztzJson = null;
         JSONObject jsxwtzJson = null;
         JSONObject gxhtzJson = null;
-        List<VehicleVo> vos = new ArrayList<>();
-        VehicleVo vo = null;
-        VehicleWztzVo vehicleWztzVo = null;
+        List<VehicleVO> vos = new ArrayList<>();
+        VehicleVO vo = null;
+        VehicleWztzVO vehicleWztzVo = null;
         VehicleHptzVO hptzVO = null;
-        VehicleCxtzVo vehicleCxtzVo = null;
-        VehicleCltzxlVo vehicleCltzxlVo = null;
+        VehicleCxtzVO vehicleCxtzVo = null;
+        VehicleCltzxlVO vehicleCltzxlVo = null;
         VehicleJsxwtzVO vehicleJsxwtzVO = null;
         VehicleGxhtzVO vehicleGxhtzVO = null;
         int vehIdx = 0;
         if (vehs != null) {
             for (Object veh : vehs) {
                 vehJson = (JSONObject) veh;
-                vo = new VehicleVo();
+                vo = new VehicleVO();
                 vo.setVehsIdx(vehIdx++);
                 vo.setOccurTime(vehJson.getString("OCCUR_TIME"));
                 vo.setCameraId(cameraId);
@@ -580,7 +578,7 @@ public class TvisUtil {
                     vo.setTrackId(vehJson.getLong("TRACK_ID"));
                 }
                 // 位置特征解析
-                vehicleWztzVo = new VehicleWztzVo();
+                vehicleWztzVo = new VehicleWztzVO();
                 wztzJson = vehJson.getJSONObject("WZTZ");
                 vehicleWztzVo.setPsfx(wztzJson.getString("PSFX"));
                 vehicleWztzVo.setClwz(wztzJson.getString("CLWZ"));
@@ -588,7 +586,7 @@ public class TvisUtil {
                 // 解析号牌特征
                 vo.setVehicleHptzVO(parseHptzJson(vehJson.getJSONObject(PropUtil.getValue("TJ_HPTZ"))));
                 // 车型特征
-                vehicleCxtzVo = new VehicleCxtzVo();
+                vehicleCxtzVo = new VehicleCxtzVO();
                 cxtzJson = vehJson.getJSONObject("CXTZ");
                 vehicleCxtzVo.setCllxflCode(cxtzJson.getString("CLLXFL"));
                 vehicleCxtzVo.setCllxzflCode(cxtzJson.getString("CLLXZFL"));
@@ -599,7 +597,7 @@ public class TvisUtil {
                 vehicleCxtzVo.setCsysCode(cxtzJson.getString("CSYS"));
                 vo.setVehicleCxtzVo(vehicleCxtzVo);
                 // 车辆特征向量
-                vehicleCltzxlVo = new VehicleCltzxlVo();
+                vehicleCltzxlVo = new VehicleCltzxlVO();
                 vehicleCltzxlVo.setCltzxl(generateTzxl(vehJson.getString("CLTZXL")));
                 vo.setVehicleCltzxlVo(vehicleCltzxlVo);
                 // 驾驶行为特征

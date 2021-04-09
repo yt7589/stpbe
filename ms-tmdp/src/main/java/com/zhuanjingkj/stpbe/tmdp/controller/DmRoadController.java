@@ -30,12 +30,12 @@ public class DmRoadController {
      */
     @GetMapping(value = "/rd/queryRoadSection")
     public ResultDTO<DbQrsDTO> queryRoad(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestParam(name = "roadName", required = false) String roadName,
-        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestParam(name = "roadName", required = false) String roadName,
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
     ) {
         return queryRoad_exp(startIndex, amount, direction, roadName);
     }
@@ -49,9 +49,9 @@ public class DmRoadController {
      */
     @PostMapping(value = "/rd/addRoadSection")
     public ResultDTO<DbInsertResultDTO> addRoadSection(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestBody AddRoadSectionToRsRTO rto
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestBody AddRoadSectionToRsRTO rto
     ) {
         return addRoadSection_exp(rto);
     }
@@ -65,9 +65,9 @@ public class DmRoadController {
      */
     @DeleteMapping(value = "/rd/deleteRoadSection")
     public ResultDTO<DbDeleteResultDTO> deleteRoadSection(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestBody DeleteRoadSectionFromRsRTO rto
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestBody DeleteRoadSectionFromRsRTO rto
     ) {
         return deleteRoadSection_exp(rto);
     }

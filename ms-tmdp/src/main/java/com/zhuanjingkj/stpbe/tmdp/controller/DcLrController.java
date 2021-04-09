@@ -29,11 +29,11 @@ public class DcLrController {
      */
     @GetMapping(value = "/lr/queryLocusReplay")
     public ResultDTO<DcLrDTO> queryLocusReplay(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestParam(name = "startTime", required = false) String startTime,
-        @RequestParam(name = "endTime", required = false) String endTime,
-        @RequestParam(name = "hphm", required = false) String hphm
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestParam(name = "startTime", required = false) String startTime,
+            @RequestParam(name = "endTime", required = false) String endTime,
+            @RequestParam(name = "hphm", required = false) String hphm
     ) {
         return queryLocusReplay_exp(startTime, endTime, hphm);
     }

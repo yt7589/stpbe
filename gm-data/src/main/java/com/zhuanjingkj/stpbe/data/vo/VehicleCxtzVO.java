@@ -3,7 +3,7 @@ package com.zhuanjingkj.stpbe.data.vo;
 /**
  * 车型特征值对象
  */
-public class VehicleCxtzVo {
+public class VehicleCxtzVO {
     private long tzxlId;
     private int cllxfl;
     private String cllxflCode;

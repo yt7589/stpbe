@@ -154,22 +154,36 @@ public class FileUtil {
     }
     /**
      * 图片上传
-     * @param file
+     * @param multipartFile
+     * @param fileName
+     * @param path
      * @param fileName
      * @return
      */
-    public static boolean uploadImg(MultipartFile file, String fileName) {
+    public static boolean uploadImg(MultipartFile multipartFile, String fileName, String path) {
         boolean flag = false;
-        String path = PropUtil.getValue("stp.img.path");
-        System.out.println("图片上传 path>>>" + path);
+        System.out.println("文件上传 path>>>" + path);
 //        String path = "D://";
-        File file1 = new File(path + fileName);
+        File file = new File(path + fileName);
         try {
-            file.transferTo(file1);
+            multipartFile.transferTo(file);
             flag = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("文件上传完成! > " + path + fileName);
         return flag;
+    }
+
+    public static Integer callCMD(String cmd) {
+        try {
+            Process prs = Runtime.getRuntime().exec(cmd);
+            return prs.waitFor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

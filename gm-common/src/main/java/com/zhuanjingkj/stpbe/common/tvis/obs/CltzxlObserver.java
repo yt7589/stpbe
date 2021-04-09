@@ -2,10 +2,10 @@ package com.zhuanjingkj.stpbe.common.tvis.obs;
 
 import com.zhuanjingkj.stpbe.common.mgq.GrqEngine;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
-import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -21,14 +21,14 @@ public class CltzxlObserver implements ITvisStpObserver {
     private RedisTemplate redisTemplate;
 
     @Override
-    public void notifyObserver(VehicleVo vo) {
+    public void notifyObserver(VehicleVO vo) {
         if (null == redisTemplate) {
             System.out.println("##### 直接返回 #####");
             return ;
         }
-        VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
-        VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
-        VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
+        VehicleWztzVO vehicleWztzVo = vo.getVehicleWztzVo();
+        VehicleCxtzVO vehicleCxtzVo = vo.getVehicleCxtzVo();
+        VehicleCltzxlVO vehicleCltzxlVo = vo.getVehicleCltzxlVo();
         try {
             String partitionTag = GrqEngine.getPartitionTag(
                     vehicleWztzVo.getPsfx(),

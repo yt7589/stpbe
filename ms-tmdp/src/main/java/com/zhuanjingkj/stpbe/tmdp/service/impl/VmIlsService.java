@@ -2,8 +2,6 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zhuanjingkj.stpbe.common.AppConst;
-import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
@@ -14,7 +12,6 @@ import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.*;
 import com.zhuanjingkj.stpbe.data.vo.CameraVehicleRecordVO;
 import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
 import com.zhuanjingkj.stpbe.tmdp.dto.vm.VmIlsVdDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vm.VmIlsVsInfoDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vm.VmIlsVsTypeDTO;
@@ -26,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -28,8 +28,8 @@ public class KsLpsController {
 
     @GetMapping(value = "/lps/queryAbnormalLicensePlate")
     public ResultDTO<KsLpsDTO> queryAbnormalLicensePlate(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version
     ) {
         ResultDTO<KsLpsDTO> dto = new ResultDTO<>();
         KsLpsDTO data = new KsLpsDTO();

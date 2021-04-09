@@ -2,7 +2,7 @@ package com.zhuanjingkj.stpbe.data.vo;
 
 import java.util.List;
 
-public class VehicleCltzxlVo {
+public class VehicleCltzxlVO {
     private List<Float> cltzxl;
 
     public List<Float> getCltzxl() {

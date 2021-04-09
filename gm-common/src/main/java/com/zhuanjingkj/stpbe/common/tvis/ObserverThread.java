@@ -1,9 +1,8 @@
 package com.zhuanjingkj.stpbe.common.tvis;
 
 import com.zhuanjingkj.stpbe.common.AppRegistry;
-import com.zhuanjingkj.stpbe.common.util.DebugLogger;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVO;
 
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -18,16 +17,16 @@ public class ObserverThread implements Runnable {
     @Override
     public void run() {
         Lock lock = new ReentrantLock();
-        VehicleVo vo = null;
+        VehicleVO vo = null;
         int batchSize = Integer.parseInt(PropUtil.getValue("stp.observer.batchSize"));
         while (true) {
             try {
                 if (lock.tryLock()) {
                     for (int i = 0; i < batchSize; i++) {
-                        if (AppRegistry.vehicleVos.size() <= 1) {
+                        if (AppRegistry.vehicleVOS.size() <= 1) {
                             break;
                         }
-                        vo = AppRegistry.vehicleVos.poll();
+                        vo = AppRegistry.vehicleVOS.poll();
                     }
                     lock.unlock();
                 }

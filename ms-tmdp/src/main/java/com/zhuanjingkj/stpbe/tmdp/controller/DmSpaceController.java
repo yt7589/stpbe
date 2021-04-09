@@ -30,11 +30,11 @@ public class DmSpaceController {
      */
     @GetMapping(value = "/sm/queryArea")
     public ResultDTO<DbQrsDTO> queryArea (
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
     ) {
         return queryArea_exp(startIndex, amount, direction);
     }
@@ -48,9 +48,9 @@ public class DmSpaceController {
      */
     @PostMapping(value = "/sm/addArea2Space")
     public ResultDTO<DbInsertResultDTO> addAreaToSpace (
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestBody AddAreaToSpaceRTO rto
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestBody AddAreaToSpaceRTO rto
     ) {
         return addAreaToSpace_exp(rto);
     }
@@ -64,9 +64,9 @@ public class DmSpaceController {
      */
     @PutMapping(value = "/sm/updateArea")
     public ResultDTO<DbDeleteResultDTO> updateArea (
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestBody UpdateSpaceAreaRTO rto
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestBody UpdateSpaceAreaRTO rto
     ) {
         return updateArea_exp(rto);
     }
@@ -80,9 +80,9 @@ public class DmSpaceController {
      */
     @DeleteMapping(value = "/sm/deleteAreaFromSpace")
     public ResultDTO<DbDeleteResultDTO> deleteAreaFromSpace(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestBody DeleteAreaFromSpaceRTO rto
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestBody DeleteAreaFromSpaceRTO rto
     ) {
         return deleteAreaFromSpace_exp(rto);
     }
@@ -92,8 +92,8 @@ public class DmSpaceController {
      */
     @GetMapping(value ="/sm/querySiteAddr")
     public ResultDTO<DbQrsDTO> querySiteAddr (
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version
     ) {
         return querySiteAddr_exp();
     }

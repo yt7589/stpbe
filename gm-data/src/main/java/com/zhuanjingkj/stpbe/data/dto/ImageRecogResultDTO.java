@@ -1,7 +1,7 @@
 package com.zhuanjingkj.stpbe.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVO;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class ImageRecogResultDTO extends BaseDTO {
     private int streamId;
     private long timeStamp;
     @JsonProperty("VEH")
-    private List<VehicleCxtzVo> veh;
+    private List<VehicleCxtzVO> veh;
 
     public String getImageId() {
         return imageId;
@@ -54,11 +54,11 @@ public class ImageRecogResultDTO extends BaseDTO {
         this.timeStamp = timeStamp;
     }
 
-    public List<VehicleCxtzVo> getVeh() {
+    public List<VehicleCxtzVO> getVeh() {
         return veh;
     }
 
-    public void setVeh(List<VehicleCxtzVo> veh) {
+    public void setVeh(List<VehicleCxtzVO> veh) {
         this.veh = veh;
     }
 }

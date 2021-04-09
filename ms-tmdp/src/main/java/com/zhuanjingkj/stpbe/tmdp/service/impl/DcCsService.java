@@ -1,22 +1,19 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
-import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.mgq.GrqEngine;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.vo.TvisGrqRstVo;
+import com.zhuanjingkj.stpbe.data.vo.TvisGrqRstVO;
 import com.zhuanjingkj.stpbe.data.vo.TvisJsonVO;
 import com.zhuanjingkj.stpbe.tmdp.dto.dc.DcCsDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IDcCsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,14 +40,14 @@ public class DcCsService implements IDcCsService {
         embeddinbs.add(embedding);
         String partitionTag = GrqEngine.getPartitionTag(psfx, cllxfl, cllxzfl);
         long topK = 100; // 以图搜车返回的记录数
-        List<TvisGrqRstVo> results = GrqEngine.findTopK(redisTemplate, partitionTag, embeddinbs, topK);
+        List<TvisGrqRstVO> results = GrqEngine.findTopK(redisTemplate, partitionTag, embeddinbs, topK);
         ResultDTO<DbQrsDTO> dto = new ResultDTO<>();
         DbQrsDTO data = new DbQrsDTO(100,20,0,20,0,null);
         List<DcCsDTO> recs = new ArrayList<>();
         DcCsDTO rec = null;
         TvisJsonVO tvisJsonVO = null;
         int idx = 0;
-        for (TvisGrqRstVo result : results) {
+        for (TvisGrqRstVO result : results) {
             tvisJsonVO = TvisUtil.getTvisJsonVOById(tvisJsonMapper, result.getTvisJsonId());
             if (tvisJsonVO != null) {
                 if (idx<startIndex) {

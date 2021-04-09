@@ -26,10 +26,10 @@ public class TpTfController {
      */
     @GetMapping(value = "/tf/queryTrafficForecast")
     public ResultDTO<TpTfDTO> queryTrafficForecast(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestParam(name = "date", required = false) String date,
-        @RequestParam(name = "time", required = false) String time
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestParam(name = "date", required = false) String date,
+            @RequestParam(name = "time", required = false) String time
     ) {
         return queryTrafficForecast_exp(date, time);
     }

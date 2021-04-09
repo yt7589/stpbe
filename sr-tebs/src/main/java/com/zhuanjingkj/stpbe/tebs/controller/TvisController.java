@@ -1,12 +1,7 @@
 package com.zhuanjingkj.stpbe.tebs.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.mgq.GrqEngine;
-import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
-import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.vo.*;
 import com.zhuanjingkj.stpbe.tebs.dto.GrqDemoDTO;
@@ -14,14 +9,12 @@ import com.zhuanjingkj.stpbe.tebs.dto.GrqDemoListDTO;
 import com.zhuanjingkj.stpbe.tebs.dto.PostTvisJsonDTO;
 import com.zhuanjingkj.stpbe.tebs.rto.TvisJsonRTO;
 import com.zhuanjingkj.stpbe.tebs.scs.TvisJsonRawListener;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -69,22 +62,22 @@ public class TvisController {
         System.out.println("识别结果：" + response + "!!!!!!!!!!!!!!!!!!!!!!");
         if (response != null && !response.equals("")) {
             // 调用以图搜图得到结果
-            List<VehicleVo> vehs = TvisUtil.parseTvisJson(cameraId, response);
+            List<VehicleVO> vehs = TvisUtil.parseTvisJson(cameraId, response);
             if (vehs.size() > 0) {
-                VehicleVo vo = vehs.get(0);
-                VehicleWztzVo wztzVo = vo.getVehicleWztzVo();
-                VehicleCltzxlVo cltzxlVo = vo.getVehicleCltzxlVo();
-                VehicleCxtzVo cxtzVo = vo.getVehicleCxtzVo();
+                VehicleVO vo = vehs.get(0);
+                VehicleWztzVO wztzVo = vo.getVehicleWztzVo();
+                VehicleCltzxlVO cltzxlVo = vo.getVehicleCltzxlVo();
+                VehicleCxtzVO cxtzVo = vo.getVehicleCxtzVo();
                 String partitionName = GrqEngine.getPartitionTag(wztzVo.getPsfx(),
                         cxtzVo.getCllxflCode(), cxtzVo.getCllxzflCode());
                 List<List<Float>> embeddings = new ArrayList<>();
                 embeddings.add(cltzxlVo.getCltzxl());
                 long topK = 20;
-                List<TvisGrqRstVo> grvs = GrqEngine.findTopK(redisTemplate, partitionName, embeddings, topK);
+                List<TvisGrqRstVO> grvs = GrqEngine.findTopK(redisTemplate, partitionName, embeddings, topK);
                 GrqDemoListDTO data = new GrqDemoListDTO();
                 List<GrqDemoDTO> recs = new ArrayList<>();
                 GrqDemoDTO rec = null;
-                for (TvisGrqRstVo grv : grvs) {
+                for (TvisGrqRstVO grv : grvs) {
                     rec = new GrqDemoDTO(grv.getGrqId(), grv.getTvisJsonId(), grv.getVehsIdx(), grv.getDist());
                     recs.add(rec);
                 }

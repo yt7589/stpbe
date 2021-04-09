@@ -1,7 +1,6 @@
 package com.zhuanjingkj.stpbe.common.mgq;
 
 import com.google.gson.JsonObject;
-import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.vo.*;
 import io.milvus.client.*;
@@ -14,7 +13,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class GrqEngine {
     private final static Logger logger = LoggerFactory.getLogger(GrqEngine.class);
@@ -67,15 +65,15 @@ public class GrqEngine {
 
     public static long insertRecord(RedisTemplate<String, Serializable> redisTemplate,
                                     String partitionTag,
-                                    VehicleVo vo) {
+                                    VehicleVO vo) {
         String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
         long grqId = getGrqId(redisTemplate);
         logger.info("##### grqId=" + grqId + "!");
         // 插入记录
         List<Long> ids = new ArrayList<>(Arrays.asList(grqId));
-        VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
-        VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
-        VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
+        VehicleWztzVO vehicleWztzVo = vo.getVehicleWztzVo();
+        VehicleCxtzVO vehicleCxtzVo = vo.getVehicleCxtzVo();
+        VehicleCltzxlVO vehicleCltzxlVo = vo.getVehicleCltzxlVo();
         List<Long> tvisJsonIds = Arrays.asList(vo.getTvisJsonId());
         List<Long> vehsIdxs = Arrays.asList(vo.getVehsIdx());
         List<List<Float>> embeddings = Arrays.asList(vehicleCltzxlVo.getCltzxl());
@@ -104,10 +102,10 @@ public class GrqEngine {
         return entityId;
     }
 
-    public static List<TvisGrqRstVo> findTopK(RedisTemplate<String, Serializable> redisTemplate, String partitionTag, List<List<Float>> queryEmbedding, long topK) {
+    public static List<TvisGrqRstVO> findTopK(RedisTemplate<String, Serializable> redisTemplate, String partitionTag, List<List<Float>> queryEmbedding, long topK) {
         String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
-        List<TvisGrqRstVo> rst = new ArrayList<>();
-        TvisGrqRstVo vo = null;
+        List<TvisGrqRstVO> rst = new ArrayList<>();
+        TvisGrqRstVO vo = null;
         // Search vectors
         // Searching the first 5 vectors of the vectors we just inserted
         final int searchBatchSize = 1;
@@ -135,7 +133,7 @@ public class GrqEngine {
                 SearchResponse.QueryResult firstQueryResult = queryResultsList.get(i).get(0);
                 long vectorId = firstQueryResult.getVectorId();
                 logger.info("##### vectorId=" + vectorId + "!");
-                vo = new TvisGrqRstVo();
+                vo = new TvisGrqRstVO();
                 JSONObject jo = new JSONObject(redisTemplate.opsForValue().get("" + vectorId).toString());
                 vo.setTvisJsonId(jo.getLong("tvisJsonId"));
                 vo.setVehsIdx(jo.getInt("vehsIdx"));
@@ -153,31 +151,31 @@ public class GrqEngine {
      * 初始化GRP系统，每次系统启动时调用
      */
     public static void initializeGrp() {
-        if (null == client) {
-            String appMilvusHost = PropUtil.getValue(AppConst.APP_MILVUS_HOST);
-            short appMilvusPort = Short.parseShort(PropUtil.getValue(AppConst.APP_MILVUS_PORT));
-            ConnectParam connectParam = new ConnectParam.Builder().withHost(appMilvusHost).withPort(appMilvusPort).build();
-            client = new MilvusGrpcClient(connectParam);
-        }
-        if (null == carCllxzfl || null == carCllxfl || null == busCllxfl || null == truckCllxfl) {
-            System.out.println("MgqEngine.initialize 2.1");
-            // 客车初始化
-            busCllxfl = new ArrayList<>();
-            busCllxfl.add("11");
-            busCllxfl.add("12");
-            busCllxfl.add("13"); // 仅包括134
-            busCllxfl.add("14");
-            // 轿车初始化
-            carCllxzfl = new ArrayList<>();
-            carCllxzfl.add("131");
-            carCllxzfl.add("132");
-            carCllxzfl.add("133");
-            // 货车初始化
-            truckCllxfl = new ArrayList<>();
-            truckCllxfl.add("21");
-            truckCllxfl.add("22");
-            System.out.println("MgqEngine.initialize 3");
-        }
+//        if (null == client) {
+//            String appMilvusHost = PropUtil.getValue(AppConst.APP_MILVUS_HOST);
+//            short appMilvusPort = Short.parseShort(PropUtil.getValue(AppConst.APP_MILVUS_PORT));
+//            ConnectParam connectParam = new ConnectParam.Builder().withHost(appMilvusHost).withPort(appMilvusPort).build();
+//            client = new MilvusGrpcClient(connectParam);
+//        }
+//        if (null == carCllxzfl || null == carCllxfl || null == busCllxfl || null == truckCllxfl) {
+//            System.out.println("MgqEngine.initialize 2.1");
+//            // 客车初始化
+//            busCllxfl = new ArrayList<>();
+//            busCllxfl.add("11");
+//            busCllxfl.add("12");
+//            busCllxfl.add("13"); // 仅包括134
+//            busCllxfl.add("14");
+//            // 轿车初始化
+//            carCllxzfl = new ArrayList<>();
+//            carCllxzfl.add("131");
+//            carCllxzfl.add("132");
+//            carCllxzfl.add("133");
+//            // 货车初始化
+//            truckCllxfl = new ArrayList<>();
+//            truckCllxfl.add("21");
+//            truckCllxfl.add("22");
+//            System.out.println("MgqEngine.initialize 3");
+//        }
     }
 
     /**
@@ -187,37 +185,37 @@ public class GrqEngine {
      * ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
      */
     public static void createGrqDb() {
-        String appMilvusHost = PropUtil.getValue(AppConst.APP_MILVUS_HOST);
-        short appMilvusPort = Short.parseShort(PropUtil.getValue(AppConst.APP_MILVUS_PORT));
-        ConnectParam connectParam = new ConnectParam.Builder().
-                withHost(appMilvusHost).
-                withPort(appMilvusPort).build();
-        client = new MilvusGrpcClient(connectParam);// 创建Collection
-        final String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
-        createCollection(collectionName);
-        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_BUS));
-        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_CAR));
-        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_TRUCK));
-        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_BUS));
-        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_CAR));
-        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_TRUCK));
-        // Create index for the collection
-        // We choose IVF_SQ8 as our index type here. Refer to IndexType javadoc for a
-        // complete explanation of different index types
-        // 高速查询，具有尽可能高的召回率
-        final IndexType indexType = IndexType.IVFLAT;   //IndexType.IVF_SQ8; // 资源有限时使用
-        // Each index type has its optional parameters you can set. Refer to the Milvus documentation
-        // for how to set the optimal parameters based on your needs.
-        JsonObject indexParamsJson = new JsonObject();
-        indexParamsJson.addProperty(MILVUS_INDEX, 16384);
-        Index index =
-                new Index.Builder(collectionName, indexType)
-                        .withParamsInJson(indexParamsJson.toString())
-                        .build();
-        Response createIndexResponse = client.createIndex(index);
-        if (!createIndexResponse.ok()) {
-            throw new AssertionError("创建索引失败：" + createIndexResponse.getMessage() + "!");
-        }
+//        String appMilvusHost = PropUtil.getValue(AppConst.APP_MILVUS_HOST);
+//        short appMilvusPort = Short.parseShort(PropUtil.getValue(AppConst.APP_MILVUS_PORT));
+//        ConnectParam connectParam = new ConnectParam.Builder().
+//                withHost(appMilvusHost).
+//                withPort(appMilvusPort).build();
+//        client = new MilvusGrpcClient(connectParam);// 创建Collection
+//        final String collectionName = PropUtil.getValue(GRQ_COLLECTION_NAME);
+//        createCollection(collectionName);
+//        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_BUS));
+//        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_CAR));
+//        createPartition(collectionName, PropUtil.getValue(GRQ_PN_HEAD_TRUCK));
+//        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_BUS));
+//        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_CAR));
+//        createPartition(collectionName, PropUtil.getValue(GRQ_PN_TAIL_TRUCK));
+//        // Create index for the collection
+//        // We choose IVF_SQ8 as our index type here. Refer to IndexType javadoc for a
+//        // complete explanation of different index types
+//        // 高速查询，具有尽可能高的召回率
+//        final IndexType indexType = IndexType.IVFLAT;   //IndexType.IVF_SQ8; // 资源有限时使用
+//        // Each index type has its optional parameters you can set. Refer to the Milvus documentation
+//        // for how to set the optimal parameters based on your needs.
+//        JsonObject indexParamsJson = new JsonObject();
+//        indexParamsJson.addProperty(MILVUS_INDEX, 16384);
+//        Index index =
+//                new Index.Builder(collectionName, indexType)
+//                        .withParamsInJson(indexParamsJson.toString())
+//                        .build();
+//        Response createIndexResponse = client.createIndex(index);
+//        if (!createIndexResponse.ok()) {
+//            throw new AssertionError("创建索引失败：" + createIndexResponse.getMessage() + "!");
+//        }
     }
 
     public static void createCollection(String collectionName) {

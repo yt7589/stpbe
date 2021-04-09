@@ -28,8 +28,8 @@ public class TnVaController {
      */
     @GetMapping(value = "/va/queryDeviceDeploy")
     public ResultDTO<DbQrsDTO> queryEquipment(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version
     ) {
         return queryDeviceDeploy_exp();
     }
@@ -40,8 +40,8 @@ public class TnVaController {
      */
     @GetMapping(value = "/va/queryDevice")
     public ResultDTO<TnVaDeviceDTO> queryDevice(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version
     ) {
         return queryDevice_exp();
     }
@@ -54,12 +54,12 @@ public class TnVaController {
      */
     @GetMapping(value  = "/va/querySdInfo")
     public ResultDTO<TnVaSiteInfoDTO> querySdInfo(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
-        @RequestParam(name = "siteId", required = false) long siteId
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
+            @RequestParam(name = "siteId", required = false) long siteId
     ) {
         return querySdInfo_exp(startIndex, amount, direction, siteId);
     }
@@ -72,9 +72,9 @@ public class TnVaController {
      */
     @GetMapping(value = "/va/querySdPic")
     public ResultDTO<DbQrsDTO> querySdPic(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestParam(name = "diId") long diId
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestParam(name = "diId") long diId
     ) {
         return querySdPic_exp();
     }

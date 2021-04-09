@@ -1,12 +1,8 @@
 package com.zhuanjingkj.stpbe.tebs.scs;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.common.tvis.TvisStpOberverManager;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.common.tvis.obs.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -45,13 +45,13 @@ public class DmDeviceController {
      */
     @GetMapping(value = "/queryDevice")
     public ResultDTO<DbQrsDTO> queryDevice(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
-        @RequestParam(name = "type", required = false) String type,
-        @RequestParam(name = "code", required = false) String code
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
+            @RequestParam(name = "type", required = false) String type,
+            @RequestParam(name = "code", required = false) String code
     ) {
         return queryDevice_exp(startIndex, amount, direction, type, code);
     }
@@ -77,9 +77,9 @@ public class DmDeviceController {
      */
     @DeleteMapping(value = "/deleteDevice")
     public ResultDTO<DbDeleteResultDTO> deleteDevice(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestBody DeleteDeviceFromDsRTO rto
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestBody DeleteDeviceFromDsRTO rto
     ) {
         return deleteDevice_exp(rto);
     }
@@ -93,9 +93,9 @@ public class DmDeviceController {
      */
     @PostMapping(value = "/addDevice")
     public ResultDTO<DbInsertResultDTO> addDevice(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestBody AddDeviceToDsRTO rto
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestBody AddDeviceToDsRTO rto
     ) {
         return addDevice_exp(rto);
     }
@@ -127,9 +127,9 @@ public class DmDeviceController {
      */
     @PutMapping(value = "/updateDeviceInfo")
     public ResultDTO<DbDeleteResultDTO> updateDeviceInfo(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestBody UpdateDeviceInfoRTO rto
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestBody UpdateDeviceInfoRTO rto
     ) {
         return updateDeviceInfo_exp(rto);
     }

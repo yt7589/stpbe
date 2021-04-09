@@ -46,18 +46,18 @@ public class DcHpController {
      */
     @GetMapping(value = "/hp/queryAllData")
     public ResultDTO<DbQrsDTO> queryAllData(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
-        @RequestParam(name = "startTime", required = false) String startTime,
-        @RequestParam(name = "endTime", required = false) String endTime,
-        @RequestParam(name = "category", required = false) String category,
-        @RequestParam(name = "vType", required = false) String vType,
-        @RequestParam(name = "ilType", required = false) String ilType,
-        @RequestParam(name = "hphm", required = false) String hphm,
-        @RequestParam(name = "vAddr", required = false) String vAddr
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
+            @RequestParam(name = "startTime", required = false) String startTime,
+            @RequestParam(name = "endTime", required = false) String endTime,
+            @RequestParam(name = "category", required = false) String category,
+            @RequestParam(name = "vType", required = false) String vType,
+            @RequestParam(name = "ilType", required = false) String ilType,
+            @RequestParam(name = "hphm", required = false) String hphm,
+            @RequestParam(name = "vAddr", required = false) String vAddr
     ) {
         return queryAllData_exp(startIndex, amount, direction, startTime, endTime, category, vType, ilType, hphm, vAddr);
     }

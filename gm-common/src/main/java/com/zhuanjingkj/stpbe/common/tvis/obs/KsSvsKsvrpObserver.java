@@ -5,7 +5,7 @@ import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
 import com.zhuanjingkj.stpbe.common.mapper.KsvssKsvrpMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -34,7 +34,7 @@ public class KsSvsKsvrpObserver implements ITvisStpObserver {
     private DeviceMapper deviceMapper;
 
     @Override
-    public void notifyObserver(VehicleVo vo) {
+    public void notifyObserver(VehicleVO vo) {
         System.out.println("KsSvsKsvrpObserver...");
         List<String> vNum = ksvssKsvrpMapper.getVTypeNum(); //重点监控车辆编号
         String vZtype = vo.getVehicleCxtzVo().getCllxzflCode(); //车辆类型子分类

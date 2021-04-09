@@ -1,6 +1,6 @@
 package com.zhuanjingkj.stpbe.data.vo;
 
-public class VehicleWztzVo {
+public class VehicleWztzVO {
     private String psfx;
     private String clwz;
 

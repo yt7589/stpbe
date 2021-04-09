@@ -4,10 +4,10 @@ import com.zhuanjingkj.stpbe.common.BmyDao;
 import com.zhuanjingkj.stpbe.common.mgq.MgqEngine;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.dto.*;
-import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVO;
 import com.zhuanjingkj.stpbe.mgqs.service.IMgqService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,10 +72,10 @@ public class MgqService implements IMgqService {
     public void processBatchDclFdsFiles(List<File> dsFiles) {
         long cameraId = 101;
         String result = null;
-        List<VehicleVo> vos = null;
-        VehicleWztzVo vehicleWztzVo = null;
-        VehicleCxtzVo vehicleCxtzVo = null;
-        VehicleCltzxlVo vehicleCltzxlVo = null;
+        List<VehicleVO> vos = null;
+        VehicleWztzVO vehicleWztzVo = null;
+        VehicleCxtzVO vehicleCxtzVo = null;
+        VehicleCltzxlVO vehicleCltzxlVo = null;
         String partitionTag = null;
         BrandDTO brandDTO = null;
         ModelDTO modelDTO = null;
@@ -98,7 +98,7 @@ public class MgqService implements IMgqService {
                 errorNum++;
             } else {
                 vos = TvisUtil.parseTvisJson(cameraId, result);
-                for (VehicleVo vo : vos) {
+                for (VehicleVO vo : vos) {
                     vehicleWztzVo = vo.getVehicleWztzVo();
                     vehicleCxtzVo = vo.getVehicleCxtzVo();
                     vehicleCltzxlVo = vo.getVehicleCltzxlVo();
@@ -222,9 +222,9 @@ public class MgqService implements IMgqService {
     private Map<String, Object> getReIDInfo(int seq) {
         Map<String, Object> infos = new HashMap<>();
         List<List<Float>> embeddings = new ArrayList<>();
-        List<VehicleCxtzVo> vos = new ArrayList<>();
+        List<VehicleCxtzVO> vos = new ArrayList<>();
         // 定义车型特征值对象
-        VehicleCxtzVo vo = new VehicleCxtzVo();
+        VehicleCxtzVO vo = new VehicleCxtzVO();
         vo.setCllxfl(seq);
         vo.setCllxflName("类型" + seq);
         vo.setCllxzfl(1000 + seq);
@@ -251,12 +251,12 @@ public class MgqService implements IMgqService {
         Map<String, Object> infos = null;
         //
         List<List<Float>> embeddings = new ArrayList<>();
-        List<VehicleCxtzVo> vos = new ArrayList<>();
+        List<VehicleCxtzVO> vos = new ArrayList<>();
         List<Float> tzxl;
-        VehicleCxtzVo vo = null;
+        VehicleCxtzVO vo = null;
         //
         infos = getReIDInfo(seq);
-        vo = (VehicleCxtzVo)infos.get("vo");
+        vo = (VehicleCxtzVO)infos.get("vo");
         vos.add(vo);
         tzxl = (List<Float>)infos.get("tzxl");
         embeddings.add(tzxl);

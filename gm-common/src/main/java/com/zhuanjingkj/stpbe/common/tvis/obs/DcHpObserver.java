@@ -5,7 +5,7 @@ import com.zhuanjingkj.stpbe.common.mapper.DcHpMapper;
 import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
 import com.zhuanjingkj.stpbe.data.dto.DcHpDTO;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVO;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class DcHpObserver implements ITvisStpObserver {
     private DeviceMapper deviceMapper;
 
     @Override
-    public void notifyObserver(VehicleVo vo) {
+    public void notifyObserver(VehicleVO vo) {
         /**
          * 1.识别对象
          */

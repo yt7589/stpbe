@@ -133,7 +133,8 @@ public class SmDcService implements ISmDcService {
         ResultDTO dto = new ResultDTO();
         String fileName = "sys_logo_" + System.currentTimeMillis() + ".jpg";
         String imgUrl = "";
-        if (FileUtil.uploadImg(file, fileName)) {
+        String path = PropUtil.getValue("stp.img.path");
+        if (FileUtil.uploadImg(file, fileName, path)) {
             imgUrl = PropUtil.getValue("sys.logo.url") + fileName;
         } else {
         }

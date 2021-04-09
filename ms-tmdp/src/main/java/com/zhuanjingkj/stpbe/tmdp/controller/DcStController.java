@@ -32,8 +32,8 @@ public class DcStController {
      */
     @GetMapping(value = "/st/queryDataStatistics")
     public ResultDTO<DcStDTO> queryDataStatistics(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version
     ) {
         ResultDTO<DcStDTO> dto = new ResultDTO<DcStDTO>();
         DcStDTO dcSt = new DcStDTO();

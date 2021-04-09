@@ -39,12 +39,12 @@ public class KsVcController {
      */
     @GetMapping(value = "/vc/queryVehicle")
     public ResultDTO<DbQrsDTO> queryVehicle(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestParam(name = "hphm", required = false) String hphm,
-        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestParam(name = "hphm", required = false) String hphm,
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
     ) {
         return queryVehicle_exp(hphm, startIndex, amount, direction);
     }
@@ -58,9 +58,9 @@ public class KsVcController {
      */
     @PostMapping(value = "/vc/addVehicle")
     public ResultDTO<DbInsertResultDTO> addVehicle(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestBody AddVehicleToVcRTO rto
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestBody AddVehicleToVcRTO rto
     ) {
         return addVehicle_exp(rto);
     }
@@ -74,9 +74,9 @@ public class KsVcController {
      */
     @DeleteMapping(value = "/vc/deleteVehicle")
     public ResultDTO<DbDeleteResultDTO> deleteVehicle(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestBody DeleteVehicleFromVcRTO rto
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestBody DeleteVehicleFromVcRTO rto
     ) {
         return deleteVehicle_exp(rto);
     }
@@ -89,8 +89,8 @@ public class KsVcController {
      */
     @GetMapping(value = "/vc/queryVcSfvs")
     public ResultDTO<DbQrsDTO> queryVcSfvs(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version
     ) {
         return queryVcSfvs_exp();
     }
@@ -103,8 +103,8 @@ public class KsVcController {
      */
     @GetMapping(value = "/vc/queryVcLsvs")
     public ResultDTO<DbQrsDTO> queryVcLsvs(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version
     ) {
         return queryVcDynLsvs_exp();
     }
@@ -117,8 +117,8 @@ public class KsVcController {
      */
     @GetMapping(value = "/vc/queryVcLtvis")
     public ResultDTO<DbQrsDTO> queryVcLtvis(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version
     ) {
         return queryVcIllLsvs_exp();
     }

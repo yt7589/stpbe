@@ -2,7 +2,7 @@ package com.zhuanjingkj.stpbe.common.tvis.obs;
 
 import com.zhuanjingkj.stpbe.common.mapper.DeviceMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -23,7 +23,7 @@ public class KsRssObserver implements ITvisStpObserver {
     private DeviceMapper deviceMapper;
 
     @Override
-    public void notifyObserver(VehicleVo vo) {
+    public void notifyObserver(VehicleVO vo) {
         System.out.println("KsRssObserver...");
         /**
          * cameraId = -1 时需要根据streamId查找正确的cameraId

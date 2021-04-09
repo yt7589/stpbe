@@ -1,11 +1,10 @@
 package com.zhuanjingkj.stpbe.common.mgq;
 
-import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
-import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVO;
 import io.milvus.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,14 +73,14 @@ public class MgqEngine {
 
     public static long insertRecord(RedisTemplate<String,
                             Serializable> redisTemplate,
-                             String partitionTag, VehicleVo vo) {
+                             String partitionTag, VehicleVO vo) {
         long tzxlId = getTzxlId(redisTemplate);
         // 插入记录
         List<Long> ids = new ArrayList<>(Arrays.asList(tzxlId));
         //VehicleVo vo = vos.get(0);
-        VehicleWztzVo vehicleWztzVo = vo.getVehicleWztzVo();
-        VehicleCxtzVo vehicleCxtzVo = vo.getVehicleCxtzVo();
-        VehicleCltzxlVo vehicleCltzxlVo = vo.getVehicleCltzxlVo();
+        VehicleWztzVO vehicleWztzVo = vo.getVehicleWztzVo();
+        VehicleCxtzVO vehicleCxtzVo = vo.getVehicleCxtzVo();
+        VehicleCltzxlVO vehicleCltzxlVo = vo.getVehicleCltzxlVo();
         List<Integer> cllxfl = Arrays.asList(vehicleCxtzVo.getCllxfl());
         List<Integer> cllxzfl = Arrays.asList(vehicleCxtzVo.getCllxzfl());
         List<Integer> csys = Arrays.asList(vehicleCxtzVo.getCsys());
@@ -111,7 +110,7 @@ public class MgqEngine {
         return entityId;
     }
 
-    public static VehicleCxtzVo findTopK(String partitionTag, List<List<Float>> queryEmbedding, long topK) {
+    public static VehicleCxtzVO findTopK(String partitionTag, List<List<Float>> queryEmbedding, long topK) {
         String dsl =
                 String.format(
                         "{\"bool\": {"
@@ -138,7 +137,7 @@ public class MgqEngine {
 //        long tzxlId = searchResult.getResultIdsList().get(0).get(idx);
 //        float top1Dist = searchResult.getResultDistancesList().get(0).get(idx);
 //        Map<String, Object> rec = searchResult.getFieldsMap().get(0).get(idx);
-        VehicleCxtzVo vo = new VehicleCxtzVo();
+        VehicleCxtzVO vo = new VehicleCxtzVO();
 //        vo.setTzxlId(tzxlId);
 //        vo.setCllxfl((Integer)rec.get(FLD_CLLXFL));
 //        vo.setCllxzfl((Integer)rec.get(FLD_CLLXZFL));

@@ -6,7 +6,7 @@ import com.zhuanjingkj.stpbe.common.mapper.DkRtvrMapper;
 import com.zhuanjingkj.stpbe.common.mapper.KsVcMapper;
 import com.zhuanjingkj.stpbe.common.mapper.KsvssKsvrpMapper;
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVO;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +45,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
     private final static Logger logger = LoggerFactory.getLogger(DkRtvrObserver.class);
 
     @Override
-    public void notifyObserver(VehicleVo vo) {
+    public void notifyObserver(VehicleVO vo) {
         /**
          * TODO
          *此cameraId 为测试id
@@ -244,7 +243,7 @@ public class DkRtvrObserver implements ITvisStpObserver {
         System.out.println("RTVR:" + jsxw + "=" + flag);
         return flag;
     }
-    private void insertViolation(long tvisJsonId, VehicleVo vo, long cameraId, String hphm, String wzlx, String vType, String tblName, Integer category, String date, long vehIdx) {
+    private void insertViolation(long tvisJsonId, VehicleVO vo, long cameraId, String hphm, String wzlx, String vType, String tblName, Integer category, String date, long vehIdx) {
         String psfx = vo.getVehicleWztzVo().getPsfx();
         if (null == psfx || psfx.equals("")) {
             psfx = "3";

@@ -30,13 +30,13 @@ public class DmNodeController {
      */
     @GetMapping(value = "/nd/queryNode")
     public ResultDTO<DbQrsDTO> queryNode(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
-        @RequestParam(name = "nodeName", required = false) String nodeName,
-        @RequestParam(name = "nodeAddr", required = false) String nodeAddr
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
+            @RequestParam(name = "nodeName", required = false) String nodeName,
+            @RequestParam(name = "nodeAddr", required = false) String nodeAddr
     ) {
         return queryNode_exp(startIndex, amount, direction, nodeName, nodeAddr);
     }
@@ -50,9 +50,9 @@ public class DmNodeController {
      */
     @DeleteMapping(value = "/nd/deleteNode")
     public ResultDTO<DbDeleteResultDTO> deleteNode(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestBody DeleteNodeFromNdRTO rto
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestBody DeleteNodeFromNdRTO rto
     ) {
         return deleteNode_exp(rto);
     }
@@ -66,9 +66,9 @@ public class DmNodeController {
      */
     @PostMapping(value ="/nd/addNode2Nd")
     public ResultDTO<DbInsertResultDTO> addNode2Nd(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestBody AddNodeToNdRTO rto
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestBody AddNodeToNdRTO rto
     ) {
         return addNode2Nd_exp(rto);
     }
@@ -82,9 +82,9 @@ public class DmNodeController {
      */
     @PutMapping(value ="/nd/updateNode")
     public ResultDTO<DbDeleteResultDTO> updateNode(
-        @RequestParam(name = "p") String platform,
-        @RequestParam(name = "v") String version,
-        @RequestBody UpdateNodeRTO rto
+            @RequestParam(name = "p") String platform,
+            @RequestParam(name = "v") String version,
+            @RequestBody UpdateNodeRTO rto
     ) {
         return updateNode_exp(rto);
     }

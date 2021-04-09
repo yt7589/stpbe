@@ -1,7 +1,7 @@
 package com.zhuanjingkj.stpbe.common.tvis.obs;
 
 import com.zhuanjingkj.stpbe.common.tvis.ITvisStpObserver;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -16,7 +16,7 @@ public class DkVtpObserver implements ITvisStpObserver {
     @Autowired
     private RedisTemplate redisTemplate;
     @Override
-    public void notifyObserver(VehicleVo vo) {
+    public void notifyObserver(VehicleVO vo) {
         System.out.println("DkVtpObserver...");
         String vType = vo.getVehicleCxtzVo().getCllxzflCode();
         String cllxfl = vo.getVehicleCxtzVo().getCllxflCode();

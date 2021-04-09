@@ -6,10 +6,10 @@ import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
 import com.zhuanjingkj.stpbe.data.dto.BmyDTO;
 import com.zhuanjingkj.stpbe.data.dto.BrandDTO;
 import com.zhuanjingkj.stpbe.data.dto.ModelDTO;
-import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleVo;
-import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVo;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCltzxlVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleCxtzVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleVO;
+import com.zhuanjingkj.stpbe.data.vo.VehicleWztzVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,10 +75,10 @@ public class MgqsClient implements ITvisClient {
                     System.out.println("识别图片失败");
                 } else {
                     // SDK识别结果
-                    List<VehicleVo> vvos = TvisUtil.parseTvisJson(cameraId, result);
-                    VehicleWztzVo vehicleWztzVo;
-                    VehicleCxtzVo vehicleCxtzVo;
-                    VehicleCltzxlVo vehicleCltzxlVo;
+                    List<VehicleVO> vvos = TvisUtil.parseTvisJson(cameraId, result);
+                    VehicleWztzVO vehicleWztzVo;
+                    VehicleCxtzVO vehicleCxtzVo;
+                    VehicleCltzxlVO vehicleCltzxlVo;
                     BrandDTO brandDTO = null;
                     BrandDTO brandDTOMilvus = null;
                     int clppSdk = 0;
@@ -91,7 +91,7 @@ public class MgqsClient implements ITvisClient {
                     BmyDTO bmyDTOMilvus = null;
                     int cxnkSdk = 0;
                     int cxnkMilvus = 0;
-                    for (VehicleVo vvo : vvos) {
+                    for (VehicleVO vvo : vvos) {
                         vehicleWztzVo = vvo.getVehicleWztzVo();
                         vehicleCxtzVo = vvo.getVehicleCxtzVo();
                         brandDTO = BmyDao.getBrandDTOByCode(mongoTemplate, vehicleCxtzVo.getClppCode());
@@ -108,7 +108,7 @@ public class MgqsClient implements ITvisClient {
                         String partitionTag = MgqEngine.getPartitionTag(vehicleWztzVo.getPsfx(),
                                 vehicleCxtzVo.getCllxflCode(),
                                 vehicleCxtzVo.getCllxzflCode());
-                        VehicleCxtzVo rstVo = MgqEngine.findTopK(partitionTag, queryEmbedding, 1);
+                        VehicleCxtzVO rstVo = MgqEngine.findTopK(partitionTag, queryEmbedding, 1);
                         clppMilvus = rstVo.getClpp();
                         ppcxMilvus = rstVo.getPpcx();
                         cxnkMilvus = rstVo.getCxnk();

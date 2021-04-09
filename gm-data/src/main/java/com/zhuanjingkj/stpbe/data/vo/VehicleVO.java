@@ -1,16 +1,16 @@
 package com.zhuanjingkj.stpbe.data.vo;
 
-public class VehicleVo {
+public class VehicleVO {
     private long tvisJsonId; // JSON的唯一编号
     private long vehsIdx; // VEH数组的序号
     private long cameraId;
     private long streamId;
     private long trackId; // 用于进行物体跟踪
     private String occurTime; //时间
-    private VehicleWztzVo vehicleWztzVo; // 位置特征
+    private VehicleWztzVO vehicleWztzVo; // 位置特征
     private VehicleHptzVO vehicleHptzVO; // 号牌特征
-    private VehicleCltzxlVo vehicleCltzxlVo; // 车辆特征向量
-    private VehicleCxtzVo vehicleCxtzVo; // 车型特征
+    private VehicleCltzxlVO vehicleCltzxlVo; // 车辆特征向量
+    private VehicleCxtzVO vehicleCxtzVo; // 车型特征
     private VehicleJsxwtzVO vehicleJsxwtzVO; //驾驶行为特征
     private VehicleGxhtzVO vehicleGxhtzVO; //个性化特征
 
@@ -54,11 +54,11 @@ public class VehicleVo {
         this.trackId = trackId;
     }
 
-    public VehicleWztzVo getVehicleWztzVo() {
+    public VehicleWztzVO getVehicleWztzVo() {
         return vehicleWztzVo;
     }
 
-    public void setVehicleWztzVo(VehicleWztzVo vehicleWztzVo) {
+    public void setVehicleWztzVo(VehicleWztzVO vehicleWztzVo) {
         this.vehicleWztzVo = vehicleWztzVo;
     }
 
@@ -70,19 +70,19 @@ public class VehicleVo {
         this.vehicleHptzVO = vehicleHptzVO;
     }
 
-    public VehicleCltzxlVo getVehicleCltzxlVo() {
+    public VehicleCltzxlVO getVehicleCltzxlVo() {
         return vehicleCltzxlVo;
     }
 
-    public void setVehicleCltzxlVo(VehicleCltzxlVo vehicleCltzxlVo) {
+    public void setVehicleCltzxlVo(VehicleCltzxlVO vehicleCltzxlVo) {
         this.vehicleCltzxlVo = vehicleCltzxlVo;
     }
 
-    public VehicleCxtzVo getVehicleCxtzVo() {
+    public VehicleCxtzVO getVehicleCxtzVo() {
         return vehicleCxtzVo;
     }
 
-    public void setVehicleCxtzVo(VehicleCxtzVo vehicleCxtzVo) {
+    public void setVehicleCxtzVo(VehicleCxtzVO vehicleCxtzVo) {
         this.vehicleCxtzVo = vehicleCxtzVo;
     }
 

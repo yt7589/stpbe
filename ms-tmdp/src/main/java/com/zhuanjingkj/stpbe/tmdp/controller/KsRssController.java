@@ -40,12 +40,12 @@ public class KsRssController {
      */
     @GetMapping(value = "/rss/queryKsRsSupervision")
     public ResultDTO<DbQrsDTO> queryKsRsSupervision(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestParam(name = "rssName", required = false) String rssName,
-        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestParam(name = "rssName", required = false) String rssName,
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
     ) {
         return queryRsSupervision_exp(rssName, startIndex, amount, direction, 0);
     }
@@ -59,9 +59,9 @@ public class KsRssController {
      */
     @DeleteMapping(value = "/rss/deleteKsRsSupervision")
     public ResultDTO<DbDeleteResultDTO> deleteKsRsSupervision(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestBody DeleteRsFromRssRTO rto
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestBody DeleteRsFromRssRTO rto
     ) {
         return deleteKsRsSupervision_exp(rto);
     }
@@ -75,9 +75,9 @@ public class KsRssController {
      */
     @PostMapping(value = "/rss/addRsToRsSupervision")
     public ResultDTO<DbInsertResultDTO> addRsToRsSupervision(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestBody AddRsToRssRTO rto
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestBody AddRsToRssRTO rto
     ) {
         return addRsToRsSupervision_exp(rto);
     }
@@ -94,12 +94,12 @@ public class KsRssController {
      */
     @GetMapping(value = "/rss/queryKeyRsSupervision")
     public ResultDTO<DbQrsDTO> queryKeyRsSupervision(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version,
-        @RequestParam(name = "rssName", required = false) String rssName,
-        @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
-        @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
-        @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestParam(name = "rssName", required = false) String rssName,
+            @RequestParam(name = "startIndex", required = false, defaultValue = "0") Integer startIndex,
+            @RequestParam(name = "amount", required = false, defaultValue = "10") Integer amount,
+            @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction
     ) {
         return queryRsSupervision_exp(rssName, startIndex, amount, direction, 1);
     }

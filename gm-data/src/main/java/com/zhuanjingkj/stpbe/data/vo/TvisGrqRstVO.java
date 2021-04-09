@@ -1,6 +1,6 @@
 package com.zhuanjingkj.stpbe.data.vo;
 
-public class TvisGrqRstVo {
+public class TvisGrqRstVO {
     private long grqId;
     private long tvisJsonId;
     private long vehsIdx;

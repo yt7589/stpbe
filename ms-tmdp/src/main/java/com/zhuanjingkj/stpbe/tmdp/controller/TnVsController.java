@@ -36,8 +36,8 @@ public class TnVsController {
      */
     @GetMapping(value = "/vs/queryVehicleStatistics")
     public ResultDTO<TnVsDTO> queryEquipment(
-        @RequestParam(name = "p", required = false) String platform,
-        @RequestParam(name = "v", required = false) String version
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version
     ) {
         ResultDTO<TnVsDTO> dto = new ResultDTO<TnVsDTO>();
         TnVsDTO tnVsDTO = new TnVsDTO();
