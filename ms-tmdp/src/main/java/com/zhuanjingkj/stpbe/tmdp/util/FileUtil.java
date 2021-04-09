@@ -164,7 +164,10 @@ public class FileUtil {
         boolean flag = false;
         System.out.println("文件上传 path>>>" + path);
 //        String path = "D://";
-        File file = new File(path + fileName);
+        File file = new File(new File(path).getAbsolutePath()+ "/" + fileName);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
         try {
             multipartFile.transferTo(file);
             flag = true;
