@@ -41,12 +41,15 @@ public class ZjcVideoService implements IZjcVideoService {
                      * 文件上传成功后转 .mkv文件
                      */
                     String cmd = "/home/ps/yantao/dev/ffmpeg/ffmpeg -i " + fileName + ".mp4 -vcodec copy -acodec copy /home/ps/live/mediaServer/" + fileName +".mkv";
+                    System.out.println("视频转码 1");
                     if (FileUtil.callCMD(cmd) == 0) {
+                        System.out.println("视频转码 2");
                         /**
                          * 文件转码成功后绑定视频流
                          */
                         ResultDTO<CreateRtspBindDTO> dto = tvisSdkService.createRtspBind(PropUtil.getValue("video.url.rtsp") + fileName + ".mkv", "/start");
                         zjcVideoMapper.addRtmp(consumerId, fileName, dto.getData().getStreamId(), DateUtil.getLocalDateTime());
+                        System.out.println("视频转码 3");
                     }
                 }
                 return null;
