@@ -26,7 +26,7 @@ public class ZjcVideoService implements IZjcVideoService {
     private TvisSdkService tvisSdkService;
 
     @Override
-    public ResultDTO<ZjcVideoVO> uploadVideo(MultipartFile file, Integer consumerId) {
+    public ResultDTO<String> uploadVideo(MultipartFile file, Integer consumerId) {
         String path = PropUtil.getValue("zjc.video.path"); //视频存储路径
         if (file == null) {
             return null;
@@ -57,10 +57,8 @@ public class ZjcVideoService implements IZjcVideoService {
             }
         });
         exec.submit(uploadVideoTask);
-        ResultDTO<ZjcVideoVO> dto = new ResultDTO<>();
-        ZjcVideoVO zjcVideoVO = new ZjcVideoVO();
-        zjcVideoVO.setVideoName(fileName);
-        dto.setData(zjcVideoVO);
+        ResultDTO<String> dto = new ResultDTO<>();
+        dto.setData(fileName);
         return dto;
     }
 

@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface IZjcVideoService {
 
-    ResultDTO<ZjcVideoVO> uploadVideo(MultipartFile file, Integer consumerId);
+    ResultDTO<String> uploadVideo(MultipartFile file, Integer consumerId);
 
     ResultDTO<String> bindVideo(String rtspUrl, String rtspName, String position);
 

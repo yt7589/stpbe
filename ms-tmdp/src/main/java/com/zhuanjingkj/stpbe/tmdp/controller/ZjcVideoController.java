@@ -25,7 +25,7 @@ public class ZjcVideoController {
      * @return
      */
     @PostMapping(value = "/uploadVideo")
-    public ResultDTO<ZjcVideoVO> uploadVideo(
+    public ResultDTO<String> uploadVideo(
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
             @RequestParam(name = "file", required = false) MultipartFile file,
