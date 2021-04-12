@@ -21,6 +21,7 @@
         <module>ms-user</module>
         <module>ag-zjc-saas</module>
         <module>ca-tvis</module>
+        <module>ca-tvis-wxs2102</module>
         <module>sr-idr</module>
         <module>sr-ts-xaidr</module>
         <module>sr-ts-wxs2102</module>
