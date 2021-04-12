@@ -36,12 +36,13 @@ public class ZjcVideoService implements IZjcVideoService {
         FutureTask uploadVideoTask = new FutureTask(new Callable() {
             @Override
             public String call() throws Exception {
+                System.out.println("视频开始上传 1");
                 if (FileUtil.uploadImg(file,  fileName + ".mp4", path)) {
                     /**
                      * 文件上传成功后转 .mkv文件
                      */
-                    String cmd = "/home/ps/yantao/dev/ffmpeg/ffmpeg -i " + fileName + ".mp4 -vcodec copy -acodec copy /home/ps/live/mediaServer/" + fileName +".mkv";
-                    System.out.println("视频转码 1");
+                    String cmd = "/home/ps/yantao/dev/ffmpeg/ffmpeg -i /home/ps/live/mediaServer/" + fileName + ".mp4 -vcodec copy -acodec copy /home/ps/live/mediaServer/" + fileName +".mkv";
+                    System.out.println("视频上传成功，开始转码 1");
                     if (FileUtil.callCMD(cmd) == 0) {
                         System.out.println("视频转码 2");
                         /**

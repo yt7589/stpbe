@@ -170,17 +170,19 @@ public class FileUtil {
         }
         try {
             multipartFile.transferTo(file);
+            System.out.println("文件上传完成! > " + path + fileName);
             flag = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("文件上传完成! > " + path + fileName);
         return flag;
     }
 
     public static Integer callCMD(String cmd) {
         try {
+            System.out.println("视频转码开始");
             Process prs = Runtime.getRuntime().exec(cmd);
+            System.out.println("视频转码结束prs>" + prs.waitFor());
             return prs.waitFor();
         } catch (IOException e) {
             e.printStackTrace();
