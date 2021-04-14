@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
+import javax.servlet.MultipartConfigElement;
 import java.nio.charset.StandardCharsets;
 
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
@@ -33,6 +35,16 @@ public class AgZjcSaasApplication {
     public static void main(String[] args) {
         System.out.println("Eureka Server v0.0.1");
         SpringApplication.run(AgZjcSaasApplication.class, args);
+    }
+
+    /**
+     * 文件上传临时文件路径
+     */
+    @Bean
+    MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        factory.setLocation("/home/ps/live/mediaServer/");
+        return factory.createMultipartConfig();
     }
 
     /*private static final String MAX_AGE = "18000L";

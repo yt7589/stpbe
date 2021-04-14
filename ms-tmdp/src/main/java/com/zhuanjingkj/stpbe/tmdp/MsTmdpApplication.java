@@ -1,6 +1,5 @@
 package com.zhuanjingkj.stpbe.tmdp;
 
-import com.zhuanjingkj.stpbe.common.AppConst;
 import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mgq.GrqEngine;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
@@ -53,7 +52,7 @@ public class MsTmdpApplication {
     }
 
     /**
-     * 文件上传临时路径
+     * 文件上传临时文件路径
      */
     @Bean
     MultipartConfigElement multipartConfigElement() {
