@@ -41,7 +41,7 @@ public class ZjcVideoService implements IZjcVideoService {
                     /**
                      * 文件上传成功后转 .mkv文件
                      */
-                    String cmd = "/home/ps/yantao/dev/ffmpeg/ffmpeg -i /home/ps/live/mediaServer/" + fileName + ".mp4 -vcodec copy -acodec copy /home/ps/live/mediaServer/" + fileName +".mkv";
+                    String cmd = "/home/ps/yantao/dev/ffmpeg/ffmpeg -i " + path + fileName + ".mp4 -vcodec copy -acodec copy " + path + fileName +".mkv";
                     System.out.println("视频上传成功，开始转码 1");
                     if (FileUtil.callCMD(cmd) == 0) {
                         System.out.println("视频转码 2");

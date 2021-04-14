@@ -37,16 +37,6 @@ public class AgZjcSaasApplication {
         SpringApplication.run(AgZjcSaasApplication.class, args);
     }
 
-    /**
-     * 文件上传临时文件路径
-     */
-    @Bean
-    MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setLocation("/home/ps/live/mediaServer/");
-        return factory.createMultipartConfig();
-    }
-
     /*private static final String MAX_AGE = "18000L";
     @Bean
     public WebFilter webFilter() {

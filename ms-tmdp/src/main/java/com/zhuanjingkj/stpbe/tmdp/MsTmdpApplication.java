@@ -57,7 +57,7 @@ public class MsTmdpApplication {
     @Bean
     MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setLocation("/home/ps/live/mediaServer/");
+        factory.setLocation("/home/ps/live/mediaServer/tmp/");
         return factory.createMultipartConfig();
     }
 }
