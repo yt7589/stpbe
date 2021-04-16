@@ -4,7 +4,8 @@ import com.zhuanjingkj.stpbe.data.dto.DbDeleteResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.DbInsertResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.rto.zjc.AddCharges;
+import com.zhuanjingkj.stpbe.data.rto.zjc.AddChargesRTO;
+import com.zhuanjingkj.stpbe.data.rto.zjc.DeleteChargesRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.ChargesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,16 @@ public class ZjcChargesController {
     @Autowired
     private ChargesService chargesService;
 
+    /**
+     * 收费管理
+     * @param platform
+     * @param version
+     * @param startIndex
+     * @param amount
+     * @param direction
+     * @param chargesId
+     * @return
+     */
     @GetMapping(value = "/getCharges")
     public ResultDTO<DbQrsDTO> getCharges(
             @RequestParam(name = "p", required = false) String platform,
@@ -32,21 +43,44 @@ public class ZjcChargesController {
         return chargesService.getCharges(startIndex, amount, direction, chargesId);
     }
 
+    /**
+     * 添加收费标准
+     * @param platform
+     * @param version
+     * @param rto
+     * @return
+     */
     @PostMapping(value = "/addCharges")
     public ResultDTO<DbInsertResultDTO> addCharges(
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
-            @RequestBody AddCharges rto
+            @RequestBody AddChargesRTO rto
     ) {
         return chargesService.addCharges(rto);
     }
 
+    /**
+     * 修改收费标准
+     * @param platform
+     * @param version
+     * @param rto
+     * @return
+     */
     @PutMapping(value = "/uptCharges")
     public ResultDTO<DbDeleteResultDTO> uptCharges(
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version,
-            @RequestBody AddCharges rto
+            @RequestBody AddChargesRTO rto
     ) {
         return chargesService.uptCharges(rto);
+    }
+
+    @DeleteMapping(value ="/deleteCharges")
+    public ResultDTO<DbDeleteResultDTO> deleteCharges(
+            @RequestParam(name = "p", required = false) String platform,
+            @RequestParam(name = "v", required = false) String version,
+            @RequestBody DeleteChargesRTO rto
+    ) {
+        return chargesService.deleteCharges(rto);
     }
 }

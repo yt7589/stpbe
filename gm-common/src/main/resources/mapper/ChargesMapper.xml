@@ -63,4 +63,10 @@
                 AND charge_id =#{charges_id}
              </if>
     </select>
+
+    <delete id ="deleteCharges">
+        DELETE
+          FROM zjc_charges
+         WHERE charge_id =#{charges_id}
+    </delete>
 </mapper>

@@ -6,7 +6,7 @@ import com.zhuanjingkj.stpbe.data.rto.BaseRTO;
 /**
  * 收费规则
  */
-public class AddCharges extends BaseRTO {
+public class AddChargesRTO extends BaseRTO {
     @JSONField(name = "charge_id")
     private Integer  charge_id; //id
     @JSONField(name = "charge_name")

@@ -2,7 +2,8 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.zhuanjingkj.stpbe.common.mapper.ChargesMapper;
 import com.zhuanjingkj.stpbe.data.dto.*;
-import com.zhuanjingkj.stpbe.data.rto.zjc.AddCharges;
+import com.zhuanjingkj.stpbe.data.rto.zjc.AddChargesRTO;
+import com.zhuanjingkj.stpbe.data.rto.zjc.DeleteChargesRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IChargesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class ChargesService implements IChargesService {
     }
 
     @Override
-    public ResultDTO<DbInsertResultDTO> addCharges(AddCharges rto) {
+    public ResultDTO<DbInsertResultDTO> addCharges(AddChargesRTO rto) {
         ResultDTO<DbInsertResultDTO> dto = new ResultDTO<>();
         Integer affectedRows = chargesMapper.addCharges(rto);
         DbInsertResultDTO data = new DbInsertResultDTO(rto.getCharge_id(),affectedRows);
@@ -38,9 +39,18 @@ public class ChargesService implements IChargesService {
     }
 
     @Override
-    public ResultDTO<DbDeleteResultDTO> uptCharges(AddCharges rto) {
+    public ResultDTO<DbDeleteResultDTO> uptCharges(AddChargesRTO rto) {
         ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
         Integer affectedRows = chargesMapper.uptCharges(rto);
+        DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);
+        dto.setData(data);
+        return dto;
+    }
+
+    @Override
+    public ResultDTO<DbDeleteResultDTO> deleteCharges(DeleteChargesRTO rto) {
+        ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
+        Integer affectedRows = chargesMapper.deleteCharges(rto.getCharge_id());
         DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);
         dto.setData(data);
         return dto;
