@@ -14,7 +14,7 @@
 
     <select id ="getCharges" resultMap ="chargesVO">
         SELECT zc.charge_id, zc.charge_name, zc.free_time, zc.pic_num, zc.pic_per_unit, zc.video_time,
-               zc.video_per_unit
+               zc.video_per_unit, zc.remark
           FROM zjc_charges zc
          WHERE 1 = 1
              <if test="charges_id != null and charges_id != ''">
