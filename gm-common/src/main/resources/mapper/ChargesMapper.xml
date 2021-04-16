@@ -27,7 +27,7 @@
                VALUES (#{rto.charge_id}, #{rto.charge_name}, #{rto.free_time}, #{rto.pic_num}, #{rto.pic_per_unit}, #{rto.video_time}, #{rto.video_per_unit}, #{rto.remark})
     </insert>
 
-    <update id="uptCharges">
+    <update id ="uptCharges">
         UPDATE zjc_charges
         <trim prefix="set" suffixOverrides=",">
             <if test="rto.charge_name != null and rto.charge_name != ''">
@@ -54,4 +54,13 @@
         </trim>
         WHERE charge_id =#{rto.charge_id}
     </update>
+
+    <select id ="getChargesCount" resultType ="Integer">
+        SELECT count(1)
+          FROM zjc_charges zc
+         WHERE 1 = 1
+             <if test="charges_id != null and charges_id != ''">
+                AND charge_id =#{charges_id}
+             </if>
+    </select>
 </mapper>

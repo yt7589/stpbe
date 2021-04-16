@@ -14,4 +14,6 @@ public interface ChargesMapper {
     Integer addCharges(@Param("rto") AddCharges rto);
 
     Integer uptCharges(@Param("rto") AddCharges rto);
+
+    Integer getChargesCount(@Param("charges_id") Integer charges_id);
 }

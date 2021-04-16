@@ -22,7 +22,8 @@ public class ChargesService implements IChargesService {
             startIndex = (startIndex - amount * 2) < 0 ? 0 : (startIndex - amount * 2);
         }
         List<ZjcChargesDTO> recs = chargesMapper.getCharges(startIndex, amount, direction, charges_id);
-        DbQrsDTO data = new DbQrsDTO(0,recs.size(),startIndex,amount,direction,recs);
+        Integer count = chargesMapper.getChargesCount(charges_id);
+        DbQrsDTO data = new DbQrsDTO(count,recs.size(),startIndex,amount,direction,recs);
         dto.setData(data);
         return dto;
     }
