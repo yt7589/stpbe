@@ -18,7 +18,7 @@
           FROM zjc_charges zc
          WHERE 1 = 1
              <if test="charges_id != null and charges_id != ''">
-                WHERE charge_id =#{charges_id}
+                AND charge_id =#{charges_id}
              </if>
     </select>
 
