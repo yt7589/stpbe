@@ -1,8 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.controller;
 
-import com.zhuanjingkj.stpbe.data.dto.DbInsertResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.vo.ZjcVideoVO;
 import com.zhuanjingkj.stpbe.tmdp.service.impl.ZjcVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

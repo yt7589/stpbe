@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.ChargesMapper">
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.ZjcChargesDTO"  id="chargesVO">
+        <result column ="charge_id" property ="charge_id" jdbcType ="INTEGER"></result>
+        <result column ="charge_name" property ="charge_name" jdbcType ="INTEGER"></result>
+        <result column ="free_time" property ="free_time" jdbcType ="INTEGER"></result>
+        <result column ="pic_num" property ="pic_num" jdbcType ="INTEGER"></result>
+        <result column ="pic_per_unit" property ="pic_per_unit" jdbcType ="INTEGER"></result>
+        <result column ="video_time" property ="video_time" jdbcType ="INTEGER"></result>
+        <result column ="video_per_unit" property ="video_per_unit" jdbcType ="INTEGER"></result>
+        <result column ="remark" property ="remark" jdbcType ="INTEGER"></result>
+    </resultMap>
+
+    <select id ="getCharges" resultMap ="chargesVO">
+        SELECT zc.charge_id, zc.charge_name, zc.free_time, zc.pic_num, zc.pic_per_unit, zc.video_time,
+               zc.video_per_unit
+          FROM zjc_charges zc
+         WHERE 1 = 1
+             <if test="charges_id != null and charges_id != ''">
+                WHERE charge_id =#{charges_id}
+             </if>
+    </select>
+
+    <insert id ="addCharges" useGeneratedKeys="true"  keyProperty="rto.charge_id">
+        INSERT INTO zjc_charges(charge_id, charge_name, free_time, pic_num, pic_per_unit, video_time, video_per_unit, remark)
+               VALUES (#{rto.charge_id}, #{rto.charge_name}, #{rto.free_time}, #{rto.pic_num}, #{rto.pic_per_unit}, #{rto.video_time}, #{rto.video_per_unit}, #{rto.remark})
+    </insert>
+
+    <update id="uptCharges">
+        UPDATE zjc_charges
+        <trim prefix="set" suffixOverrides=",">
+            <if test="rto.charge_name != null and rto.charge_name != ''">
+                charge_name =#{rto.charge_name},
+            </if>
+            <if test="rto.free_time != null and rto.free_time != ''">
+                free_time =#{rto.free_time},
+            </if>
+            <if test="rto.pic_num != null and rto.pic_num != ''">
+                pic_num =#{rto.pic_num},
+            </if>
+            <if test="rto.pic_per_unit != null and rto.pic_per_unit != ''">
+                pic_per_unit =#{rto.pic_per_unit},
+            </if>
+            <if test="rto.video_time != null and rto.video_time != ''">
+                video_time =#{rto.video_time},
+            </if>
+            <if test="rto.video_per_unit != null and rto.video_per_unit != ''">
+                video_per_unit =#{rto.video_per_unit},
+            </if>
+            <if test="rto.remark != null and rto.remark != ''">
+                remark =#{rto.remark},
+            </if>
+        </trim>
+        WHERE charge_id =#{rto.charge_id}
+    </update>
+</mapper>

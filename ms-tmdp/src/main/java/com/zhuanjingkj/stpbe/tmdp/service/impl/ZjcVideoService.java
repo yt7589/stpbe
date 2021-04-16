@@ -3,9 +3,7 @@ package com.zhuanjingkj.stpbe.tmdp.service.impl;
 import com.zhuanjingkj.stpbe.common.mapper.ZjcVideoMapper;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.CreateRtspBindDTO;
-import com.zhuanjingkj.stpbe.data.dto.DbInsertResultDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.vo.ZjcVideoVO;
 import com.zhuanjingkj.stpbe.tmdp.service.IZjcVideoService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
 import com.zhuanjingkj.stpbe.tmdp.util.FileUtil;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.concurrent.*;
 
 @Service

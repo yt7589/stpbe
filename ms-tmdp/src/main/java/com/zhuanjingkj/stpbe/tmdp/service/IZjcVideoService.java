@@ -1,7 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.service;
 
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
-import com.zhuanjingkj.stpbe.data.vo.ZjcVideoVO;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IZjcVideoService {
