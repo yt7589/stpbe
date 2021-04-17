@@ -59,6 +59,8 @@ public class Wxs2102App {
 
     private String sendRequest(String cmdUrl, String imageFile) {
         String tp = ImageBase64Converter.convertFileToBase64(imageFile);
+        System.out.println("file:" + imageFile + "!");
+        System.out.println("tp: " + tp + "!");
         Map<String, Object> params = new HashMap<>();
         params.put("TP", tp);
         String response = null;

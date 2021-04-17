@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.concurrent.*;
 
 @Service
@@ -34,21 +36,26 @@ public class ZjcVideoService implements IZjcVideoService {
             @Override
             public String call() throws Exception {
                 System.out.println("视频开始上传 1");
+                byte[] data = file.getBytes();
+                FileOutputStream fos = new FileOutputStream(new File(path + fileName + ".mp4"));
+                fos.write(data);
+                fos.flush();
+                fos.close();
+                String cmd = "/home/ps/yantao/dev/ffmpeg/ffmpeg -i " + path + fileName + ".mp4 -vcodec copy -acodec copy " + path + fileName +".mkv";
+                System.out.println("视频上传成功，开始转码 1");
+                if (FileUtil.callCMD(cmd) == 0) {
+                    System.out.println("视频转码 2");
+                    /**
+                     * 文件转码成功后绑定视频流
+                     */
+                    ResultDTO<CreateRtspBindDTO> dto = tvisSdkService.createRtspBind(PropUtil.getValue("video.url.rtsp") + fileName + ".mkv", "/start");
+                    zjcVideoMapper.addRtmp(consumerId, fileName, dto.getData().getStreamId(), DateUtil.getLocalDateTime());
+                    System.out.println("视频转码 3");
+                }
                 if (FileUtil.uploadImg(file,  fileName + ".mp4", path)) {
                     /**
                      * 文件上传成功后转 .mkv文件
                      */
-                    String cmd = "/home/ps/yantao/dev/ffmpeg/ffmpeg -i " + path + fileName + ".mp4 -vcodec copy -acodec copy " + path + fileName +".mkv";
-                    System.out.println("视频上传成功，开始转码 1");
-                    if (FileUtil.callCMD(cmd) == 0) {
-                        System.out.println("视频转码 2");
-                        /**
-                         * 文件转码成功后绑定视频流
-                         */
-                        ResultDTO<CreateRtspBindDTO> dto = tvisSdkService.createRtspBind(PropUtil.getValue("video.url.rtsp") + fileName + ".mkv", "/start");
-                        zjcVideoMapper.addRtmp(consumerId, fileName, dto.getData().getStreamId(), DateUtil.getLocalDateTime());
-                        System.out.println("视频转码 3");
-                    }
                 }
                 return null;
             }

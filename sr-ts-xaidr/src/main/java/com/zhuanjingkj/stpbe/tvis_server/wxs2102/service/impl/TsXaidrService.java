@@ -29,6 +29,9 @@ public class TsXaidrService implements ITsXaidrService {
             return null;
         }
         System.out.println("Yantao resp: " + response + "!");
+        if (response.indexOf(":404,") >= 0) {
+            return new JSONArray();
+        }
         return JSON.parseArray(response);
     }
 }
