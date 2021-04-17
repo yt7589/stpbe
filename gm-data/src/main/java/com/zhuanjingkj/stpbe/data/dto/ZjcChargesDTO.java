@@ -87,7 +87,7 @@ public class ZjcChargesDTO extends BaseDTO{
     }
 
     public String getRule() {
-        return rule;
+        return "免费时长" + freeTime + "天，图片限制" + picNum + "张/天，" + "视频限制时长" + videoTime + "分钟/天";
     }
 
     public void setRule(String rule) {
