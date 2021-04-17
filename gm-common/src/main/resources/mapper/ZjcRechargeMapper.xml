@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.RechargeMapper">
+    <resultMap type ="com.zhuanjingkj.stpbe.data.dto.ZjcRechargeDTO" id ="rechargeVO">
+        <result column="rd_id" property="rdId" jdbcType="INTEGER"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="customer_id" property="customerId" jdbcType="INTEGER"/>
+        <result column="amount" property="amount" jdbcType="INTEGER"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id ="getRechargeRecord" resultMap ="rechargeVO">
+        SELECT zr.id, zr.order_no, zr.customer_id, zr.amount, zr.operator, zr.create_time
+          FROM zjc_recharge_record zr
+         WHERE 1 = 1
+             <if test="customerId != null and customerId !=''">
+                 AND zr.customer_id = #{customerId}
+             </if>
+             <if test="orderno != null and orderno !=''">
+                 AND zr.order_no =#{orderno}
+             </if>
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getRechargeCount" resultType ="Integer">
+        SELECT count(1)
+          FROM zjc_recharge_record zr
+         WHERE 1 = 1
+             <if test="customerId != null and customerId !=''">
+                 AND zr.customer_id = #{customerId}
+             </if>
+             <if test="orderno != null and orderno !=''">
+                 AND zr.order_no =#{orderno}
+             </if>
+    </select>
+
+    <insert id ="recharge" useGeneratedKeys="true" keyProperty="rto.rdId">
+        INSERT INTO zjc_recharge_record(order_no, customer_id, amount, operator, create_time)
+               VALUES(#{rto.orderNo}, #{rto.customerId}, #{rto.amount}, #{rto.operator}, #{rto.createTime})
+    </insert>
+</mapper>
