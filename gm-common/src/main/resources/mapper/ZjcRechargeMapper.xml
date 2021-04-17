@@ -12,7 +12,7 @@
     </resultMap>
 
     <select id ="getRechargeRecord" resultMap ="rechargeVO">
-        SELECT zr.id, zr.order_no, zr.customer_id, zr.amount, zr.operator, zr.create_time, zc.customer_corporateName
+        SELECT zr.rd_id, zr.order_no, zr.customer_id, zr.amount, zr.operator, zr.create_time, zc.customer_corporateName
           FROM zjc_recharge_record zr
      LEFT JOIN zjc_customer zc
             ON zr.customer_id = zc.customer_id
