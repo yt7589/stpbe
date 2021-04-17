@@ -52,11 +52,6 @@ public class ZjcVideoService implements IZjcVideoService {
                     zjcVideoMapper.addRtmp(consumerId, fileName, dto.getData().getStreamId(), DateUtil.getLocalDateTime());
                     System.out.println("视频转码 3");
                 }
-                if (FileUtil.uploadImg(file,  fileName + ".mp4", path)) {
-                    /**
-                     * 文件上传成功后转 .mkv文件
-                     */
-                }
                 return null;
             }
         });
