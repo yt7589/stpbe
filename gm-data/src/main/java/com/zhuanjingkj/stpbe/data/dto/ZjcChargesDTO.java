@@ -6,15 +6,15 @@ public class ZjcChargesDTO extends BaseDTO{
     @JSONField(name = "chargeId")
     private Integer  chargeId; //id
     @JSONField(name = "chargeName")
-    private String charge_name; //名称
+    private String chargeName; //名称
     @JSONField(name = "freeTime")
-    private Integer free_time; //免费时长
+    private Integer freeTime; //免费时长
     @JSONField(name = "picNum")
-    private Integer pic_num; //每天检测图片数量
+    private Integer picNum; //每天检测图片数量
     @JSONField(name = "picPerUnit")
-    private Integer pic_per_unit; //每张图片的检测费用
+    private Integer picPerUnit; //每张图片的检测费用
     @JSONField(name = "videoTime")
-    private Integer video_time; //每天可播放视频时长
+    private Integer videoTime; //每天可播放视频时长
     @JSONField(name = "videoPerUnit")
     private Integer videoPerUnit; //每秒视频的播放费用
     @JSONField(name = "remark")
@@ -30,44 +30,44 @@ public class ZjcChargesDTO extends BaseDTO{
         this.chargeId = chargeId;
     }
 
-    public String getCharge_name() {
-        return charge_name;
+    public String getChargeName() {
+        return chargeName;
     }
 
-    public void setCharge_name(String charge_name) {
-        this.charge_name = charge_name;
+    public void setChargeName(String chargeName) {
+        this.chargeName = chargeName;
     }
 
-    public Integer getFree_time() {
-        return free_time;
+    public Integer getFreeTime() {
+        return freeTime;
     }
 
-    public void setFree_time(Integer free_time) {
-        this.free_time = free_time;
+    public void setFreeTime(Integer freeTime) {
+        this.freeTime = freeTime;
     }
 
-    public Integer getPic_num() {
-        return pic_num;
+    public Integer getPicNum() {
+        return picNum;
     }
 
-    public void setPic_num(Integer pic_num) {
-        this.pic_num = pic_num;
+    public void setPicNum(Integer picNum) {
+        this.picNum = picNum;
     }
 
-    public Integer getPic_per_unit() {
-        return pic_per_unit;
+    public Integer getPicPerUnit() {
+        return picPerUnit;
     }
 
-    public void setPic_per_unit(Integer pic_per_unit) {
-        this.pic_per_unit = pic_per_unit;
+    public void setPicPerUnit(Integer picPerUnit) {
+        this.picPerUnit = picPerUnit;
     }
 
-    public Integer getVideo_time() {
-        return video_time;
+    public Integer getVideoTime() {
+        return videoTime;
     }
 
-    public void setVideo_time(Integer video_time) {
-        this.video_time = video_time;
+    public void setVideoTime(Integer videoTime) {
+        this.videoTime = videoTime;
     }
 
     public Integer getVideoPerUnit() {
