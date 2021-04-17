@@ -124,6 +124,13 @@ public class TvisImageDataController {
         byte[] data = null;
         Map<String, Object> recogResult = null;
 
+        /**
+         * 图片检测流程
+         * 1.检测之前判断用户是否有余额（免费用户是否有免费检测余量）
+         * 2.检测完成后进行扣费
+         * 3.图片检测表添加检测记录
+         * 4.检测费用明细表添加记录
+         */
         try {
             checkImageEngine();
             data = file.getBytes();

@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.ChargesMapper">
     <resultMap type="com.zhuanjingkj.stpbe.data.dto.ZjcChargesDTO"  id="chargesVO">
-        <result column ="charge_id" property ="charge_id" jdbcType ="INTEGER"></result>
-        <result column ="charge_name" property ="charge_name" jdbcType ="INTEGER"></result>
-        <result column ="free_time" property ="free_time" jdbcType ="INTEGER"></result>
-        <result column ="pic_num" property ="pic_num" jdbcType ="INTEGER"></result>
-        <result column ="pic_per_unit" property ="pic_per_unit" jdbcType ="INTEGER"></result>
-        <result column ="video_time" property ="video_time" jdbcType ="INTEGER"></result>
-        <result column ="video_per_unit" property ="video_per_unit" jdbcType ="INTEGER"></result>
-        <result column ="remark" property ="remark" jdbcType ="INTEGER"></result>
+        <result column ="charge_id" property ="chargeId" jdbcType ="INTEGER"></result>
+        <result column ="charge_name" property ="chargeName" jdbcType ="VARCHAR"></result>
+        <result column ="free_time" property ="freeTime" jdbcType ="INTEGER"></result>
+        <result column ="pic_num" property ="picNum" jdbcType ="INTEGER"></result>
+        <result column ="pic_per_unit" property ="picPerUnit" jdbcType ="INTEGER"></result>
+        <result column ="video_time" property ="videoTime" jdbcType ="INTEGER"></result>
+        <result column ="video_per_unit" property ="videoPerUnit" jdbcType ="INTEGER"></result>
+        <result column ="remark" property ="remark" jdbcType ="VARCHAR"></result>
     </resultMap>
 
     <select id ="getCharges" resultMap ="chargesVO">

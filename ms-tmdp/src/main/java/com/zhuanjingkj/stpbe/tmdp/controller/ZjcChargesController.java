@@ -56,8 +56,6 @@ public class ZjcChargesController {
             @RequestParam(name = "v", required = false) String version,
             @RequestBody AddChargesRTO rto
     ) {
-        System.out.println("rto:" + rto.getCharge_id() + ";" + rto.getCharge_name() + ";" + rto.getRemark() + ";" +
-                           rto.getFree_time() + ";" + rto.getVideo_time() + ";" + rto.getPic_num() + ";" + rto.getPic_per_unit() + ";" + rto.getVideo_per_unit() );
         return chargesService.addCharges(rto);
     }
 
@@ -77,6 +75,13 @@ public class ZjcChargesController {
         return chargesService.uptCharges(rto);
     }
 
+    /**
+     * 删除收费标准
+     * @param platform
+     * @param version
+     * @param rto
+     * @return
+     */
     @DeleteMapping(value ="/deleteCharges")
     public ResultDTO<DbDeleteResultDTO> deleteCharges(
             @RequestParam(name = "p", required = false) String platform,

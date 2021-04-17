@@ -33,7 +33,7 @@ public class ChargesService implements IChargesService {
     public ResultDTO<DbInsertResultDTO> addCharges(AddChargesRTO rto) {
         ResultDTO<DbInsertResultDTO> dto = new ResultDTO<>();
         Integer affectedRows = chargesMapper.addCharges(rto);
-        DbInsertResultDTO data = new DbInsertResultDTO(rto.getCharge_id(),affectedRows);
+        DbInsertResultDTO data = new DbInsertResultDTO(rto.getChargeId(),affectedRows);
         dto.setData(data);
         return dto;
     }
@@ -50,7 +50,7 @@ public class ChargesService implements IChargesService {
     @Override
     public ResultDTO<DbDeleteResultDTO> deleteCharges(DeleteChargesRTO rto) {
         ResultDTO<DbDeleteResultDTO> dto = new ResultDTO<>();
-        Integer affectedRows = chargesMapper.deleteCharges(rto.getCharge_id());
+        Integer affectedRows = chargesMapper.deleteCharges(rto.getChargeId());
         DbDeleteResultDTO data = new DbDeleteResultDTO(affectedRows);
         dto.setData(data);
         return dto;

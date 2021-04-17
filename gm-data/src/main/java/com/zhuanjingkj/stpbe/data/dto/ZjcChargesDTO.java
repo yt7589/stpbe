@@ -3,31 +3,31 @@ package com.zhuanjingkj.stpbe.data.dto;
 import com.alibaba.fastjson.annotation.JSONField;
 
 public class ZjcChargesDTO extends BaseDTO{
-    @JSONField(name = "charge_id")
-    private Integer  charge_id; //id
-    @JSONField(name = "charge_name")
+    @JSONField(name = "chargeId")
+    private Integer  chargeId; //id
+    @JSONField(name = "chargeName")
     private String charge_name; //名称
-    @JSONField(name = "free_time")
+    @JSONField(name = "freeTime")
     private Integer free_time; //免费时长
-    @JSONField(name = "pic_num")
+    @JSONField(name = "picNum")
     private Integer pic_num; //每天检测图片数量
-    @JSONField(name = "pic_per_unit")
+    @JSONField(name = "picPerUnit")
     private Integer pic_per_unit; //每张图片的检测费用
-    @JSONField(name = "video_time")
+    @JSONField(name = "videoTime")
     private Integer video_time; //每天可播放视频时长
-    @JSONField(name = "video_per_unit")
-    private Integer video_per_unit; //每秒视频的播放费用
+    @JSONField(name = "videoPerUnit")
+    private Integer videoPerUnit; //每秒视频的播放费用
     @JSONField(name = "remark")
     private String remark; //备注
     @JSONField(name = "rule")
     private String rule;
 
-    public Integer getCharge_id() {
-        return charge_id;
+    public Integer getChargeId() {
+        return chargeId;
     }
 
-    public void setCharge_id(Integer charge_id) {
-        this.charge_id = charge_id;
+    public void setChargeId(Integer chargeId) {
+        this.chargeId = chargeId;
     }
 
     public String getCharge_name() {
@@ -70,12 +70,12 @@ public class ZjcChargesDTO extends BaseDTO{
         this.video_time = video_time;
     }
 
-    public Integer getVideo_per_unit() {
-        return video_per_unit;
+    public Integer getVideoPerUnit() {
+        return videoPerUnit;
     }
 
-    public void setVideo_per_unit(Integer video_per_unit) {
-        this.video_per_unit = video_per_unit;
+    public void setVideoPerUnit(Integer videoPerUnit) {
+        this.videoPerUnit = videoPerUnit;
     }
 
     public String getRemark() {
@@ -87,12 +87,10 @@ public class ZjcChargesDTO extends BaseDTO{
     }
 
     public String getRule() {
-        return "免费时长" + free_time + "天，" + "图片限制" + pic_num +"张/天，视频限制时长" + video_time + "分钟/天";
+        return rule;
     }
 
     public void setRule(String rule) {
         this.rule = rule;
     }
-
-
 }
