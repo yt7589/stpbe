@@ -2,9 +2,12 @@ package com.zhuanjingkj.stpbe.tvis_server.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.zhuanjingkj.stpbe.common.tvis.TvisUtil;
+import com.zhuanjingkj.stpbe.common.util.DistributeRedisLock;
+import com.zhuanjingkj.stpbe.tvis_server.conf.RedissonConfig;
 import com.zhuanjingkj.stpbe.tvis_server.service.ITvisImageRecogService;
 import com.zhuanjingkj.stpbe.tvis_server.vo.TvisImageErrorResponse;
 import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,9 +66,14 @@ public class TvisImageRecogService implements ITvisImageRecogService {
         return JSON.parseObject(response);
     }
 
+    @Autowired
+    private RedissonClient redissonClient;
+
     @Override
     public Map<String, Object> recognition(String cameraId, String gcxh, String mrhpt, String hphm, byte[] imageData) {
-        System.out.println("recognition:cameraId>" + cameraId + ";gcxh>" + gcxh + ";mrhpt>"+ mrhpt);
+        if (null == DistributeRedisLock.redissonClient) {
+            DistributeRedisLock.redissonClient = redissonClient;
+        }
         String response = TvisUtil.sendByteRequest(redisTemplate, redisTemplate2, LIST_VEHICLE_RECOGNITION, imageData);
         if(StringUtils.equals(response,"0")){
             TvisImageErrorResponse responseError = new TvisImageErrorResponse(4,gcxh,MSG);

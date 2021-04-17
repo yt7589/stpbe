@@ -186,16 +186,10 @@ public class TvisImageDataController {
                 result.put("MSG", "无法读取图片");
                 return result;
             }
-            System.out.println("VehicleRecognition data:" + data.length + "!");
-            for (int i=0; i<50; i++) {
-                System.out.println("vr@_" + i + ":" + Integer.toHexString(data[i]) + "!");
-            }
-            logger.info("before recognition");
             return tvisImageRecogService.recognition(cameraId, gcxh, mrhpt, hphm, data);
 
         } catch (Exception e) {
             logger.error("车辆识别异常, gcxh={}, tplx={}", gcxh, tplx, e);
-
             Map<String, Object> result = new HashMap<>();
             result.put("GCXH", gcxh);
             result.put("CODE", 0);
