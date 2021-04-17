@@ -8,6 +8,7 @@
         <result column="amount" property="amount" jdbcType="INTEGER"/>
         <result column="operator" property="operator" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+        <result column="customer_corporateName" property="corporateName" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id ="getRechargeRecord" resultMap ="rechargeVO">

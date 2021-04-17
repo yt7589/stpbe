@@ -13,6 +13,8 @@ public class ZjcRechargeDTO extends BaseDTO {
     private Double amount;
     @JSONField(name = "operator")
     private String operator;
+    @JSONField(name = "corporateName")
+    private String corporateName;
     @JSONField(name = "createTime")
     private String createTime;
 
@@ -62,5 +64,13 @@ public class ZjcRechargeDTO extends BaseDTO {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getCorporateName() {
+        return corporateName;
+    }
+
+    public void setCorporateName(String corporateName) {
+        this.corporateName = corporateName;
     }
 }
