@@ -23,6 +23,34 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-data-mongodb</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-eureka-server</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-jdbc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-jdbc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.netflix.zuul</groupId>
+                    <artifactId>zuul-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.milvus</groupId>
+                    <artifactId>milvus-sdk-java</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -39,13 +67,6 @@
     </dependencies>
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Hoxton.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>

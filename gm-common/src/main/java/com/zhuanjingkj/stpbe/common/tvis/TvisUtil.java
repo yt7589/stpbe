@@ -29,6 +29,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TvisUtil {
     public final static String ERROR_RESPONSE = "ERROR";
@@ -380,7 +381,10 @@ public class TvisUtil {
 
 
     private final static String REQUEST_ID_PREFIX = "a_";
+    private static AtomicInteger concurrentWaitNum = new AtomicInteger(0);
+    private static int MAX_WAIT_NUM = 0;
     public static String sendRequest(RedisTemplate redisTemplate, RedisTemplate<String, byte[]> redisTemplate2, String requestList, String requestId, Object requestData) {
+        String response = null;
         if (requestData instanceof String) {
             redisTemplate.opsForList().leftPush(requestList, (String) requestData);
         } else {
@@ -421,12 +425,22 @@ public class TvisUtil {
                 }
                 redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
             }*/
+            int num = concurrentWaitNum.addAndGet(1);
+            if (MAX_WAIT_NUM < 1) {
+                MAX_WAIT_NUM = Integer.parseInt(PropUtil.getValue("tvis.max-wait-num"));
+            }
+            if (num > MAX_WAIT_NUM) {
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+                return "{\"timestamp\":\"" +
+                        df.format(Calendar.getInstance().getTime()) + "\"," +
+                        "\"status\":505,\"error\":\"queue overflow\"," +
+                        "\"message\":系统繁忙，请稍后再试！\"}";
+            }
             redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
         }
         // ！！！！！ 测试程序，正式环境下需保持注释掉状态 ！！！！！！
         //prepareXaidrRst(redisTemplate, requestList, requestId);
         long startTime = System.currentTimeMillis();
-        String response = null;
         System.out.println("##### begin reading response...");
         do {
             try {
@@ -435,13 +449,18 @@ public class TvisUtil {
             }
             response = (String) redisTemplate.opsForValue().get(requestId);
             if (response != null) {
+                concurrentWaitNum.addAndGet(-1);
                 break;
             }
         } while (System.currentTimeMillis() - startTime < TVIS_RST_TIMEOUT);
         System.out.println("##### after reading response:" + response + "! key=" + requestId + "!");
         if (response == null) {
             //throw new RuntimeException("等待执行结果超时");
-            response = "{\"timestamp\":\"2020-11-26T08:29:34.273+0000\",\"status\":404,\"error\":\"Not Found\",\"message\":\"No message available TvisImageRecogService Ln227\",\"path\":\"/vehicle/function/recognition\"}";
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+            response = "{\"timestamp\":" +
+                    "\"" + df.format(Calendar.getInstance().getTime()) + "\",\"status\":404," +
+                    "\"error\":\"Timeout\"," +
+                    "\"message\":\"请求超时，请稍后再试！\"}";
         }
 
         return response;

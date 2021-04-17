@@ -37,20 +37,16 @@ public class SrTvisServerApplication {
         // 将删除所有数据！！！！！！！！！！！！！！！！！！！！！！！！！！！
         //GrqEngine.createGrqDb(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        GrqEngine.initializeGrp();
+        //GrqEngine.initializeGrp();
         SpringApplication.run(SrTvisServerApplication.class, args);
     }
 
     @PostConstruct
     public void startScheduledTask() {
-        System.out.println("postConstruct 1");
-        if (StringUtils.isNullOrEmpty(AppRegistry.tvisJsonTblName)) {
+        if (appRunMode.equals("1") && StringUtils.isNullOrEmpty(AppRegistry.tvisJsonTblName)) {
             AppRegistry.tvisJsonTblName = tvisJsonMapper.getLatesTvisJsonTblName();
         }
-        System.out.println("postConstruct 2");
-        System.out.println("appRunMode=" + appRunMode + "!");
         if (appRunMode.equals("1")) {
-            System.out.println("postConstruct 3");
             Thread thd = new Thread(tasScheduledTask);
             thd.start();
         }
