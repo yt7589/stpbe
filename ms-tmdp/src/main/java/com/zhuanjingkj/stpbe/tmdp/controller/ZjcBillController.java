@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  *个人账单
  */
 @RestController
-@RequestMapping(value = "")
+@RequestMapping(value = "/zjc/bill/")
 @CrossOrigin(value = "*")
 public class ZjcBillController {
 
