@@ -52,6 +52,7 @@ public class ZjcRechargeController {
         return zjcRechargeService.recharge(rto);
     }
 
+    @GetMapping(value ="/getCustomers")
     public ResultDTO<DbQrsDTO> getCustomers(
             @RequestParam(name = "p", required = false) String platform,
             @RequestParam(name = "v", required = false) String version
