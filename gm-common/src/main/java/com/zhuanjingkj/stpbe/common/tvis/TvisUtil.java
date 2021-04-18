@@ -7,6 +7,7 @@ import com.zhuanjingkj.stpbe.common.AppRegistry;
 import com.zhuanjingkj.stpbe.common.mapper.TvisJsonMapper;
 import com.zhuanjingkj.stpbe.common.net.HttpUtil;
 import com.zhuanjingkj.stpbe.common.net.IpfsClient;
+import com.zhuanjingkj.stpbe.common.util.DistributeRedisLock;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
 import com.zhuanjingkj.stpbe.data.dto.RecognizeTvisImageDTO;
 import com.zhuanjingkj.stpbe.data.dto.WsmVideoFrameDTO;
@@ -16,6 +17,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -376,86 +378,132 @@ public class TvisUtil {
     }
 
 
+    private final static String LOCK_NAME_TVIS_WAIT_NUM = "tvis.wait_num";
+    private final static String KEY_CONCURRENT_WAIT_NUM = "concurrentWaitNum";
+    private static int getWaitNumRedis(RedisTemplate redisTemplate) {
+        try {
+            if (DistributeRedisLock.lock(LOCK_NAME_TVIS_WAIT_NUM)) {
+                if (redisTemplate.opsForValue().get(KEY_CONCURRENT_WAIT_NUM) == null) {
+                    redisTemplate.opsForValue().set(KEY_CONCURRENT_WAIT_NUM, "0");
+                    DistributeRedisLock.unlock(LOCK_NAME_TVIS_WAIT_NUM);
+                    return 0;
+                } else {
+                    int num = Integer.parseInt((String) redisTemplate.opsForValue().get("concurrentWaitNum"));
+                    if (num < 0) {
+                        redisTemplate.opsForValue().set(KEY_CONCURRENT_WAIT_NUM, "0");
+                    }
+                    DistributeRedisLock.unlock(LOCK_NAME_TVIS_WAIT_NUM);
+                    return num;
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("       $$$$$$$$ getWaitNumRedis 6");
+            DistributeRedisLock.unlock(LOCK_NAME_TVIS_WAIT_NUM);
+        }
+        return 0;
+    }
 
+    private static int increaseWaitNumRedis(RedisTemplate redisTemplate) {
+        try {
+            if (DistributeRedisLock.lock(LOCK_NAME_TVIS_WAIT_NUM)) {
+                int num = getWaitNumRedis(redisTemplate);
+                if (num < 0) {
+                    DistributeRedisLock.unlock(LOCK_NAME_TVIS_WAIT_NUM);
+                    return -2;
+                }
+                num++;
+                redisTemplate.opsForValue().set("", "" + num);
+                DistributeRedisLock.unlock(LOCK_NAME_TVIS_WAIT_NUM);
+                return num;
+            }
+        } catch (Exception ex) {
+            DistributeRedisLock.unlock(LOCK_NAME_TVIS_WAIT_NUM);
+        }
+        return -3;
+    }
 
+    private static int decreaseWaitNumRedis(RedisTemplate redisTemplate) {
+        try {
+            if (DistributeRedisLock.lock(LOCK_NAME_TVIS_WAIT_NUM)) {
+                int num = getWaitNumRedis(redisTemplate);
+                if (num < 0) {
+                    DistributeRedisLock.unlock(LOCK_NAME_TVIS_WAIT_NUM);
+                    return -4;
+                }
+                num--;
+                if (num >= 0) {
+                    redisTemplate.opsForValue().set(KEY_CONCURRENT_WAIT_NUM, "" + num);
+                }
+                DistributeRedisLock.unlock(LOCK_NAME_TVIS_WAIT_NUM);
+                return num;
+            }
+        } catch (Exception ex) {
+            DistributeRedisLock.unlock(LOCK_NAME_TVIS_WAIT_NUM);
+        }
+        return -5;
+    }
 
 
     private final static String REQUEST_ID_PREFIX = "a_";
-    private static AtomicInteger concurrentWaitNum = new AtomicInteger(0);
-    private static int MAX_WAIT_NUM = 0;
+    private static int MAX_WAIT_NUM = -1;
     public static String sendRequest(RedisTemplate redisTemplate, RedisTemplate<String, byte[]> redisTemplate2, String requestList, String requestId, Object requestData) {
         String response = null;
+        // 根据负载进行限流
+        if (MAX_WAIT_NUM < 0) {
+            MAX_WAIT_NUM = Integer.parseInt(PropUtil.getValue("tvis.max-wait-num"));
+        }
+        //int concurrentWaitNum = getWaitNumRedis(redisTemplate);
+        if (redisTemplate.boundListOps(requestList).size() > MAX_WAIT_NUM) {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+            //System.out.println("    Ln435 ######################### num=" + concurrentWaitNum + "!");
+            return "{\"timestamp\":\"" +
+                    df.format(Calendar.getInstance().getTime()) + "\"," +
+                    "\"status\":505,\"error\":\"queue overflow\"," +
+                    "\"message\":\"系统繁忙，请稍后再试！\"}";
+        }
+        /*if (concurrentWaitNum < 0) {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+            System.out.println("    Ln435 !!!!!!!!!!!!!!!!!!!!!! num=" + concurrentWaitNum + "!");
+            return "{\"timestamp\":\"" +
+                    df.format(Calendar.getInstance().getTime()) + "\"," +
+                    "\"status\":506,\"error\":\"Cannot lock\"," +
+                    "\"message\":\"无法获取读写锁！\"}";
+        }
+        if (concurrentWaitNum >= MAX_WAIT_NUM) {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+            System.out.println("    Ln435 ######################### num=" + concurrentWaitNum + "!");
+            return "{\"timestamp\":\"" +
+                    df.format(Calendar.getInstance().getTime()) + "\"," +
+                    "\"status\":505,\"error\":\"queue overflow\"," +
+                    "\"message\":\"系统繁忙，请稍后再试！\"}";
+        }*/
+        // 具体处理请求
         if (requestData instanceof String) {
             redisTemplate.opsForList().leftPush(requestList, (String) requestData);
         } else {
-            /*
-            synchronized (this){
-                logger.info("sendRequest 3.1");
-                // 设置请求编号超时时间
-                redisTemplate.opsForValue().set(REQUEST_ID_PREFIX + requestId, "0", REQUEST_EXPIRED_TIME, TimeUnit.MILLISECONDS);
-                logger.info("sendRequest 3.2");
-                // 取出最老请求的请求编号
-                long rlSize = redisTemplate2.opsForList().size(requestList);
-                logger.info("sendRequest 3.3 rlSize=" + rlSize + "!");
-                byte[] topVal;
-                if(rlSize > 0){
-                    logger.info("sendRequest 3.4");
-                    topVal = redisTemplate2.opsForList().range(requestList, rlSize-1, rlSize).get(0);
-                    logger.info("sendRequest 3.5");
-                    StringBuilder oldRequestId = new StringBuilder(REQUEST_ID_PREFIX);
-                    String oldRawRequestId = new String(topVal, 0, REQUEST_ID_LEN, Charset.forName("UTF-8"));
-                    oldRequestId.append(new String(topVal, 0, REQUEST_ID_LEN, Charset.forName("UTF-8")));
-                    logger.info("sendRequest 3.6 oldRequestId=" + oldRequestId + "!");
-                    // 如果最老请求编号在Redis中不存在，证明该请求已过期，则删除该请求，继续比较接下来的元素
-                    while (redisTemplate.opsForValue().get(oldRequestId.toString()) == null) {
-                        logger.info("sendRequest 3.7");
-                        redisTemplate2.opsForList().rightPop(requestList);
-                        logger.info("sendRequest 3.8");
-                        rlSize = redisTemplate2.opsForList().size(requestList);
-                        logger.info("sendRequest 3.9");
-                        if(rlSize<=0)
-                            break;
-                        logger.info("sendRequest 3.10");
-                        topVal = redisTemplate2.opsForList().range(requestList, rlSize-1, rlSize).get(0);
-                        logger.info("sendRequest 3.11");
-                        oldRequestId = new StringBuilder(REQUEST_ID_PREFIX);
-                        oldRequestId.append(new String(topVal, 0, 36, Charset.forName("UTF-8")));
-                        logger.info("sendRequest 3.12");
-                    }
-                }
-                redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
-            }*/
-            int num = concurrentWaitNum.addAndGet(1);
-            if (MAX_WAIT_NUM < 1) {
-                MAX_WAIT_NUM = Integer.parseInt(PropUtil.getValue("tvis.max-wait-num"));
-            }
-            if (num > MAX_WAIT_NUM) {
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
-                return "{\"timestamp\":\"" +
-                        df.format(Calendar.getInstance().getTime()) + "\"," +
-                        "\"status\":505,\"error\":\"queue overflow\"," +
-                        "\"message\":系统繁忙，请稍后再试！\"}";
-            }
             redisTemplate2.opsForList().leftPush(requestList, (byte[]) requestData);
         }
         // ！！！！！ 测试程序，正式环境下需保持注释掉状态 ！！！！！！
         //prepareXaidrRst(redisTemplate, requestList, requestId);
         long startTime = System.currentTimeMillis();
-        System.out.println("##### begin reading response...");
+        //concurrentWaitNum = increaseWaitNumRedis(redisTemplate);
+        //System.out.println("    " + Thread.currentThread().getId() + ": Ln447 n2=" + concurrentWaitNum + "!");
         do {
             try {
-                Thread.sleep(3);
+                Thread.sleep(3); // 睡3毫秒读取识别结果
             } catch (InterruptedException ignore) {
             }
             response = (String) redisTemplate.opsForValue().get(requestId);
             if (response != null) {
-                concurrentWaitNum.addAndGet(-1);
+                //concurrentWaitNum = decreaseWaitNumRedis(redisTemplate);
+                //System.out.println("       " + Thread.currentThread().getId() + " @@@@@@@@@@@@@@@@@@@@@@@ n1=" + concurrentWaitNum + "   @@@@@@@@@@@@@@@@@@@@@@@@@@");
                 break;
             }
         } while (System.currentTimeMillis() - startTime < TVIS_RST_TIMEOUT);
-        System.out.println("##### after reading response:" + response + "! key=" + requestId + "!");
         if (response == null) {
             //throw new RuntimeException("等待执行结果超时");
+            /*concurrentWaitNum = decreaseWaitNumRedis(redisTemplate);
+            System.out.println("    " + Thread.currentThread().getId() + ": Ln463 n3=" + concurrentWaitNum + "!");*/
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
             response = "{\"timestamp\":" +
                     "\"" + df.format(Calendar.getInstance().getTime()) + "\",\"status\":404," +
