@@ -28,7 +28,7 @@
           FROM zjc_bill_details
          WHERE  1 = 1
              <if test="customerId != 1">
-                 AND zb.customer_id =#{customerId}
+                 AND customer_id =#{customerId}
              </if>
     </select>
 
@@ -37,7 +37,7 @@
           FROM zjc_recharge_record
          WHERE  1 = 1
              <if test="customerId != 1">
-                 AND zb.customer_id =#{customerId}
+                 AND customer_id =#{customerId}
              </if>
     </select>
 
@@ -46,7 +46,7 @@
           FROM zjc_customer
          WHERE 1 = 1
              <if test="customerId != 1">
-                 AND zb.customer_id =#{customerId}
+                 AND customer_id =#{customerId}
              </if>
     </select>
 
