@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface ChargesMapper {
+public interface ZjcChargesMapper {
 
     List<ZjcChargesDTO> getCharges(@Param("startIndex") Integer startIndex, @Param("amount") Integer amount,
                                    @Param("direction") Integer direction, @Param("charges_id")Integer charges_id);

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ChargesService implements IChargesService {
+public class ZjcChargesService implements IChargesService {
 
     @Autowired
     private ChargesMapper chargesMapper;

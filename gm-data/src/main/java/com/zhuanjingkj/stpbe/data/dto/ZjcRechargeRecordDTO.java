@@ -15,6 +15,8 @@ public class ZjcRechargeDTO extends BaseDTO {
     private String operator;
     @JSONField(name = "corporateName")
     private String corporateName;
+    @JSONField(name = "balance")
+    private Double balance;
     @JSONField(name = "createTime")
     private String createTime;
 
@@ -72,5 +74,13 @@ public class ZjcRechargeDTO extends BaseDTO {
 
     public void setCorporateName(String corporateName) {
         this.corporateName = corporateName;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 }

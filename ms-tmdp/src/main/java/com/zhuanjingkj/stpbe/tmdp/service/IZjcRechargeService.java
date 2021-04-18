@@ -7,8 +7,10 @@ import com.zhuanjingkj.stpbe.data.rto.zjc.ZjcRechargeRTO;
 
 public interface IRechargeService {
 
-    ResultDTO<DbQrsDTO> getRechargeRecord(Integer customerId, Integer startIndex, Integer amount,
+    ResultDTO<DbQrsDTO> getRechargeRecord(String customer, Integer startIndex, Integer amount,
                                           Integer direction, String orderno);
 
     ResultDTO<DbInsertResultDTO> recharge(ZjcRechargeRTO rto);
+
+    ResultDTO<DbQrsDTO> getCustomers();
 }
