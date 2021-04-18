@@ -4,6 +4,10 @@
 ### zjc ###
 target/
 
+# ignore application.properties
+ms-tmdp/src/resources/application.properties
+sr-tvis-server/src/resources/application.properties
+
 ### STS ###
 .apt_generated
 .classpath
