@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.ZjcBillMapper">
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.ZjcBillDTO"  id ="zjcBillDTO">
+        <result column="bill_id" property="billId" jdbcType="INTEGER"></result>
+        <result column="file_type" property="fileType" jdbcType="INTEGER"></result>
+        <result column="file_addr" property="fileAddr" jdbcType="VARCHAR"></result>
+        <result column="start_time" property="startTime" jdbcType="VARCHAR"></result>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"></result>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"></result>
+        <result column="ip_addr" property="ipAddr" jdbcType="VARCHAR"></result>
+        <result column="duration" property="duration" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <select id ="getBills" resultMap ="zjcBillDTO">
+        SELECT zb.bill_id, zb.file_type, zb.file_addr, zb.start_time, zb.end_time, zb.create_time, zb.ip_addr,
+               IF(zb.file_type = 1, TIMESTAMPDIFF(SECOND,(DATE_FORMAT(zb.start_time,'%Y-%m-%d %H:%i')), (DATE_FORMAT(zb.end_time, '%Y-%m-%d %H:%i'))), 0) AS duration
+          FROM zjc_bill_details zb
+         WHERE 1 = 1
+             <if test="customerId != 1">
+                 AND zb.customer_id =#{customerId}
+             </if>
+         LIMIT #{startIndex}, #{amount}
+    </select>
+
+    <select id ="getBillCount" resultType ="Integer">
+        SELECT count(1)
+          FROM zjc_bill_details
+         WHERE  1 = 1
+             <if test="customerId != 1">
+                 AND zb.customer_id =#{customerId}
+             </if>
+    </select>
+
+    <select id ="getTotalRechargeByCustomerId" resultType ="Double">
+        SELECT SUM(amount) AS amount
+          FROM zjc_recharge_record
+         WHERE  1 = 1
+             <if test="customerId != 1">
+                 AND zb.customer_id =#{customerId}
+             </if>
+    </select>
+
+    <select id ="getBalanceByCustomerId" resultType ="Double">
+        SELECT customer_balance
+          FROM zjc_customer
+         WHERE 1 = 1
+             <if test="customerId != 1">
+                 AND zb.customer_id =#{customerId}
+             </if>
+    </select>
+
+    <select id ="getPicCountByCustomerId" resultType ="Integer">
+        SELECT COUNT(1)
+          FROM zjc_bill_details zb
+         WHERE 1 = 1
+             <if test="customerId != 1">
+                 AND zb.customer_id =#{customerId}
+                 AND zb.file_type = 0
+             </if>
+    </select>
+
+    <select id ="getVideoDurationByCustomerId" resultType ="Integer">
+        SELECT SUM(TIMESTAMPDIFF(SECOND,(DATE_FORMAT(zb.start_time,'%Y-%m-%d %H:%i')), (DATE_FORMAT(zb.end_time, '%Y-%m-%d %H:%i')))) AS duration
+          FROM zjc_bill_details zb
+         WHERE 1 = 1
+             <if test="customerId != 1">
+                 AND zb.customer_id =#{customerId}
+                 AND zb.file_type = 1
+             </if>
+    </select>
+
+</mapper>

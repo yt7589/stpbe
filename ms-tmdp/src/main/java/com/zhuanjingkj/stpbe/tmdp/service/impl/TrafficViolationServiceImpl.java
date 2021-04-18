@@ -11,7 +11,7 @@ import com.zhuanjingkj.stpbe.tmdp.mapper.TrafficViolationMapper;
 import com.zhuanjingkj.stpbe.tmdp.rto.TrafficViolationRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.TrafficViolationService;
 import com.zhuanjingkj.stpbe.tmdp.util.CommentUtils;
-import org.apache.commons.lang.StringUtils;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

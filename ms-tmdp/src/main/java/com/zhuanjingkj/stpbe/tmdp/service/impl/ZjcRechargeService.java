@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class ZjcZjcRechargeService implements IZjcRechargeService {
+public class ZjcRechargeService implements IZjcRechargeService {
 
     @Autowired
     private ZjcRechargeMapper zjcRechargeMapper;

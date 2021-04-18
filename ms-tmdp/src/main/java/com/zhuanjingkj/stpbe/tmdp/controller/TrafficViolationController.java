@@ -23,7 +23,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.POST;
 import java.util.ArrayList;
 import java.util.List;
 

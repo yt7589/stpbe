@@ -6,7 +6,7 @@ import com.zhuanjingkj.stpbe.data.dto.DbQrsDTO;
 import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.rto.zjc.AddChargesRTO;
 import com.zhuanjingkj.stpbe.data.rto.zjc.DeleteChargesRTO;
-import com.zhuanjingkj.stpbe.tmdp.service.impl.ChargesService;
+import com.zhuanjingkj.stpbe.tmdp.service.impl.ZjcChargesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class ZjcChargesController {
 
     @Autowired
-    private ChargesService chargesService;
+    private ZjcChargesService zjcChargesService;
 
     /**
      * 收费管理
@@ -40,7 +40,7 @@ public class ZjcChargesController {
             @RequestParam(name = "direction", required = false, defaultValue = "1") Integer direction,
             @RequestParam(name = "chargesId", required = false) Integer chargesId
      ) {
-        return chargesService.getCharges(startIndex, amount, direction, chargesId);
+        return zjcChargesService.getCharges(startIndex, amount, direction, chargesId);
     }
 
     /**
@@ -56,7 +56,7 @@ public class ZjcChargesController {
             @RequestParam(name = "v", required = false) String version,
             @RequestBody AddChargesRTO rto
     ) {
-        return chargesService.addCharges(rto);
+        return zjcChargesService.addCharges(rto);
     }
 
     /**
@@ -72,7 +72,7 @@ public class ZjcChargesController {
             @RequestParam(name = "v", required = false) String version,
             @RequestBody AddChargesRTO rto
     ) {
-        return chargesService.uptCharges(rto);
+        return zjcChargesService.uptCharges(rto);
     }
 
     /**
@@ -88,6 +88,6 @@ public class ZjcChargesController {
             @RequestParam(name = "v", required = false) String version,
             @RequestBody DeleteChargesRTO rto
     ) {
-        return chargesService.deleteCharges(rto);
+        return zjcChargesService.deleteCharges(rto);
     }
 }

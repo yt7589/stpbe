@@ -2,7 +2,7 @@ package com.zhuanjingkj.stpbe.data.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class ZjcRechargeDTO extends BaseDTO {
+public class ZjcRechargeRecordDTO extends BaseDTO {
     @JSONField(name = "rdId")
     private Integer rdId;
     @JSONField(name = "orderNo")

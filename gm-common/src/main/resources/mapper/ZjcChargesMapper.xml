@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.ChargesMapper">
-    <resultMap type="com.zhuanjingkj.stpbe.data.dto.ZjcChargesDTO"  id="chargesVO">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.ZjcChargesMapper">
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.ZjcChargesDTO"  id ="chargesDTO">
         <result column ="charge_id" property ="chargeId" jdbcType ="INTEGER"></result>
         <result column ="charge_name" property ="chargeName" jdbcType ="VARCHAR"></result>
         <result column ="free_time" property ="freeTime" jdbcType ="INTEGER"></result>
@@ -12,7 +12,7 @@
         <result column ="remark" property ="remark" jdbcType ="VARCHAR"></result>
     </resultMap>
 
-    <select id ="getCharges" resultMap ="chargesVO">
+    <select id ="getCharges" resultMap ="chargesDTO">
         SELECT zc.charge_id, zc.charge_name, zc.free_time, zc.pic_num, zc.pic_per_unit, zc.video_time,
                zc.video_per_unit, zc.remark
           FROM zjc_charges zc

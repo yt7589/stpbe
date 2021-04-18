@@ -17,7 +17,7 @@ import com.zhuanjingkj.stpbe.tmdp.dto.vm.VmIlsVsInfoDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.vm.VmIlsVsTypeDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IVmIlsService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
-import org.apache.commons.lang.StringUtils;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

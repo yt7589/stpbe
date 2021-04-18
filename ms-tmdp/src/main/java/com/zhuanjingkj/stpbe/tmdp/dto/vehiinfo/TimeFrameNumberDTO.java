@@ -1,6 +1,5 @@
 package com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo;
 
-import com.netflix.discovery.DNSBasedAzToRegionMapper;
 import com.zhuanjingkj.stpbe.data.dto.BaseDTO;
 
 /**

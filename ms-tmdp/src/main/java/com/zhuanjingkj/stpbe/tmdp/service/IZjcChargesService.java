@@ -7,7 +7,7 @@ import com.zhuanjingkj.stpbe.data.dto.ResultDTO;
 import com.zhuanjingkj.stpbe.data.rto.zjc.AddChargesRTO;
 import com.zhuanjingkj.stpbe.data.rto.zjc.DeleteChargesRTO;
 
-public interface IChargesService {
+public interface IZjcChargesService {
 
     ResultDTO<DbQrsDTO> getCharges(Integer startIndex, Integer amount, Integer direction, Integer charges_id);
 

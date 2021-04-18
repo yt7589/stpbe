@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuanjingkj.stpbe.common.mapper.ZjcConsumeMapper">
+    <resultMap type="com.zhuanjingkj.stpbe.data.dto.ZjcConsumeRecordDTO" id="zjcConsumeDTO">
+        <result column="cr_id" property="crId" jdbcType="VARCHAR"/>
+        <result column="customer_user" property="userName" jdbcType="VARCHAR"/>
+        <result column="customer_corporateName" property="corporateName" jdbcType="VARCHAR"/>
+        <result column="amount" property="amount" jdbcType="DOUBLE"/>
+        <result column="desc" property="desc" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id ="getConsumeRecord" resultMap ="zjcConsumeDTO">
+        SELECT zr.cr_id,zc.customer_user, zc.customer_corporateName, zr.amount, zr.`desc`, zr.create_time
+          FROM zjc_consume_record zr
+     LEFT JOIN zjc_customer zc ON zr.cr_id = zc.customer_id
+         WHERE zc.customer_id =#{customerId}
+         LIMIT #{startIndex}, #{amount}
+    </select>
+</mapper>

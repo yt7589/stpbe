@@ -7,7 +7,7 @@ import com.zhuanjingkj.stpbe.data.rto.ks.DeleteVehicleFromVcRTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsVcLsvsDTO;
 import com.zhuanjingkj.stpbe.tmdp.dto.ks.KsVcSfvsDTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IKsVcService;
-import org.apache.commons.lang.StringUtils;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

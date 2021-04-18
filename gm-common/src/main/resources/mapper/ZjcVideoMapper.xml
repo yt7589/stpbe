@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhuanjingkj.stpbe.common.mapper.ZjcVideoMapper">
+
     <insert id ="addRtmp" >
         INSERT INTO t_zjc_video_info(stream_id, consumer_id, file_name, create_time) VALUES (#{streamId}, #{consumerId}, #{fileName}, #{date})
     </insert>

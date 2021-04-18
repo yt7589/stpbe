@@ -1,12 +1,12 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
-import com.alibaba.druid.util.StringUtils;
 import com.zhuanjingkj.stpbe.data.dto.Code;
 import com.zhuanjingkj.stpbe.data.entity.VehicleJoinType;
 import com.zhuanjingkj.stpbe.tmdp.dto.vehiinfo.*;
 import com.zhuanjingkj.stpbe.tmdp.exception.ServiceException;
 import com.zhuanjingkj.stpbe.tmdp.mapper.VehicleStatisticMapper;
 import com.zhuanjingkj.stpbe.tmdp.service.VehicleStatisticService;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

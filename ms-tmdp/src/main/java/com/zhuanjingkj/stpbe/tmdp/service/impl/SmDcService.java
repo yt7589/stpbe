@@ -1,8 +1,6 @@
 package com.zhuanjingkj.stpbe.tmdp.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.zhuanjingkj.stpbe.common.mapper.DcStMapper;
 import com.zhuanjingkj.stpbe.common.mapper.SmDcMapper;
 import com.zhuanjingkj.stpbe.common.util.PropUtil;
@@ -15,28 +13,16 @@ import com.zhuanjingkj.stpbe.tmdp.dto.dc.*;
 import com.zhuanjingkj.stpbe.tmdp.service.ISmDcService;
 import com.zhuanjingkj.stpbe.tmdp.util.DateUtil;
 import com.zhuanjingkj.stpbe.tmdp.util.FileUtil;
-import com.zhuanjingkj.stpbe.tmdp.util.SHA1;
-import org.apache.commons.lang.StringUtils;
-import org.checkerframework.checker.units.qual.A;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class SmDcService implements ISmDcService {

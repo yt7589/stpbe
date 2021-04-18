@@ -8,7 +8,7 @@ import com.zhuanjingkj.stpbe.data.dto.DmDeviceNodeDTO;
 import com.zhuanjingkj.stpbe.tmdp.rto.dm.DeleteDeviceFromDsRTO;
 import com.zhuanjingkj.stpbe.data.rto.dm.UpdateDeviceInfoRTO;
 import com.zhuanjingkj.stpbe.tmdp.service.IDeviceService;
-import org.apache.commons.lang.StringUtils;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
