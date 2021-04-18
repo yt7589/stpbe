@@ -17,7 +17,7 @@
                IF(zb.file_type = 1, TIMESTAMPDIFF(SECOND,(DATE_FORMAT(zb.start_time,'%Y-%m-%d %H:%i')), (DATE_FORMAT(zb.end_time, '%Y-%m-%d %H:%i'))), 0) AS duration
           FROM zjc_bill_details zb
          WHERE 1 = 1
-             <if test="customerId != 1">
+             <if test="customerId != null and customerId != '' and customerId != 1">
                  AND zb.customer_id =#{customerId}
              </if>
          LIMIT #{startIndex}, #{amount}
@@ -27,7 +27,7 @@
         SELECT count(1)
           FROM zjc_bill_details
          WHERE  1 = 1
-             <if test="customerId != 1">
+             <if test="customerId != null and customerId != '' and customerId != 1">
                  AND customer_id =#{customerId}
              </if>
     </select>
@@ -36,7 +36,7 @@
         SELECT SUM(amount) AS amount
           FROM zjc_recharge_record
          WHERE  1 = 1
-             <if test="customerId != 1">
+             <if test="customerId != null and customerId != '' and customerId != 1">
                  AND customer_id =#{customerId}
              </if>
     </select>
@@ -44,17 +44,14 @@
     <select id ="getBalanceByCustomerId" resultType ="Double">
         SELECT customer_balance
           FROM zjc_customer
-         WHERE 1 = 1
-             <if test="customerId != 1">
-                 AND customer_id =#{customerId}
-             </if>
+         WHERE AND customer_id =#{customerId}
     </select>
 
     <select id ="getPicCountByCustomerId" resultType ="Integer">
         SELECT COUNT(1)
           FROM zjc_bill_details zb
          WHERE 1 = 1
-             <if test="customerId != 1">
+             <if test="customerId != null and customerId != '' and customerId != 1">
                  AND zb.customer_id =#{customerId}
                  AND zb.file_type = 0
              </if>
@@ -64,7 +61,7 @@
         SELECT SUM(TIMESTAMPDIFF(SECOND,(DATE_FORMAT(zb.start_time,'%Y-%m-%d %H:%i')), (DATE_FORMAT(zb.end_time, '%Y-%m-%d %H:%i')))) AS duration
           FROM zjc_bill_details zb
          WHERE 1 = 1
-             <if test="customerId != 1">
+             <if test="customerId != null and customerId != '' and customerId != 1">
                  AND zb.customer_id =#{customerId}
                  AND zb.file_type = 1
              </if>

@@ -34,7 +34,10 @@ public class ZjcBillService implements IZjcBillService {
     public ResultDTO<ZjcBillSummaryDTO> getBillSummary(Integer customerId) {
         ResultDTO dto = new ResultDTO();
         Double totalRecharge = zjcBillMapper.getTotalRechargeByCustomerId(customerId); //总充值金额
-        Double balance = zjcBillMapper.getBalanceByCustomerId(customerId); //余额
+        Double balance = 0.0;
+        if(customerId > 1) {
+            balance = zjcBillMapper.getBalanceByCustomerId(customerId); //余额
+        }
         Integer picNum = zjcBillMapper.getPicCountByCustomerId(customerId); //检测图片数量
         Integer duration = zjcBillMapper.getVideoDurationByCustomerId(customerId); //检测视频时长
         ZjcBillSummaryDTO zjcBillSummaryDTO = new ZjcBillSummaryDTO(totalRecharge, balance, picNum, duration);
